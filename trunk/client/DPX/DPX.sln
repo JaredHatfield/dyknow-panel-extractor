@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickReader", "QuickReader\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{A19B1B47-2213-48DA-AE12-406FC665C73C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Preview", "Preview\Preview.csproj", "{107A5897-5275-476B-81D7-C0A01EF976B7}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -29,6 +31,10 @@ Global
 		{A19B1B47-2213-48DA-AE12-406FC665C73C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A19B1B47-2213-48DA-AE12-406FC665C73C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A19B1B47-2213-48DA-AE12-406FC665C73C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{107A5897-5275-476B-81D7-C0A01EF976B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{107A5897-5275-476B-81D7-C0A01EF976B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{107A5897-5275-476B-81D7-C0A01EF976B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{107A5897-5275-476B-81D7-C0A01EF976B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
