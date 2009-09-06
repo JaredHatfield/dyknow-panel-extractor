@@ -17,12 +17,14 @@ namespace QuickReader
             FileStream originalFile = new FileStream(input, FileMode.Open, FileAccess.Read, FileShare.Read);
             GZipStream unzipedFile = new GZipStream(originalFile, CompressionMode.Decompress);
             XmlTextReader xmlFile = new XmlTextReader(unzipedFile);
-
+            
             //File Output
             FileStream newFile = new FileStream(output, FileMode.Create, FileAccess.Write, FileShare.Write);
             GZipStream zippedFile = new GZipStream(newFile, CompressionMode.Compress);
             XmlTextWriter newXmlFile = new XmlTextWriter(zippedFile, Encoding.ASCII);
 
+            //A collection to keep all of the pages in
+            List<XmlDocument> pages = new List<XmlDocument>();
 
             while (xmlFile.Read())
             {
@@ -30,13 +32,10 @@ namespace QuickReader
                 {
                     if (xmlFile.Name.ToString() == "PAGE")
                     {
-                        //xmlFile.ReadSubtree();
-                        newXmlFile.WriteNode(xmlFile.ReadSubtree(), false);
-
-                        while (!(xmlFile.NodeType == XmlNodeType.EndElement && xmlFile.Name.ToString() == "PAGE"))
-                        {
-                            xmlFile.Read();
-                        }
+                        //Store all of the pages in memory so they can be sorted
+                        XmlDocument d = new XmlDocument();
+                        d.Load(xmlFile.ReadSubtree());
+                        pages.Add(d);
                     }
                     else if (xmlFile.Name.ToString() == "IMG")
                     {
@@ -74,6 +73,18 @@ namespace QuickReader
                     {
                         //Previously closed
                     }
+                    else if (xmlFile.Name.ToString() == "DATA")
+                    {
+                        //Sort the pages
+                        sortpages(pages);
+                        //Write the pages
+                        for (int i = 0; i < pages.Count; i++)
+                        {
+                            newXmlFile.WriteNode(new XmlTextReader(new StringReader(pages[i].OuterXml)), false);
+                        }
+                        //Close the data tag
+                        newXmlFile.WriteEndElement();
+                    }
                     else
                     {
                         newXmlFile.WriteEndElement();
@@ -92,6 +103,24 @@ namespace QuickReader
             zippedFile.Close();
             newFile.Close();
 
+        }
+
+        private void sortpages(List<XmlDocument> pages)
+        {
+            //Bubble sort algorithm to put all of the pages in the correct order
+            for (int i = 0; i < pages.Count; i++)
+            {
+                for (int j = 0; j < pages.Count; j++)
+                {
+                    if (pages[i]["PAGE"].Attributes["ONERN"].Value.ToString().CompareTo(
+                        pages[j]["PAGE"].Attributes["ONERN"].Value.ToString()) < 0)
+                    {
+                        XmlDocument d = pages[i];
+                        pages[i] = pages[j];
+                        pages[j] = d;
+                    }
+                }
+            }
         }
     }
 }
