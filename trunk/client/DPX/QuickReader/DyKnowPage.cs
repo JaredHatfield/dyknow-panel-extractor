@@ -13,6 +13,7 @@ namespace QuickReader
         private String fullName;
         private int strokes;
         private String finished;
+        private List<DyKnowPenStroke> pens;
 
         //Constructor accepts the XML sub tree
         public DyKnowPage(XmlReader xmlFile, int pageNum)
@@ -23,6 +24,7 @@ namespace QuickReader
             fullName = "";
             strokes = 0;
             finished = "";
+            pens = new List<DyKnowPenStroke>();
 
             List<String> myStrokes = new List<string>();
 
@@ -31,6 +33,7 @@ namespace QuickReader
                 //Used to identify the user name and full name
                 if (xmlFile.Name.ToString() == "PAGE")
                 {
+                    //xmlFile
                     while (xmlFile.MoveToNextAttribute())
                     {
                         //User Name
@@ -55,6 +58,12 @@ namespace QuickReader
                         //Stroke taken
                         myStrokes.Add(xmlFile.GetAttribute("UID").ToString());
                     }
+                    DyKnowPenStroke dps = new DyKnowPenStroke(Int32.Parse(xmlFile.GetAttribute("UT").ToString()),
+                        Int32.Parse(xmlFile.GetAttribute("PW").ToString()),
+                        Int32.Parse(xmlFile.GetAttribute("PH").ToString()),
+                        xmlFile.GetAttribute("UID").ToString(),
+                        xmlFile.GetAttribute("DATA").ToString());
+                    pens.Add(dps);
                 }
                 else if (xmlFile.Name.ToString() == "DEOB")
                 {
@@ -69,6 +78,39 @@ namespace QuickReader
             strokes = myStrokes.Count;
         }
 
+
+        public long getStrokeDistance()
+        {
+            long length = 0;
+            for (int i = 0; i < pens.Count; i++)
+            {
+                if (pens[i].UT == 0)
+                {
+                    if (!pens[i].DELETED)
+                    {
+                        length += pens[i].DATA.Length;
+                    }
+                }
+            }
+            return length;
+        }
+
+
+
+        public int getDeletedStrokeCount()
+        {
+            int total = 0;
+            for (int i = 0; i < pens.Count; i++)
+            {
+                if (pens[i].DELETED)
+                {
+                    total++;
+                }
+            }
+            return total;
+        }
+
+
         //Used to delete strokes from the list of strokes
         private void deleteStrokes(List<string> myStrokes, XmlReader xmlFile)
         {
@@ -76,7 +118,17 @@ namespace QuickReader
             {
                 if (xmlFile.Name.ToString() == "EDDE")
                 {
-                    myStrokes.Remove(xmlFile.GetAttribute("OBJID").ToString());
+                    String objid = xmlFile.GetAttribute("OBJID").ToString();
+                    myStrokes.Remove(objid);
+
+                    for (int i = 0; i < pens.Count; i++)
+                    {
+                        if (objid.Equals(pens[i].UID))
+                        {
+                            pens[i].deleteStroke();
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -129,7 +181,8 @@ namespace QuickReader
         public override string ToString()
         {
             //return base.ToString();
-            return pageNumber.ToString() + ", " + userName + ", " + fullName + ", " + strokes.ToString() + ", " + finished;
+            return pageNumber.ToString() + ", " + userName + ", " + fullName + ", " +
+                strokes.ToString() + ", " + finished + ", " + getDeletedStrokeCount() + ", " + getStrokeDistance();
         }
     }
 }

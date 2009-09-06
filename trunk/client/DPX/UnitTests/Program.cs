@@ -14,17 +14,33 @@ namespace UnitTests
         {
             Console.WriteLine("DyKnow Panel eXtractor Unit Tests");
 
-            //Test the file sorter
-            String inputfile = "";
-            String outputfile = "";
-            PanelSorter ps = new PanelSorter(inputfile, outputfile);
-            
+            //databaseTest();
+
+            readdyknowfile();
+
 
             Console.WriteLine();
             Console.WriteLine("Press any key to exit...");
             Console.ReadLine();
         }
 
+        public static void sortfile(String inputfile, String outputfile)
+        {
+            PanelSorter ps = new PanelSorter(inputfile, outputfile);
+        }
+
+        public static void readdyknowfile()
+        {
+            //Get the DyKnow file ready
+            Console.Write("File Name: ");
+            String file = Console.ReadLine();
+            DyKnowReader dr = new DyKnowReader(file);
+
+            for (int i = 0; i < dr.NumOfPages(); i++)
+            {
+                Console.WriteLine(dr.GetPageString(i));
+            }
+        }
 
         public static void databaseTest()
         {
