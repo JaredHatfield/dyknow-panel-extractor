@@ -53,11 +53,11 @@ namespace UnitTests
                 cmdInsert.CommandType = System.Data.CommandType.Text;
                 //Add parameters to the query
                 cmdInsert.Parameters.AddWithValue("@parm1", file);
-                cmdInsert.Parameters.AddWithValue("@parm1", page.getPageNumber());
-                cmdInsert.Parameters.AddWithValue("@parm1", page.getUserName());
-                cmdInsert.Parameters.AddWithValue("@parm1", page.getFullName());
-                cmdInsert.Parameters.AddWithValue("@parm1", page.getStrokeCount());
-                cmdInsert.Parameters.AddWithValue("@parm1", page.getFinished());
+                cmdInsert.Parameters.AddWithValue("@parm2", page.getPageNumber());
+                cmdInsert.Parameters.AddWithValue("@parm3", page.getUserName());
+                cmdInsert.Parameters.AddWithValue("@parm4", page.getFullName());
+                cmdInsert.Parameters.AddWithValue("@parm5", page.getStrokeCount());
+                cmdInsert.Parameters.AddWithValue("@parm6", page.getFinished());
                 
                 //Specify connection
                 cmdInsert.Connection = aConnection;
