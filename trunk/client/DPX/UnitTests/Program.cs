@@ -13,12 +13,27 @@ namespace UnitTests
         static void Main(string[] args)
         {
             Console.WriteLine("DyKnow Panel eXtractor Unit Tests");
+
+            //Test the file sorter
+            String inputfile = "";
+            String outputfile = "";
+            PanelSorter ps = new PanelSorter(inputfile, outputfile);
             
+
+            Console.WriteLine();
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadLine();
+        }
+
+
+        public static void databaseTest()
+        {
+
             //Get the database ready
             Console.Write("Database File: ");
             String db = Console.ReadLine();
             aConnection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + db + ";Persist Security Info=False");
-            
+
             //Get the DyKnow file ready
             Console.Write("File Name: ");
             String file = Console.ReadLine();
@@ -31,10 +46,6 @@ namespace UnitTests
                 InsertNewRecord(file, dr.getDyKnowPage(i));
             }
             aConnection.Close();
-
-            Console.WriteLine();
-            Console.WriteLine("Press any key to exit...");
-            Console.ReadLine();
         }
 
 

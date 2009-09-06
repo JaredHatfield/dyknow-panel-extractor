@@ -48,6 +48,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="DyKnowPage.cs" />
     <Compile Include="DyKnowReader.cs" />
+    <Compile Include="PanelSorter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
