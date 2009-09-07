@@ -40,6 +40,11 @@ namespace UnitTests
             {
                 Console.WriteLine(dr.GetPageString(i));
             }
+
+            Console.WriteLine();
+            Console.WriteLine(dr.ToString());
+            Console.WriteLine("Minimum: " + dr.MinStrokeCount);
+            Console.WriteLine("Maximum: " + dr.MaxStrokeCount);
         }
 
         public static void databaseTest()
@@ -80,11 +85,11 @@ namespace UnitTests
                 cmdInsert.CommandType = System.Data.CommandType.Text;
                 //Add parameters to the query
                 cmdInsert.Parameters.AddWithValue("@parm1", file);
-                cmdInsert.Parameters.AddWithValue("@parm2", page.getPageNumber());
-                cmdInsert.Parameters.AddWithValue("@parm3", page.getUserName());
-                cmdInsert.Parameters.AddWithValue("@parm4", page.getFullName());
-                cmdInsert.Parameters.AddWithValue("@parm5", page.getStrokeCount());
-                cmdInsert.Parameters.AddWithValue("@parm6", page.getFinished());
+                cmdInsert.Parameters.AddWithValue("@parm2", page.PageNumber);
+                cmdInsert.Parameters.AddWithValue("@parm3", page.UserName);
+                cmdInsert.Parameters.AddWithValue("@parm4", page.FullName);
+                cmdInsert.Parameters.AddWithValue("@parm5", page.StrokeCount);
+                cmdInsert.Parameters.AddWithValue("@parm6", page.Finished);
                 
                 //Specify connection
                 cmdInsert.Connection = aConnection;

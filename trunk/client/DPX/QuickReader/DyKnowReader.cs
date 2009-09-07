@@ -18,6 +18,72 @@ namespace QuickReader
 
         private double meanStrokes;
         private double stdDevStrokes;
+        private double meanStrokeDistance;
+        private double stdDevStrokeDistance;
+
+        public double MeanStrokes
+        {
+            get { return meanStrokes; }
+        }
+        public double StdDevStrokes
+        {
+            get { return stdDevStrokes; }
+        }
+        public double MeanStrokeDistance
+        {
+            get { return meanStrokeDistance; }
+        }
+        public double StdDevStrokeDistance
+        {
+            get { return stdDevStrokeDistance; }
+        }
+        public int MinStrokeCount
+        {
+            get
+            {
+                if (dyKnowPages.Count > 0)
+                {
+                    int min = dyKnowPages[0].StrokeCount;
+                    for (int i = 0; i < dyKnowPages.Count; i++)
+                    {
+                        if (dyKnowPages[i].StrokeCount < min)
+                        {
+                            min = dyKnowPages[i].StrokeCount;
+                        }
+                    }
+                    return min;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+        public int MaxStrokeCount
+        {
+            get
+            {
+                if (dyKnowPages.Count > 0)
+                {
+                    int max = dyKnowPages[0].StrokeCount;
+                    for (int i = 0; i < dyKnowPages.Count; i++)
+                    {
+                        if (dyKnowPages[i].StrokeCount > max)
+                        {
+                            max = dyKnowPages[i].StrokeCount;
+                        }
+                    }
+                    return max;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+
+
+
 
         public DyKnowReader(string name)
         {
@@ -56,6 +122,10 @@ namespace QuickReader
 
             meanStrokes = CalcMeanStrokes();
             stdDevStrokes = CalcStdDevStrokes(meanStrokes);
+
+            meanStrokeDistance = CalcMeanStrokeDistance();
+            stdDevStrokeDistance = CalcStdDevStrokeDistance(meanStrokeDistance);
+
             fillInFinished();
         }
 
@@ -63,11 +133,11 @@ namespace QuickReader
         {
             for (int i = 0; i < NumOfPages(); i++)
             {
-                if (dyKnowPages[i].getStrokeCount() == 0)
+                if (dyKnowPages[i].StrokeCount == 0)
                 {
                     dyKnowPages[i].setFinished("No");
                 }
-                else if (dyKnowPages[i].getStrokeCount() < (meanStrokes - (2 * stdDevStrokes)))
+                else if (dyKnowPages[i].StrokeCount < (meanStrokes - (2 * stdDevStrokes)))
                 {
                     dyKnowPages[i].setFinished("Maybe");
                 }
@@ -77,35 +147,45 @@ namespace QuickReader
                 }
             }
         }
-
+        //Performs the calculation to determine the mean number of pen strokes per page in this file
         private double CalcMeanStrokes()
         {
             long total = 0;
             for (int i = 0; i < NumOfPages(); i++)
             {
-                total += dyKnowPages[i].getStrokeCount();
+                total += dyKnowPages[i].StrokeCount;
             }
             return (double)total / (double)NumOfPages();
         }
-
+        //Performs the calculation to determine the standard deviation of pen strokes per page in this file
         private double CalcStdDevStrokes(double mean)
         {
             double total = 0;
             for (int i = 0; i < NumOfPages(); i++)
             {
-                total += Math.Pow((dyKnowPages[i].getStrokeCount() - mean), 2);
+                total += Math.Pow((dyKnowPages[i].StrokeCount - mean), 2);
             }
             return Math.Sqrt((double)total / (double)(NumOfPages() - 1));
         }
-
-        public double GetMeanStrokes()
+        //Performs the calculation to determine the mean stroke data distance per page in this specific file
+        private double CalcMeanStrokeDistance()
         {
-            return meanStrokes;
+            long total = 0;
+            for (int i = 0; i < NumOfPages(); i++)
+            {
+                total += dyKnowPages[i].getStrokeDistance();
+            }
+            return (double)total / (double)NumOfPages();
         }
-
-        public double GetStdDevStrokes()
+        //Performs the calculation to determine the standard deviation of the stroke data distance per page in this specific file
+        private double CalcStdDevStrokeDistance(double mean)
         {
-            return stdDevStrokes;
+            double total = 0;
+            for (int i = 0; i < NumOfPages(); i++)
+            {
+                total += Math.Pow((dyKnowPages[i].getStrokeDistance() - mean), 2);
+            }
+            return Math.Sqrt((double)total / (double)(NumOfPages() - 1));
         }
 
         public void Close()
@@ -139,6 +219,13 @@ namespace QuickReader
         }
 
 
+        override public String ToString()
+        {
+            return "Mean Number of Strokes: " + meanStrokes + "\n" +
+                "Standard Deviation of Strokes: " + stdDevStrokes + "\n" +
+                "Mean Stroke Distance: " + meanStrokeDistance + "\n" +
+                "Standard Deviation of Stroke Distance " + stdDevStrokeDistance + "\n";
+        }
 
     }
 }

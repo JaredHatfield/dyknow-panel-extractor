@@ -15,6 +15,28 @@ namespace QuickReader
         private String finished;
         private List<DyKnowPenStroke> pens;
 
+
+        public int PageNumber
+        {
+            get { return pageNumber; }
+        }
+        public String UserName
+        {
+            get { return userName; }
+        }
+        public String FullName
+        {
+            get { return fullName; }
+        }
+        public int StrokeCount
+        {
+            get { return strokes; }
+        }
+        public String Finished
+        {
+            get { return finished; }
+        }
+
         //Constructor accepts the XML sub tree
         public DyKnowPage(XmlReader xmlFile, int pageNum)
         {
@@ -138,30 +160,6 @@ namespace QuickReader
             finished = st;
         }
 
-        public int getPageNumber()
-        {
-            return pageNumber;
-        }
-
-        public string getUserName()
-        {
-            return userName;
-        }
-
-        public string getFullName()
-        {
-            return fullName;
-        }
-
-        public int getStrokeCount()
-        {
-            return strokes;
-        }
-
-        public String getFinished()
-        {
-            return finished;
-        }
 
         //Used to get the information form the page for display purposes.
         public String[] getData()
