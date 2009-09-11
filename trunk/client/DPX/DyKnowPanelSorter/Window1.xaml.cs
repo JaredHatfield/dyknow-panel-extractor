@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using QuickReader;
+using System.IO;
 
 namespace DyKnowPanelSorter
 {
@@ -75,10 +76,33 @@ namespace DyKnowPanelSorter
 
         private void processsort_Click(object sender, RoutedEventArgs e)
         {
+            //Perform some checks so we don't do any damage
+            if (!File.Exists(inputfilename.Text))
+            {
+                MessageBox.Show("Source file does not exist!", "Alert");
+            }
+            else if (File.Exists(outputfilename.Text))
+            {
+                MessageBox.Show("Destination file already exists!", "Alert");
+            }
             //Lets make sure something is in paths that were chosen
-            if (inputfilename.Text.Length > 0 && outputfilename.Text.Length > 0)
+            else if (outputfilename.Text.Length > 0)
             {
                 PanelSorter ps = new PanelSorter(inputfilename.Text, outputfilename.Text);
+                if (radioButtonSN.IsChecked == true)
+                {
+                    ps.setSortByFullName();
+                }
+                else if (radioButtonUN.IsChecked == true)
+                {
+                    ps.setSortByUsername();
+                }
+                ps.processSort();
+                MessageBox.Show("File sort finished.", "Success");
+            }
+            else
+            {
+                MessageBox.Show("A destination file must be specified.", "Alert");
             }
         }
     }

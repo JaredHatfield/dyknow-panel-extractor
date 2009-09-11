@@ -27,6 +27,7 @@ namespace UnitTests
         public static void sortfile(String inputfile, String outputfile)
         {
             PanelSorter ps = new PanelSorter(inputfile, outputfile);
+            ps.processSort();
         }
 
         public static void readdyknowfile()

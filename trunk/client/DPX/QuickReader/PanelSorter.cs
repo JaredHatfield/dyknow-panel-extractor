@@ -10,16 +10,36 @@ namespace QuickReader
 {
     public class PanelSorter
     {
+        String inputfile;
+        String outputfile;
+        Boolean sorttype; //True sorts by name, false sorts by username
 
-        public PanelSorter(String input, String output)
+        public PanelSorter(string input, String output)
+        {
+            inputfile = input;
+            outputfile = output;
+            sorttype = true;
+        }
+
+        public void setSortByUsername()
+        {
+            sorttype = false;
+        }
+
+        public void setSortByFullName()
+        {
+            sorttype = true;
+        }
+
+        public void processSort()
         {
             //File Input
-            FileStream originalFile = new FileStream(input, FileMode.Open, FileAccess.Read, FileShare.Read);
+            FileStream originalFile = new FileStream(inputfile, FileMode.Open, FileAccess.Read, FileShare.Read);
             GZipStream unzipedFile = new GZipStream(originalFile, CompressionMode.Decompress);
             XmlTextReader xmlFile = new XmlTextReader(unzipedFile);
             
             //File Output
-            FileStream newFile = new FileStream(output, FileMode.Create, FileAccess.Write, FileShare.Write);
+            FileStream newFile = new FileStream(outputfile, FileMode.Create, FileAccess.Write, FileShare.Write);
             GZipStream zippedFile = new GZipStream(newFile, CompressionMode.Compress);
             XmlTextWriter newXmlFile = new XmlTextWriter(zippedFile, Encoding.ASCII);
 
@@ -112,12 +132,27 @@ namespace QuickReader
             {
                 for (int j = 0; j < pages.Count; j++)
                 {
-                    if (pages[i]["PAGE"].Attributes["ONERN"].Value.ToString().CompareTo(
-                        pages[j]["PAGE"].Attributes["ONERN"].Value.ToString()) < 0)
+                    //Sorts by name (ONERN)
+                    if (sorttype)
                     {
-                        XmlDocument d = pages[i];
-                        pages[i] = pages[j];
-                        pages[j] = d;
+                        if (pages[i]["PAGE"].Attributes["ONERN"].Value.ToString().CompareTo(
+                            pages[j]["PAGE"].Attributes["ONERN"].Value.ToString()) < 0)
+                        {
+                            XmlDocument d = pages[i];
+                            pages[i] = pages[j];
+                            pages[j] = d;
+                        }
+                    }
+                    //Sorts by username (ONER)
+                    else
+                    {
+                        if (pages[i]["PAGE"].Attributes["ONER"].Value.ToString().CompareTo(
+                            pages[j]["PAGE"].Attributes["ONER"].Value.ToString()) < 0)
+                        {
+                            XmlDocument d = pages[i];
+                            pages[i] = pages[j];
+                            pages[j] = d;
+                        }
                     }
                 }
             }

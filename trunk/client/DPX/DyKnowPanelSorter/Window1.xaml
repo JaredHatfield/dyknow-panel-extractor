@@ -3,12 +3,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="DyKnow Panel Sorter" Height="288" Width="629">
     <Grid>
-        <Button Height="23" HorizontalAlignment="Right" Margin="0,52,34,0" Name="opendialog" VerticalAlignment="Top" Width="75" Click="opendialog_box">Open</Button>
-        <Button HorizontalAlignment="Right" Margin="0,106,34,121" Name="savedialog" Width="75" Click="savedialog_box">Save</Button>
-        <Button Margin="168,0,168,71" Name="processsort" Height="23" VerticalAlignment="Bottom" Click="processsort_Click">Process</Button>
-        <TextBox Height="23" Margin="0,52,140,0" Name="inputfilename" VerticalAlignment="Top" HorizontalAlignment="Right" Width="324" TextChanged="inputfilename_TextChanged" />
-        <TextBox Margin="0,106,140,121" Name="outputfilename" HorizontalAlignment="Right" Width="324" TextChanged="outputfilename_TextChanged" />
-        <Label Height="28" HorizontalAlignment="Left" Margin="26,50,0,0" Name="label1" VerticalAlignment="Top" Width="102">Source File</Label>
-        <Label HorizontalAlignment="Left" Margin="26,104,0,118" Name="label2" Width="102">Destination File</Label>
+        <Button Height="23" HorizontalAlignment="Right" Margin="0,27.48,28,0" Name="opendialog" VerticalAlignment="Top" Width="75" Click="opendialog_box">Open</Button>
+        <Button HorizontalAlignment="Right" Margin="0,70,28,0" Name="savedialog" Width="75" Click="savedialog_box" Height="23" VerticalAlignment="Top">Save</Button>
+        <Button Margin="171,0,112,54" Name="processsort" Height="23" VerticalAlignment="Bottom" Click="processsort_Click">Process</Button>
+        <TextBox Height="23" Margin="171,26,112,0" Name="inputfilename" VerticalAlignment="Top" TextChanged="inputfilename_TextChanged" />
+        <TextBox Margin="171,70,112,0" Name="outputfilename" TextChanged="outputfilename_TextChanged" Height="23" VerticalAlignment="Top" />
+        <Label Height="28" HorizontalAlignment="Left" Margin="8,26,0,0" Name="label1" VerticalAlignment="Top" Width="155">Source DyKnow File</Label>
+        <Label HorizontalAlignment="Left" Margin="8,69,0,0" Name="label2" Width="155" Height="28" VerticalAlignment="Top">Destination DyKnow File</Label>
+        <ProgressBar Height="17" Name="progressBar1" VerticalAlignment="Bottom" />
+        <RadioButton Margin="171,108,286,0" GroupName="sortsetting" Name="radioButtonSN" IsChecked="True" Height="16" VerticalAlignment="Top">Sort by Student Name</RadioButton>
+        <RadioButton Height="16" Margin="171,0,0,95" GroupName="sortsetting" Name="radioButtonUN" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="120" >Sort by Username</RadioButton>
     </Grid>
 </Window>
