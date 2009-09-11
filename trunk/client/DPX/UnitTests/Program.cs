@@ -48,6 +48,30 @@ namespace UnitTests
             Console.WriteLine("Maximum: " + dr.MaxStrokeCount);
         }
 
+
+        public void databasereadtest(string myConnString)
+        {
+            string mySelectQuery = "SELECT OrderID, CustomerID FROM Orders";
+            OleDbConnection myConnection = new OleDbConnection(myConnString);
+            OleDbCommand myCommand = new OleDbCommand(mySelectQuery, myConnection);
+            myConnection.Open();
+            OleDbDataReader myReader = myCommand.ExecuteReader();
+            try
+            {
+                while (myReader.Read())
+                {
+                    Console.WriteLine(myReader.GetInt32(0) + ", " + myReader.GetString(1));
+                }
+            }
+            finally
+            {
+                // always call Close when done reading.
+                myReader.Close();
+                // always call Close when done reading.
+                myConnection.Close();
+            }
+        }
+
         public static void databaseTest()
         {
 
