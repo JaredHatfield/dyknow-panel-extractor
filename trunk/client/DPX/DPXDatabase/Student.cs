@@ -7,13 +7,13 @@ namespace DPXDatabase
 {
     public class Student
     {
-        int id;
-        String username;
-        String fullName;
-        String firstName;
-        String lastName;
-        int section;
-        Boolean isEnrolled;
+        private int id;
+        private String username;
+        private String fullName;
+        private String firstName;
+        private String lastName;
+        private int section;
+        private Boolean isEnrolled;
 
         public int Id
         {

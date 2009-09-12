@@ -15,7 +15,19 @@ namespace UnitTests
         {
             Console.WriteLine("DyKnow Panel eXtractor Unit Tests");
 
+            String dbfile = "C:\\Users\\Jared\\Desktop\\testdatabase.accdb";
+            String dyknowfiled = "C:\\Users\\Jared\\Desktop\\samplefile.dyz";
+
+            Database db = new Database(dbfile);
+
+            DyKnowReader dr = new DyKnowReader(dyknowfiled);
             
+
+            List<Student> s = db.getAllStudents();
+            for (int i = 0; i < s.Count; i++)
+            {
+                Console.WriteLine(s[i].ToString());
+            }
 
             Console.WriteLine();
             Console.WriteLine("Press any key to exit...");
