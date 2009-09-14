@@ -11,9 +11,11 @@ namespace DPXDatabase
         private int classdate;
         private String fileName;
         private Double meanStrokes;
+        private Double stdDevStrokes;
         private Double minStrokes;
         private Double maxStrokes;
         private Double meanDataLength;
+        private Double stdDevDataLength;
         private Double minDataLength;
         private Double maxDataLength;
 
@@ -33,6 +35,10 @@ namespace DPXDatabase
         {
             get { return meanStrokes; }
         }
+        public Double StdDevStrokes
+        {
+            get { return stdDevStrokes; }
+        }
         public Double MinStrokes
         {
             get { return minStrokes; }
@@ -45,6 +51,10 @@ namespace DPXDatabase
         {
             get { return meanDataLength; }
         }
+        public Double StdDevDataLength
+        {
+            get { return stdDevDataLength; }
+        }
         public Double MinDataLength
         {
             get { return minDataLength; }
@@ -55,28 +65,36 @@ namespace DPXDatabase
         }
 
 
-        public File(int id, int classdate, String fileName, Double meanStrokes, Double minStrokes, Double maxStrokes, Double meanDataLength, Double minDataLength, Double maxDataLength)
+        public File(int id, int classdate, String fileName, Double meanStrokes, Double stdDevStrokes,
+            Double minStrokes, Double maxStrokes, Double meanDataLength, Double stdDevDataLength,
+            Double minDataLength, Double maxDataLength)
         {
             this.id = id;
             this.classdate = classdate;
             this.fileName = fileName;
             this.meanStrokes = meanStrokes;
+            this.stdDevStrokes = stdDevStrokes;
             this.minStrokes = minStrokes;
             this.maxStrokes = maxStrokes;
             this.meanDataLength = maxDataLength;
+            this.stdDevDataLength = stdDevDataLength;
             this.minDataLength = minDataLength;
             this.maxDataLength = maxDataLength;
         }
 
-        public File(int classdate, String fileName, Double meanStrokes, Double minStrokes, Double maxStrokes, Double meanDataLength, Double minDataLength, Double maxDataLength)
+        public File(int classdate, String fileName, Double meanStrokes, Double stdDevStrokes, 
+            Double minStrokes, Double maxStrokes, Double meanDataLength, Double stdDevDataLength, 
+            Double minDataLength, Double maxDataLength)
         {
             this.id = -1;
             this.classdate = classdate;
             this.fileName = fileName;
             this.meanStrokes = meanStrokes;
+            this.stdDevStrokes = stdDevStrokes;
             this.minStrokes = minStrokes;
             this.maxStrokes = maxStrokes;
             this.meanDataLength = maxDataLength;
+            this.stdDevDataLength = stdDevDataLength;
             this.minDataLength = minDataLength;
             this.maxDataLength = maxDataLength;
         }
@@ -88,9 +106,11 @@ namespace DPXDatabase
             this.classdate = -1;
             this.fileName = "";
             this.meanStrokes = -1;
+            this.stdDevStrokes = -1;
             this.minStrokes = -1;
             this.maxStrokes = -1;
             this.meanDataLength = -1;
+            this.stdDevDataLength = -1;
             this.minDataLength = -1;
             this.maxDataLength = -1;
         }

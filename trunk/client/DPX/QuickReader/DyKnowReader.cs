@@ -21,6 +21,11 @@ namespace QuickReader
         private double meanStrokeDistance;
         private double stdDevStrokeDistance;
 
+
+        public String FileName
+        {
+            get { return fileName; }
+        }
         public double MeanStrokes
         {
             get { return meanStrokes; }
@@ -81,7 +86,50 @@ namespace QuickReader
                 }
             }
         }
-
+        public long MinStrokeDistance
+        {
+            get
+            {
+                if (dyKnowPages.Count > 0)
+                {
+                    long min = dyKnowPages[0].getStrokeDistance();
+                    for (int i = 0; i < dyKnowPages.Count; i++)
+                    {
+                        if (dyKnowPages[i].getStrokeDistance() < min)
+                        {
+                            min = dyKnowPages[i].getStrokeDistance();
+                        }
+                    }
+                    return min;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+        public long MaxStrokeDistance
+        {
+            get
+            {
+                if (dyKnowPages.Count > 0)
+                {
+                    long max = dyKnowPages[0].getStrokeDistance();
+                    for (int i = 0; i < dyKnowPages.Count; i++)
+                    {
+                        if (dyKnowPages[i].getStrokeDistance() > max)
+                        {
+                            max = dyKnowPages[i].getStrokeDistance();
+                        }
+                    }
+                    return max;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
 
 
 

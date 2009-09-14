@@ -21,14 +21,16 @@ namespace UnitTests
             Database db = new Database(dbfile);
 
             DyKnowReader dr = new DyKnowReader(dyknowfiled);
-            
 
+            db.addFile(dr, DateTime.Now);
+
+            /*
             List<Student> s = db.getAllStudents();
             for (int i = 0; i < s.Count; i++)
             {
                 Console.WriteLine(s[i].ToString());
             }
-
+             */
             Console.WriteLine();
             Console.WriteLine("Press any key to exit...");
             Console.ReadLine();
