@@ -25,8 +25,75 @@ namespace DPXDatabase
         private void close()
         {
             connection.Close();
+}
+
+
+        //QUERIES ON THE SECTION TABLE
+
+        public String getSectionName(int id)
+        {
+            String mySelectQuery = "SELECT S.[sectionName] FROM Sections S WHERE S.[ID] = @parm1";
+            OleDbCommand myCommand = new OleDbCommand(mySelectQuery, connection);
+            myCommand.Parameters.AddWithValue("@parm1", id);
+            this.open();
+            OleDbDataReader myReader = myCommand.ExecuteReader();
+            String section = "";
+            try
+            {
+                if (myReader.Read())
+                {
+                    section = myReader.GetString(0);
+                }
+                else
+                {
+                    throw new Exception("Probelm retreiving student from database");
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                myReader.Close();
+                this.close();
+            }
+            return section;
         }
 
+        public Boolean addSection(String name)
+        {
+            this.open();
+            string query = "INSERT INTO Sections([sectionName]) VALUES(@parm1)";
+            int status;
+            OleDbCommand cmdInsert = new OleDbCommand(query, connection);
+            cmdInsert.Parameters.Clear();
+            try
+            {
+                cmdInsert.CommandType = System.Data.CommandType.Text; //Type of query
+                //Add parameters to the query
+                cmdInsert.Parameters.AddWithValue("@parm1", name);
+
+                status = cmdInsert.ExecuteNonQuery(); // 0 = failed, 1 = success
+                if (!(status == 0))
+                {
+                    return false; //ItFailed
+                }
+                else
+                {
+                    return true; //It Worked!
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message, "Error"); //Display the error
+            }
+            finally
+            {
+                this.close(); //All done
+            }
+            return true;
+        }
 
         // QUERIES ON THE STUDENT TABLE
         public List<Student> getAllStudents()
@@ -60,9 +127,10 @@ namespace DPXDatabase
 
         public Student getStudent(int id)
         {
-            String mySelectQuery = "SELECT S.[ID], S.[username], S.[fullName], S.[firstName], S.[lastName], S.[Section], S.[isEnrolled] FROM Students S WHERE S.[ID] = " + id.ToString();
-            Console.WriteLine(mySelectQuery);
+            String mySelectQuery = "SELECT S.[ID], S.[username], S.[fullName], S.[firstName], S.[lastName], ";
+            mySelectQuery += "S.[Section], S.[isEnrolled] FROM Students S WHERE S.[ID] = @parm1";
             OleDbCommand myCommand = new OleDbCommand(mySelectQuery, connection);
+            myCommand.Parameters.AddWithValue("@parm1", id);
             this.open();
             OleDbDataReader myReader = myCommand.ExecuteReader();
             Student student = new Student();
@@ -93,50 +161,94 @@ namespace DPXDatabase
 
         public Boolean addStudent(Student s)
         {
-            this.open();
-            string query = "INSERT INTO Students([username], [fullName], [firstName], [lastName], [Section], [isEnrolled]) VALUES(@parm1, @parm2, @parm3, @parm4, @parm5, @parm6)";
-            int status;
-            OleDbCommand cmdInsert = new OleDbCommand(query, connection);
-            cmdInsert.Parameters.Clear();
-            try
+            //The section is going to be null
+            if (s.Section < 0)
             {
-                cmdInsert.CommandType = System.Data.CommandType.Text; //Type of query
-                //Add parameters to the query
-                cmdInsert.Parameters.AddWithValue("@parm1", s.Username);
-                cmdInsert.Parameters.AddWithValue("@parm2", s.FirstName);
-                cmdInsert.Parameters.AddWithValue("@parm3", s.FirstName);
-                cmdInsert.Parameters.AddWithValue("@parm4", s.LastName);
-                cmdInsert.Parameters.AddWithValue("@parm5", s.Section);
-                cmdInsert.Parameters.AddWithValue("@parm6", s.IsEnrolled);
+                this.open();
+                string query = "INSERT INTO Students([username], [fullName], [firstName], [lastName], [isEnrolled]) VALUES(@parm1, @parm2, @parm3, @parm4, @parm5)";
+                int status;
+                OleDbCommand cmdInsert = new OleDbCommand(query, connection);
+                cmdInsert.Parameters.Clear();
+                try
+                {
+                    cmdInsert.CommandType = System.Data.CommandType.Text; //Type of query
+                    //Add parameters to the query
+                    cmdInsert.Parameters.AddWithValue("@parm1", s.Username);
+                    cmdInsert.Parameters.AddWithValue("@parm2", s.FirstName);
+                    cmdInsert.Parameters.AddWithValue("@parm3", s.FirstName);
+                    cmdInsert.Parameters.AddWithValue("@parm4", s.LastName);
+                    cmdInsert.Parameters.AddWithValue("@parm5", s.IsEnrolled);
 
-                status = cmdInsert.ExecuteNonQuery(); // 0 = failed, 1 = success
-                if (!(status == 0))
-                {
-                    return false; //ItFailed
+                    status = cmdInsert.ExecuteNonQuery(); // 0 = failed, 1 = success
+                    if (!(status == 0))
+                    {
+                        return false; //ItFailed
+                    }
+                    else
+                    {
+                        return true; //It Worked!
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    return true; //It Worked!
+                    Console.WriteLine(ex.Message, "Error"); //Display the error
                 }
+                finally
+                {
+                    this.close(); //All done
+                }
+                return true;
             }
-            catch (Exception ex)
+            //We know what section
+            else
             {
-                Console.WriteLine(ex.Message, "Error"); //Display the error
+                this.open();
+                string query = "INSERT INTO Students([username], [fullName], [firstName], [lastName], [Section], [isEnrolled]) VALUES(@parm1, @parm2, @parm3, @parm4, @parm5, @parm6)";
+                int status;
+                OleDbCommand cmdInsert = new OleDbCommand(query, connection);
+                cmdInsert.Parameters.Clear();
+                try
+                {
+                    cmdInsert.CommandType = System.Data.CommandType.Text; //Type of query
+                    //Add parameters to the query
+                    cmdInsert.Parameters.AddWithValue("@parm1", s.Username);
+                    cmdInsert.Parameters.AddWithValue("@parm2", s.FirstName);
+                    cmdInsert.Parameters.AddWithValue("@parm3", s.FirstName);
+                    cmdInsert.Parameters.AddWithValue("@parm4", s.LastName);
+                    cmdInsert.Parameters.AddWithValue("@parm5", s.Section);
+                    cmdInsert.Parameters.AddWithValue("@parm6", s.IsEnrolled);
+
+                    status = cmdInsert.ExecuteNonQuery(); // 0 = failed, 1 = success
+                    if (!(status == 0))
+                    {
+                        return false; //ItFailed
+                    }
+                    else
+                    {
+                        return true; //It Worked!
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message, "Error"); //Display the error
+                }
+                finally
+                {
+                    this.close(); //All done
+                }
+                return true;
             }
-            finally
-            {
-                this.close(); //All done
-            }
-            return true;
         }
 
         //QUERIES ON THE FILE TABLE
-        public Boolean addFile(File f)
+        public int addFile(File f)
         {
             this.open();
             string query = "INSERT INTO Files ( [Classdate], [fileName], [meanStrokes], [stdDevStrokes], ";
             query += "[minStrokes], [maxStrokes], [meanDataLength], [stdDevDataLength], [minDataLength], [maxDataLength] ) ";
             query += " VALUES(@parm1, @parm2, @parm3, @parm4, @parm5, @parm6, @parm7, @parm8, @parm9, @parm10)";
+
+            int insertId = -1;
 
             int status;
             OleDbCommand cmdInsert = new OleDbCommand(query, connection);
@@ -158,14 +270,20 @@ namespace DPXDatabase
 
 
                 status = cmdInsert.ExecuteNonQuery(); // 0 = failed, 1 = success
+                
                 if (!(status == 0))
                 {
-                    return false; //It Failed
+                    //It Failed
                 }
                 else
                 {
-                    return true; //It Worked!
+                    //It Worked!
+                    cmdInsert.CommandText = "Select @@Identity";
+                    insertId = (int)cmdInsert.ExecuteScalar();
                 }
+                 
+                
+
             }
             catch (Exception ex)
             {
@@ -175,10 +293,10 @@ namespace DPXDatabase
             {
                 this.close(); //All done
             }
-            return true;
+            return insertId;
         }
 
-        public Boolean addFile(DyKnowReader dr, DateTime d)
+        public int addFile(DyKnowReader dr, DateTime d)
         {
             File f = new File(1, dr.FileName, dr.MaxStrokeCount, dr.MeanStrokes, dr.MaxStrokeCount,
                 dr.MeanStrokeDistance, dr.MeanStrokeDistance, dr.StdDevStrokeDistance, dr.MinStrokeDistance,
@@ -224,7 +342,6 @@ namespace DPXDatabase
         public Boolean isClassdate(DateTime d)
         {
             String mySelectQuery = "SELECT C.[ID], C.[classDate] FROM Classdates C WHERE C.[classDate] = @parm1";
-            Console.WriteLine(mySelectQuery);
             OleDbCommand myCommand = new OleDbCommand(mySelectQuery, connection);
             myCommand.Parameters.AddWithValue("@parm1", d.Date);
             this.open();
@@ -250,5 +367,79 @@ namespace DPXDatabase
             }
             return panelFound;
         }
+
+        public int getClassdateId(DateTime d)
+        {
+            String mySelectQuery = "SELECT C.[ID], C.[classDate] FROM Classdates C WHERE C.[classDate] = @parm1";
+            OleDbCommand myCommand = new OleDbCommand(mySelectQuery, connection);
+            myCommand.Parameters.AddWithValue("@parm1", d);
+            this.open();
+            OleDbDataReader myReader = myCommand.ExecuteReader();
+            int id = -1;
+            try
+            {
+                if (myReader.Read())
+                {
+                    id = myReader.GetInt32(0);
+                }
+                else
+                {
+                    throw new Exception("Probelm retreiving student from database");
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+            finally
+            {
+                myReader.Close();
+                this.close();
+            }
+            return id;
+        }
+
+
+        //QUERIES ON THE PANELS TABLE
+
+        public Boolean addPanel(DyKnowPage d)
+        {
+            /*
+            this.open();
+            string query = "INSERT INTO Classdates ( classDate ) VALUES (@parm1)";
+            int status;
+            OleDbCommand cmdInsert = new OleDbCommand(query, connection);
+            cmdInsert.Parameters.Clear();
+            try
+            {
+                cmdInsert.CommandType = System.Data.CommandType.Text; //Type of query
+                //Add parameters to the query
+                cmdInsert.Parameters.AddWithValue("@parm1", d.Date);
+
+                status = cmdInsert.ExecuteNonQuery(); // 0 = failed, 1 = success
+                if (!(status == 0))
+                {
+                    return false; //It Failed
+                }
+                else
+                {
+                    return true; //It Worked!
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message, "Error"); //Display the error
+            }
+            finally
+            {
+                this.close(); //All done
+            }
+            return true;
+             */
+            return false;
+        }
+
+
+
     }
 }

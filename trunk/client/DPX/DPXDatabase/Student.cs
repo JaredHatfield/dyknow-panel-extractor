@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using QuickReader;
 
 namespace DPXDatabase
 {
@@ -43,6 +44,31 @@ namespace DPXDatabase
         {
             get { return isEnrolled; }
         }
+
+        public Student(DyKnowPage dp)
+        {
+            this.id = -1;
+            this.username = dp.UserName;
+            this.fullName = dp.FullName;
+            //First name
+            if (dp.FullName.IndexOf(',') > 0)
+            {
+                this.firstName = dp.FullName.Substring(0, dp.FullName.IndexOf(','));
+                this.lastName = dp.FullName.Substring(dp.FullName.IndexOf(',')+2);
+                if (this.lastName.IndexOf(' ') > 0)
+                {
+                    this.lastName = this.lastName.Substring(0, this.lastName.IndexOf(' '));
+                }
+            }
+            else
+            {
+                this.firstName = dp.FullName;
+                this.lastName = dp.FullName;
+            }
+            this.section = -1;
+            this.isEnrolled = true;
+        }
+
 
         public Student(int id, String username, String fullName, String firstName, 
             String lastName, int section, Boolean isEnrolled)

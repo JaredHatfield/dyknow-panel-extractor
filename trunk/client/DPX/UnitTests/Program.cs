@@ -22,15 +22,14 @@ namespace UnitTests
 
             DyKnowReader dr = new DyKnowReader(dyknowfiled);
 
+            //db.addStudent(new Student(dr.getDyKnowPage(0)));
+
+            db.addSection("101-01");
+
+            Console.WriteLine(db.getSectionName(1));
+
             db.addFile(dr, DateTime.Now);
 
-            /*
-            List<Student> s = db.getAllStudents();
-            for (int i = 0; i < s.Count; i++)
-            {
-                Console.WriteLine(s[i].ToString());
-            }
-             */
             Console.WriteLine();
             Console.WriteLine("Press any key to exit...");
             Console.ReadLine();
