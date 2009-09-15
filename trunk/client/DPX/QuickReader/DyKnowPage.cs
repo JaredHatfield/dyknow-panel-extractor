@@ -28,13 +28,105 @@ namespace QuickReader
         {
             get { return fullName; }
         }
-        public int StrokeCount
+        public int NetStrokeCount
         {
             get { return strokes; }
         }
         public String Finished
         {
             get { return finished; }
+        }
+        public long NetStrokeDistance
+        {
+            get
+            {
+                long length = 0;
+                for (int i = 0; i < pens.Count; i++)
+                {
+                    if (pens[i].UT == 0)
+                    {
+                        if (!pens[i].DELETED)
+                        {
+                            length += pens[i].DATA.Length;
+                        }
+                    }
+                }
+                return length;
+            }
+        }
+        public int DeletedStrokeCount
+        {
+            get
+            {
+                int total = 0;
+                for (int i = 0; i < pens.Count; i++)
+                {
+                    if (pens[i].DELETED)
+                    {
+                        total++;
+                    }
+                }
+                return total;
+            }
+        }
+        public long DeletedStrokeDistance
+        {
+            get
+            {
+                long total = 0;
+                for (int i = 0; i < pens.Count; i++)
+                {
+                    if (pens[i].DELETED)
+                    {
+                        total += pens[i].DATA.Length;
+                    }
+                }
+                return total;
+            }
+        }
+        public int TotalStrokeCount
+        {
+            get
+            {
+                int count = 0;
+                for (int i = 0; i < pens.Count; i++)
+                {
+                    if (pens[i].UT == 0)
+                    {
+                        count++;
+                    }
+                }
+                return count;
+            }
+        }
+        public long TotalStrokeDistance
+        {
+            get
+            {
+                long length = 0;
+                for (int i = 0; i < pens.Count; i++)
+                {
+                    if (pens[i].UT == 0)
+                    {
+                        length += pens[i].DATA.Length;
+                    }
+                }
+                return length;
+            }
+        }
+        public Boolean IsBlank
+        {
+            get
+            {
+                if (this.NetStrokeCount == 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
 
         //Constructor accepts the XML sub tree
@@ -101,36 +193,7 @@ namespace QuickReader
         }
 
 
-        public long getStrokeDistance()
-        {
-            long length = 0;
-            for (int i = 0; i < pens.Count; i++)
-            {
-                if (pens[i].UT == 0)
-                {
-                    if (!pens[i].DELETED)
-                    {
-                        length += pens[i].DATA.Length;
-                    }
-                }
-            }
-            return length;
-        }
-
-
-
-        public int getDeletedStrokeCount()
-        {
-            int total = 0;
-            for (int i = 0; i < pens.Count; i++)
-            {
-                if (pens[i].DELETED)
-                {
-                    total++;
-                }
-            }
-            return total;
-        }
+        
 
 
         //Used to delete strokes from the list of strokes
@@ -180,7 +243,7 @@ namespace QuickReader
         {
             //return base.ToString();
             return pageNumber.ToString() + ", " + userName + ", " + fullName + ", " +
-                strokes.ToString() + ", " + finished + ", " + getDeletedStrokeCount() + ", " + getStrokeDistance();
+                strokes.ToString() + ", " + finished + ", " + this.DeletedStrokeCount + ", " + this.NetStrokeDistance;
         }
     }
 }

@@ -240,6 +240,38 @@ namespace DPXDatabase
             }
         }
 
+        public Boolean isStudentUsername(String username)
+        {
+            String mySelectQuery = "SELECT S.[ID], S.[username], S.[fullName], S.[firstName], S.[lastName], ";
+            mySelectQuery += "S.[Section], S.[isEnrolled] FROM Students S WHERE S.[username] = @parm1";
+            OleDbCommand myCommand = new OleDbCommand(mySelectQuery, connection);
+            myCommand.Parameters.AddWithValue("@parm1", username);
+            this.open();
+            OleDbDataReader myReader = myCommand.ExecuteReader();
+            Boolean studentTest = false;
+            try
+            {
+                if (myReader.Read())
+                {
+                    studentTest = true;
+                }
+                else
+                {
+                    throw new Exception("Probelm retreiving student from database");
+                }
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                myReader.Close();
+                this.close();
+            }
+            return studentTest;
+        }
+
         //QUERIES ON THE FILE TABLE
         public int addFile(File f)
         {
@@ -268,22 +300,9 @@ namespace DPXDatabase
                 cmdInsert.Parameters.AddWithValue("@parm9", f.MinDataLength);
                 cmdInsert.Parameters.AddWithValue("@parm10", f.MaxDataLength);
 
-
-                status = cmdInsert.ExecuteNonQuery(); // 0 = failed, 1 = success
-                
-                if (!(status == 0))
-                {
-                    //It Failed
-                }
-                else
-                {
-                    //It Worked!
-                    cmdInsert.CommandText = "Select @@Identity";
-                    insertId = (int)cmdInsert.ExecuteScalar();
-                }
-                 
-                
-
+                cmdInsert.ExecuteNonQuery();
+                cmdInsert.CommandText = "Select @@Identity";
+                insertId = (int)cmdInsert.ExecuteScalar();
             }
             catch (Exception ex)
             {
@@ -298,7 +317,15 @@ namespace DPXDatabase
 
         public int addFile(DyKnowReader dr, DateTime d)
         {
-            File f = new File(1, dr.FileName, dr.MaxStrokeCount, dr.MeanStrokes, dr.MaxStrokeCount,
+            int classdateId = -1;
+            if (!this.isClassdate(d))//Date is not in the database
+            {
+                addClassdate(d);
+                
+            }
+            classdateId = this.getClassdateId(d);
+            
+            File f = new File(classdateId, dr.FileName, dr.MaxStrokeCount, dr.MeanStrokes, dr.MaxStrokeCount,
                 dr.MeanStrokeDistance, dr.MeanStrokeDistance, dr.StdDevStrokeDistance, dr.MinStrokeDistance,
                 dr.MaxStrokeDistance);
             return this.addFile(f);
@@ -372,7 +399,7 @@ namespace DPXDatabase
         {
             String mySelectQuery = "SELECT C.[ID], C.[classDate] FROM Classdates C WHERE C.[classDate] = @parm1";
             OleDbCommand myCommand = new OleDbCommand(mySelectQuery, connection);
-            myCommand.Parameters.AddWithValue("@parm1", d);
+            myCommand.Parameters.AddWithValue("@parm1", d.Date);
             this.open();
             OleDbDataReader myReader = myCommand.ExecuteReader();
             int id = -1;
@@ -399,14 +426,15 @@ namespace DPXDatabase
             return id;
         }
 
-
         //QUERIES ON THE PANELS TABLE
 
-        public Boolean addPanel(DyKnowPage d)
+        public Boolean addPanel(int fileid, DyKnowPage d)
         {
-            /*
             this.open();
-            string query = "INSERT INTO Classdates ( classDate ) VALUES (@parm1)";
+            string query = "INSERT INTO Panels ( [File], [slideNumber], [username], [totalStrokeCount], ";
+            query += "[netStrokeCount], [deletedStrokeCount], [totalDateLength], [netDataLength], [deletedDataLength], ";
+            query += "[isBlank], [analysis] ) VALUES(@parm1, @parm2, @parm3, @parm4, @parm5, @parm6, @parm7, @parm8, ";
+            query += "@parm9, @parm10, @parm11)";
             int status;
             OleDbCommand cmdInsert = new OleDbCommand(query, connection);
             cmdInsert.Parameters.Clear();
@@ -414,7 +442,17 @@ namespace DPXDatabase
             {
                 cmdInsert.CommandType = System.Data.CommandType.Text; //Type of query
                 //Add parameters to the query
-                cmdInsert.Parameters.AddWithValue("@parm1", d.Date);
+                cmdInsert.Parameters.AddWithValue("@parm1", fileid);
+                cmdInsert.Parameters.AddWithValue("@parm2", d.PageNumber);
+                cmdInsert.Parameters.AddWithValue("@parm3", d.UserName);
+                cmdInsert.Parameters.AddWithValue("@parm4", d.TotalStrokeCount);
+                cmdInsert.Parameters.AddWithValue("@parm5", d.NetStrokeCount);
+                cmdInsert.Parameters.AddWithValue("@parm6", d.DeletedStrokeCount);
+                cmdInsert.Parameters.AddWithValue("@parm7", d.TotalStrokeDistance);
+                cmdInsert.Parameters.AddWithValue("@parm8", d.NetStrokeDistance);
+                cmdInsert.Parameters.AddWithValue("@parm9", d.DeletedStrokeDistance);
+                cmdInsert.Parameters.AddWithValue("@parm10", d.IsBlank);
+                cmdInsert.Parameters.AddWithValue("@parm11", d.Finished);
 
                 status = cmdInsert.ExecuteNonQuery(); // 0 = failed, 1 = success
                 if (!(status == 0))
@@ -435,11 +473,47 @@ namespace DPXDatabase
                 this.close(); //All done
             }
             return true;
-             */
-            return false;
         }
 
 
+        //QUERIES ON THE EXCEPTIONS TABLE
 
+        public Boolean addException(Exceptions e)
+        {
+            this.open();
+            string query = "INSERT INTO Exceptions ( [Classdate], [Student], [Reason], [notes] ) ";
+            query += "VALUES (@parm1, @parm2, @parm3, @parm4)";
+            int status;
+            OleDbCommand cmdInsert = new OleDbCommand(query, connection);
+            cmdInsert.Parameters.Clear();
+            try
+            {
+                cmdInsert.CommandType = System.Data.CommandType.Text; //Type of query
+                //Add parameters to the query
+                cmdInsert.Parameters.AddWithValue("@parm1", e.Classdate);
+                cmdInsert.Parameters.AddWithValue("@parm2", e.Student);
+                cmdInsert.Parameters.AddWithValue("@parm3", e.Reason);
+                cmdInsert.Parameters.AddWithValue("@parm4", e.Notes);
+
+                status = cmdInsert.ExecuteNonQuery(); // 0 = failed, 1 = success
+                if (!(status == 0))
+                {
+                    return false; //ItFailed
+                }
+                else
+                {
+                    return true; //It Worked!
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message, "Error"); //Display the error
+            }
+            finally
+            {
+                this.close(); //All done
+            }
+            return true;
+        }
     }
 }

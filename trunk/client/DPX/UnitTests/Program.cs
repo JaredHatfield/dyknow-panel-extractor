@@ -22,13 +22,27 @@ namespace UnitTests
 
             DyKnowReader dr = new DyKnowReader(dyknowfiled);
 
+            //Exceptions e = new Exceptions(5, 180, 1, "This is a test");
+            //db.addException(e);
+
             //db.addStudent(new Student(dr.getDyKnowPage(0)));
-
-            db.addSection("101-01");
-
-            Console.WriteLine(db.getSectionName(1));
-
-            db.addFile(dr, DateTime.Now);
+            //db.addSection("101-01");
+            //Console.WriteLine(db.getSectionName(1));
+            
+            int fileId = db.addFile(dr, DateTime.Now);
+            for (int i = 0; i < dr.NumOfPages(); i++)
+            {
+                if (!db.isStudentUsername(dr.getDyKnowPage(i).UserName))
+                {
+                    Console.WriteLine("Student isn't in db: " + dr.getDyKnowPage(i).UserName);
+                    db.addStudent(new Student(dr.getDyKnowPage(i)));
+                }
+                db.addPanel(fileId, dr.getDyKnowPage(i));
+                //Console.Write(".");
+            }
+            
+            Console.WriteLine();
+            Console.WriteLine("Inserted File ID: " + fileId.ToString());
 
             Console.WriteLine();
             Console.WriteLine("Press any key to exit...");
@@ -100,7 +114,7 @@ namespace UnitTests
                 cmdInsert.Parameters.AddWithValue("@parm2", page.PageNumber);
                 cmdInsert.Parameters.AddWithValue("@parm3", page.UserName);
                 cmdInsert.Parameters.AddWithValue("@parm4", page.FullName);
-                cmdInsert.Parameters.AddWithValue("@parm5", page.StrokeCount);
+                cmdInsert.Parameters.AddWithValue("@parm5", page.NetStrokeCount);
                 cmdInsert.Parameters.AddWithValue("@parm6", page.Finished);
                 
                 //Specify connection

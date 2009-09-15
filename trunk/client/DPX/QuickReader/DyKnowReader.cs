@@ -48,12 +48,12 @@ namespace QuickReader
             {
                 if (dyKnowPages.Count > 0)
                 {
-                    int min = dyKnowPages[0].StrokeCount;
+                    int min = dyKnowPages[0].NetStrokeCount;
                     for (int i = 0; i < dyKnowPages.Count; i++)
                     {
-                        if (dyKnowPages[i].StrokeCount < min)
+                        if (dyKnowPages[i].NetStrokeCount < min)
                         {
-                            min = dyKnowPages[i].StrokeCount;
+                            min = dyKnowPages[i].NetStrokeCount;
                         }
                     }
                     return min;
@@ -70,12 +70,12 @@ namespace QuickReader
             {
                 if (dyKnowPages.Count > 0)
                 {
-                    int max = dyKnowPages[0].StrokeCount;
+                    int max = dyKnowPages[0].NetStrokeCount;
                     for (int i = 0; i < dyKnowPages.Count; i++)
                     {
-                        if (dyKnowPages[i].StrokeCount > max)
+                        if (dyKnowPages[i].NetStrokeCount > max)
                         {
-                            max = dyKnowPages[i].StrokeCount;
+                            max = dyKnowPages[i].NetStrokeCount;
                         }
                     }
                     return max;
@@ -92,12 +92,12 @@ namespace QuickReader
             {
                 if (dyKnowPages.Count > 0)
                 {
-                    long min = dyKnowPages[0].getStrokeDistance();
+                    long min = dyKnowPages[0].NetStrokeDistance;
                     for (int i = 0; i < dyKnowPages.Count; i++)
                     {
-                        if (dyKnowPages[i].getStrokeDistance() < min)
+                        if (dyKnowPages[i].NetStrokeDistance < min)
                         {
-                            min = dyKnowPages[i].getStrokeDistance();
+                            min = dyKnowPages[i].NetStrokeDistance;
                         }
                     }
                     return min;
@@ -114,12 +114,12 @@ namespace QuickReader
             {
                 if (dyKnowPages.Count > 0)
                 {
-                    long max = dyKnowPages[0].getStrokeDistance();
+                    long max = dyKnowPages[0].NetStrokeDistance;
                     for (int i = 0; i < dyKnowPages.Count; i++)
                     {
-                        if (dyKnowPages[i].getStrokeDistance() > max)
+                        if (dyKnowPages[i].NetStrokeDistance > max)
                         {
-                            max = dyKnowPages[i].getStrokeDistance();
+                            max = dyKnowPages[i].NetStrokeDistance;
                         }
                     }
                     return max;
@@ -181,11 +181,11 @@ namespace QuickReader
         {
             for (int i = 0; i < NumOfPages(); i++)
             {
-                if (dyKnowPages[i].StrokeCount == 0)
+                if (dyKnowPages[i].NetStrokeCount == 0)
                 {
                     dyKnowPages[i].setFinished("No");
                 }
-                else if (dyKnowPages[i].StrokeCount < (meanStrokes - (2 * stdDevStrokes)))
+                else if (dyKnowPages[i].NetStrokeCount < (meanStrokes - (2 * stdDevStrokes)))
                 {
                     dyKnowPages[i].setFinished("Maybe");
                 }
@@ -201,7 +201,7 @@ namespace QuickReader
             long total = 0;
             for (int i = 0; i < NumOfPages(); i++)
             {
-                total += dyKnowPages[i].StrokeCount;
+                total += dyKnowPages[i].NetStrokeCount;
             }
             return (double)total / (double)NumOfPages();
         }
@@ -211,7 +211,7 @@ namespace QuickReader
             double total = 0;
             for (int i = 0; i < NumOfPages(); i++)
             {
-                total += Math.Pow((dyKnowPages[i].StrokeCount - mean), 2);
+                total += Math.Pow((dyKnowPages[i].NetStrokeCount - mean), 2);
             }
             return Math.Sqrt((double)total / (double)(NumOfPages() - 1));
         }
@@ -221,7 +221,7 @@ namespace QuickReader
             long total = 0;
             for (int i = 0; i < NumOfPages(); i++)
             {
-                total += dyKnowPages[i].getStrokeDistance();
+                total += dyKnowPages[i].NetStrokeDistance;
             }
             return (double)total / (double)NumOfPages();
         }
@@ -231,7 +231,7 @@ namespace QuickReader
             double total = 0;
             for (int i = 0; i < NumOfPages(); i++)
             {
-                total += Math.Pow((dyKnowPages[i].getStrokeDistance() - mean), 2);
+                total += Math.Pow((dyKnowPages[i].NetStrokeDistance - mean), 2);
             }
             return Math.Sqrt((double)total / (double)(NumOfPages() - 1));
         }
