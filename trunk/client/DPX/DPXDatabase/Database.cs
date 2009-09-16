@@ -29,7 +29,6 @@ namespace DPXDatabase
 
 
         //QUERIES ON THE SECTION TABLE
-
         public String getSectionName(int id)
         {
             String mySelectQuery = "SELECT S.[sectionName] FROM Sections S WHERE S.[ID] = @parm1";
@@ -60,7 +59,6 @@ namespace DPXDatabase
             }
             return section;
         }
-
         public Boolean addSection(String name)
         {
             this.open();
@@ -123,7 +121,6 @@ namespace DPXDatabase
             }
             return students;
         }
-
         public Student getStudent(int id)
         {
             String mySelectQuery = "SELECT S.[ID], S.[username], S.[fullName], S.[firstName], S.[lastName], ";
@@ -157,7 +154,6 @@ namespace DPXDatabase
             }
             return student;
         }
-
         public Boolean addStudent(Student s)
         {
             //The section is going to be null
@@ -238,7 +234,6 @@ namespace DPXDatabase
                 return true;
             }
         }
-
         public Boolean isStudentUsername(String username)
         {
             String mySelectQuery = "SELECT S.[ID], S.[username], S.[fullName], S.[firstName], S.[lastName], ";
@@ -313,7 +308,6 @@ namespace DPXDatabase
             }
             return insertId;
         }
-
         public int addFile(DyKnowReader dr, DateTime d)
         {
             int classdateId = -1;
@@ -364,7 +358,6 @@ namespace DPXDatabase
             }
             return true;
         }
-
         public Boolean isClassdate(DateTime d)
         {
             String mySelectQuery = "SELECT C.[ID], C.[classDate] FROM Classdates C WHERE C.[classDate] = @parm1";
@@ -393,7 +386,6 @@ namespace DPXDatabase
             }
             return panelFound;
         }
-
         public int getClassdateId(DateTime d)
         {
             String mySelectQuery = "SELECT C.[ID], C.[classDate] FROM Classdates C WHERE C.[classDate] = @parm1";
@@ -424,7 +416,6 @@ namespace DPXDatabase
             }
             return id;
         }
-
         public List<Classdate> getClassdates()
         {
             String mySelectQuery = "SELECT C.[ID], C.[classDate] FROM Classdates C ORDER BY [classDate] DESC";
@@ -452,7 +443,6 @@ namespace DPXDatabase
         }
 
         //QUERIES ON THE PANELS TABLE
-
         public Boolean addPanel(int fileid, DyKnowPage d)
         {
             this.open();
@@ -501,7 +491,6 @@ namespace DPXDatabase
         }
 
         //QUERIES ON THE EXCEPTIONS TABLE
-
         public Boolean addException(Exceptions e)
         {
             this.open();
@@ -538,6 +527,34 @@ namespace DPXDatabase
                 this.close(); //All done
             }
             return true;
+        }
+
+        //QUERIES ON THE REASON TABLE
+        public List<Reason> getReasons()
+        {
+            String mySelectQuery = "SELECT R.[ID], R.[credit], R.[description] FROM Reasons R ORDER BY [ID] ASC";
+            OleDbCommand myCommand = new OleDbCommand(mySelectQuery, connection);
+            this.open();
+            OleDbDataReader myReader = myCommand.ExecuteReader();
+            List<Reason> reasons = new List<Reason>();
+            try
+            {
+                while (myReader.Read())
+                {
+                    reasons.Add(new Reason(myReader.GetInt32(0), myReader.GetBoolean(1),
+                        myReader.GetString(2)));
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                myReader.Close();
+                this.close();
+            }
+            return reasons;
         }
 
 

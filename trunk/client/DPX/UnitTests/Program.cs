@@ -30,6 +30,12 @@ namespace UnitTests
             {
                 Console.WriteLine(cd[i].ClassDate.Date);
             }
+
+            List<Reason> r = db.getReasons();
+            for (int i = 0; i < r.Count; i++)
+            {
+                Console.WriteLine(r[i].ToString());
+            }
             //db.addStudent(new Student(dr.getDyKnowPage(0)));
             //db.addSection("101-01");
             //Console.WriteLine(db.getSectionName(1));

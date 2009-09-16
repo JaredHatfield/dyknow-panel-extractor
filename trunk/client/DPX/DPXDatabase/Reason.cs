@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DPXDatabase
 {
-    class Reason
+    public class Reason
     {
         int id;
         Boolean credit;
@@ -37,5 +37,11 @@ namespace DPXDatabase
             credit = false;
             description = "";
         }
+
+        public override string ToString()
+        {
+            return "ID = " + this.id.ToString() + " Credit = " + this.credit.ToString() +
+                " Description = " + this.description;
+        } 
     }
 }
