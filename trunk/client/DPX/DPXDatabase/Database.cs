@@ -99,7 +99,6 @@ namespace DPXDatabase
         public List<Student> getAllStudents()
         {
             String mySelectQuery = "SELECT S.[ID], S.[username], S.[fullName], S.[firstName], S.[lastName], S.[Section], S.[isEnrolled] FROM Students S";
-            Console.WriteLine(mySelectQuery);
             OleDbCommand myCommand = new OleDbCommand(mySelectQuery, connection);
             this.open();
             OleDbDataReader myReader = myCommand.ExecuteReader();
@@ -426,6 +425,32 @@ namespace DPXDatabase
             return id;
         }
 
+        public List<Classdate> getClassdates()
+        {
+            String mySelectQuery = "SELECT C.[ID], C.[classDate] FROM Classdates C ORDER BY [classDate] DESC";
+            OleDbCommand myCommand = new OleDbCommand(mySelectQuery, connection);
+            this.open();
+            OleDbDataReader myReader = myCommand.ExecuteReader();
+            List<Classdate> dates = new List<Classdate>();
+            try
+            {
+                while (myReader.Read())
+                {
+                    dates.Add(new Classdate(myReader.GetInt32(0), myReader.GetDateTime(1)));
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                myReader.Close();
+                this.close();
+            }
+            return dates;
+        }
+
         //QUERIES ON THE PANELS TABLE
 
         public Boolean addPanel(int fileid, DyKnowPage d)
@@ -475,7 +500,6 @@ namespace DPXDatabase
             return true;
         }
 
-
         //QUERIES ON THE EXCEPTIONS TABLE
 
         public Boolean addException(Exceptions e)
@@ -515,5 +539,7 @@ namespace DPXDatabase
             }
             return true;
         }
+
+
     }
 }

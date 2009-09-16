@@ -45,9 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classdate.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="File.cs" />
+    <Compile Include="Reason.cs" />
     <Compile Include="Student.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

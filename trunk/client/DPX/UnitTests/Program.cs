@@ -25,10 +25,15 @@ namespace UnitTests
             //Exceptions e = new Exceptions(5, 180, 1, "This is a test");
             //db.addException(e);
 
+            List<Classdate> cd = db.getClassdates();
+            for (int i = 0; i < cd.Count; i++)
+            {
+                Console.WriteLine(cd[i].ClassDate.Date);
+            }
             //db.addStudent(new Student(dr.getDyKnowPage(0)));
             //db.addSection("101-01");
             //Console.WriteLine(db.getSectionName(1));
-            
+            /*
             int fileId = db.addFile(dr, DateTime.Now);
             for (int i = 0; i < dr.NumOfPages(); i++)
             {
@@ -43,7 +48,7 @@ namespace UnitTests
             
             Console.WriteLine();
             Console.WriteLine("Inserted File ID: " + fileId.ToString());
-
+            */
             Console.WriteLine();
             Console.WriteLine("Press any key to exit...");
             Console.ReadLine();
