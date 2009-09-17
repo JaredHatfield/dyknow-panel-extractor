@@ -5,7 +5,7 @@
 This document describes the features of the DyKnow Panel eXtractor.
 
 = Interfaces =
-  * Import student roster into the database (CSV file including Student name, username, and section
+  * Import student roster into the database (CSV file including Student name, username, and section)
   * Add / Update student in the database  (Includes toggling a student's enrollment status)
   * Change a student from one section to another. (Also lists students currently not in a section)
   * Manage the list of sections (Add / Update sections)
@@ -13,3 +13,8 @@ This document describes the features of the DyKnow Panel eXtractor.
   * Add Student Exception to the database
   * Display a summary for a single student (easily searchable)
   * Generate a grade report for specific days
+
+=== Tabs ===
+  * Import DyKnow File
+  * Manage Students
+  * Generate Report
