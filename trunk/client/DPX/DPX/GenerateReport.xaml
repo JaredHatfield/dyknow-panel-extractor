@@ -1,0 +1,8 @@
+﻿<Page x:Class="DPX.GenerateReport"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="GenerateReport" >
+    <Grid Height="Auto" Name="grid1" Width="Auto">
+        <Label Height="28" Margin="96,24,84,0" Name="label1" VerticalAlignment="Top">Generate Report</Label>
+    </Grid>
+</Page>

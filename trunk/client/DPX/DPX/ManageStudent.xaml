@@ -1,0 +1,8 @@
+﻿<Page x:Class="DPX.ManageStudent"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="ManageStudent">
+    <Grid Height="Auto" Name="grid1" Width="Auto">
+        <Label Height="28" Margin="87,35,93,0" Name="label1" VerticalAlignment="Top">Manage Students</Label>
+    </Grid>
+</Page>
