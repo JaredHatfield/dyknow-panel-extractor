@@ -68,6 +68,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AboutDPX.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GenerateReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -94,6 +98,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutDPX.xaml.cs">
+      <DependentUpon>AboutDPX.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GenerateReport.xaml.cs">
       <DependentUpon>GenerateReport.xaml</DependentUpon>
     </Compile>

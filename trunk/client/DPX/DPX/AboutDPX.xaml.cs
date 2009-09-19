@@ -4,34 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace DPX
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for AboutDPX.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class AboutDPX : Window
     {
-        private Popup _AboutWindow;
-
-        public Window1()
+        public AboutDPX()
         {
             InitializeComponent();
+            buttonOk.Focus();
         }
 
-        private void DisplayAboutWindow(object sender, RoutedEventArgs e)
+        private void button_ok(object sender, RoutedEventArgs e)
         {
-            AboutDPX popupWindow = new AboutDPX();
-            popupWindow.Owner = this;
-            popupWindow.ShowDialog();
+            this.Close();
+            
         }
     }
 }
