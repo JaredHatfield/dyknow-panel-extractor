@@ -11,6 +11,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DPXDatabase;
+using System.Data.OleDb;
+
 
 namespace DPX
 {
@@ -19,10 +22,26 @@ namespace DPX
     /// </summary>
     public partial class ManageStudent : Page
     {
+        Controller c = Controller.Instance();
+
         public ManageStudent()
         {
-            InitializeComponent();
             
+            InitializeComponent();
         }
+
+        private void buttonRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            if (c.isDatabaseOpen())
+            {
+                List<Student> allStudents = c.DB.getAllStudents();
+                listBoxStudents.Items.Clear();
+                for (int i = 0; i < allStudents.Count; i++)
+                {
+                    listBoxStudents.Items.Add(allStudents[i]);
+                }
+            }
+        }
+
     }
 }

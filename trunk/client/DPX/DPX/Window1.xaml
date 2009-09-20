@@ -1,19 +1,18 @@
 ﻿<Window x:Class="DPX.Window1"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="DyKnow Panel eXtractor" Height="500" Width="780">
-    <StackPanel Height="Auto" Name="stackPanel1" Width="Auto">
+    Title="DyKnow Panel eXtractor" Height="Auto" Width="780">
+    <StackPanel Height="Auto" Name="stackPanel1" Width="Auto" Margin="0,0,0,0">
         <Menu Height="22.22" Name="menu1" Width="Auto">
             <MenuItem Header="_File">
-                <MenuItem Header="_Open" />
-                <MenuItem Header="_Close" />
-                <MenuItem Header="_Save" />
+                <MenuItem Header="_Open" Name="FileMenuOpen" Click="OpenFile" />
+                <MenuItem Header="_Close" Name="FileMenuClose" Click="CloseFile" />
             </MenuItem>
             <MenuItem Header="_Help">
                 <MenuItem Header="_About" Click="DisplayAboutWindow"/>
             </MenuItem>
         </Menu>
-        <TabControl TabStripPlacement="Left" Name="tabControl1" Height="Auto" Width="Auto">
+        <TabControl TabStripPlacement="Left" Name="tabControl1" Margin="0,0,0,0" Height="Auto" Width="Auto" MinHeight="300">
             <TabItem Header="Import File" IsSelected="True" IsEnabled="True">
                 <Frame Name="frameImportFile" Source="ImportFile.xaml" />
             </TabItem>

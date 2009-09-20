@@ -12,5 +12,6 @@ namespace DPX
     /// </summary>
     public partial class App : Application
     {
+        Controller c = Controller.Instance();
     }
 }

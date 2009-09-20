@@ -25,8 +25,12 @@ namespace DPXDatabase
         private void close()
         {
             connection.Close();
-}
+        }
 
+        public OleDbConnection Connection
+        {
+            get { return connection; }
+        }
 
         //QUERIES ON THE SECTION TABLE
         public String getSectionName(int id)
@@ -97,21 +101,31 @@ namespace DPXDatabase
         public List<Student> getAllStudents()
         {
             String mySelectQuery = "SELECT S.[ID], S.[username], S.[fullName], S.[firstName], S.[lastName], S.[Section], S.[isEnrolled] FROM Students S";
-            OleDbCommand myCommand = new OleDbCommand(mySelectQuery, connection);
             this.open();
+            OleDbCommand myCommand = new OleDbCommand(mySelectQuery, connection);
             OleDbDataReader myReader = myCommand.ExecuteReader();
             List<Student> students = new List<Student>();
             try
             {
                 while (myReader.Read())
                 {
-                    students.Add(new Student(myReader.GetInt32(0), myReader.GetString(1), myReader.GetString(2),
-                        myReader.GetString(3), myReader.GetString(4), myReader.GetInt32(5),
-                        myReader.GetBoolean(6)));
+                    if (myReader.IsDBNull(5))
+                    {
+                        students.Add(new Student(myReader.GetInt32(0), myReader.GetString(1), myReader.GetString(2),
+                            myReader.GetString(3), myReader.GetString(4), -1,
+                            myReader.GetBoolean(6)));
+                    }
+                    else
+                    {
+                        students.Add(new Student(myReader.GetInt32(0), myReader.GetString(1), myReader.GetString(2),
+                            myReader.GetString(3), myReader.GetString(4), myReader.GetInt32(5),
+                            myReader.GetBoolean(6)));
+                    }
                 }
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return null;
             }
             finally
@@ -134,9 +148,18 @@ namespace DPXDatabase
             {
                 if (myReader.Read())
                 {
-                    student = new Student(id, myReader.GetString(1), myReader.GetString(2),
-                        myReader.GetString(3), myReader.GetString(4), myReader.GetInt32(5),
-                        myReader.GetBoolean(6));
+                    if (myReader.IsDBNull(5))
+                    {
+                        student = new Student(myReader.GetInt32(0), myReader.GetString(1), myReader.GetString(2),
+                            myReader.GetString(3), myReader.GetString(4), -1,
+                            myReader.GetBoolean(6));
+                    }
+                    else
+                    {
+                        student = new Student(myReader.GetInt32(0), myReader.GetString(1), myReader.GetString(2),
+                            myReader.GetString(3), myReader.GetString(4), myReader.GetInt32(5),
+                            myReader.GetBoolean(6));
+                    }
                 }
                 else
                 {
@@ -169,7 +192,7 @@ namespace DPXDatabase
                     cmdInsert.CommandType = System.Data.CommandType.Text; //Type of query
                     //Add parameters to the query
                     cmdInsert.Parameters.AddWithValue("@parm1", s.Username);
-                    cmdInsert.Parameters.AddWithValue("@parm2", s.FirstName);
+                    cmdInsert.Parameters.AddWithValue("@parm2", s.FullName);
                     cmdInsert.Parameters.AddWithValue("@parm3", s.FirstName);
                     cmdInsert.Parameters.AddWithValue("@parm4", s.LastName);
                     cmdInsert.Parameters.AddWithValue("@parm5", s.IsEnrolled);

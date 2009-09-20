@@ -21,7 +21,14 @@ namespace UnitTests
             Database db = new Database(dbfile);
             DyKnowReader dr = new DyKnowReader(dyknowfiled);
 
-            
+            for (int i = 0; i < dr.NumOfPages(); i++)
+            {
+                Student s = new Student(dr.getDyKnowPage(i));
+                db.addStudent(s);
+            }
+
+
+            /*
             List<Classdate> cd = db.getClassdates();
             for (int i = 0; i < cd.Count; i++)
             {
@@ -34,6 +41,7 @@ namespace UnitTests
                 Console.WriteLine(r[i].ToString());
             }
             
+             */
             Console.WriteLine();
             Console.WriteLine("Press any key to exit...");
             Console.ReadLine();

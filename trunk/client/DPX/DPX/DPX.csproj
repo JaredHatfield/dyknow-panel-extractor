@@ -101,6 +101,7 @@
     <Compile Include="AboutDPX.xaml.cs">
       <DependentUpon>AboutDPX.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controller.cs" />
     <Compile Include="GenerateReport.xaml.cs">
       <DependentUpon>GenerateReport.xaml</DependentUpon>
     </Compile>
@@ -133,6 +134,12 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DPXDatabase\DPXDatabase.csproj">
+      <Project>{0EB8D572-1B0A-43F0-B491-17373A9288B9}</Project>
+      <Name>DPXDatabase</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

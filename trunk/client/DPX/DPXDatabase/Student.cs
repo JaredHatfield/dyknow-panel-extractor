@@ -108,8 +108,9 @@ namespace DPXDatabase
 
         public override string ToString()
         {
-            return id.ToString() + ", " + username + ", " + fullName + ", " + firstName
-                 + ", " + lastName + ", " + section.ToString() + ", " + isEnrolled.ToString();
+            //return id.ToString() + ", " + username + ", " + fullName + ", " + firstName
+            //     + ", " + lastName + ", " + section.ToString() + ", " + isEnrolled.ToString();
+            return fullName + " (" + username + ")";
         }
     }
 }
