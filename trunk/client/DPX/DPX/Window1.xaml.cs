@@ -20,7 +20,6 @@ namespace DPX
     /// </summary>
     public partial class Window1 : Window
     {
-        private Popup _AboutWindow;
 
         public Window1()
         {

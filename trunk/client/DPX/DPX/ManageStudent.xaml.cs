@@ -22,6 +22,7 @@ namespace DPX
         public ManageStudent()
         {
             InitializeComponent();
+            
         }
     }
 }
