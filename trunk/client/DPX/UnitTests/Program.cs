@@ -15,16 +15,23 @@ namespace UnitTests
         {
             Console.WriteLine("DyKnow Panel eXtractor Unit Tests");
 
-            String dbfile = "C:\\Users\\Jared\\Desktop\\testdatabase.accdb";
+            //String dbfile = "C:\\Users\\Jared\\Desktop\\testdatabase.accdb";
             String dyknowfiled = "C:\\Users\\Jared\\Desktop\\samplefile.dyz";
 
-            Database db = new Database(dbfile);
+            //Database db = new Database(dbfile);
             DyKnowReader dr = new DyKnowReader(dyknowfiled);
 
             for (int i = 0; i < dr.NumOfPages(); i++)
             {
-                Student s = new Student(dr.getDyKnowPage(i));
-                db.addStudent(s);
+                if (i == 6)
+                {
+                    DyKnowPage dp = dr.getDyKnowPage(i);
+                    List<DyKnowPenStroke> dps = dp.Pens;
+                    for (int k = 0; k < dps.Count; k++)
+                    {
+                        Console.Write(dps[k].PH + " - " + dps[k].PW + " / ");
+                    }
+                }
             }
 
 

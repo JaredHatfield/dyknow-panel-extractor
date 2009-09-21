@@ -185,11 +185,8 @@ namespace QuickReader
                 }
                 else if (xmlFile.Name.ToString() == "DEOB")
                 {
-                    //Stroke removed
-                    if (xmlFile.GetAttribute("UT") == "0")
-                    {
-                        deleteStrokes(myStrokes, xmlFile.ReadSubtree());
-                    }
+                    //Stroke removed (for both the moderator and the user)
+                    deleteStrokes(myStrokes, xmlFile.ReadSubtree());
                 }
             }
             //Net number of strokes on page

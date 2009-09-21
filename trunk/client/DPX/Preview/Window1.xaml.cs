@@ -22,44 +22,103 @@ namespace Preview
     /// </summary>
     public partial class Window1 : Window
     {
+        private DyKnowReader dr;
+        private int currentPanelNumber = 0;
+
         public Window1()
         {
             InitializeComponent();
+            currentPanelNumber = 0;
         }
 
         private void buttonLoadClick(object sender, RoutedEventArgs e)
         {
-            //Clear what is currently on the screen
-            Inky.Strokes.Clear();
-
             //Let the user choose which file to open
             Microsoft.Win32.OpenFileDialog openFileDialog1 = new Microsoft.Win32.OpenFileDialog();
             openFileDialog1.Filter = "DyKnow files (*.dyz)|*.dyz";
             if (openFileDialog1.ShowDialog() == true)
             {
                 //Open the DyKnow file
-                DyKnowReader dr = new DyKnowReader(openFileDialog1.FileName);
-                //Read in the first panel
-                DyKnowPage dp = dr.getDyKnowPage(0);
+                dr = new DyKnowReader(openFileDialog1.FileName);
+                currentPanelNumber = 0;
+                Inky.Strokes.Clear();
+                displayPanel(currentPanelNumber);
+                
+            }
+        }
+
+        private void buttonNextClick(object sender, RoutedEventArgs e)
+        {
+            //Clear what is currently on the screen
+            Inky.Strokes.Clear();
+            displayPanel(++currentPanelNumber);
+        }
+
+        private void buttonPreviousClick(object sender, RoutedEventArgs e)
+        {
+            Inky.Strokes.Clear();
+            displayPanel(--currentPanelNumber);
+        }
+
+        private void buttonExportImageClick(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.SaveFileDialog saveFileDialog1 = new Microsoft.Win32.SaveFileDialog();
+            //saveFileDialog1.Filter = "DyKnow files (*.dyz)|*.dyz";
+            if (saveFileDialog1.ShowDialog() == true)
+            {
+                FileStream fs = new FileStream(saveFileDialog1.FileName, FileMode.Create);
+
+                RenderTargetBitmap rtb = new RenderTargetBitmap(1024 / 2, 768 / 2, 96d, 96d, PixelFormats.Default);
+                
+                rtb.Render(Inky);
+                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(rtb));
+                
+                //encoder.Frames.Add(BitmapFrame.Create(Inky));
+
+                encoder.Save(fs);
+                fs.Close();
+            }
+            
+        }
+
+        private void displayPanel(int n)
+        {
+            //Some error checking to make sure we don't crash
+            if (dr != null && n >= 0 && n < dr.NumOfPages())
+            {
+                currentPanelNumber = n;
+                //Read in the panel
+                DyKnowPage dp = dr.getDyKnowPage(n);
                 //Get that Panel's pen strokes
                 List<DyKnowPenStroke> pens = dp.Pens;
                 //Loop through all of the pen strokes
                 for (int i = 0; i < pens.Count; i++)
                 {
-                    //The data is encoded as a string
-                    String data = pens[i].DATA;
-                    //Truncate off the "base64:" from the beginning of the string
-                    data = data.Substring(7); 
-                    //Decode the string
-                    byte[] bufferData = Convert.FromBase64String(data);
-                    //Turn the string into a stream
-                    Stream s = new MemoryStream(bufferData);
-                    //Convert the stream into an ink stroke
-                    StrokeCollection sc = new StrokeCollection(s);
-                    //Add the ink stroke to the canvas
-                    Inky.Strokes.Add(sc);
+                    //Only display the ink if it wasn't deleted
+                    if (!pens[i].DELETED)
+                    {
+                        //The data is encoded as a string
+                        String data = pens[i].DATA;
+                        //Truncate off the "base64:" from the beginning of the string
+                        data = data.Substring(7);
+                        //Decode the string
+                        byte[] bufferData = Convert.FromBase64String(data);
+                        //Turn the string into a stream
+                        Stream s = new MemoryStream(bufferData);
+                        //Convert the stream into an ink stroke
+                        StrokeCollection sc = new StrokeCollection(s);
+
+                        if (pens[i].PH != 768 || pens[i].PW != 1024)
+                        {
+                            Matrix inkTransform = new Matrix();
+                            inkTransform.Scale(1024.0 / (double)pens[i].PW, 768.0 / (double)pens[i].PH);
+                            sc.Transform(inkTransform, true);
+                        }
+                        //Add the ink stroke to the canvas
+                        Inky.Strokes.Add(sc);
+                    }
                 }
-                
             }
         }
     }

@@ -43,6 +43,7 @@ namespace QuickReader
         {
             this.ut = ut;
             this.pw = pw;
+            this.ph = ph;
             this.uid = uid;
             this.data = data;
             deleted = false;
