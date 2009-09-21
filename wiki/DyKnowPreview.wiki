@@ -1,0 +1,14 @@
+#summary A simple application that reads in the ink strokes encoded in a DyKnow file
+
+= Introduction =
+
+This application is currently under development.  The hope it to allow the contents of a file generate from DyKnow to be properly read and understood.
+
+
+= Details =
+
+  * Reads in the contents of a DyKnow file
+  * Is able to render each panel individually
+  * Able to save an image version of the ink strokes encoded in the panel.
+  * Thumbnail equivalents are able to be generated
+  * Much of the functionality of this program will be transfered back into a generic library once it is completed.
