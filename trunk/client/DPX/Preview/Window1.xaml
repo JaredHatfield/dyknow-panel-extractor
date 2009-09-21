@@ -2,4 +2,14 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="Window1" Height="340" Width="600">
+    <StackPanel Height="Auto" Width="Auto">
+        <Button Name="buttonLoad" Click="buttonLoadClick">Load</Button>
+        <Grid Height="Auto" Name="grid1" Width="Auto">
+            <InkCanvas Name="Inky">
+                <InkCanvas.LayoutTransform>
+                    <ScaleTransform ScaleX=".50" ScaleY=".50" />
+                </InkCanvas.LayoutTransform>
+            </InkCanvas>
+        </Grid>
+    </StackPanel>
 </Window>

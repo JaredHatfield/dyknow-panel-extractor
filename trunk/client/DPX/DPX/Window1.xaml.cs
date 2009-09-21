@@ -26,6 +26,7 @@ namespace DPX
         {
             InitializeComponent();
             FileMenuClose.IsEnabled = false;
+            
         }
 
         private void DisplayAboutWindow(object sender, RoutedEventArgs e)

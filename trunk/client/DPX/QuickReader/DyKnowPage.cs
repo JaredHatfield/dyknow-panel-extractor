@@ -128,6 +128,10 @@ namespace QuickReader
                 }
             }
         }
+        public List<DyKnowPenStroke> Pens
+        {
+            get { return pens; }
+        }
 
         //Constructor accepts the XML sub tree
         public DyKnowPage(XmlReader xmlFile, int pageNum)
