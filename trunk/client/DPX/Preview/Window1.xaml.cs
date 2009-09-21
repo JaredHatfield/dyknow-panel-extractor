@@ -49,15 +49,20 @@ namespace Preview
 
         private void buttonNextClick(object sender, RoutedEventArgs e)
         {
-            //Clear what is currently on the screen
-            Inky.Strokes.Clear();
-            displayPanel(++currentPanelNumber);
+            if (currentPanelNumber < dr.NumOfPages())
+            {
+                Inky.Strokes.Clear();
+                displayPanel(++currentPanelNumber);
+            }
         }
 
         private void buttonPreviousClick(object sender, RoutedEventArgs e)
         {
-            Inky.Strokes.Clear();
-            displayPanel(--currentPanelNumber);
+            if (currentPanelNumber > 0)
+            {
+                Inky.Strokes.Clear();
+                displayPanel(--currentPanelNumber);
+            }
         }
 
         private void buttonExportImageClick(object sender, RoutedEventArgs e)
