@@ -1,0 +1,10 @@
+#summary A web based version of the DyKnow panel extractor software written in PHP.
+
+= Introduction =
+
+This software is currently under development.  It is a PHP web application that is able to import DyKnow file and parse them into a database.  The information contained within the files can then be analyzed.
+
+
+= Details =
+
+More to come later...
