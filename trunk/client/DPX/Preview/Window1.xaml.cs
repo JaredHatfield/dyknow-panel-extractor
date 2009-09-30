@@ -31,6 +31,10 @@ namespace Preview
             currentPanelNumber = 0;
         }
 
+        private void updatePageNumber()
+        {
+            labelPageNumber.Content = (currentPanelNumber + 1).ToString() + " of " + dr.NumOfPages().ToString();
+        }
         private void buttonLoadClick(object sender, RoutedEventArgs e)
         {
             //Let the user choose which file to open
@@ -43,25 +47,34 @@ namespace Preview
                 currentPanelNumber = 0;
                 Inky.Strokes.Clear();
                 displayPanel(currentPanelNumber);
+                updatePageNumber();
                 
             }
         }
 
         private void buttonNextClick(object sender, RoutedEventArgs e)
         {
-            if (currentPanelNumber < dr.NumOfPages())
+            if (dr != null)
             {
-                Inky.Strokes.Clear();
-                displayPanel(++currentPanelNumber);
+                if ((currentPanelNumber + 1) < dr.NumOfPages())
+                {
+                    Inky.Strokes.Clear();
+                    displayPanel(++currentPanelNumber);
+                    updatePageNumber();
+                }
             }
         }
 
         private void buttonPreviousClick(object sender, RoutedEventArgs e)
         {
-            if (currentPanelNumber > 0)
+            if (dr != null)
             {
-                Inky.Strokes.Clear();
-                displayPanel(--currentPanelNumber);
+                if (currentPanelNumber > 0)
+                {
+                    Inky.Strokes.Clear();
+                    displayPanel(--currentPanelNumber);
+                    updatePageNumber();
+                }
             }
         }
 
@@ -85,6 +98,13 @@ namespace Preview
                 fs.Close();
             }
             
+        }
+
+        private void DisplayAboutWindow(object sender, RoutedEventArgs e)
+        {
+            AboutDPX popupWindow = new AboutDPX();
+            popupWindow.Owner = this;
+            popupWindow.ShowDialog();
         }
 
         private void displayPanel(int n)

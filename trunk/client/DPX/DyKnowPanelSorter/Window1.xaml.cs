@@ -105,6 +105,13 @@ namespace DyKnowPanelSorter
                 MessageBox.Show("A destination file must be specified.", "Alert");
             }
         }
+
+        private void DisplayAboutWindow(object sender, RoutedEventArgs e)
+        {
+            AboutDPX popupWindow = new AboutDPX();
+            popupWindow.Owner = this;
+            popupWindow.ShowDialog();
+        }
     }
 
 }
