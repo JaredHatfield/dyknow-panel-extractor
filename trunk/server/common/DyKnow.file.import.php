@@ -105,6 +105,7 @@ class dpxparser {
 	private function addNewPage($file_id, $uid, $oner, $onern){
 		$query = "INSERT INTO `pages` (`file`, `uid`, `oner`, `onern`) VALUES (" . $file_id . ", '" . $uid . "', '" . $oner . "', '" . $onern . "');";
 		$result = mysql_query($query);
+		echo "Added new page... " . time() . "\n"; // Debug code
 		return mysql_insert_id();
 	}
 	
@@ -127,6 +128,12 @@ class dpxparser {
 	}
 }
 
+function dyknow_raw_db_import($content){
+	$query = "INSERT INTO files_raw (class, body) VALUES (1, '" . mysql_real_escape_string($content) . "');";
+	echo $query;
+	//$result = mysql_query($query);
+	//return mysql_insert_id();
+}
 
 function open_dyknow_file($path){
 	$contents = "";
