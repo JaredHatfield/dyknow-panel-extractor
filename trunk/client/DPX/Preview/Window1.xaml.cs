@@ -29,12 +29,10 @@ namespace Preview
         {
             InitializeComponent();
             currentPanelNumber = 0;
+            menuUserInformation.IsEnabled = false;
+            menuStatistics.IsEnabled = false;
         }
 
-        private void updatePageNumber()
-        {
-            labelPageNumber.Content = (currentPanelNumber + 1).ToString() + " of " + dr.NumOfPages().ToString();
-        }
         private void buttonLoadClick(object sender, RoutedEventArgs e)
         {
             //Let the user choose which file to open
@@ -48,7 +46,8 @@ namespace Preview
                 Inky.Strokes.Clear();
                 displayPanel(currentPanelNumber);
                 updatePageNumber();
-                
+                menuUserInformation.IsEnabled = true;
+                menuStatistics.IsEnabled = true;
             }
         }
 
@@ -78,33 +77,25 @@ namespace Preview
             }
         }
 
+        private void updatePageNumber()
+        {
+            labelPageNumber.Content = (currentPanelNumber + 1).ToString() + " of " + dr.NumOfPages().ToString();
+        }
+
         private void buttonExportImageClick(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.SaveFileDialog saveFileDialog1 = new Microsoft.Win32.SaveFileDialog();
-            //saveFileDialog1.Filter = "DyKnow files (*.dyz)|*.dyz";
+            saveFileDialog1.Filter = "JPEG (*.jpg)|*.jpg";
             if (saveFileDialog1.ShowDialog() == true)
             {
                 FileStream fs = new FileStream(saveFileDialog1.FileName, FileMode.Create);
-
                 RenderTargetBitmap rtb = new RenderTargetBitmap(1024 / 2, 768 / 2, 96d, 96d, PixelFormats.Default);
-                
                 rtb.Render(Inky);
                 JpegBitmapEncoder encoder = new JpegBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create(rtb));
-                
-                //encoder.Frames.Add(BitmapFrame.Create(Inky));
-
                 encoder.Save(fs);
                 fs.Close();
             }
-            
-        }
-
-        private void DisplayAboutWindow(object sender, RoutedEventArgs e)
-        {
-            AboutDPX popupWindow = new AboutDPX();
-            popupWindow.Owner = this;
-            popupWindow.ShowDialog();
         }
 
         private void displayPanel(int n)
@@ -133,7 +124,7 @@ namespace Preview
                         Stream s = new MemoryStream(bufferData);
                         //Convert the stream into an ink stroke
                         StrokeCollection sc = new StrokeCollection(s);
-
+                        //Resize the panel if it is not the default resolution
                         if (pens[i].PH != 768 || pens[i].PW != 1024)
                         {
                             Matrix inkTransform = new Matrix();
@@ -145,6 +136,40 @@ namespace Preview
                     }
                 }
             }
+        }
+
+        private void displayAboutWindow(object sender, RoutedEventArgs e)
+        {
+            AboutDPX popupWindow = new AboutDPX();
+            popupWindow.Owner = this;
+            popupWindow.ShowDialog();
+        }
+
+        private void displayUserInformationWindow(object sender, RoutedEventArgs e)
+        {
+            FlowDocument fd = new FlowDocument();
+            fd.Blocks.Add(new Paragraph(new Run("Students")));
+            if (fd != null)
+            {
+                for (int i = 0; i < dr.NumOfPages(); i++)
+                {
+                    DyKnowPage d = dr.getDyKnowPage(i);
+                    String s = (i + 1).ToString() + ") " + d.FullName;
+                    Paragraph p = new Paragraph(new Run(s));
+                    p.LineHeight = 5.0;
+                    fd.Blocks.Add(p);
+                }
+            }
+            UserInformation popupWindow = new UserInformation(fd);
+            popupWindow.Owner = this;
+            popupWindow.ShowDialog();
+        }
+
+        private void displayStatisticsWindow(object sender, RoutedEventArgs e)
+        {
+            Statistics popupWindow = new Statistics();
+            popupWindow.Owner = this;
+            popupWindow.ShowDialog();
         }
     }
 }

@@ -1,0 +1,9 @@
+﻿<Window x:Class="Preview.UserInformation"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="StudentInformation" Height="300" Width="300"
+        WindowStartupLocation="CenterOwner">
+    <Grid>
+        <RichTextBox Name="textBoxContent" Margin="0,0,0,0" VerticalScrollBarVisibility="Visible" ></RichTextBox>
+    </Grid>
+</Window>
