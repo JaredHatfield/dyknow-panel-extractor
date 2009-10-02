@@ -90,6 +90,7 @@ namespace Preview
             {
                 FileStream fs = new FileStream(saveFileDialog1.FileName, FileMode.Create);
                 RenderTargetBitmap rtb = new RenderTargetBitmap(1024 / 2, 768 / 2, 96d, 96d, PixelFormats.Default);
+                
                 rtb.Render(Inky);
                 JpegBitmapEncoder encoder = new JpegBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create(rtb));
@@ -100,12 +101,35 @@ namespace Preview
 
         private void displayPanel(int n)
         {
+            
+            
+            
             //Some error checking to make sure we don't crash
             if (dr != null && n >= 0 && n < dr.NumOfPages())
             {
                 currentPanelNumber = n;
                 //Read in the panel
                 DyKnowPage dp = dr.getDyKnowPage(n);
+
+                Inky.Children.Clear();
+                List<DyKnowImage> dki = dp.Images;
+                for (int i = 0; i < dki.Count; i++)
+                {
+                    ImageData id = dr.getImageData(dki[i].Id);
+                    BitmapImage bi = new BitmapImage();
+                    bi.BeginInit();
+                    bi.StreamSource = new MemoryStream(System.Convert.FromBase64String(id.Img));
+                    bi.EndInit();
+                    Image im = new Image();
+                    im.Source = bi;
+                    Inky.Children.Add(im);
+                }
+                //Display all of the images
+                /*
+                
+                */
+
+
                 //Get that Panel's pen strokes
                 List<DyKnowPenStroke> pens = dp.Pens;
                 //Loop through all of the pen strokes

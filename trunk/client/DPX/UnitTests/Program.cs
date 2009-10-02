@@ -21,19 +21,24 @@ namespace UnitTests
             //Database db = new Database(dbfile);
             DyKnowReader dr = new DyKnowReader(dyknowfiled);
 
-            for (int i = 0; i < dr.NumOfPages(); i++)
+            List<ImageData> id = dr.ImageInformation;
+            for (int i = 0; i < id.Count; i++)
             {
-                if (i == 6)
-                {
-                    DyKnowPage dp = dr.getDyKnowPage(i);
-                    List<DyKnowPenStroke> dps = dp.Pens;
-                    for (int k = 0; k < dps.Count; k++)
-                    {
-                        Console.Write(dps[k].PH + " - " + dps[k].PW + " / ");
-                    }
-                }
+                Console.WriteLine(id[i].ToString());
             }
 
+            /*
+            for (int i = 0; i < dr.NumOfPages(); i++)
+            {
+                DyKnowPage dp = dr.getDyKnowPage(i);
+                Console.WriteLine("Panel " + i.ToString());
+                List<DyKnowImage> imgs = dp.Images;
+                for (int k = 0; k < imgs.Count; k++)
+                {
+                    Console.Write(imgs[k].ToString());
+                }
+            }
+            */
 
             /*
             List<Classdate> cd = db.getClassdates();

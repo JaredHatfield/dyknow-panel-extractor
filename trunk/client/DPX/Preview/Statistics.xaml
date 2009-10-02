@@ -4,6 +4,25 @@
     Title="Statistics" Height="300" Width="400"
         WindowStartupLocation="CenterOwner">
     <StackPanel>
-        <RichTextBox Height="253" VerticalScrollBarVisibility="Visible" ></RichTextBox>
+        <DockPanel>
+            <Label Width="200">Number of Panels: </Label>
+            <TextBox Name="textBoxNumberOfPanels"></TextBox>
+        </DockPanel>
+        <DockPanel>
+            <Label Width="200">Mean Number of Strokes:</Label>
+            <TextBox Name="textBoxMeanNumberOfStrokes"></TextBox>
+        </DockPanel>
+        <DockPanel>
+            <Label Width="200">Standard Deviation of Strokes:</Label>
+            <TextBox Name="textBoxStandardDeviationOfStrokes"></TextBox>
+        </DockPanel>
+        <DockPanel>
+            <Label Width="200">Mean Length of Data:</Label>
+            <TextBox Name="textBoxMeanLengthOfData"></TextBox>
+        </DockPanel>
+        <DockPanel>
+            <Label Width="200">Standard Deviation of Data Length:</Label>
+            <TextBox Name="textBoxStandardDeviationOfDataLength"></TextBox>
+        </DockPanel>
     </StackPanel>
 </Window>

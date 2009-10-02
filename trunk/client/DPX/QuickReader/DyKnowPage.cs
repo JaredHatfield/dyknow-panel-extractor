@@ -14,6 +14,7 @@ namespace QuickReader
         private int strokes;
         private String finished;
         private List<DyKnowPenStroke> pens;
+        private List<DyKnowImage> images;
 
 
         public int PageNumber
@@ -132,6 +133,10 @@ namespace QuickReader
         {
             get { return pens; }
         }
+        public List<DyKnowImage> Images
+        {
+            get { return images; }
+        }
 
         //Constructor accepts the XML sub tree
         public DyKnowPage(XmlReader xmlFile, int pageNum)
@@ -143,6 +148,7 @@ namespace QuickReader
             strokes = 0;
             finished = "";
             pens = new List<DyKnowPenStroke>();
+            images = new List<DyKnowImage>();
 
             List<String> myStrokes = new List<string>();
 
@@ -187,6 +193,15 @@ namespace QuickReader
                 {
                     //Stroke removed (for both the moderator and the user)
                     deleteStrokes(myStrokes, xmlFile.ReadSubtree());
+                }
+                else if (xmlFile.Name.ToString() == "IMG")
+                {
+                    DyKnowImage dki = new DyKnowImage(Int32.Parse(xmlFile.GetAttribute("UT")),
+                        xmlFile.GetAttribute("SP"), Int32.Parse(xmlFile.GetAttribute("PW")),
+                        Int32.Parse(xmlFile.GetAttribute("PH")), xmlFile.GetAttribute("UID"),
+                        xmlFile.GetAttribute("ID"), Int32.Parse(xmlFile.GetAttribute("WID")),
+                        Int32.Parse(xmlFile.GetAttribute("HEI")));
+                    images.Add(dki);
                 }
             }
             //Net number of strokes on page

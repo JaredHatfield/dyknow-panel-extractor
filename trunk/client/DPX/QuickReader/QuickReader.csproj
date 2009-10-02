@@ -45,9 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DyKnowImage.cs" />
     <Compile Include="DyKnowPage.cs" />
     <Compile Include="DyKnowPenStroke.cs" />
     <Compile Include="DyKnowReader.cs" />
+    <Compile Include="ImageData.cs" />
     <Compile Include="PanelSorter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

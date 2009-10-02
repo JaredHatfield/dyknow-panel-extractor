@@ -6,6 +6,7 @@ using System.Xml;
 using System.IO.Compression;
 using System.IO;
 
+
 namespace QuickReader
 {
     public class DyKnowReader
@@ -15,6 +16,7 @@ namespace QuickReader
         private XmlTextReader xmlFile;
         private String fileName;
         private List<DyKnowPage> dyKnowPages;
+        private List<ImageData> imageInformation;
 
         private double meanStrokes;
         private double stdDevStrokes;
@@ -131,7 +133,10 @@ namespace QuickReader
             }
         }
 
-
+        public List<ImageData> ImageInformation
+        {
+            get { return imageInformation; }
+        }
 
         public DyKnowReader(string name)
         {
@@ -145,6 +150,8 @@ namespace QuickReader
             xmlFile = new XmlTextReader(gzipFile);
             //The collection of pages
             dyKnowPages = new List<DyKnowPage>();
+            //The collection of inmageData
+            imageInformation = new List<ImageData>();
             //Some more default values
             meanStrokes = 0;
             stdDevStrokes = 0;
@@ -158,12 +165,19 @@ namespace QuickReader
                     //We only care about the PAGE nodes
                     if (xmlFile.Name.ToString() == "PAGE")
                     {
-
                         //Process the PAGE sub-tree and store the inforation
                         DyKnowPage panel = new DyKnowPage(xmlFile.ReadSubtree(), myRow++);
                         
                         //Add the page information to the list of pages
                         dyKnowPages.Add(panel);
+                    }
+                    else if (xmlFile.Name.ToString() == "IMGS")
+                    {
+                        parseIMGS(xmlFile.ReadSubtree());
+                    }
+                    else if (xmlFile.Name.ToString() == "IMGD")
+                    {
+                        parseIMGD(xmlFile.ReadSubtree());
                     }
                 }
             }
@@ -175,6 +189,45 @@ namespace QuickReader
             stdDevStrokeDistance = CalcStdDevStrokeDistance(meanStrokeDistance);
 
             fillInFinished();
+        }
+
+        private void parseIMGS(XmlReader subfile)
+        {
+            while (subfile.Read())
+            {
+                if (subfile.Name.ToString() == "IMG")
+                {
+                    ImageData id = new ImageData(new Guid(), subfile.ReadString());
+                    imageInformation.Add(id);
+                }
+            }
+        }
+
+        public ImageData getImageData(Guid uid)
+        {
+            for (int i = 0; i < imageInformation.Count; i++)
+            {
+                if (imageInformation[i].Id.Equals(uid))
+                {
+                    return imageInformation[i];
+                }
+            }
+            return null;
+        }
+
+        private void parseIMGD(XmlReader subfile)
+        {
+            int num = 0;
+            while (subfile.Read())
+            {
+                if (subfile.Name.ToString() == "ID")
+                {
+                    ImageData id = imageInformation[num];
+                    String s = subfile.ReadString();
+                    id.Id = new Guid(s);
+                    num++;
+                }
+            }
         }
 
         private void fillInFinished()
