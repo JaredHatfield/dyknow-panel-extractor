@@ -111,6 +111,8 @@ namespace Preview
                 //Read in the panel
                 DyKnowPage dp = dr.getDyKnowPage(n);
 
+
+                //Display all of the images
                 Inky.Children.Clear();
                 List<DyKnowImage> dki = dp.Images;
                 for (int i = 0; i < dki.Count; i++)
@@ -120,14 +122,31 @@ namespace Preview
                     bi.BeginInit();
                     bi.StreamSource = new MemoryStream(System.Convert.FromBase64String(id.Img));
                     bi.EndInit();
-                    Image im = new Image();
-                    im.Source = bi;
-                    Inky.Children.Add(im);
+                    
+                    
+                    
+                    
+                    if (dki[i].Ph != 768 || dki[i].Pw != 1024)
+                    {
+                        TransformedBitmap tb = new TransformedBitmap();
+                        tb.BeginInit();
+                        tb.Source = bi;
+                        ScaleTransform sc = new ScaleTransform(1024.0 / (double)dki[i].Pw, 768.0 / (double)dki[i].Ph);
+                        tb.Transform = sc;
+                        tb.EndInit();
+                        Image im = new Image();
+                        im.Source = tb;
+                        Inky.Children.Add(im);
+                    }
+                    else{
+                        Image im = new Image();
+                        im.Source = bi;
+                        Inky.Children.Add(im);
+                    }
+
+                    
                 }
-                //Display all of the images
-                /*
                 
-                */
 
 
                 //Get that Panel's pen strokes

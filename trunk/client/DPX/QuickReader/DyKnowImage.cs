@@ -22,6 +22,15 @@ namespace QuickReader
             get { return id; }
         }
 
+        public int Pw
+        {
+            get { return pw; }
+        }
+        public int Ph
+        {
+            get { return ph; }
+        }
+
         public DyKnowImage(int ut, String sp, int pw, int ph, String uid, String id, int wid, int hei)
         {
             this.ut = ut;
