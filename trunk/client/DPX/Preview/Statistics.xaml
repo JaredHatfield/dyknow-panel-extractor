@@ -8,6 +8,9 @@
             <Label Width="200">Number of Panels: </Label>
             <TextBox Name="textBoxNumberOfPanels"></TextBox>
         </DockPanel>
+        <Label HorizontalAlignment="Center" >
+            <TextBlock><Bold>Panel Statistics</Bold></TextBlock>
+        </Label>
         <DockPanel>
             <Label Width="200">Mean Number of Strokes:</Label>
             <TextBox Name="textBoxMeanNumberOfStrokes"></TextBox>

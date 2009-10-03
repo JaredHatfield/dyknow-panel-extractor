@@ -89,8 +89,8 @@ namespace Preview
             if (saveFileDialog1.ShowDialog() == true)
             {
                 FileStream fs = new FileStream(saveFileDialog1.FileName, FileMode.Create);
-                RenderTargetBitmap rtb = new RenderTargetBitmap(1024 / 2, 768 / 2, 96d, 96d, PixelFormats.Default);
-                
+                RenderTargetBitmap rtb = new RenderTargetBitmap(Convert.ToInt32( Inky.Width / 2.0), Convert.ToInt32( Inky.Height / 2.0), 96d, 96d, PixelFormats.Default);
+               
                 rtb.Render(Inky);
                 JpegBitmapEncoder encoder = new JpegBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create(rtb));
@@ -115,36 +115,38 @@ namespace Preview
                 //Display all of the images
                 Inky.Children.Clear();
                 List<DyKnowImage> dki = dp.Images;
+                //Add all of the images as children (there should only be 1, but this works for now)
                 for (int i = 0; i < dki.Count; i++)
                 {
+                    //Get the actual image
                     ImageData id = dr.getImageData(dki[i].Id);
                     BitmapImage bi = new BitmapImage();
                     bi.BeginInit();
                     bi.StreamSource = new MemoryStream(System.Convert.FromBase64String(id.Img));
                     bi.EndInit();
-                    
-                    
-                    
-                    
-                    if (dki[i].Ph != 768 || dki[i].Pw != 1024)
+                    //Resize the image if it is not the correct size
+                    if (dki[i].Ph != Inky.Height || dki[i].Pw != Inky.Width)
                     {
+                        
                         TransformedBitmap tb = new TransformedBitmap();
                         tb.BeginInit();
                         tb.Source = bi;
-                        ScaleTransform sc = new ScaleTransform(1024.0 / (double)dki[i].Pw, 768.0 / (double)dki[i].Ph);
+                        //ScaleTransform sc = new ScaleTransform(1024.0 / (double)dki[i].Pw, 768.0 / (double)dki[i].Ph);
+                        ScaleTransform sc = new ScaleTransform(Inky.Width / bi.Width, Inky.Height/ bi.Height);
                         tb.Transform = sc;
                         tb.EndInit();
+                        //Add the image to the canvas
                         Image im = new Image();
                         im.Source = tb;
                         Inky.Children.Add(im);
                     }
+                    //The image is the correct size
                     else{
+                        //Add the image to the canvas
                         Image im = new Image();
                         im.Source = bi;
                         Inky.Children.Add(im);
                     }
-
-                    
                 }
                 
 
@@ -168,10 +170,10 @@ namespace Preview
                         //Convert the stream into an ink stroke
                         StrokeCollection sc = new StrokeCollection(s);
                         //Resize the panel if it is not the default resolution
-                        if (pens[i].PH != 768 || pens[i].PW != 1024)
+                        if (pens[i].PH != Inky.Height || pens[i].PW != Inky.Width)
                         {
                             Matrix inkTransform = new Matrix();
-                            inkTransform.Scale(1024.0 / (double)pens[i].PW, 768.0 / (double)pens[i].PH);
+                            inkTransform.Scale(Inky.Width / (double)pens[i].PW, Inky.Height / (double)pens[i].PH);
                             sc.Transform(inkTransform, true);
                         }
                         //Add the ink stroke to the canvas
@@ -210,7 +212,7 @@ namespace Preview
 
         private void displayStatisticsWindow(object sender, RoutedEventArgs e)
         {
-            Statistics popupWindow = new Statistics();
+            Statistics popupWindow = new Statistics(dr);
             popupWindow.Owner = this;
             popupWindow.ShowDialog();
         }

@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using QuickReader;
 
 namespace Preview
 {
@@ -18,9 +19,18 @@ namespace Preview
     /// </summary>
     public partial class Statistics : Window
     {
-        public Statistics()
+        DyKnowReader dr;
+        public Statistics(DyKnowReader dr)
         {
             InitializeComponent();
+            this.dr = dr;
+
+            textBoxMeanLengthOfData.Text = dr.MeanStrokeDistance.ToString();
+            textBoxMeanNumberOfStrokes.Text = dr.MeanStrokes.ToString();
+            textBoxNumberOfPanels.Text = dr.NumOfPages().ToString();
+            textBoxStandardDeviationOfDataLength.Text = dr.StdDevStrokeDistance.ToString();
+            textBoxStandardDeviationOfStrokes.Text = dr.StdDevStrokes.ToString();
         }
+
     }
 }
