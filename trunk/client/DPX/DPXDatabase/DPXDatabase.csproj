@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Classdate.cs" />
     <Compile Include="Database.cs" />
+    <Compile Include="DisplayPanelInfo.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="File.cs" />
     <Compile Include="Reason.cs" />

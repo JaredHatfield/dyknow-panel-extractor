@@ -2,8 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="ManageStudent">
-    <Grid Height="Auto" Name="grid1" Width="Auto">
-        <DockPanel HorizontalAlignment="Left" Margin="10,10,0,10" Width="250">
+    <DockPanel Height="Auto" Width="Auto">
+        <DockPanel DockPanel.Dock="Left" Margin="10,10,10,10" Width="250">
             <Label Height="28" VerticalAlignment="Top" DockPanel.Dock="Top">Manage Students</Label>
             <TextBox Height="23" Name="textBoxFilter" DockPanel.Dock="Top" TextChanged="txtSearch_TextChanged"/>
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
@@ -12,31 +12,68 @@
             </StackPanel>
             <ListBox Name="listBoxStudents" SelectionChanged="listBoxStudents_SelectionChanged" />
         </DockPanel>
-        <StackPanel HorizontalAlignment="Left" Margin="270,10,0,10" Width="300">
-            <StackPanel Orientation="Horizontal">
-                <Label Width="100">Username</Label>
-                <TextBox Name="textBoxStudentUserName" Width="200" IsEnabled="False"></TextBox>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+            <StackPanel HorizontalAlignment="Left" Margin="10,10,10,10" Width="250">
+                <StackPanel Orientation="Horizontal">
+                    <Label Width="100">Username</Label>
+                    <TextBox Name="textBoxStudentUserName" Width="150" IsEnabled="False"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Width="100">Full Name</Label>
+                    <TextBox Name="textBoxStudentFullName" Width="150" IsEnabled="False"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Width="100">First Name</Label>
+                    <TextBox Name="textBoxStudentFirstName" Width="150" IsEnabled="False"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Width="100">Last Name</Label>
+                    <TextBox Name="textBoxStudentLastName" Width="150" IsEnabled="False"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Width="100">Section</Label>
+                    <ComboBox Name="comboBoxSection" Width="150" SelectionChanged="comboBoxSection_SelectionChanged"></ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Width="100">Is Enrolled</Label>
+                    <CheckBox Name="checkBoxStudentIsEnrolled" Margin="0,8,0,0" Checked="checkBoxStudentIsEnrolled_Checked" Unchecked="checkBoxStudentIsEnrolled_Unchecked"></CheckBox>
+                </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Width="100">Full Name</Label>
-                <TextBox Name="textBoxStudentFullName" Width="200" IsEnabled="False"></TextBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Width="100">First Name</Label>
-                <TextBox Name="textBoxStudentFirstName" Width="200" IsEnabled="False"></TextBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Width="100">Last Name</Label>
-                <TextBox Name="textBoxStudentLastName" Width="200" IsEnabled="False"></TextBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Width="100">Section</Label>
-                <ComboBox Name="comboBoxSection" Width="200"></ComboBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Width="100">Is Enrolled</Label>
-                <TextBox Name="textBoxStudentIsEnrolled" Width="200"></TextBox>
+            <StackPanel HorizontalAlignment="Left" Margin="10,10,10,10" Width="250">
+                <StackPanel Orientation="Horizontal">
+                    <Label Width="50">Date</Label>
+                    <ComboBox Name="comboBoxDate" Width="200"></ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Width="50">Reason</Label>
+                    <ComboBox Name="comboBoxReason" Width="200"></ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Width="50">Notes</Label>
+                    <TextBox Name="textBoxNotes" Width="200" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="60"></TextBox>
+                </StackPanel>
+                <Button Name="buttonAddException" HorizontalAlignment="Right" Click="buttonAddException_Click">Add Exception</Button>
             </StackPanel>
         </StackPanel>
-    </Grid>
+        <StackPanel>
+            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                <Grid Name="gridPanels">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Name="columnPanels1" Width="75" />
+                        <ColumnDefinition Name="columnPanels2" />
+                        <ColumnDefinition Name="columnPanels3" Width="75" />
+                        <ColumnDefinition Name="columnPanels4" Width="75" />
+                        <ColumnDefinition Name="columnPanels5" Width="75" />
+                        <ColumnDefinition Name="columnPanels6" Width="75" />
+                        <ColumnDefinition Name="columnPanels7" Width="75" />
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </ScrollViewer>
+            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                <Grid Name="gridException">
+                    
+                </Grid>
+            </ScrollViewer>
+        </StackPanel>
+    </DockPanel>
 </Page>

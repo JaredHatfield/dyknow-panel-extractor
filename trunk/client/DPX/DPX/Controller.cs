@@ -16,8 +16,11 @@ namespace DPX
         //Instance of the database
         Database db;
 
-       // Collections of data kept in the interface
-        ComboBox comboBoxDates;
+        // Collections of data kept in the interface
+        ComboBox comboBoxDateImport;
+        ComboBox comboBoxDateException;
+        ComboBox comboBoxSections;
+        ComboBox comboBoxReasons;
         ListBox listBoxStudents;
 
         private Controller()
@@ -40,9 +43,24 @@ namespace DPX
         }
 
 
-        public void setComboBoxDates(ComboBox cbd)
+        public void setComboBoxDateImport(ComboBox cbd)
         {
-            comboBoxDates = cbd;
+            comboBoxDateImport = cbd;
+        }
+
+        public void setComboBoxDateException(ComboBox cbd)
+        {
+            comboBoxDateException = cbd;
+        }
+
+        public void setComboBoxSections(ComboBox cbs)
+        {
+            comboBoxSections = cbs;
+        }
+
+        public void setComboBoxReason(ComboBox cbr)
+        {
+            comboBoxReasons = cbr;
         }
 
         public void setListBoxStudents(ListBox stu)
@@ -69,18 +87,45 @@ namespace DPX
 
             refreshClassdate();
             refreshStudents();
-            
+            refreshSections();
+            refreshReasons();
         }
 
         public void refreshClassdate()
         {
-            comboBoxDates.Items.Clear();
+            comboBoxDateImport.Items.Clear();
+            comboBoxDateException.Items.Clear();
             // Fill in all of the currently available dates
             List<Classdate> cdl = db.getClassdates();
             for (int i = 0; i < cdl.Count; i++)
             {
-                comboBoxDates.Items.Add(cdl[i]);
+                comboBoxDateImport.Items.Add(cdl[i]);
+                comboBoxDateException.Items.Add(cdl[i]);
             }
+        }
+
+        public void refreshSections()
+        {
+            comboBoxSections.Items.Clear();
+            // Fill in all of the sections
+            List<Section> s = db.getSections();
+            for (int i = 0; i < s.Count; i++)
+            {
+                comboBoxSections.Items.Add(s[i]);
+            }
+            comboBoxSections.SelectedIndex = 0;
+        }
+
+        public void refreshReasons()
+        {
+            comboBoxReasons.Items.Clear();
+            // Fill in all of the sections
+            List<Reason> res = db.getReasons();
+            for (int i = 0; i < res.Count; i++)
+            {
+                comboBoxReasons.Items.Add(res[i]);
+            }
+            comboBoxReasons.SelectedIndex = 0;
         }
 
         public void refreshStudents()
@@ -115,8 +160,12 @@ namespace DPX
                 db.Connection.Dispose();
                 db = null;
             }
-            comboBoxDates.Items.Clear();
+            comboBoxDateImport.Items.Clear();
+            comboBoxDateException.Items.Clear();
+            comboBoxSections.Items.Clear();
+            comboBoxReasons.Items.Clear();
             listBoxStudents.Items.Clear();
+             
         }
     }
 }

@@ -32,7 +32,7 @@ namespace DPX
             grid1.Background = Brushes.White;
             buttonImport.IsEnabled = false;
 
-            c.setComboBoxDates(comboBoxDates);
+            c.setComboBoxDateImport(comboBoxDates);
         }
 
 

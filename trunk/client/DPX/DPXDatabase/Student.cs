@@ -39,10 +39,12 @@ namespace DPXDatabase
         public int Section
         {
             get { return section; }
+            set { section = value; }
         }
         public Boolean IsEnrolled
         {
             get { return isEnrolled; }
+            set { isEnrolled = value; }
         }
 
         public Boolean IsInSection

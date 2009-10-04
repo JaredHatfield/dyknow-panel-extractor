@@ -32,6 +32,7 @@ namespace DPXDatabase
             get { return connection; }
         }
 
+
         // QUERIES ON THE SECTION TABLE
         public String getSectionName(int id)
         {
@@ -98,11 +99,12 @@ namespace DPXDatabase
         }
         public List<Section> getSections()
         {
-            String mySelectQuery = "SELECT S.[ID], S.[sectionName] FROM Sections S ORDER BY [sectionName] DESC";
+            String mySelectQuery = "SELECT S.[ID], S.[sectionName] FROM Sections S ORDER BY [sectionName] ASC";
             OleDbCommand myCommand = new OleDbCommand(mySelectQuery, connection);
             this.open();
             OleDbDataReader myReader = myCommand.ExecuteReader();
             List<Section> sections = new List<Section>();
+            sections.Add(new Section(-1, "No Section"));
             try
             {
                 while (myReader.Read())
@@ -121,6 +123,7 @@ namespace DPXDatabase
             }
             return sections;
         }
+
 
         // QUERIES ON THE STUDENT TABLE
         public List<Student> getAllStudents()
@@ -313,6 +316,116 @@ namespace DPXDatabase
             }
             return studentTest;
         }
+        public Boolean updateStudentSection(int section, int studentId)
+        {
+            if (section == -1)
+            {
+                this.open();
+                string query = "UPDATE Students AS S SET S.Section = Null WHERE S.ID = @parm2;";
+                int status;
+                OleDbCommand cmdInsert = new OleDbCommand(query, connection);
+                cmdInsert.Parameters.Clear();
+                try
+                {
+                    cmdInsert.CommandType = System.Data.CommandType.Text; //Type of query
+                    //Add parameters to the query
+                    cmdInsert.Parameters.AddWithValue("@parm2", studentId);
+                    status = cmdInsert.ExecuteNonQuery(); // 0 = failed, 1 = success
+                    if (!(status == 0))
+                    {
+                        return false; //ItFailed
+                    }
+                    else
+                    {
+                        return true; //It Worked!
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message, "Error"); //Display the error
+                }
+                finally
+                {
+                    this.close(); //All done
+                }
+            }
+            else
+            {
+                this.open();
+                string query = "UPDATE Students AS S SET S.Section = @parm1 WHERE S.ID = @parm2;";
+                int status;
+                OleDbCommand cmdInsert = new OleDbCommand(query, connection);
+                cmdInsert.Parameters.Clear();
+                try
+                {
+                    cmdInsert.CommandType = System.Data.CommandType.Text; //Type of query
+                    //Add parameters to the query
+                    cmdInsert.Parameters.AddWithValue("@parm1", section);
+                    cmdInsert.Parameters.AddWithValue("@parm2", studentId);
+
+                    status = cmdInsert.ExecuteNonQuery(); // 0 = failed, 1 = success
+                    if (!(status == 0))
+                    {
+                        return false; //ItFailed
+                    }
+                    else
+                    {
+                        return true; //It Worked!
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message, "Error"); //Display the error
+                }
+                finally
+                {
+                    this.close(); //All done
+                }
+            }
+            return true;
+        }
+        public Boolean updateStudentSetEnrolled(Boolean val, int studentId)
+        {
+            this.open();
+            string query = "UPDATE Students AS S SET S.isEnrolled = @parm1 WHERE S.ID = @parm2;";
+            int status;
+            OleDbCommand cmdInsert = new OleDbCommand(query, connection);
+            cmdInsert.Parameters.Clear();
+            try
+            {
+                cmdInsert.CommandType = System.Data.CommandType.Text; //Type of query
+                //Add parameters to the query
+                if (val == true)
+                {
+                    cmdInsert.Parameters.AddWithValue("@parm1", true);
+                }
+                else
+                {
+                    cmdInsert.Parameters.AddWithValue("@parm1", false);
+                }
+                cmdInsert.Parameters.AddWithValue("@parm2", studentId);
+
+                status = cmdInsert.ExecuteNonQuery(); // 0 = failed, 1 = success
+                if (!(status == 0))
+                {
+                    return false; //ItFailed
+                }
+                else
+                {
+                    return true; //It Worked!
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message, "Error"); //Display the error
+            }
+            finally
+            {
+                this.close(); //All done
+            }
+            return true;
+        }
+
 
         // QUERIES ON THE FILE TABLE
         public int addFile(File f)
@@ -371,6 +484,7 @@ namespace DPXDatabase
                 dr.MaxStrokeDistance);
             return this.addFile(f);
         }
+
 
         // QUERIES ON THE CLASSDATE TABLE
         public Boolean addClassdate(DateTime d)
@@ -490,6 +604,7 @@ namespace DPXDatabase
             return dates;
         }
 
+
         // QUERIES ON THE PANELS TABLE
         public Boolean addPanel(int fileid, DyKnowPage d)
         {
@@ -538,6 +653,7 @@ namespace DPXDatabase
             return true;
         }
 
+
         // QUERIES ON THE EXCEPTIONS TABLE
         public Boolean addException(Exceptions e)
         {
@@ -575,6 +691,34 @@ namespace DPXDatabase
                 this.close(); //All done
             }
             return true;
+        }
+        public List<DisplayPanelInfo> getPanelsForStudent(int studentid)
+        {
+            String mySelectQuery = "SELECT Classdates.classDate, Files.fileName, Panels.slideNumber, Panels.totalStrokeCount, Panels.netStrokeCount, Panels.isBlank, Panels.analysis FROM (Classdates INNER JOIN Files ON Classdates.ID = Files.Classdate) INNER JOIN (Students INNER JOIN Panels ON Students.username = Panels.username) ON Files.ID = Panels.File WHERE (((Students.ID)= @parm1));";
+            OleDbCommand myCommand = new OleDbCommand(mySelectQuery, connection);
+            myCommand.Parameters.AddWithValue("@parm1", studentid);
+            this.open();
+            OleDbDataReader myReader = myCommand.ExecuteReader();
+            List<DisplayPanelInfo> panelinfo = new List<DisplayPanelInfo>();
+            try
+            {
+                while (myReader.Read())
+                {
+                    panelinfo.Add(new DisplayPanelInfo(myReader.GetDateTime(0), myReader.GetString(1),
+                        myReader.GetInt32(2), myReader.GetInt32(3), myReader.GetInt32(4),
+                        myReader.GetBoolean(5), myReader.GetString(6)));
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                myReader.Close();
+                this.close();
+            }
+            return panelinfo;
         }
 
         // QUERIES ON THE REASON TABLE

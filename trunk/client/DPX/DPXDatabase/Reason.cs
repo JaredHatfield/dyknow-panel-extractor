@@ -40,8 +40,7 @@ namespace DPXDatabase
 
         public override string ToString()
         {
-            return "ID = " + this.id.ToString() + " Credit = " + this.credit.ToString() +
-                " Description = " + this.description;
+            return this.description;
         } 
     }
 }
