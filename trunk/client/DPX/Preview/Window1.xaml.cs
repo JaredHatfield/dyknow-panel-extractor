@@ -101,20 +101,18 @@ namespace Preview
 
         private void displayPanel(int n)
         {
-            
-            
-            
             //Some error checking to make sure we don't crash
             if (dr != null && n >= 0 && n < dr.NumOfPages())
             {
                 currentPanelNumber = n;
+
                 //Read in the panel
                 DyKnowPage dp = dr.getDyKnowPage(n);
-
 
                 //Display all of the images
                 Inky.Children.Clear();
                 List<DyKnowImage> dki = dp.Images;
+
                 //Add all of the images as children (there should only be 1, but this works for now)
                 for (int i = 0; i < dki.Count; i++)
                 {
@@ -124,35 +122,24 @@ namespace Preview
                     bi.BeginInit();
                     bi.StreamSource = new MemoryStream(System.Convert.FromBase64String(id.Img));
                     bi.EndInit();
+
                     //Resize the image if it is not the correct size
-                    if (dki[i].Ph != Inky.Height || dki[i].Pw != Inky.Width)
-                    {
-                        
-                        TransformedBitmap tb = new TransformedBitmap();
-                        tb.BeginInit();
-                        tb.Source = bi;
-                        //ScaleTransform sc = new ScaleTransform(1024.0 / (double)dki[i].Pw, 768.0 / (double)dki[i].Ph);
-                        ScaleTransform sc = new ScaleTransform(Inky.Width / bi.Width, Inky.Height/ bi.Height);
-                        tb.Transform = sc;
-                        tb.EndInit();
-                        //Add the image to the canvas
-                        Image im = new Image();
-                        im.Source = tb;
-                        Inky.Children.Add(im);
-                    }
-                    //The image is the correct size
-                    else{
-                        //Add the image to the canvas
-                        Image im = new Image();
-                        im.Source = bi;
-                        Inky.Children.Add(im);
-                    }
+                    TransformedBitmap tb = new TransformedBitmap();
+                    tb.BeginInit();
+                    tb.Source = bi;
+                    ScaleTransform sc = new ScaleTransform(Inky.Width / bi.Width, Inky.Height/ bi.Height);
+                    tb.Transform = sc;
+                    tb.EndInit();
+
+                    //Add the image to the canvas
+                    Image im = new Image();
+                    im.Source = tb;
+                    Inky.Children.Add(im);
                 }
                 
-
-
                 //Get that Panel's pen strokes
                 List<DyKnowPenStroke> pens = dp.Pens;
+
                 //Loop through all of the pen strokes
                 for (int i = 0; i < pens.Count; i++)
                 {
@@ -215,6 +202,11 @@ namespace Preview
             Statistics popupWindow = new Statistics(dr);
             popupWindow.Owner = this;
             popupWindow.ShowDialog();
+        }
+
+        private void sliderPanelSize_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            
         }
     }
 }

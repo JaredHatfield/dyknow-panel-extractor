@@ -43,5 +43,23 @@ namespace DPX
             }
         }
 
+
+        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            FilterText(textBoxFilter.Text);
+        }
+
+        public void FilterText(string searchText)
+        {
+            listBoxStudents.Items.Filter = delegate(object obj)
+            {
+                Student s = (Student)obj;
+                if (s == null) return false;
+                else if (s.FirstName.ToLower().IndexOf(searchText.ToLower(), 0) > -1) return true;
+                else if (s.LastName.ToLower().IndexOf(searchText.ToLower(), 0) > -1) return true;
+                else if (s.Username.ToLower().IndexOf(searchText.ToLower(), 0) > -1) return true;
+                else return false;
+            };
+        }
     }
 }

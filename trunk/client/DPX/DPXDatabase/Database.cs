@@ -32,7 +32,7 @@ namespace DPXDatabase
             get { return connection; }
         }
 
-        //QUERIES ON THE SECTION TABLE
+        // QUERIES ON THE SECTION TABLE
         public String getSectionName(int id)
         {
             String mySelectQuery = "SELECT S.[sectionName] FROM Sections S WHERE S.[ID] = @parm1";
@@ -289,7 +289,7 @@ namespace DPXDatabase
             return studentTest;
         }
 
-        //QUERIES ON THE FILE TABLE
+        // QUERIES ON THE FILE TABLE
         public int addFile(File f)
         {
             this.open();
@@ -347,7 +347,7 @@ namespace DPXDatabase
             return this.addFile(f);
         }
 
-        //QUERIES ON THE CLASSDATE TABLE
+        // QUERIES ON THE CLASSDATE TABLE
         public Boolean addClassdate(DateTime d)
         {
             this.open();
@@ -465,7 +465,7 @@ namespace DPXDatabase
             return dates;
         }
 
-        //QUERIES ON THE PANELS TABLE
+        // QUERIES ON THE PANELS TABLE
         public Boolean addPanel(int fileid, DyKnowPage d)
         {
             this.open();
@@ -513,7 +513,7 @@ namespace DPXDatabase
             return true;
         }
 
-        //QUERIES ON THE EXCEPTIONS TABLE
+        // QUERIES ON THE EXCEPTIONS TABLE
         public Boolean addException(Exceptions e)
         {
             this.open();
@@ -552,7 +552,7 @@ namespace DPXDatabase
             return true;
         }
 
-        //QUERIES ON THE REASON TABLE
+        // QUERIES ON THE REASON TABLE
         public List<Reason> getReasons()
         {
             String mySelectQuery = "SELECT R.[ID], R.[credit], R.[description] FROM Reasons R ORDER BY [ID] ASC";

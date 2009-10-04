@@ -22,9 +22,9 @@
                 <Button Name="buttonNext" Click="buttonNextClick" Margin="0,0,20,0" HorizontalAlignment="Right" Width="100" DockPanel.Dock="Right">Next</Button>
                 <Label Name="labelPageNumber" HorizontalAlignment="Center" DockPanel.Dock="Bottom">0 of 0</Label>
             </DockPanel>
-            <Slider Name="sliderPanelSize" MaxWidth="300" Minimum=".25" Maximum="1" Value=".5"></Slider>
+            <Slider Name="sliderPanelSize" MaxWidth="300" Minimum=".25" Maximum="1" Value=".5" ValueChanged="sliderPanelSize_ValueChanged" ></Slider>
         </StackPanel>
-        <ScrollViewer Width="Auto" Height="Auto" MaxHeight="{Binding ElementName=myStackPanel, Path=Height}" HorizontalScrollBarVisibility="Visible" Background="LightGray">
+        <ScrollViewer Name="scollViewerPanel" Width="Auto" Height="Auto" HorizontalScrollBarVisibility="Visible" Background="LightGray">
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                 <InkCanvas Name="Inky" Width="1024" Height="768" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <InkCanvas.LayoutTransform>

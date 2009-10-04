@@ -3,9 +3,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="ManageStudent">
     <Grid Height="Auto" Name="grid1" Width="Auto">
-        <Label Height="28" Margin="96,15,0,0" Name="label1" VerticalAlignment="Top">Manage Students</Label>
-        <ListBox Margin="20,128,0,20" Name="listBoxStudents" MinHeight="300" MinWidth="200" MaxWidth="200" VerticalAlignment="Top" HorizontalAlignment="Left" />
-        <Button Height="23" Margin="20,60,0,0" Name="buttonRefresh" MinWidth="200" MaxWidth="200" VerticalAlignment="Top" HorizontalAlignment="Left" Click="buttonRefresh_Click">Refresh</Button>
-        <TextBox Height="23" Margin="20,95,0,0" Name="textBoxFilter" MinWidth="200" MaxWidth="200" VerticalAlignment="Top" HorizontalAlignment="Left" />
+        <DockPanel HorizontalAlignment="Left" Margin=" 10,10,0,10" Width="250">
+            <Button Height="23" Name="buttonRefresh" DockPanel.Dock="Top" Click="buttonRefresh_Click">Refresh</Button>
+            <Label Height="28" VerticalAlignment="Top" DockPanel.Dock="Top">Manage Students</Label>
+            <TextBox Height="23" Name="textBoxFilter" DockPanel.Dock="Top" TextChanged="txtSearch_TextChanged"/>
+            <ListBox Name="listBoxStudents"/>
+        </DockPanel>
     </Grid>
 </Page>
