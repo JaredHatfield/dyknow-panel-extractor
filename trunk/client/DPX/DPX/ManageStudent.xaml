@@ -3,11 +3,40 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="ManageStudent">
     <Grid Height="Auto" Name="grid1" Width="Auto">
-        <DockPanel HorizontalAlignment="Left" Margin=" 10,10,0,10" Width="250">
-            <Button Height="23" Name="buttonRefresh" DockPanel.Dock="Top" Click="buttonRefresh_Click">Refresh</Button>
+        <DockPanel HorizontalAlignment="Left" Margin="10,10,0,10" Width="250">
             <Label Height="28" VerticalAlignment="Top" DockPanel.Dock="Top">Manage Students</Label>
             <TextBox Height="23" Name="textBoxFilter" DockPanel.Dock="Top" TextChanged="txtSearch_TextChanged"/>
-            <ListBox Name="listBoxStudents"/>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
+                <Label>Show Only Students not in a Section:</Label>
+                <CheckBox Name="checkBoxFilterNoSection" Margin="0,8,0,0" Checked="checkBoxFilterNoSection_Checked" Unchecked="checkBoxFilterNoSection_Unchecked"></CheckBox>
+            </StackPanel>
+            <ListBox Name="listBoxStudents" SelectionChanged="listBoxStudents_SelectionChanged" />
         </DockPanel>
+        <StackPanel HorizontalAlignment="Left" Margin="270,10,0,10" Width="300">
+            <StackPanel Orientation="Horizontal">
+                <Label Width="100">Username</Label>
+                <TextBox Name="textBoxStudentUserName" Width="200" IsEnabled="False"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Width="100">Full Name</Label>
+                <TextBox Name="textBoxStudentFullName" Width="200" IsEnabled="False"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Width="100">First Name</Label>
+                <TextBox Name="textBoxStudentFirstName" Width="200" IsEnabled="False"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Width="100">Last Name</Label>
+                <TextBox Name="textBoxStudentLastName" Width="200" IsEnabled="False"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Width="100">Section</Label>
+                <ComboBox Name="comboBoxSection" Width="200"></ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Width="100">Is Enrolled</Label>
+                <TextBox Name="textBoxStudentIsEnrolled" Width="200"></TextBox>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>

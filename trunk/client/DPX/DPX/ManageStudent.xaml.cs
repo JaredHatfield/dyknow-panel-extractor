@@ -28,38 +28,61 @@ namespace DPX
         {
             
             InitializeComponent();
-        }
-
-        private void buttonRefresh_Click(object sender, RoutedEventArgs e)
-        {
-            if (c.isDatabaseOpen())
-            {
-                List<Student> allStudents = c.DB.getAllStudents();
-                listBoxStudents.Items.Clear();
-                for (int i = 0; i < allStudents.Count; i++)
-                {
-                    listBoxStudents.Items.Add(allStudents[i]);
-                }
-            }
+            c.setListBoxStudents(listBoxStudents);
         }
 
 
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
-            FilterText(textBoxFilter.Text);
+            FilterText(textBoxFilter.Text, checkBoxFilterNoSection.IsChecked == true);
         }
 
-        public void FilterText(string searchText)
+        private void checkBoxFilterNoSection_Checked(object sender, RoutedEventArgs e)
+        {
+            FilterText(textBoxFilter.Text, checkBoxFilterNoSection.IsChecked == true);
+        }
+
+        private void checkBoxFilterNoSection_Unchecked(object sender, RoutedEventArgs e)
+        {
+            FilterText(textBoxFilter.Text, checkBoxFilterNoSection.IsChecked == true);
+        }
+
+        public void FilterText(string searchText, bool sectionless)
         {
             listBoxStudents.Items.Filter = delegate(object obj)
             {
                 Student s = (Student)obj;
                 if (s == null) return false;
+                else if (sectionless && s.IsInSection) return false;
                 else if (s.FirstName.ToLower().IndexOf(searchText.ToLower(), 0) > -1) return true;
                 else if (s.LastName.ToLower().IndexOf(searchText.ToLower(), 0) > -1) return true;
                 else if (s.Username.ToLower().IndexOf(searchText.ToLower(), 0) > -1) return true;
                 else return false;
             };
         }
+
+
+        private void listBoxStudents_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Student s = listBoxStudents.SelectedValue as Student;
+            if (s != null)
+            {
+                textBoxStudentFirstName.Text = s.FirstName;
+                textBoxStudentFullName.Text = s.FullName;
+                textBoxStudentLastName.Text = s.LastName;
+                textBoxStudentUserName.Text = s.Username;
+                //textBoxStudentSection;
+                //textBoxStudentIsEnrolled;
+            }
+            else
+            {
+                textBoxStudentFirstName.Text = "";
+                textBoxStudentFullName.Text = "";
+                textBoxStudentLastName.Text = "";
+                textBoxStudentUserName.Text = "";
+            }
+        }
+
+
     }
 }

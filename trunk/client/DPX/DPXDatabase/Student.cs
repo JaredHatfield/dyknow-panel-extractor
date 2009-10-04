@@ -45,6 +45,15 @@ namespace DPXDatabase
             get { return isEnrolled; }
         }
 
+        public Boolean IsInSection
+        {
+            get
+            {
+                if (section == -1) { return false; }
+                else { return true; }
+            }
+        }
+
         public Student(DyKnowPage dp)
         {
             this.id = -1;

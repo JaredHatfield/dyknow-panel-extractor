@@ -96,11 +96,36 @@ namespace DPXDatabase
             }
             return true;
         }
+        public List<Section> getSections()
+        {
+            String mySelectQuery = "SELECT S.[ID], S.[sectionName] FROM Sections S ORDER BY [sectionName] DESC";
+            OleDbCommand myCommand = new OleDbCommand(mySelectQuery, connection);
+            this.open();
+            OleDbDataReader myReader = myCommand.ExecuteReader();
+            List<Section> sections = new List<Section>();
+            try
+            {
+                while (myReader.Read())
+                {
+                    sections.Add(new Section(myReader.GetInt32(0), myReader.GetString(1)));
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                myReader.Close();
+                this.close();
+            }
+            return sections;
+        }
 
         // QUERIES ON THE STUDENT TABLE
         public List<Student> getAllStudents()
         {
-            String mySelectQuery = "SELECT S.[ID], S.[username], S.[fullName], S.[firstName], S.[lastName], S.[Section], S.[isEnrolled] FROM Students S";
+            String mySelectQuery = "SELECT S.[ID], S.[username], S.[fullName], S.[firstName], S.[lastName], S.[Section], S.[isEnrolled] FROM Students S ORDER BY S.[fullName]";
             this.open();
             OleDbCommand myCommand = new OleDbCommand(mySelectQuery, connection);
             OleDbDataReader myReader = myCommand.ExecuteReader();

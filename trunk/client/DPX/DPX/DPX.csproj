@@ -72,6 +72,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="AddNewDate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GenerateReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -100,6 +104,9 @@
   <ItemGroup>
     <Compile Include="AboutDPX.xaml.cs">
       <DependentUpon>AboutDPX.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddNewDate.xaml.cs">
+      <DependentUpon>AddNewDate.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controller.cs" />
     <Compile Include="GenerateReport.xaml.cs">

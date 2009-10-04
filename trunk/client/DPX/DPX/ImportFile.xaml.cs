@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using QuickReader;
+using DPXDatabase;
 
 namespace DPX
 {
@@ -19,7 +20,8 @@ namespace DPX
     /// Interaction logic for Page1.xaml
     /// </summary>
     public partial class ImportFile : Page
-    {
+    {   
+        Controller c = Controller.Instance();
         DyKnowReader dr;
 
         public ImportFile()
@@ -28,15 +30,24 @@ namespace DPX
             //grid1.ShowGridLines = true;
             textBoxSaveFileName.IsReadOnly = true;
             grid1.Background = Brushes.White;
+            buttonImport.IsEnabled = false;
+
+            c.setComboBoxDates(comboBoxDates);
         }
 
 
+        public void clearDyKnowGrid()
+        {
+            grid1.Children.Clear();
+            grid1.RowDefinitions.Clear();
+        }
 
         private void displayFile(String file)
         {
             dr = new DyKnowReader(file);
-            grid1.Children.Clear();
-            grid1.RowDefinitions.Clear();
+            clearDyKnowGrid();
+
+            buttonImport.IsEnabled = true;
 
 
             for (int i = 0; i < dr.NumOfPages(); i++)
@@ -106,6 +117,42 @@ namespace DPX
                 // Open document
                 textBoxSaveFileName.Text = dlg.FileName;
                 displayFile(dlg.FileName);
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (dr == null)
+            {
+                MessageBox.Show("Please open a DyKnow file", "Error");
+            }
+            else if (!c.isDatabaseOpen())
+            {
+                MessageBox.Show("Please open a database file.", "Error");
+            }
+            else if (comboBoxDates.SelectedValue == null)
+            {
+                MessageBox.Show("Please select a date.", "Error");
+            }
+            else
+            {
+                c.addDyKnowFile(dr, textBoxSaveFileName.Text, comboBoxDates.SelectedValue as Classdate);
+                clearDyKnowGrid();
+                c.refreshStudents();
+            }
+        }
+
+        private void buttonAddDate_Click(object sender, RoutedEventArgs e)
+        {
+            if (!c.isDatabaseOpen())
+            {
+                MessageBox.Show("Error: No database is open.");
+            }
+            else
+            {
+                AddNewDate popupWindow = new AddNewDate();
+                //popupWindow.Owner = this.Pare;
+                popupWindow.ShowDialog();
             }
         }
 

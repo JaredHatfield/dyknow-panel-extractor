@@ -5,35 +5,35 @@ using System.Text;
 
 namespace DPXDatabase
 {
-    public class Classdate
+    public class Section
     {
         private int id;
-        private DateTime classDate;
+        private String sectionName;
 
         public int Id
         {
             get { return id; }
         }
-        public DateTime ClassDate
+        public String SectionName
         {
-            get { return classDate; }
+            get { return sectionName; }
         }
 
-        public Classdate(int id, DateTime classdate)
+        public Section(int id, String sectionName)
         {
             this.id = id;
-            this.classDate = classdate;
+            this.sectionName = sectionName;
         }
 
-        public Classdate()
+        public Section()
         {
             this.id = -1;
-            this.classDate = DateTime.Today;
+            this.sectionName = "No-Name-Section";
         }
 
         public override string ToString()
         {
-            return classDate.Date.ToShortDateString();
+            return sectionName;
         }
     }
 }
