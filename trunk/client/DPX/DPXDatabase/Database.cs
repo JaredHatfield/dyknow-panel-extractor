@@ -436,7 +436,7 @@ namespace DPXDatabase
             query += " VALUES(@parm1, @parm2, @parm3, @parm4, @parm5, @parm6, @parm7, @parm8, @parm9, @parm10)";
 
             int insertId = -1;
-
+            
             int status;
             OleDbCommand cmdInsert = new OleDbCommand(query, connection);
             cmdInsert.Parameters.Clear();
@@ -652,7 +652,34 @@ namespace DPXDatabase
             }
             return true;
         }
-
+        public List<DisplayPanelInfo> getPanelsForStudent(int studentid)
+        {
+            String mySelectQuery = "SELECT Classdates.classDate, Files.fileName, Panels.slideNumber, Panels.totalStrokeCount, Panels.netStrokeCount, Panels.isBlank, Panels.analysis FROM (Classdates INNER JOIN Files ON Classdates.ID = Files.Classdate) INNER JOIN (Students INNER JOIN Panels ON Students.username = Panels.username) ON Files.ID = Panels.File WHERE (((Students.ID)= @parm1)) ORDER BY Classdates.classDate DESC;";
+            OleDbCommand myCommand = new OleDbCommand(mySelectQuery, connection);
+            myCommand.Parameters.AddWithValue("@parm1", studentid);
+            this.open();
+            OleDbDataReader myReader = myCommand.ExecuteReader();
+            List<DisplayPanelInfo> panelinfo = new List<DisplayPanelInfo>();
+            try
+            {
+                while (myReader.Read())
+                {
+                    panelinfo.Add(new DisplayPanelInfo(myReader.GetDateTime(0), myReader.GetString(1),
+                        myReader.GetInt32(2), myReader.GetInt32(3), myReader.GetInt32(4),
+                        myReader.GetBoolean(5), myReader.GetString(6)));
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                myReader.Close();
+                this.close();
+            }
+            return panelinfo;
+        }
 
         // QUERIES ON THE EXCEPTIONS TABLE
         public Boolean addException(Exceptions e)
@@ -692,21 +719,20 @@ namespace DPXDatabase
             }
             return true;
         }
-        public List<DisplayPanelInfo> getPanelsForStudent(int studentid)
+        public List<DisplayExceptionInfo> getExceptionsForStudent(int studentid)
         {
-            String mySelectQuery = "SELECT Classdates.classDate, Files.fileName, Panels.slideNumber, Panels.totalStrokeCount, Panels.netStrokeCount, Panels.isBlank, Panels.analysis FROM (Classdates INNER JOIN Files ON Classdates.ID = Files.Classdate) INNER JOIN (Students INNER JOIN Panels ON Students.username = Panels.username) ON Files.ID = Panels.File WHERE (((Students.ID)= @parm1));";
+            String mySelectQuery = "SELECT Classdates.classDate, Reasons.credit, Reasons.description, Exceptions.notes FROM Classdates INNER JOIN (Reasons INNER JOIN (Students INNER JOIN Exceptions ON Students.ID = Exceptions.Student) ON Reasons.ID = Exceptions.Reason) ON Classdates.ID = Exceptions.Classdate WHERE Students.ID = @parm1 ORDER BY Classdates.classDate DESC;";
             OleDbCommand myCommand = new OleDbCommand(mySelectQuery, connection);
             myCommand.Parameters.AddWithValue("@parm1", studentid);
             this.open();
             OleDbDataReader myReader = myCommand.ExecuteReader();
-            List<DisplayPanelInfo> panelinfo = new List<DisplayPanelInfo>();
+            List<DisplayExceptionInfo> exceptionlist = new List<DisplayExceptionInfo>();
             try
             {
                 while (myReader.Read())
                 {
-                    panelinfo.Add(new DisplayPanelInfo(myReader.GetDateTime(0), myReader.GetString(1),
-                        myReader.GetInt32(2), myReader.GetInt32(3), myReader.GetInt32(4),
-                        myReader.GetBoolean(5), myReader.GetString(6)));
+                    exceptionlist.Add(new DisplayExceptionInfo(myReader.GetDateTime(0), myReader.GetBoolean(1),
+                        myReader.GetString(2), myReader.GetString(3)));
                 }
             }
             catch
@@ -718,8 +744,9 @@ namespace DPXDatabase
                 myReader.Close();
                 this.close();
             }
-            return panelinfo;
+            return exceptionlist;
         }
+
 
         // QUERIES ON THE REASON TABLE
         public List<Reason> getReasons()

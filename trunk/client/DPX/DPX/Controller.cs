@@ -149,6 +149,10 @@ namespace DPX
 
             for (int i = 0; i < dr.NumOfPages(); i++)
             {
+                if (!db.isStudentUsername(dr.getDyKnowPage(i).UserName))
+                {
+                    db.addStudent(new Student(dr.getDyKnowPage(i)));
+                }
                 db.addPanel(fileId, dr.getDyKnowPage(i));
             }
         }

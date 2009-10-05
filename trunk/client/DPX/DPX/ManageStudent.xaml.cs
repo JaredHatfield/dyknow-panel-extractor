@@ -62,12 +62,6 @@ namespace DPX
             };
         }
 
-        public void clearGrids()
-        {
-            gridPanels.Children.Clear();
-            gridPanels.RowDefinitions.Clear();
-        }
-
 
         private void listBoxStudents_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -104,78 +98,9 @@ namespace DPX
                     checkBoxStudentIsEnrolled.IsChecked = false;
                 }
 
-
-
-                //Display the panels for this user
-                List<DisplayPanelInfo> dpi = c.DB.getPanelsForStudent(s.Id);
-
-                clearGrids();
-
-                for (int i = 0; i < dpi.Count; i++)
-                {
-                    RowDefinition rd = new RowDefinition();
-                    rd.Height = new GridLength(30);
-                    gridPanels.RowDefinitions.Add(rd);
-
-                    DisplayPanelInfo d = dpi[i];
-
-                    Label date = new Label();
-                    date.Content = d.Date.Date.ToShortDateString();
-                    Grid.SetColumn(date, 0);
-                    Grid.SetRow(date, i);
-                    date.BorderThickness = new Thickness(1);
-                    date.BorderBrush = Brushes.Black;
-                    gridPanels.Children.Add(date);
-
-                    Label file = new Label();
-                    file.Content = d.Filename;
-                    Grid.SetColumn(file, 1);
-                    Grid.SetRow(file, i);
-                    file.BorderThickness = new Thickness(1);
-                    file.BorderBrush = Brushes.Black;
-                    gridPanels.Children.Add(file);
-
-                    Label slidenum = new Label();
-                    slidenum.Content = d.SlideNumber;
-                    Grid.SetColumn(slidenum, 2);
-                    Grid.SetRow(slidenum, i);
-                    slidenum.BorderThickness = new Thickness(1);
-                    slidenum.BorderBrush = Brushes.Black;
-                    gridPanels.Children.Add(slidenum);
-
-                    Label tstrokecount = new Label();
-                    tstrokecount.Content = d.TotalStrokeCount;
-                    Grid.SetColumn(tstrokecount, 3);
-                    Grid.SetRow(tstrokecount, i);
-                    tstrokecount.BorderThickness = new Thickness(1);
-                    tstrokecount.BorderBrush = Brushes.Black;
-                    gridPanels.Children.Add(tstrokecount);
-
-                    Label nstrokecount = new Label();
-                    nstrokecount.Content = d.NetStrokeCount;
-                    Grid.SetColumn(nstrokecount, 4);
-                    Grid.SetRow(nstrokecount, i);
-                    nstrokecount.BorderThickness = new Thickness(1);
-                    nstrokecount.BorderBrush = Brushes.Black;
-                    gridPanels.Children.Add(nstrokecount);
-
-                    Label isblank = new Label();
-                    isblank.Content = d.IsBlank.ToString();
-                    Grid.SetColumn(isblank, 5);
-                    Grid.SetRow(isblank, i);
-                    isblank.BorderThickness = new Thickness(1);
-                    isblank.BorderBrush = Brushes.Black;
-                    gridPanels.Children.Add(isblank);
-
-                    Label analysis = new Label();
-                    analysis.Content = d.Analysis;
-                    Grid.SetColumn(analysis, 6);
-                    Grid.SetRow(analysis, i);
-                    analysis.BorderThickness = new Thickness(1);
-                    analysis.BorderBrush = Brushes.Black;
-                    gridPanels.Children.Add(analysis);
-                }
-
+                //Display the panel information
+                displayExceptions(s.Id);
+                displayPanels(s.Id);
             }
             else
             {
@@ -186,15 +111,140 @@ namespace DPX
                 comboBoxSection.SelectedIndex = 0;
                 checkBoxStudentIsEnrolled.IsChecked = false;
 
+                gridException.Children.Clear();
+                gridException.RowDefinitions.Clear();
                 gridPanels.Children.Clear();
                 gridPanels.RowDefinitions.Clear();
             }
         }
 
+
+        private void displayExceptions(int studentId)
+        {
+            gridException.Children.Clear();
+            gridException.RowDefinitions.Clear();
+
+            // Display the exceptions for this user
+            List<DisplayExceptionInfo> dei = c.DB.getExceptionsForStudent(studentId);
+            for (int i = 0; i < dei.Count; i++)
+            {
+                RowDefinition rd = new RowDefinition();
+                rd.Height = new GridLength(30);
+                gridException.RowDefinitions.Add(rd);
+
+                DisplayExceptionInfo d = dei[i];
+
+                Label date = new Label();
+                date.Content = d.Date.Date.ToShortDateString();
+                Grid.SetColumn(date, 0);
+                Grid.SetRow(date, i);
+                date.BorderThickness = new Thickness(1);
+                date.BorderBrush = Brushes.Black;
+                gridException.Children.Add(date);
+
+                Label credit = new Label();
+                credit.Content = d.Credit;
+                Grid.SetColumn(credit, 1);
+                Grid.SetRow(credit, i);
+                credit.BorderThickness = new Thickness(1);
+                credit.BorderBrush = Brushes.Black;
+                gridException.Children.Add(credit);
+
+                Label description = new Label();
+                description.Content = d.Description;
+                Grid.SetColumn(description, 2);
+                Grid.SetRow(description, i);
+                description.BorderThickness = new Thickness(1);
+                description.BorderBrush = Brushes.Black;
+                gridException.Children.Add(description);
+
+                Label notes = new Label();
+                notes.Content = d.Notes;
+                Grid.SetColumn(notes, 3);
+                Grid.SetRow(notes, i);
+                notes.BorderThickness = new Thickness(1);
+                notes.BorderBrush = Brushes.Black;
+                gridException.Children.Add(notes);
+            }
+        }
+        private void displayPanels(int studentId)
+        {
+            gridPanels.Children.Clear();
+            gridPanels.RowDefinitions.Clear();
+
+            // Display the panels for this user
+            List<DisplayPanelInfo> dpi = c.DB.getPanelsForStudent(studentId);
+            for (int i = 0; i < dpi.Count; i++)
+            {
+                RowDefinition rd = new RowDefinition();
+                rd.Height = new GridLength(30);
+                gridPanels.RowDefinitions.Add(rd);
+
+                DisplayPanelInfo d = dpi[i];
+
+                Label date = new Label();
+                date.Content = d.Date.Date.ToShortDateString();
+                Grid.SetColumn(date, 0);
+                Grid.SetRow(date, i);
+                date.BorderThickness = new Thickness(1);
+                date.BorderBrush = Brushes.Black;
+                gridPanels.Children.Add(date);
+
+                Label file = new Label();
+                file.Content = d.Filename;
+                Grid.SetColumn(file, 1);
+                Grid.SetRow(file, i);
+                file.BorderThickness = new Thickness(1);
+                file.BorderBrush = Brushes.Black;
+                gridPanels.Children.Add(file);
+
+                Label slidenum = new Label();
+                slidenum.Content = d.SlideNumber;
+                Grid.SetColumn(slidenum, 2);
+                Grid.SetRow(slidenum, i);
+                slidenum.BorderThickness = new Thickness(1);
+                slidenum.BorderBrush = Brushes.Black;
+                gridPanels.Children.Add(slidenum);
+
+                Label tstrokecount = new Label();
+                tstrokecount.Content = d.TotalStrokeCount;
+                Grid.SetColumn(tstrokecount, 3);
+                Grid.SetRow(tstrokecount, i);
+                tstrokecount.BorderThickness = new Thickness(1);
+                tstrokecount.BorderBrush = Brushes.Black;
+                gridPanels.Children.Add(tstrokecount);
+
+                Label nstrokecount = new Label();
+                nstrokecount.Content = d.NetStrokeCount;
+                Grid.SetColumn(nstrokecount, 4);
+                Grid.SetRow(nstrokecount, i);
+                nstrokecount.BorderThickness = new Thickness(1);
+                nstrokecount.BorderBrush = Brushes.Black;
+                gridPanels.Children.Add(nstrokecount);
+
+                Label isblank = new Label();
+                isblank.Content = d.IsBlank.ToString();
+                Grid.SetColumn(isblank, 5);
+                Grid.SetRow(isblank, i);
+                isblank.BorderThickness = new Thickness(1);
+                isblank.BorderBrush = Brushes.Black;
+                gridPanels.Children.Add(isblank);
+
+                Label analysis = new Label();
+                analysis.Content = d.Analysis;
+                Grid.SetColumn(analysis, 6);
+                Grid.SetRow(analysis, i);
+                analysis.BorderThickness = new Thickness(1);
+                analysis.BorderBrush = Brushes.Black;
+                gridPanels.Children.Add(analysis);
+            }
+        }
+
+
         private void comboBoxSection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Student s = listBoxStudents.SelectedValue as Student;
-            if (s != null)
+            if (s != null && c.isDatabaseOpen())
             {
                 DPXDatabase.Section section = comboBoxSection.SelectedValue as DPXDatabase.Section;
                 c.DB.updateStudentSection(section.Id, s.Id);
@@ -205,14 +255,17 @@ namespace DPX
         private void checkBoxStudentIsEnrolled_Checked(object sender, RoutedEventArgs e)
         {
             Student s = listBoxStudents.SelectedValue as Student;
-            c.DB.updateStudentSetEnrolled(true, s.Id);
-            s.IsEnrolled = true;
+            if (s != null && c.isDatabaseOpen())
+            {
+                c.DB.updateStudentSetEnrolled(true, s.Id);
+                s.IsEnrolled = true;
+            }
         }
 
         private void checkBoxStudentIsEnrolled_Unchecked(object sender, RoutedEventArgs e)
         {
             Student s = listBoxStudents.SelectedValue as Student;
-            if (s != null)
+            if (s != null && c.isDatabaseOpen())
             {
                 c.DB.updateStudentSetEnrolled(false, s.Id);
                 s.IsEnrolled = false;
@@ -248,6 +301,8 @@ namespace DPX
                 comboBoxReason.SelectedIndex = -1;
                 textBoxNotes.Text = "";
             }
+
+            displayExceptions(s.Id);
         }
 
 

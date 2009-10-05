@@ -21,7 +21,7 @@ namespace DPXDatabase
         }
         public String Filename
         {
-            get { return System.IO.Path.GetFileNameWithoutExtension( filename); }
+            get { return filename; }
         }
         public int SlideNumber
         {

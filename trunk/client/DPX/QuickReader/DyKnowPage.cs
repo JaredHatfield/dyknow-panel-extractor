@@ -194,7 +194,7 @@ namespace QuickReader
                     //Stroke removed (for both the moderator and the user)
                     deleteStrokes(myStrokes, xmlFile.ReadSubtree());
                 }
-                else if (xmlFile.Name.ToString() == "IMG")
+                else if (xmlFile.Name.ToString() == "IMG" && xmlFile.NodeType == XmlNodeType.Element)
                 {
                     DyKnowImage dki = new DyKnowImage(Int32.Parse(xmlFile.GetAttribute("UT")),
                         xmlFile.GetAttribute("SP"), Int32.Parse(xmlFile.GetAttribute("PW")),

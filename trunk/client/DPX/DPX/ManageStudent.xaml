@@ -55,25 +55,30 @@
                 <Button Name="buttonAddException" HorizontalAlignment="Right" Click="buttonAddException_Click">Add Exception</Button>
             </StackPanel>
         </StackPanel>
-        <StackPanel>
-            <ScrollViewer VerticalScrollBarVisibility="Visible">
+        <DockPanel>
+            <ScrollViewer VerticalScrollBarVisibility="Visible" DockPanel.Dock="Top">
                 <Grid Name="gridPanels">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Name="columnPanels1" Width="75" />
-                        <ColumnDefinition Name="columnPanels2" />
-                        <ColumnDefinition Name="columnPanels3" Width="75" />
-                        <ColumnDefinition Name="columnPanels4" Width="75" />
-                        <ColumnDefinition Name="columnPanels5" Width="75" />
-                        <ColumnDefinition Name="columnPanels6" Width="75" />
-                        <ColumnDefinition Name="columnPanels7" Width="75" />
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition Width="75" />
                     </Grid.ColumnDefinitions>
                 </Grid>
             </ScrollViewer>
-            <ScrollViewer VerticalScrollBarVisibility="Visible">
+            <ScrollViewer VerticalScrollBarVisibility="Visible" DockPanel.Dock="Bottom">
                 <Grid Name="gridException">
-                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
                 </Grid>
             </ScrollViewer>
-        </StackPanel>
+        </DockPanel>
     </DockPanel>
 </Page>

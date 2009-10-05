@@ -120,6 +120,8 @@ namespace DPX
             }
         }
 
+
+        // Import a file into the database
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             if (dr == null)
@@ -136,8 +138,12 @@ namespace DPX
             }
             else
             {
-                c.addDyKnowFile(dr, textBoxSaveFileName.Text, comboBoxDates.SelectedValue as Classdate);
+                c.addDyKnowFile(dr, System.IO.Path.GetFileNameWithoutExtension(textBoxSaveFileName.Text), 
+                    comboBoxDates.SelectedValue as Classdate);
                 clearDyKnowGrid();
+                textBoxSaveFileName.Clear();
+                buttonImport.IsEnabled = false;
+                c.refreshStudents();
                 c.refreshStudents();
             }
         }
