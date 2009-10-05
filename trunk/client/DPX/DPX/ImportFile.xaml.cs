@@ -138,13 +138,20 @@ namespace DPX
             }
             else
             {
-                c.addDyKnowFile(dr, System.IO.Path.GetFileNameWithoutExtension(textBoxSaveFileName.Text), 
+                int i = c.addDyKnowFile(dr, System.IO.Path.GetFileNameWithoutExtension(textBoxSaveFileName.Text), 
                     comboBoxDates.SelectedValue as Classdate);
-                clearDyKnowGrid();
-                textBoxSaveFileName.Clear();
-                buttonImport.IsEnabled = false;
-                c.refreshStudents();
-                c.refreshStudents();
+                if (i < 0)
+                {
+                    MessageBox.Show("Import failed to create file record in the database.", "Error");
+                }
+                else
+                {
+                    clearDyKnowGrid();
+                    textBoxSaveFileName.Clear();
+                    buttonImport.IsEnabled = false;
+                    c.refreshStudents();
+                    c.refreshStudents();
+                }
             }
         }
 

@@ -26,7 +26,7 @@ namespace DPX
         {
             InitializeComponent();
             FileMenuClose.IsEnabled = false;
-            
+            c.setProgressBarMaster(progressBarMaster);
         }
 
         private void DisplayAboutWindow(object sender, RoutedEventArgs e)

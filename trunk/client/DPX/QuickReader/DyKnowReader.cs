@@ -34,7 +34,17 @@ namespace QuickReader
         }
         public double StdDevStrokes
         {
-            get { return stdDevStrokes; }
+            get
+            {
+                if (NumOfPages() < 2)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return stdDevStrokes;
+                }
+            }
         }
         public double MeanStrokeDistance
         {
@@ -42,7 +52,17 @@ namespace QuickReader
         }
         public double StdDevStrokeDistance
         {
-            get { return stdDevStrokeDistance; }
+            get
+            {
+                if (NumOfPages() < 2)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return stdDevStrokeDistance;
+                }
+            }
         }
         public int MinStrokeCount
         {

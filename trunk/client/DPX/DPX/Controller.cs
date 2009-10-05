@@ -14,14 +14,15 @@ namespace DPX
         private static Controller c;
 
         //Instance of the database
-        Database db;
+        private Database db;
 
         // Collections of data kept in the interface
-        ComboBox comboBoxDateImport;
-        ComboBox comboBoxDateException;
-        ComboBox comboBoxSections;
-        ComboBox comboBoxReasons;
-        ListBox listBoxStudents;
+        private ComboBox comboBoxDateImport;
+        private ComboBox comboBoxDateException;
+        private ComboBox comboBoxSections;
+        private ComboBox comboBoxReasons;
+        private ListBox listBoxStudents;
+        private ProgressBar progressBarMaster;
 
         private Controller()
         {
@@ -45,27 +46,50 @@ namespace DPX
 
         public void setComboBoxDateImport(ComboBox cbd)
         {
-            comboBoxDateImport = cbd;
+            if (comboBoxDateImport == null)
+            {
+                comboBoxDateImport = cbd;
+            }
         }
 
         public void setComboBoxDateException(ComboBox cbd)
         {
-            comboBoxDateException = cbd;
+            if (comboBoxDateException == null)
+            {
+                comboBoxDateException = cbd;
+            }
         }
 
         public void setComboBoxSections(ComboBox cbs)
         {
-            comboBoxSections = cbs;
+            if (comboBoxSections == null)
+            {
+                comboBoxSections = cbs;
+            }
         }
 
         public void setComboBoxReason(ComboBox cbr)
         {
-            comboBoxReasons = cbr;
+            if (comboBoxReasons == null)
+            {
+                comboBoxReasons = cbr;
+            }
         }
 
         public void setListBoxStudents(ListBox stu)
         {
-            listBoxStudents = stu;
+            if (listBoxStudents == null)
+            {
+                listBoxStudents = stu;
+            }
+        }
+
+        public void setProgressBarMaster(ProgressBar pb)
+        {
+            if (progressBarMaster == null)
+            {
+                progressBarMaster = pb;
+            }
         }
 
 
@@ -140,12 +164,18 @@ namespace DPX
             }
         }
 
-        public void addDyKnowFile(DyKnowReader dr, String filename, Classdate cd)
+        public int addDyKnowFile(DyKnowReader dr, String filename, Classdate cd)
         {
+            
             File f = new File(cd.Id, filename, dr.MeanStrokes, dr.StdDevStrokes, dr.MinStrokeCount,
                 dr.MaxStrokeCount, dr.MeanStrokeDistance, dr.StdDevStrokeDistance,
                 dr.MinStrokeDistance, dr.MaxStrokeDistance);
             int fileId = db.addFile(f);
+            
+            if (fileId < 0)
+            {
+                return fileId;
+            }
 
             for (int i = 0; i < dr.NumOfPages(); i++)
             {
@@ -155,7 +185,10 @@ namespace DPX
                 }
                 db.addPanel(fileId, dr.getDyKnowPage(i));
             }
+
+            return fileId;
         }
+
 
         public void closeDatabase()
         {
