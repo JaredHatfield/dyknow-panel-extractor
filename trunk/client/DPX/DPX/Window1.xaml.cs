@@ -41,22 +41,22 @@ namespace DPX
             //The database is not open
             if (!c.isDatabaseOpen())
             {
-                // Configure open file dialog box
-                Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-                dlg.DefaultExt = ".accdb"; // Default file extension
-                dlg.Filter = "Database File (.accdb)|*.accdb"; // Filter files by extension
+                    // Configure open file dialog box
+                    Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+                    dlg.DefaultExt = ".accdb"; // Default file extension
+                    dlg.Filter = "Database File (.accdb)|*.accdb"; // Filter files by extension
 
-                // Show open file dialog box
-                Nullable<bool> result = dlg.ShowDialog();
+                    // Show open file dialog box
+                    Nullable<bool> result = dlg.ShowDialog();
 
-                // Process open file dialog box results
-                if (result == true)
-                {
-                    // Open document
-                    c.openDatabaseFile(dlg.FileName);
-                    FileMenuOpen.IsEnabled = false;
-                    FileMenuClose.IsEnabled = true;
-                }
+                    // Process open file dialog box results
+                    if (result == true)
+                    {
+                        // Open document
+                        c.openDatabaseFile(dlg.FileName);
+                        FileMenuOpen.IsEnabled = false;
+                        FileMenuClose.IsEnabled = true;
+                    }
                 
             }
         }

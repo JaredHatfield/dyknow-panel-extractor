@@ -42,6 +42,15 @@ namespace DPX
             grid1.RowDefinitions.Clear();
         }
 
+        private void show_preview(object sender, System.EventArgs e)
+        {
+            Button b = sender as Button;
+            int i = (int)b.Tag;
+            PanelPreview pp = new PanelPreview(dr);
+            pp.displayPanel(i);
+            pp.ShowDialog();
+        }
+
         private void displayFile(String file)
         {
             dr = new DyKnowReader(file);
@@ -97,6 +106,16 @@ namespace DPX
                 analysis.BorderThickness = new Thickness(1);
                 analysis.BorderBrush = Brushes.Black;
                 grid1.Children.Add(analysis);
+
+                Button buttonNum = new Button();
+                buttonNum.Content = "Show";
+                Grid.SetColumn(buttonNum, 5);
+                Grid.SetRow(buttonNum, i);
+                buttonNum.AddHandler(Button.ClickEvent, new RoutedEventHandler(this.show_preview));
+                buttonNum.Tag = i;
+                buttonNum.BorderBrush = Brushes.Black;
+                buttonNum.BorderThickness = new Thickness(1);
+                grid1.Children.Add(buttonNum);
             }
         }
 
