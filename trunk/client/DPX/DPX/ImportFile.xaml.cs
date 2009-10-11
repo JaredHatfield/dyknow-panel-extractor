@@ -101,6 +101,18 @@ namespace DPX
 
                 Label analysis = new Label();
                 analysis.Content = dp.Finished;
+                if (dp.Finished.Equals("Yes"))
+                {
+                    analysis.Background = Brushes.LightGreen;
+                }
+                else if (dp.Finished.Equals("Maybe"))
+                {
+                    analysis.Background = Brushes.LightYellow;
+                }
+                else if (dp.Finished.Equals("No"))
+                {
+                    analysis.Background = Brushes.LightPink;
+                }
                 Grid.SetColumn(analysis, 4);
                 Grid.SetRow(analysis, i);
                 analysis.BorderThickness = new Thickness(1);

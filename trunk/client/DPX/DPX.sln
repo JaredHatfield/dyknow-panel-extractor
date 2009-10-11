@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DyKnowPanelSorter", "DyKnow
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPXDatabase", "DPXDatabase\DPXDatabase.csproj", "{0EB8D572-1B0A-43F0-B491-17373A9288B9}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PanelSorter", "PanelSorter\PanelSorter.vdproj", "{2D4E83A8-CD9F-4297-BD18-60DA3CBA43D9}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "DPX-Tools", "DPX-Tools\DPX-Tools.vdproj", "{2C1A55D7-1998-4E62-96BE-61FDE75F1E7C}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
@@ -49,8 +49,8 @@ Global
 		{0EB8D572-1B0A-43F0-B491-17373A9288B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EB8D572-1B0A-43F0-B491-17373A9288B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EB8D572-1B0A-43F0-B491-17373A9288B9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2D4E83A8-CD9F-4297-BD18-60DA3CBA43D9}.Debug|Any CPU.ActiveCfg = Debug
-		{2D4E83A8-CD9F-4297-BD18-60DA3CBA43D9}.Release|Any CPU.ActiveCfg = Release
+		{2C1A55D7-1998-4E62-96BE-61FDE75F1E7C}.Debug|Any CPU.ActiveCfg = Debug
+		{2C1A55D7-1998-4E62-96BE-61FDE75F1E7C}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

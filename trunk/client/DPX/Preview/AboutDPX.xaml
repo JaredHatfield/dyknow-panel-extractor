@@ -4,8 +4,8 @@
     Title="About" Height="200" Width="450"
     WindowStartupLocation="CenterOwner">
     <Grid>
-        <TextBlock Margin="20,16,20,0" FontSize="18" FontWeight="Bold" TextAlignment="Center" VerticalAlignment="Top">
-            DyKnow Panel eXtractor
+        <TextBlock Margin="20,16,20,0" FontSize="28" FontWeight="Bold" TextAlignment="Center" VerticalAlignment="Top">
+            DPX
         </TextBlock>
         <TextBlock Margin="20,70,20,76" TextAlignment="Center">
             Code license: GNU General Public License v3
