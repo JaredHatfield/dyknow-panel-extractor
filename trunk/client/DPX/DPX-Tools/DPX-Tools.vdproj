@@ -15,37 +15,13 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_2B85F7D41EBD3BD481680D60059A4213"
-        "OwnerKey" = "8:_C4D1062318B50F05CA4D2F2CD45294AA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_2B85F7D41EBD3BD481680D60059A4213"
-        "OwnerKey" = "8:_CC6F983023454FA79F2E05E2B99BBB63"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_2B85F7D41EBD3BD481680D60059A4213"
-        "OwnerKey" = "8:_EB67CE04AF4D402387A0B257038C9EF9"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_2B85F7D41EBD3BD481680D60059A4213"
-        "OwnerKey" = "8:_917B475ABE57439789E371403AA3121A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_917B475ABE57439789E371403AA3121A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_C4D1062318B50F05CA4D2F2CD45294AA"
+        "MsmKey" = "8:_A8EAB70FEC66DAB0DE020923F4EE2CD4"
         "OwnerKey" = "8:_917B475ABE57439789E371403AA3121A"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -63,20 +39,26 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2B85F7D41EBD3BD481680D60059A4213"
+        "MsmKey" = "8:_FECCE81BA9FD172932ADFD5FFE1D06E9"
+        "OwnerKey" = "8:_A8EAB70FEC66DAB0DE020923F4EE2CD4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_FECCE81BA9FD172932ADFD5FFE1D06E9"
+        "OwnerKey" = "8:_EB67CE04AF4D402387A0B257038C9EF9"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_FECCE81BA9FD172932ADFD5FFE1D06E9"
         "OwnerKey" = "8:_CC6F983023454FA79F2E05E2B99BBB63"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_EB67CE04AF4D402387A0B257038C9EF9"
+        "MsmKey" = "8:_FECCE81BA9FD172932ADFD5FFE1D06E9"
+        "OwnerKey" = "8:_917B475ABE57439789E371403AA3121A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -88,7 +70,25 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C4D1062318B50F05CA4D2F2CD45294AA"
+        "OwnerKey" = "8:_EB67CE04AF4D402387A0B257038C9EF9"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_CC6F983023454FA79F2E05E2B99BBB63"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_A8EAB70FEC66DAB0DE020923F4EE2CD4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_FECCE81BA9FD172932ADFD5FFE1D06E9"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -109,6 +109,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -125,6 +133,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -154,20 +170,20 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2B85F7D41EBD3BD481680D60059A4213"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A8EAB70FEC66DAB0DE020923F4EE2CD4"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:QuickReader, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DPXDatabase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_2B85F7D41EBD3BD481680D60059A4213"
+                    "_A8EAB70FEC66DAB0DE020923F4EE2CD4"
                     {
-                    "Name" = "8:QuickReader.dll"
+                    "Name" = "8:DPXDatabase.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:QuickReader.dll"
+            "SourcePath" = "8:DPXDatabase.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B81E8B20C5C34E0482C4016517F9DF4A"
@@ -185,20 +201,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C4D1062318B50F05CA4D2F2CD45294AA"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_FECCE81BA9FD172932ADFD5FFE1D06E9"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DPXDatabase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:QuickReader, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_C4D1062318B50F05CA4D2F2CD45294AA"
+                    "_FECCE81BA9FD172932ADFD5FFE1D06E9"
                     {
-                    "Name" = "8:DPXDatabase.dll"
+                    "Name" = "8:QuickReader.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:DPXDatabase.dll"
+            "SourcePath" = "8:QuickReader.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B81E8B20C5C34E0482C4016517F9DF4A"
@@ -291,15 +307,15 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Default Company Name"
+        "Manufacturer" = "8:DPX"
         "ARPHELPTELEPHONE" = "8:"
-        "ARPHELPLINK" = "8:"
+        "ARPHELPLINK" = "8:http://code.google.com/p/dyknow-panel-extractor/issues/list"
         "Title" = "8:DPX-Tools"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Default Company Name"
+        "ARPCONTACT" = "8:DPX"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
-        "ARPURLINFOABOUT" = "8:"
+        "ARPURLINFOABOUT" = "8:http://code.google.com/p/dyknow-panel-extractor/"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
@@ -846,7 +862,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_917B475ABE57439789E371403AA3121A"
             {
-            "SourcePath" = "8:..\\DPX\\obj\\Debug\\DPX.exe"
+            "SourcePath" = "8:..\\DPX\\obj\\Release\\DPX.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B81E8B20C5C34E0482C4016517F9DF4A"
@@ -874,7 +890,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_CC6F983023454FA79F2E05E2B99BBB63"
             {
-            "SourcePath" = "8:..\\Preview\\obj\\Debug\\Preview.exe"
+            "SourcePath" = "8:..\\Preview\\obj\\Release\\Preview.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B81E8B20C5C34E0482C4016517F9DF4A"
@@ -902,7 +918,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_EB67CE04AF4D402387A0B257038C9EF9"
             {
-            "SourcePath" = "8:..\\DyKnowPanelSorter\\obj\\Debug\\DyKnowPanelSorter.exe"
+            "SourcePath" = "8:..\\DyKnowPanelSorter\\obj\\Release\\DyKnowPanelSorter.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B81E8B20C5C34E0482C4016517F9DF4A"
