@@ -778,14 +778,11 @@ namespace DPXDatabase
 
 
         // REPORT GENERATION
-        public List<String> generateReport(List<Classdate> dates)
+        public String generateReport(List<Classdate> dates)
         {
             List<String> report = new List<string>();
-
-
-            //ReportGeneration rg = new ReportGeneration(this);
-
-            return report;
+            ReportGeneration rg = new ReportGeneration(this, dates);
+            return rg.getReport();
 
         }
 

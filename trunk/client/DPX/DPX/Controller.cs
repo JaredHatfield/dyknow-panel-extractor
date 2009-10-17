@@ -22,6 +22,7 @@ namespace DPX
         private ComboBox comboBoxSections;
         private ComboBox comboBoxReasons;
         private ListBox listBoxStudents;
+        private ListBox listBoxReportDates;
         private ProgressBar progressBarMaster;
 
         private Controller()
@@ -84,6 +85,14 @@ namespace DPX
             }
         }
 
+        public void setListBoxReportDates(ListBox r)
+        {
+            if (listBoxReportDates == null)
+            {
+                listBoxReportDates = r;
+            }
+        }
+
         public void setProgressBarMaster(ProgressBar pb)
         {
             if (progressBarMaster == null)
@@ -119,12 +128,14 @@ namespace DPX
         {
             comboBoxDateImport.Items.Clear();
             comboBoxDateException.Items.Clear();
+            listBoxReportDates.Items.Clear();
             // Fill in all of the currently available dates
             List<Classdate> cdl = db.getClassdates();
             for (int i = 0; i < cdl.Count; i++)
             {
                 comboBoxDateImport.Items.Add(cdl[i]);
                 comboBoxDateException.Items.Add(cdl[i]);
+                listBoxReportDates.Items.Add(cdl[i]);
             }
         }
 

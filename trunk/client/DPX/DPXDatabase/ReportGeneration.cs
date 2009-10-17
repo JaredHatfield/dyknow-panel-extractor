@@ -21,6 +21,22 @@ namespace DPXDatabase
             this.sections = db.getSections();
         }
 
+        public String getReport()
+        {
+            String report = "Report - ";
+            for (int i = 0; i < dates.Count; i++)
+            {
+                report += dates[i] + " - ";
+            }
+            report += "\n";
+
+            for (int i = 0; i < students.Count; i++)
+            {
+                StudentReport sr = new StudentReport(db, students[i], dates);
+            }
+            return report;
+        }
+
 
 
     }
@@ -47,15 +63,50 @@ namespace DPXDatabase
             List<StudentDate> studentDate = new List<StudentDate>();
             for (int n = 0; n < dates.Count; n++)
             {
+                StudentDate sd = new StudentDate(student, dates[n]);
                 for (int i = 0; i < exception.Count; i++)
                 {
-
-                    //if(exception[i].Date
+                    // Matched a date for the students exception to a date in the report
+                    if (exception[i].Date.Equals(dates[i].ClassDate))
+                    {
+                        // The student gets credit
+                        if (exception[i].Credit)
+                        {
+                            sd.Exception = true;
+                        }
+                        // The student does not get credit
+                        else
+                        {
+                            sd.NoCredit = true;
+                        }
+                    }
                 }
 
                 for (int i = 0; i < panels.Count; i++)
                 {
+                    // Matched a date for a panel to a date in the report
+                    if (panels[i].Date.Equals(dates[i].ClassDate))
+                    {
+                        // Panel is blank, no credit
+                        if (panels[i].IsBlank)
+                        {
+                            sd.PanelWithoutCredit = true;
+                        }
+                        // Panel is NOT blank, student gets credit
+                        else
+                        {
+                            sd.PanelWithCredit = true;
+                        }
+                    }
+                }
+            }
 
+            for (int i = 0; i < studentDate.Count; i++)
+            {
+                int count = 0;
+                if (studentDate[i].Result)
+                {
+                    
                 }
             }
             return "Not implemented";
@@ -76,6 +127,29 @@ namespace DPXDatabase
         public Boolean Exception { get; set; }
         public Boolean PanelWithCredit { get; set; }
         public Boolean PanelWithoutCredit { get; set; }
+
+        public Boolean Result
+        {
+            get
+            {
+                if (noCredit)
+                {
+                    return false;
+                }
+                else if (exception)
+                {
+                    return true;
+                }
+                else if (panelWithCredit)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
         
 
         public StudentDate(Student student, Classdate date)
