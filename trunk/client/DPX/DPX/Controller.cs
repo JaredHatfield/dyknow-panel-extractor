@@ -130,7 +130,7 @@ namespace DPX
             comboBoxDateException.Items.Clear();
             listBoxReportDates.Items.Clear();
             // Fill in all of the currently available dates
-            List<Classdate> cdl = db.getClassdates();
+            List<Classdate> cdl = db.GetClassdates();
             for (int i = 0; i < cdl.Count; i++)
             {
                 comboBoxDateImport.Items.Add(cdl[i]);
@@ -143,7 +143,7 @@ namespace DPX
         {
             comboBoxSections.Items.Clear();
             // Fill in all of the sections
-            List<Section> s = db.getSections();
+            List<Section> s = db.GetSections();
             for (int i = 0; i < s.Count; i++)
             {
                 comboBoxSections.Items.Add(s[i]);
@@ -155,7 +155,7 @@ namespace DPX
         {
             comboBoxReasons.Items.Clear();
             // Fill in all of the sections
-            List<Reason> res = db.getReasons();
+            List<Reason> res = db.GetReasons();
             for (int i = 0; i < res.Count; i++)
             {
                 comboBoxReasons.Items.Add(res[i]);
@@ -167,7 +167,7 @@ namespace DPX
         {
             listBoxStudents.Items.Clear();
             // Fill in all of the students
-            List<Student> allStudents = c.DB.getAllStudents();
+            List<Student> allStudents = c.DB.GetAllStudents();
             listBoxStudents.Items.Clear();
             for (int i = 0; i < allStudents.Count; i++)
             {
@@ -181,7 +181,7 @@ namespace DPX
             File f = new File(cd.Id, filename, dr.MeanStrokes, dr.StdDevStrokes, dr.MinStrokeCount,
                 dr.MaxStrokeCount, dr.MeanStrokeDistance, dr.StdDevStrokeDistance,
                 dr.MinStrokeDistance, dr.MaxStrokeDistance);
-            int fileId = db.addFile(f);
+            int fileId = db.AddFile(f);
             
             if (fileId < 0)
             {
@@ -190,11 +190,11 @@ namespace DPX
 
             for (int i = 0; i < dr.NumOfPages(); i++)
             {
-                if (!db.isStudentUsername(dr.getDyKnowPage(i).UserName))
+                if (!db.IsStudentUsername(dr.getDyKnowPage(i).UserName))
                 {
-                    db.addStudent(new Student(dr.getDyKnowPage(i)));
+                    db.AddStudent(new Student(dr.getDyKnowPage(i)));
                 }
-                db.addPanel(fileId, dr.getDyKnowPage(i));
+                db.AddPanel(fileId, dr.getDyKnowPage(i));
             }
 
             return fileId;

@@ -24,7 +24,7 @@ namespace DPX
         {
             InitializeComponent();
 
-            if (c.DB.isClassdate(dateTimePicker.Value.Date))
+            if (c.DB.IsClassdate(dateTimePicker.Value.Date))
             {
                 buttonAddDate.IsEnabled = false;
             }
@@ -37,7 +37,7 @@ namespace DPX
 
         private void dateTimePicker_ValueChanged(object sender, EventArgs e)
         {
-            if (c.DB.isClassdate(dateTimePicker.Value.Date))
+            if (c.DB.IsClassdate(dateTimePicker.Value.Date))
             {
                 buttonAddDate.IsEnabled = false;
             }
@@ -49,7 +49,7 @@ namespace DPX
 
         private void buttonAddDate_Click(object sender, RoutedEventArgs e)
         {
-            c.DB.addClassdate(dateTimePicker.Value.Date);
+            c.DB.AddClassdate(dateTimePicker.Value.Date);
             c.refreshClassdate();
             this.Close();
         }

@@ -10,7 +10,8 @@ namespace UnitTests
 {
     class Program
     {
-        public static OleDbConnection aConnection;
+        //public static OleDbConnection aConnection;
+
         static void Main(string[] args)
         {
             Console.WriteLine("DyKnow Panel eXtractor Unit Tests");
@@ -41,13 +42,13 @@ namespace UnitTests
             */
 
             /*
-            List<Classdate> cd = db.getClassdates();
+            List<Classdate> cd = db.GetClassdates();
             for (int i = 0; i < cd.Count; i++)
             {
                 Console.WriteLine(cd[i].ClassDate.Date);
             }
 
-            List<Reason> r = db.getReasons();
+            List<Reason> r = db.GetReasons();
             for (int i = 0; i < r.Count; i++)
             {
                 Console.WriteLine(r[i].ToString());

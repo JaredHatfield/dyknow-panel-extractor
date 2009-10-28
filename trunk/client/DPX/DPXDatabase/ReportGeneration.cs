@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace DPXDatabase
+﻿namespace DPXDatabase
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     internal class ReportGeneration
     {
         private Database db;
@@ -18,8 +18,8 @@ namespace DPXDatabase
         {
             this.db = db;
             this.dates = dates;
-            this.students = db.getAllStudents();
-            this.sections = db.getSections();
+            this.students = db.GetAllStudents();
+            this.sections = db.GetSections();
             
             // Generate the report... this will take a while
             studentReport = new List<StudentReport>();
@@ -40,7 +40,7 @@ namespace DPXDatabase
 
 
             // Not the most elegant solution to break student's out by section, but it works.
-            List<Section> sections = db.getSections();
+            List<Section> sections = db.GetSections();
             for (int n = 0; n < sections.Count; n++)
             {
                 report += "\n----------------------------------------------------\n";
@@ -78,8 +78,8 @@ namespace DPXDatabase
         {
             this.student = student;
             this.dates = dates;
-            exception = db.getExceptionsForStudent(student.Id);
-            panels = db.getPanelsForStudent(student.Id);
+            exception = db.GetExceptionsForStudent(student.Id);
+            panels = db.GetPanelsForStudent(student.Id);
 
             // GENERATE THE REPORT
             studentDate = new List<StudentDate>();

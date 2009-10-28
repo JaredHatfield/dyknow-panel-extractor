@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace DPXDatabase
+﻿namespace DPXDatabase
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     public class Classdate
     {
         private int id;
         private DateTime classDate;
 
-        public int Id
+        public Classdate()
         {
-            get { return id; }
-        }
-        public DateTime ClassDate
-        {
-            get { return classDate; }
+            this.id = -1;
+            this.classDate = DateTime.Today;
         }
 
         public Classdate(int id, DateTime classdate)
@@ -25,15 +22,19 @@ namespace DPXDatabase
             this.classDate = classdate;
         }
 
-        public Classdate()
+        public int Id
         {
-            this.id = -1;
-            this.classDate = DateTime.Today;
+            get { return this.id; }
+        }
+
+        public DateTime ClassDate
+        {
+            get { return this.classDate; }
         }
 
         public override string ToString()
         {
-            return classDate.Date.ToShortDateString();
+            return this.classDate.Date.ToShortDateString();
         }
     }
 }

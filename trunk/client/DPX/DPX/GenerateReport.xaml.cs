@@ -39,7 +39,7 @@ namespace DPX
                 }
 
                 Paragraph para = new Paragraph();
-                para.Inlines.Add(new Run(c.DB.generateReport(selectedDates)));
+                para.Inlines.Add(new Run(c.DB.GenerateReport(selectedDates)));
                 richTextBoxReport.Document.Blocks.Add(para);
             }
             else

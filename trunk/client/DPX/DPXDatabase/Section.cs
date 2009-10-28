@@ -1,25 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace DPXDatabase
+﻿namespace DPXDatabase
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     public class Section
     {
         private int id;
-        private String sectionName;
+        private string sectionName;
 
-        public int Id
-        {
-            get { return id; }
-        }
-        public String SectionName
-        {
-            get { return sectionName; }
-        }
-
-        public Section(int id, String sectionName)
+        public Section(int id, string sectionName)
         {
             this.id = id;
             this.sectionName = sectionName;
@@ -31,9 +22,19 @@ namespace DPXDatabase
             this.sectionName = "No-Name-Section";
         }
 
+        public int Id
+        {
+            get { return this.id; }
+        }
+
+        public string SectionName
+        {
+            get { return this.sectionName; }
+        }
+
         public override string ToString()
         {
-            return sectionName;
+            return this.sectionName;
         }
     }
 }

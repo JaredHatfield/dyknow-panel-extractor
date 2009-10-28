@@ -1,51 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace DPXDatabase
+﻿namespace DPXDatabase
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     public class DisplayPanelInfo
     {
         private DateTime date;
-        private String filename;
+        private string filename;
         private int slideNumber;
         private int totalStrokeCount;
         private int netStrokeCount;
-        private Boolean isBlank;
-        private String analysis;
+        private bool isBlank;
+        private string analysis;
 
-        public DateTime Date
-        {
-            get { return date; }
-        }
-        public String Filename
-        {
-            get { return filename; }
-        }
-        public int SlideNumber
-        {
-            get { return slideNumber; }
-        }
-        public int TotalStrokeCount
-        {
-            get { return totalStrokeCount; }
-        }
-        public int NetStrokeCount
-        {
-            get { return netStrokeCount; }
-        }
-        public Boolean IsBlank
-        {
-            get { return isBlank; }
-        }
-        public String Analysis
-        {
-            get { return analysis; }
-        }
-
-        public DisplayPanelInfo(DateTime date, String filename, int slideNumber, int totalStrokeCount,
-            int netStrokeCount, Boolean isBlank, String analysis)
+        public DisplayPanelInfo(
+            DateTime date, 
+            string filename, 
+            int slideNumber, 
+            int totalStrokeCount,
+            int netStrokeCount, 
+            bool isBlank, 
+            string analysis)
         {
             this.date = date;
             this.filename = filename;
@@ -54,6 +31,41 @@ namespace DPXDatabase
             this.netStrokeCount = netStrokeCount;
             this.isBlank = isBlank;
             this.analysis = analysis;
+        }
+
+        public DateTime Date
+        {
+            get { return this.date; }
+        }
+
+        public string Filename
+        {
+            get { return this.filename; }
+        }
+
+        public int SlideNumber
+        {
+            get { return this.slideNumber; }
+        }
+
+        public int TotalStrokeCount
+        {
+            get { return this.totalStrokeCount; }
+        }
+
+        public int NetStrokeCount
+        {
+            get { return this.netStrokeCount; }
+        }
+
+        public bool IsBlank
+        {
+            get { return this.isBlank; }
+        }
+
+        public string Analysis
+        {
+            get { return this.analysis; }
         }
     }
 }

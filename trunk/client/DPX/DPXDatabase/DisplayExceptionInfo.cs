@@ -1,35 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace DPXDatabase
+﻿namespace DPXDatabase
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     public class DisplayExceptionInfo
     {
         private DateTime date;
-        private Boolean credit;
+        private bool credit;
         private string description;
         private string notes;
 
-        public DateTime Date
-        {
-            get { return date; }
-        }
-        public Boolean Credit
-        {
-            get { return credit; }
-        }
-        public String Description
-        {
-            get { return description; }
-        }
-        public String Notes
-        {
-            get { return notes; }
-        }
-
-        public DisplayExceptionInfo(DateTime date, Boolean credit, string description, string notes)
+        public DisplayExceptionInfo(DateTime date, bool credit, string description, string notes)
         {
             this.date = date;
             this.credit = credit;
@@ -37,6 +20,24 @@ namespace DPXDatabase
             this.notes = notes;
         }
 
+        public DateTime Date
+        {
+            get { return this.date; }
+        }
 
+        public bool Credit
+        {
+            get { return this.credit; }
+        }
+
+        public string Description
+        {
+            get { return this.description; }
+        }
+
+        public string Notes
+        {
+            get { return this.notes; }
+        }
     }
 }

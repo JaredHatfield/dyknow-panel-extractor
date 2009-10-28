@@ -1,41 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace DPXDatabase
+﻿namespace DPXDatabase
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     public class Reason
     {
-        int id;
-        Boolean credit;
-        String description;
+        private int id;
+        private bool credit;
+        private string description;
 
-        public int Id
+        public Reason()
         {
-            get { return id; }
-        }
-        public Boolean Credit
-        {
-            get { return credit; }
-        }
-        public String Description
-        {
-            get { return description; }
+            this.id = -1;
+            this.credit = false;
+            this.description = string.Empty;
         }
 
-        public Reason(int id, Boolean credit, String description)
+        public Reason(int id, bool credit, string description)
         {
             this.id = id;
             this.credit = credit;
             this.description = description;
         }
 
-        public Reason()
+        public int Id
         {
-            id = -1;
-            credit = false;
-            description = "";
+            get { return this.id; }
+        }
+
+        public bool Credit
+        {
+            get { return this.credit; }
+        }
+
+        public string Description
+        {
+            get { return this.description; }
         }
 
         public override string ToString()

@@ -125,7 +125,7 @@ namespace DPX
             gridException.RowDefinitions.Clear();
 
             // Display the exceptions for this user
-            List<DisplayExceptionInfo> dei = c.DB.getExceptionsForStudent(studentId);
+            List<DisplayExceptionInfo> dei = c.DB.GetExceptionsForStudent(studentId);
             for (int i = 0; i < dei.Count; i++)
             {
                 RowDefinition rd = new RowDefinition();
@@ -173,7 +173,7 @@ namespace DPX
             gridPanels.RowDefinitions.Clear();
 
             // Display the panels for this user
-            List<DisplayPanelInfo> dpi = c.DB.getPanelsForStudent(studentId);
+            List<DisplayPanelInfo> dpi = c.DB.GetPanelsForStudent(studentId);
             for (int i = 0; i < dpi.Count; i++)
             {
                 RowDefinition rd = new RowDefinition();
@@ -247,7 +247,7 @@ namespace DPX
             if (s != null && c.isDatabaseOpen())
             {
                 DPXDatabase.Section section = comboBoxSection.SelectedValue as DPXDatabase.Section;
-                c.DB.updateStudentSection(section.Id, s.Id);
+                c.DB.UpdateStudentSection(section.Id, s.Id);
                 s.Section = section.Id;
             }
         }
@@ -257,7 +257,7 @@ namespace DPX
             Student s = listBoxStudents.SelectedValue as Student;
             if (s != null && c.isDatabaseOpen())
             {
-                c.DB.updateStudentSetEnrolled(true, s.Id);
+                c.DB.UpdateStudentSetEnrolled(true, s.Id);
                 s.IsEnrolled = true;
             }
         }
@@ -267,7 +267,7 @@ namespace DPX
             Student s = listBoxStudents.SelectedValue as Student;
             if (s != null && c.isDatabaseOpen())
             {
-                c.DB.updateStudentSetEnrolled(false, s.Id);
+                c.DB.UpdateStudentSetEnrolled(false, s.Id);
                 s.IsEnrolled = false;
             }
         }
@@ -296,7 +296,7 @@ namespace DPX
             else
             {
                 Exceptions ex = new Exceptions(d.Id, s.Id, r.Id, textBoxNotes.Text);
-                c.DB.addException(ex);
+                c.DB.AddException(ex);
                 //comboBoxDate.SelectedIndex = -1;
                 comboBoxReason.SelectedIndex = -1;
                 textBoxNotes.Text = "";
