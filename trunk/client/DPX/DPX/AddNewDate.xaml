@@ -4,9 +4,9 @@
     xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
     Title="Add New Date" Height="300" Width="300">
     <StackPanel>
-        <Button Name="buttonAddDate" Click="buttonAddDate_Click">Add Date</Button>
+        <Button Name="buttonAddDate" Click="ButtonAddDate_Click">Add Date</Button>
         <WindowsFormsHost>
-            <wf:DateTimePicker x:Name="dateTimePicker" ValueChanged="dateTimePicker_ValueChanged"></wf:DateTimePicker>
+            <wf:DateTimePicker x:Name="dateTimePicker" ValueChanged="DateTimePicker_ValueChanged"></wf:DateTimePicker>
         </WindowsFormsHost>
     </StackPanel>
 </Window>

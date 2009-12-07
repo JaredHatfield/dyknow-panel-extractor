@@ -1,20 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Ink;
-using System.IO;
-using QuickReader;
-
+﻿// <copyright file="PanelPreview.xaml.cs" company="DPX on Google Code">
+// GNU General Public License v3
+// </copyright>
 namespace DPX
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Data;
+    using System.Windows.Documents;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+    using System.Windows.Ink;
+    using System.IO;
+    using QuickReader;
+
     /// <summary>
     /// Interaction logic for PanelPreview.xaml
     /// </summary>

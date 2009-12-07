@@ -1,13 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Controls;
-using DPXDatabase;
-using QuickReader;
-
+﻿// <copyright file="Controller.cs" company="DPX on Google Code">
+// GNU General Public License v3
+// </copyright>
 namespace DPX
 {
+    using DPXDatabase;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Windows.Controls;
+    using QuickReader;
+
+    /// <summary>
+    /// 
+    /// </summary>
     class Controller
     {
         //Singleton instance of the class
@@ -43,7 +49,6 @@ namespace DPX
         {
             get { return db; }
         }
-
 
         public void setComboBoxDateImport(ComboBox cbd)
         {
@@ -100,7 +105,6 @@ namespace DPX
                 progressBarMaster = pb;
             }
         }
-
 
         public Boolean isDatabaseOpen()
         {
@@ -200,7 +204,6 @@ namespace DPX
             return fileId;
         }
 
-
         public void closeDatabase()
         {
             if (db != null)
@@ -208,12 +211,12 @@ namespace DPX
                 db.Connection.Dispose();
                 db = null;
             }
+
             comboBoxDateImport.Items.Clear();
             comboBoxDateException.Items.Clear();
             comboBoxSections.Items.Clear();
             comboBoxReasons.Items.Clear();
             listBoxStudents.Items.Clear();
-             
         }
     }
 }
