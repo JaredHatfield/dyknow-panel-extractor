@@ -1,25 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data.OleDb;
-using QuickReader;
-using DPXDatabase;
-
+﻿// <copyright file="Program.cs" company="DPX">
+// GNU General Public License v3
+// </copyright>
 namespace UnitTests
 {
-    class Program
-    {
-        //public static OleDbConnection aConnection;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.OleDb;
+    using System.Linq;
+    using System.Text;
+    using DPXDatabase;
+    using QuickReader;
 
-        static void Main(string[] args)
+    private class Program
+    {
+        public static void SortFile(string inputfile, string outputfile)
+        {
+            PanelSorter ps = new PanelSorter(inputfile, outputfile);
+            ps.ProcessSort();
+        }
+
+        private static void Main(string[] args)
         {
             Console.WriteLine("DyKnow Panel eXtractor Unit Tests");
 
-            //String dbfile = "C:\\Users\\Jared\\Desktop\\testdatabase.accdb";
-            String dyknowfiled = "C:\\Users\\Jared\\Desktop\\samplefile.dyz";
+            // String dbfile = "C:\\Users\\Jared\\Desktop\\testdatabase.accdb";
+            string dyknowfiled = "C:\\Users\\Jared\\Desktop\\samplefile.dyz";
 
-            //Database db = new Database(dbfile);
+            // Database db = new Database(dbfile);
             DyKnowReader dr = new DyKnowReader(dyknowfiled);
 
             List<ImageData> id = dr.ImageInformation;
@@ -59,13 +66,5 @@ namespace UnitTests
             Console.WriteLine("Press any key to exit...");
             Console.ReadLine();
         }
-
-        public static void sortfile(String inputfile, String outputfile)
-        {
-            PanelSorter ps = new PanelSorter(inputfile, outputfile);
-            ps.ProcessSort();
-        }
-
-
     }
 }
