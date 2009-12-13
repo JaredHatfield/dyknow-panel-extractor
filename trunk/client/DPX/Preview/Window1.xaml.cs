@@ -1,22 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Ink;
-using System.IO;
-using QuickReader;
-
+﻿// <copyright file="Window1.xaml.cs" company="DPX">
+// GNU General Public License v3
+// </copyright>
 namespace Preview
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Data;
+    using System.Windows.Documents;
+    using System.Windows.Ink;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+    using System.Windows.Navigation;
+    using System.Windows.Shapes;
+    using QuickReader;
+
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
@@ -28,68 +31,68 @@ namespace Preview
         public Window1()
         {
             InitializeComponent();
-            currentPanelNumber = 0;
+            this.currentPanelNumber = 0;
             menuUserInformation.IsEnabled = false;
             menuStatistics.IsEnabled = false;
         }
 
-        private void buttonLoadClick(object sender, RoutedEventArgs e)
+        private void ButtonLoadClick(object sender, RoutedEventArgs e)
         {
-            //Let the user choose which file to open
+            // Let the user choose which file to open
             Microsoft.Win32.OpenFileDialog openFileDialog1 = new Microsoft.Win32.OpenFileDialog();
             openFileDialog1.Filter = "DyKnow files (*.dyz)|*.dyz";
             if (openFileDialog1.ShowDialog() == true)
             {
-                //Open the DyKnow file
-                dr = new DyKnowReader(openFileDialog1.FileName);
-                currentPanelNumber = 0;
+                // Open the DyKnow file
+                this.dr = new DyKnowReader(openFileDialog1.FileName);
+                this.currentPanelNumber = 0;
                 Inky.Strokes.Clear();
-                displayPanel(currentPanelNumber);
-                updatePageNumber();
+                this.DisplayPanel(this.currentPanelNumber);
+                this.UpdatePageNumber();
                 menuUserInformation.IsEnabled = true;
                 menuStatistics.IsEnabled = true;
             }
         }
 
-        private void buttonNextClick(object sender, RoutedEventArgs e)
+        private void ButtonNextClick(object sender, RoutedEventArgs e)
         {
-            if (dr != null)
+            if (this.dr != null)
             {
-                if ((currentPanelNumber + 1) < dr.NumOfPages())
+                if ((this.currentPanelNumber + 1) < this.dr.NumOfPages())
                 {
                     Inky.Strokes.Clear();
-                    displayPanel(++currentPanelNumber);
-                    updatePageNumber();
+                    this.DisplayPanel(++this.currentPanelNumber);
+                    this.UpdatePageNumber();
                 }
             }
         }
 
-        private void buttonPreviousClick(object sender, RoutedEventArgs e)
+        private void ButtonPreviousClick(object sender, RoutedEventArgs e)
         {
-            if (dr != null)
+            if (this.dr != null)
             {
-                if (currentPanelNumber > 0)
+                if (this.currentPanelNumber > 0)
                 {
                     Inky.Strokes.Clear();
-                    displayPanel(--currentPanelNumber);
-                    updatePageNumber();
+                    this.DisplayPanel(--this.currentPanelNumber);
+                    this.UpdatePageNumber();
                 }
             }
         }
 
-        private void updatePageNumber()
+        private void UpdatePageNumber()
         {
-            labelPageNumber.Content = (currentPanelNumber + 1).ToString() + " of " + dr.NumOfPages().ToString();
+            labelPageNumber.Content = (this.currentPanelNumber + 1).ToString() + " of " + this.dr.NumOfPages().ToString();
         }
 
-        private void buttonExportImageClick(object sender, RoutedEventArgs e)
+        private void ButtonExportImageClick(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.SaveFileDialog saveFileDialog1 = new Microsoft.Win32.SaveFileDialog();
             saveFileDialog1.Filter = "JPEG (*.jpg)|*.jpg";
             if (saveFileDialog1.ShowDialog() == true)
             {
                 FileStream fs = new FileStream(saveFileDialog1.FileName, FileMode.Create);
-                RenderTargetBitmap rtb = new RenderTargetBitmap(Convert.ToInt32( Inky.Width / 2.0), Convert.ToInt32( Inky.Height / 2.0), 96d, 96d, PixelFormats.Default);
+                RenderTargetBitmap rtb = new RenderTargetBitmap(Convert.ToInt32(Inky.Width / 2.0), Convert.ToInt32(Inky.Height / 2.0), 96d, 96d, PixelFormats.Default);
                
                 rtb.Render(Inky);
                 JpegBitmapEncoder encoder = new JpegBitmapEncoder();
@@ -99,114 +102,121 @@ namespace Preview
             }
         }
 
-        private void displayPanel(int n)
+        private void DisplayPanel(int n)
         {
-            //Some error checking to make sure we don't crash
-            if (dr != null && n >= 0 && n < dr.NumOfPages())
+            // Some error checking to make sure we don't crash
+            if (this.dr != null && n >= 0 && n < this.dr.NumOfPages())
             {
-                currentPanelNumber = n;
+                this.currentPanelNumber = n;
 
-                //Read in the panel
-                DyKnowPage dp = dr.getDyKnowPage(n);
+                // Read in the panel
+                DyKnowPage dp = this.dr.getDyKnowPage(n);
 
-                //Display all of the images
+                // Display all of the images
                 Inky.Children.Clear();
                 List<DyKnowImage> dki = dp.Images;
 
-                //Add all of the images as children (there should only be 1, but this works for now)
+                // Add all of the images as children (there should only be 1, but this works for now)
                 for (int i = 0; i < dki.Count; i++)
                 {
-                    //Get the actual image
-                    ImageData id = dr.getImageData(dki[i].Id);
+                    // Get the actual image
+                    ImageData id = this.dr.getImageData(dki[i].Id);
                     BitmapImage bi = new BitmapImage();
                     bi.BeginInit();
                     bi.StreamSource = new MemoryStream(System.Convert.FromBase64String(id.Img));
                     bi.EndInit();
 
-                    //Resize the image if it is not the correct size
+                    // Resize the image if it is not the correct size
                     TransformedBitmap tb = new TransformedBitmap();
                     tb.BeginInit();
                     tb.Source = bi;
-                    ScaleTransform sc = new ScaleTransform(Inky.Width / bi.Width, Inky.Height/ bi.Height);
+                    ScaleTransform sc = new ScaleTransform(Inky.Width / bi.Width, Inky.Height / bi.Height);
                     tb.Transform = sc;
                     tb.EndInit();
 
-                    //Add the image to the canvas
+                    // Add the image to the canvas
                     Image im = new Image();
                     im.Source = tb;
                     Inky.Children.Add(im);
                 }
                 
-                //Get that Panel's pen strokes
+                // Get that Panel's pen strokes
                 List<DyKnowPenStroke> pens = dp.Pens;
 
-                //Loop through all of the pen strokes
+                // Loop through all of the pen strokes
                 for (int i = 0; i < pens.Count; i++)
                 {
-                    //Only display the ink if it wasn't deleted
+                    // Only display the ink if it wasn't deleted
                     if (!pens[i].DELETED)
                     {
-                        //The data is encoded as a string
-                        String data = pens[i].DATA;
-                        //Truncate off the "base64:" from the beginning of the string
+                        // The data is encoded as a string
+                        string data = pens[i].DATA;
+
+                        // Truncate off the "base64:" from the beginning of the string
                         data = data.Substring(7);
-                        //Decode the string
+
+                        // Decode the string
                         byte[] bufferData = Convert.FromBase64String(data);
-                        //Turn the string into a stream
+
+                        // Turn the string into a stream
                         Stream s = new MemoryStream(bufferData);
-                        //Convert the stream into an ink stroke
+
+                        // Convert the stream into an ink stroke
                         StrokeCollection sc = new StrokeCollection(s);
-                        //Resize the panel if it is not the default resolution
+
+                        // Resize the panel if it is not the default resolution
                         if (pens[i].PH != Inky.Height || pens[i].PW != Inky.Width)
                         {
                             Matrix inkTransform = new Matrix();
                             inkTransform.Scale(Inky.Width / (double)pens[i].PW, Inky.Height / (double)pens[i].PH);
                             sc.Transform(inkTransform, true);
                         }
-                        //Add the ink stroke to the canvas
+
+                        // Add the ink stroke to the canvas
                         Inky.Strokes.Add(sc);
                     }
                 }
             }
         }
 
-        private void displayAboutWindow(object sender, RoutedEventArgs e)
+        private void DisplayAboutWindow(object sender, RoutedEventArgs e)
         {
             AboutDPX popupWindow = new AboutDPX();
             popupWindow.Owner = this;
             popupWindow.ShowDialog();
         }
 
-        private void displayUserInformationWindow(object sender, RoutedEventArgs e)
+        private void DisplayUserInformationWindow(object sender, RoutedEventArgs e)
         {
             FlowDocument fd = new FlowDocument();
             fd.Blocks.Add(new Paragraph(new Run("Students")));
             if (fd != null)
             {
-                for (int i = 0; i < dr.NumOfPages(); i++)
+                for (int i = 0; i < this.dr.NumOfPages(); i++)
                 {
-                    DyKnowPage d = dr.getDyKnowPage(i);
-                    String s = (i + 1).ToString() + ") " + d.FullName;
+                    DyKnowPage d = this.dr.getDyKnowPage(i);
+                    string s = (i + 1).ToString() + ") " + d.FullName;
                     Paragraph p = new Paragraph(new Run(s));
                     p.LineHeight = 5.0;
                     fd.Blocks.Add(p);
                 }
             }
+
             UserInformation popupWindow = new UserInformation(fd);
             popupWindow.Owner = this;
             popupWindow.ShowDialog();
         }
 
-        private void displayStatisticsWindow(object sender, RoutedEventArgs e)
+        private void DisplayStatisticsWindow(object sender, RoutedEventArgs e)
         {
-            Statistics popupWindow = new Statistics(dr);
+            Statistics popupWindow = new Statistics(this.dr);
             popupWindow.Owner = this;
             popupWindow.ShowDialog();
         }
 
-        private void sliderPanelSize_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void SliderPanelSize_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            
+            // Nothing here yet.
         }
     }
 }

@@ -6,24 +6,24 @@
     <DockPanel Name="myStackPanel" Height="Auto" Width="Auto" Background="LightBlue">
         <Menu Height="22.22" Name="menu1" Width="Auto" DockPanel.Dock="Top">
             <MenuItem Header="_File">
-                <MenuItem Header="_Open" Click="buttonLoadClick" />
-                <MenuItem Header="_Export Image" Click="buttonExportImageClick" />
+                <MenuItem Header="_Open" Click="ButtonLoadClick" />
+                <MenuItem Header="_Export Image" Click="ButtonExportImageClick" />
             </MenuItem>
             <MenuItem Header="_Information">
-                <MenuItem Header="_User Information" Name="menuUserInformation" Click="displayUserInformationWindow" />
-                <MenuItem Header="_Statistics" Name="menuStatistics" Click="displayStatisticsWindow"/>
+                <MenuItem Header="_User Information" Name="menuUserInformation" Click="DisplayUserInformationWindow" />
+                <MenuItem Header="_Statistics" Name="menuStatistics" Click="DisplayStatisticsWindow"/>
             </MenuItem>
             <MenuItem Header="_Help">
-                <MenuItem Header="_About" Click="displayAboutWindow"/>
+                <MenuItem Header="_About" Click="DisplayAboutWindow"/>
             </MenuItem>
         </Menu>
         <StackPanel Height="100" DockPanel.Dock="Bottom" MaxWidth="500">
             <DockPanel Width="Auto" Margin="0,20,0,0">
-                <Button Name="buttonPrevious" Click="buttonPreviousClick" Margin="20,0,0,0" Width="100" DockPanel.Dock="Left">Previous</Button>
-                <Button Name="buttonNext" Click="buttonNextClick" Margin="0,0,20,0" HorizontalAlignment="Right" Width="100" DockPanel.Dock="Right">Next</Button>
+                <Button Name="buttonPrevious" Click="ButtonPreviousClick" Margin="20,0,0,0" Width="100" DockPanel.Dock="Left">Previous</Button>
+                <Button Name="buttonNext" Click="ButtonNextClick" Margin="0,0,20,0" HorizontalAlignment="Right" Width="100" DockPanel.Dock="Right">Next</Button>
                 <Label Name="labelPageNumber" HorizontalAlignment="Center" DockPanel.Dock="Bottom">0 of 0</Label>
             </DockPanel>
-            <Slider Name="sliderPanelSize" MaxWidth="300" Minimum=".25" Maximum="1" Value=".5" ValueChanged="sliderPanelSize_ValueChanged" ></Slider>
+            <Slider Name="sliderPanelSize" MaxWidth="300" Minimum=".25" Maximum="1" Value=".5" ValueChanged="SliderPanelSize_ValueChanged" ></Slider>
         </StackPanel>
         <ScrollViewer Name="scollViewerPanel" Width="Auto" Height="Auto" HorizontalScrollBarVisibility="Visible" Background="LightGray">
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
