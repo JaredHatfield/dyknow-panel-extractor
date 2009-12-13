@@ -110,7 +110,7 @@ namespace Preview
                 this.currentPanelNumber = n;
 
                 // Read in the panel
-                DyKnowPage dp = this.dr.getDyKnowPage(n);
+                DyKnowPage dp = this.dr.GetDyKnowPage(n);
 
                 // Display all of the images
                 Inky.Children.Clear();
@@ -120,7 +120,7 @@ namespace Preview
                 for (int i = 0; i < dki.Count; i++)
                 {
                     // Get the actual image
-                    ImageData id = this.dr.getImageData(dki[i].Id);
+                    ImageData id = this.dr.GetImageData(dki[i].Id);
                     BitmapImage bi = new BitmapImage();
                     bi.BeginInit();
                     bi.StreamSource = new MemoryStream(System.Convert.FromBase64String(id.Img));
@@ -194,7 +194,7 @@ namespace Preview
             {
                 for (int i = 0; i < this.dr.NumOfPages(); i++)
                 {
-                    DyKnowPage d = this.dr.getDyKnowPage(i);
+                    DyKnowPage d = this.dr.GetDyKnowPage(i);
                     string s = (i + 1).ToString() + ") " + d.FullName;
                     Paragraph p = new Paragraph(new Run(s));
                     p.LineHeight = 5.0;

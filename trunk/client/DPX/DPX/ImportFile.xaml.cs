@@ -59,7 +59,7 @@ namespace DPX
             buttonImport.IsEnabled = true;
             for (int i = 0; i < this.dr.NumOfPages(); i++)
             {
-                DyKnowPage dp = this.dr.getDyKnowPage(i);
+                DyKnowPage dp = this.dr.GetDyKnowPage(i);
 
                 RowDefinition rd = new RowDefinition();
                 rd.Height = new GridLength(30);

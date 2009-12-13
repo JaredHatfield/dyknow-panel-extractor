@@ -37,7 +37,7 @@ namespace DPX
             if (this.dr != null && n >= 0 && n < this.dr.NumOfPages())
             {
                 // Read in the panel
-                DyKnowPage dp = this.dr.getDyKnowPage(n);
+                DyKnowPage dp = this.dr.GetDyKnowPage(n);
 
                 // Display all of the images
                 Inky.Children.Clear();
@@ -47,7 +47,7 @@ namespace DPX
                 for (int i = 0; i < dki.Count; i++)
                 {
                     // Get the actual image
-                    ImageData id = this.dr.getImageData(dki[i].Id);
+                    ImageData id = this.dr.GetImageData(dki[i].Id);
                     BitmapImage bi = new BitmapImage();
                     bi.BeginInit();
                     bi.StreamSource = new MemoryStream(System.Convert.FromBase64String(id.Img));

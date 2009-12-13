@@ -92,14 +92,14 @@ namespace DyKnowPanelSorter
                 PanelSorter ps = new PanelSorter(inputfilename.Text, outputfilename.Text);
                 if (radioButtonSN.IsChecked == true)
                 {
-                    ps.setSortByFullName();
+                    ps.SetSortByFullName();
                 }
                 else if (radioButtonUN.IsChecked == true)
                 {
-                    ps.setSortByUsername();
+                    ps.SetSortByUsername();
                 }
 
-                ps.processSort();
+                ps.ProcessSort();
                 MessageBox.Show("File sort finished.", "Success");
             }
             else

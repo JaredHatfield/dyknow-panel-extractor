@@ -31,7 +31,7 @@ namespace UnitTests
             /*
             for (int i = 0; i < dr.NumOfPages(); i++)
             {
-                DyKnowPage dp = dr.getDyKnowPage(i);
+                DyKnowPage dp = dr.GetDyKnowPage(i);
                 Console.WriteLine("Panel " + i.ToString());
                 List<DyKnowImage> imgs = dp.Images;
                 for (int k = 0; k < imgs.Count; k++)
@@ -63,7 +63,7 @@ namespace UnitTests
         public static void sortfile(String inputfile, String outputfile)
         {
             PanelSorter ps = new PanelSorter(inputfile, outputfile);
-            ps.processSort();
+            ps.ProcessSort();
         }
 
 

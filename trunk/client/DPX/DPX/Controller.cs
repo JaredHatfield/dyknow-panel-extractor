@@ -212,12 +212,12 @@ namespace DPX
 
             for (int i = 0; i < dr.NumOfPages(); i++)
             {
-                if (!this.db.IsStudentUsername(dr.getDyKnowPage(i).UserName))
+                if (!this.db.IsStudentUsername(dr.GetDyKnowPage(i).UserName))
                 {
-                    this.db.AddStudent(new Student(dr.getDyKnowPage(i)));
+                    this.db.AddStudent(new Student(dr.GetDyKnowPage(i)));
                 }
 
-                this.db.AddPanel(fileId, dr.getDyKnowPage(i));
+                this.db.AddPanel(fileId, dr.GetDyKnowPage(i));
             }
 
             return fileId;

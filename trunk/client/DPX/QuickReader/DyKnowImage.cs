@@ -1,37 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿// <copyright file="DyKnowImage.cs" company="DPX">
+// GNU General Public License v3
+// </copyright>
 namespace QuickReader
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     public class DyKnowImage
     {
         private int ut;
-        private String sp;
+        
+        private string sp;
+        
         private int pw;
+        
         private int ph;
+        
         private Guid uid;
+        
         private Guid id;
+        
         private int wid;
+
         private int hei;
 
-
-        public Guid Id
-        {
-            get { return id; }
-        }
-
-        public int Pw
-        {
-            get { return pw; }
-        }
-        public int Ph
-        {
-            get { return ph; }
-        }
-
-        public DyKnowImage(int ut, String sp, int pw, int ph, String uid, String id, int wid, int hei)
+        public DyKnowImage(int ut, string sp, int pw, int ph, string uid, string id, int wid, int hei)
         {
             this.ut = ut;
             this.sp = sp;
@@ -43,7 +38,7 @@ namespace QuickReader
             this.hei = hei;
         }
 
-        public DyKnowImage(int ut, String sp, int pw, int ph, Guid uid, Guid id, int wid, int hei)
+        public DyKnowImage(int ut, string sp, int pw, int ph, Guid uid, Guid id, int wid, int hei)
         {
             this.ut = ut;
             this.sp = sp;
@@ -55,9 +50,24 @@ namespace QuickReader
             this.hei = hei;
         }
 
+        public Guid Id
+        {
+            get { return this.id; }
+        }
+
+        public int Pw
+        {
+            get { return this.pw; }
+        }
+
+        public int Ph
+        {
+            get { return this.ph; }
+        }
+
         public override string ToString()
         {
-            return ut.ToString() + " - " + sp.ToString() + " - " + uid.ToString();
+            return this.ut.ToString() + " - " + this.sp.ToString() + " - " + this.uid.ToString();
         }
     }
 }
