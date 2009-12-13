@@ -1,4 +1,7 @@
-﻿using System.Reflection;
+﻿// <copyright file="AssemblyInfo.cs" company="DPX">
+// GNU General Public License v3
+// </copyright>
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 

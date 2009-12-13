@@ -1,4 +1,7 @@
-﻿namespace DPXDatabase
+﻿// <copyright file="Classdate.cs" company="DPX">
+// GNU General Public License v3
+// </copyright>
+namespace DPXDatabase
 {
     using System;
     using System.Collections.Generic;

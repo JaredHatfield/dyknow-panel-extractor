@@ -1,4 +1,7 @@
-﻿namespace DPXDatabase
+﻿// <copyright file="Database.cs" company="DPX">
+// GNU General Public License v3
+// </copyright>
+namespace DPXDatabase
 {
     using System;
     using System.Collections.Generic;
@@ -462,8 +465,6 @@
             query += " VALUES(@parm1, @parm2, @parm3, @parm4, @parm5, @parm6, @parm7, @parm8, @parm9, @parm10)";
 
             int insertId = -1;
-            
-            //int status;
             OleDbCommand cmdInsert = new OleDbCommand(query, this.connection);
             cmdInsert.Parameters.Clear();
             try
@@ -773,7 +774,7 @@
         
         public List<DisplayExceptionInfo> GetExceptionsForStudent(int studentid)
         {
-            string mySelectQuery = "SELECT Classdates.classDate, Reasons.credit, Reasons.description, Exceptions.notes FROM Classdates INNER JOIN (Reasons INNER JOIN (Students INNER JOIN Exceptions ON Students.ID = Exceptions.Student) ON Reasons.ID = Exceptions.Reason) ON Classdates.ID = Exceptions.Classdate WHERE Students.ID = @parm1 ORDER BY Classdates.classDate DESC;";
+            string mySelectQuery = "SELECT Classdates.classDate, Reasons.Credit, Reasons.description, Exceptions.notes FROM Classdates INNER JOIN (Reasons INNER JOIN (Students INNER JOIN Exceptions ON Students.ID = Exceptions.Student) ON Reasons.ID = Exceptions.Reason) ON Classdates.ID = Exceptions.Classdate WHERE Students.ID = @parm1 ORDER BY Classdates.classDate DESC;";
             OleDbCommand myCommand = new OleDbCommand(mySelectQuery, this.connection);
             myCommand.Parameters.AddWithValue("@parm1", studentid);
             this.Open();
@@ -806,7 +807,7 @@
         // QUERIES ON THE REASON TABLE
         public List<Reason> GetReasons()
         {
-            string mySelectQuery = "SELECT R.[ID], R.[credit], R.[description] FROM Reasons R ORDER BY [ID] ASC";
+            string mySelectQuery = "SELECT R.[ID], R.[Credit], R.[description] FROM Reasons R ORDER BY [ID] ASC";
             OleDbCommand myCommand = new OleDbCommand(mySelectQuery, this.connection);
             this.Open();
             OleDbDataReader myReader = myCommand.ExecuteReader();
@@ -839,7 +840,7 @@
         {
             List<string> report = new List<string>();
             ReportGeneration rg = new ReportGeneration(this, dates);
-            return rg.getReport();
+            return rg.GetReport();
         }
 
         // DATABASE MANAGEMENT

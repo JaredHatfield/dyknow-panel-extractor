@@ -10,11 +10,11 @@
             </MenuItem>
         </Menu>
         <Grid Height="Auto" Margin="0,0,0,0">
-            <Button Height="23" HorizontalAlignment="Right" Margin="0,27.48,30,0" Name="opendialog" VerticalAlignment="Top" Width="75" Click="opendialog_box">Open</Button>
-            <Button HorizontalAlignment="Right" Margin="0,70,30,0" Name="savedialog" Width="75" Click="savedialog_box" Height="23" VerticalAlignment="Top">Save</Button>
-            <Button Margin="200,200,0,0" Name="processsort" Width="300" Height="23" HorizontalAlignment="Left" VerticalAlignment="Top" Click="processsort_Click">Process</Button>
-            <TextBox Height="23" Margin="180,26,120,0" Name="inputfilename" VerticalAlignment="Top" TextChanged="inputfilename_TextChanged" />
-            <TextBox Margin="180,70,120,0" Name="outputfilename" TextChanged="outputfilename_TextChanged" Height="23" VerticalAlignment="Top" />
+            <Button Height="23" HorizontalAlignment="Right" Margin="0,27.48,30,0" Name="opendialog" VerticalAlignment="Top" Width="75" Click="OpenDialog_Box">Open</Button>
+            <Button HorizontalAlignment="Right" Margin="0,70,30,0" Name="savedialog" Width="75" Click="SaveDialog_Box" Height="23" VerticalAlignment="Top">Save</Button>
+            <Button Margin="200,200,0,0" Name="processsort" Width="300" Height="23" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ProcessSort_Click">Process</Button>
+            <TextBox Height="23" Margin="180,26,120,0" Name="inputfilename" VerticalAlignment="Top" TextChanged="InputFileName_TextChanged" />
+            <TextBox Margin="180,70,120,0" Name="outputfilename" TextChanged="OutputFileName_TextChanged" Height="23" VerticalAlignment="Top" />
             <Label Height="28" HorizontalAlignment="Left" Margin="8,26,0,0" Name="label1" VerticalAlignment="Top" Width="155">Source DyKnow File</Label>
             <Label HorizontalAlignment="Left" Margin="8,69,0,0" Name="label2" Width="155" Height="28" VerticalAlignment="Top">Destination DyKnow File</Label>
             <RadioButton Margin="180,160,0,0" GroupName="sortsetting" Name="radioButtonSN" IsChecked="True" Height="16" VerticalAlignment="Top">Sort by Student Name</RadioButton>
