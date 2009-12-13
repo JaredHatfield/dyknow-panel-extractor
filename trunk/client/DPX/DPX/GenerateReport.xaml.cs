@@ -23,14 +23,25 @@ namespace DPX
     /// </summary>
     public partial class GenerateReport : Page
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private Controller c = Controller.Instance();
 
+        /// <summary>
+        /// 
+        /// </summary>
         public GenerateReport()
         {
             InitializeComponent();
             this.c.SetListBoxReportDates(listBoxDates);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void ButtonGenerateReport_Click(object sender, RoutedEventArgs e)
         {
             if (this.c.IsDatabaseOpen())

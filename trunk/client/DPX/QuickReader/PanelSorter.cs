@@ -1,6 +1,7 @@
 ﻿// <copyright file="PanelSorter.cs" company="DPX">
 // GNU General Public License v3
 // </copyright>
+// <summary>Page Sorter class.</summary>
 namespace QuickReader
 {
     using System;
@@ -11,14 +12,31 @@ namespace QuickReader
     using System.Text;
     using System.Xml;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class PanelSorter
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private string inputfile;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private string outputfile;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private bool sorttype; // True sorts by name, false sorts by username
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="output"></param>
         public PanelSorter(string input, string output)
         {
             this.inputfile = input;
@@ -26,16 +44,25 @@ namespace QuickReader
             this.sorttype = true;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void SetSortByUsername()
         {
             this.sorttype = false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void SetSortByFullName()
         {
             this.sorttype = true;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void ProcessSort()
         {
             // File Input
@@ -129,6 +156,10 @@ namespace QuickReader
             newFile.Close();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pages"></param>
         private void SortPages(List<XmlDocument> pages)
         {
             // Bubble sort algorithm to put all of the pages in the correct order

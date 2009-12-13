@@ -23,14 +23,25 @@ namespace DPX
     /// </summary>
     public partial class PanelPreview : Window
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private DyKnowReader dr;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dr"></param>
         public PanelPreview(DyKnowReader dr)
         {
             InitializeComponent();
             this.dr = dr;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="n"></param>
         public void DisplayPanel(int n)
         {
             // Some error checking to make sure we don't crash

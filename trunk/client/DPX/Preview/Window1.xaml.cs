@@ -25,9 +25,19 @@ namespace Preview
     /// </summary>
     public partial class Window1 : Window
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private DyKnowReader dr;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private int currentPanelNumber = 0;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Window1()
         {
             InitializeComponent();
@@ -36,6 +46,11 @@ namespace Preview
             menuStatistics.IsEnabled = false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void ButtonLoadClick(object sender, RoutedEventArgs e)
         {
             // Let the user choose which file to open
@@ -54,6 +69,11 @@ namespace Preview
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void ButtonNextClick(object sender, RoutedEventArgs e)
         {
             if (this.dr != null)
@@ -67,6 +87,11 @@ namespace Preview
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void ButtonPreviousClick(object sender, RoutedEventArgs e)
         {
             if (this.dr != null)
@@ -80,11 +105,19 @@ namespace Preview
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void UpdatePageNumber()
         {
             labelPageNumber.Content = (this.currentPanelNumber + 1).ToString() + " of " + this.dr.NumOfPages().ToString();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void ButtonExportImageClick(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.SaveFileDialog saveFileDialog1 = new Microsoft.Win32.SaveFileDialog();
@@ -102,6 +135,10 @@ namespace Preview
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="n"></param>
         private void DisplayPanel(int n)
         {
             // Some error checking to make sure we don't crash
@@ -179,6 +216,11 @@ namespace Preview
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void DisplayAboutWindow(object sender, RoutedEventArgs e)
         {
             AboutDPX popupWindow = new AboutDPX();
@@ -186,6 +228,11 @@ namespace Preview
             popupWindow.ShowDialog();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void DisplayUserInformationWindow(object sender, RoutedEventArgs e)
         {
             FlowDocument fd = new FlowDocument();
@@ -207,6 +254,11 @@ namespace Preview
             popupWindow.ShowDialog();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void DisplayStatisticsWindow(object sender, RoutedEventArgs e)
         {
             Statistics popupWindow = new Statistics(this.dr);
@@ -214,6 +266,11 @@ namespace Preview
             popupWindow.ShowDialog();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void SliderPanelSize_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             // Nothing here yet.

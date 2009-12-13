@@ -24,8 +24,14 @@ namespace DPX
     /// </summary>
     public partial class ManageStudent : Page
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private Controller c = Controller.Instance();
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ManageStudent()
         {
             InitializeComponent();
@@ -35,6 +41,11 @@ namespace DPX
             this.c.SetComboBoxReason(comboBoxReason);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="searchText"></param>
+        /// <param name="sectionless"></param>
         public void FilterText(string searchText, bool sectionless)
         {
             listBoxStudents.Items.Filter = delegate(object obj)
@@ -67,21 +78,41 @@ namespace DPX
             };
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void TxtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             this.FilterText(textBoxFilter.Text, checkBoxFilterNoSection.IsChecked == true);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void CheckBoxFilterNoSection_Checked(object sender, RoutedEventArgs e)
         {
             this.FilterText(textBoxFilter.Text, checkBoxFilterNoSection.IsChecked == true);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void CheckBoxFilterNoSection_Unchecked(object sender, RoutedEventArgs e)
         {
             this.FilterText(textBoxFilter.Text, checkBoxFilterNoSection.IsChecked == true);
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void ListBoxStudents_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Student s = listBoxStudents.SelectedValue as Student;
@@ -138,6 +169,10 @@ namespace DPX
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="studentId"></param>
         private void DisplayExceptions(int studentId)
         {
             gridException.Children.Clear();
@@ -187,6 +222,10 @@ namespace DPX
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="studentId"></param>
         private void DisplayPanels(int studentId)
         {
             gridPanels.Children.Clear();
@@ -260,6 +299,11 @@ namespace DPX
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void ComboBoxSection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Student s = listBoxStudents.SelectedValue as Student;
@@ -271,6 +315,11 @@ namespace DPX
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void CheckBoxStudentIsEnrolled_Checked(object sender, RoutedEventArgs e)
         {
             Student s = listBoxStudents.SelectedValue as Student;
@@ -281,6 +330,11 @@ namespace DPX
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void CheckBoxStudentIsEnrolled_Unchecked(object sender, RoutedEventArgs e)
         {
             Student s = listBoxStudents.SelectedValue as Student;
@@ -291,6 +345,11 @@ namespace DPX
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void ButtonAddException_Click(object sender, RoutedEventArgs e)
         {
             Student s = listBoxStudents.SelectedValue as Student;

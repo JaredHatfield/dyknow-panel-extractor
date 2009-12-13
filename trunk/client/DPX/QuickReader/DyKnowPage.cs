@@ -1,6 +1,7 @@
 ﻿// <copyright file="DyKnowPage.cs" company="DPX">
 // GNU General Public License v3
 // </copyright>
+// <summary>DyKnow Page object.</summary>
 namespace QuickReader
 {
     using System;
@@ -9,23 +10,51 @@ namespace QuickReader
     using System.Text;
     using System.Xml;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class DyKnowPage
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private int pageNumber;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private string userName;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private string fullName;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private int strokes;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private string finished;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private List<DyKnowPenStroke> pens;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private List<DyKnowImage> images;
 
-        // Constructor accepts the XML sub tree
+        /// <summary>
+        /// Constructor accepts the XML sub tree
+        /// </summary>
+        /// <param name="xmlFile"></param>
+        /// <param name="pageNum"></param>
         public DyKnowPage(XmlReader xmlFile, int pageNum)
         {
             // Set some default values if the xml parsing doesn't workout
@@ -100,31 +129,49 @@ namespace QuickReader
             this.strokes = myStrokes.Count;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int PageNumber
         {
             get { return this.pageNumber; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string UserName
         {
             get { return this.userName; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string FullName
         {
             get { return this.fullName; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int NetStrokeCount
         {
             get { return this.strokes; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string Finished
         {
             get { return this.finished; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public long NetStrokeDistance
         {
             get
@@ -145,6 +192,9 @@ namespace QuickReader
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int DeletedStrokeCount
         {
             get
@@ -162,6 +212,9 @@ namespace QuickReader
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public long DeletedStrokeDistance
         {
             get
@@ -179,6 +232,9 @@ namespace QuickReader
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int TotalStrokeCount
         {
             get
@@ -196,6 +252,9 @@ namespace QuickReader
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public long TotalStrokeDistance
         {
             get
@@ -213,6 +272,9 @@ namespace QuickReader
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool IsBlank
         {
             get
@@ -228,41 +290,66 @@ namespace QuickReader
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public List<DyKnowPenStroke> Pens
         {
             get { return this.pens; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public List<DyKnowImage> Images
         {
             get { return this.images; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="st"></param>
         public void SetFinished(string st)
         {
             this.finished = st;
         }
 
-        // Used to get the information form the page for display purposes.
+        /// <summary>
+        /// Used to get the information form the page for display purposes.
+        /// </summary>
+        /// <returns></returns>
         public string[] GetData()
         {
             string[] data = { this.pageNumber.ToString(), this.userName, this.fullName, this.strokes.ToString(), this.finished };
             return data;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public object[] GetRowData()
         {
             object[] data = { this.pageNumber, this.userName, this.fullName, this.strokes, this.finished };
             return data;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return this.pageNumber.ToString() + ", " + this.userName + ", " + this.fullName + ", " +
                 this.strokes.ToString() + ", " + this.finished + ", " + this.DeletedStrokeCount + ", " + this.NetStrokeDistance;
         }
 
-        // Used to delete strokes from the list of strokes
+        /// <summary>
+        /// Used to delete strokes from the list of strokes
+        /// </summary>
+        /// <param name="myStrokes"></param>
+        /// <param name="xmlFile"></param>
         private void DeleteStrokes(List<string> myStrokes, XmlReader xmlFile)
         {
             while (xmlFile.Read())

@@ -23,8 +23,14 @@ namespace DPX
     /// </summary>
     public partial class Window1 : Window
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private Controller c = Controller.Instance();
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Window1()
         {
             InitializeComponent();
@@ -32,6 +38,11 @@ namespace DPX
             this.c.SetProgressBarMaster(progressBarMaster);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void DisplayAboutWindow(object sender, RoutedEventArgs e)
         {
             AboutDPX popupWindow = new AboutDPX();
@@ -39,6 +50,11 @@ namespace DPX
             popupWindow.ShowDialog();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void OpenFile(object sender, RoutedEventArgs e)
         {
             // The database is not open
@@ -63,6 +79,11 @@ namespace DPX
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void CloseFile(object sender, RoutedEventArgs e)
         {
             this.c.CloseDatabase();

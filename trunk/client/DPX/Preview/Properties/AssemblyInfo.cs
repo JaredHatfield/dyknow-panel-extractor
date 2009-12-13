@@ -1,6 +1,7 @@
 ﻿// <copyright file="AssemblyInfo.cs" company="DPX">
 // GNU General Public License v3
 // </copyright>
+// <summary>Assembly Info file.</summary>
 using System.Reflection;
 using System.Resources;
 using System.Runtime.CompilerServices;

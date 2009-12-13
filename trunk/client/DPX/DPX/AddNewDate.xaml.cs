@@ -46,8 +46,8 @@ namespace DPX
         /// <summary>
         /// The selected date changed and the add button will toggel depending on if it is a valid date.
         /// </summary>
-        /// <param name="sender">The object that triggered this method.</param>
-        /// <param name="e">The parameters sent to this method.</param>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void DateTimePicker_ValueChanged(object sender, EventArgs e)
         {
             if (this.c.DB.IsClassdate(dateTimePicker.Value.Date))
@@ -63,8 +63,8 @@ namespace DPX
         /// <summary>
         /// Add the selected date to the list of dates.
         /// </summary>
-        /// <param name="sender">The object that triggered this method.</param>
-        /// <param name="e">The paremeters sent to this method.</param>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void ButtonAddDate_Click(object sender, RoutedEventArgs e)
         {
             this.c.DB.AddClassdate(dateTimePicker.Value.Date);

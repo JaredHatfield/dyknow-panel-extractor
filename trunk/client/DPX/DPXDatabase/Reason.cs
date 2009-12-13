@@ -8,12 +8,29 @@ namespace DPXDatabase
     using System.Linq;
     using System.Text;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class Reason
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private int id;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private bool credit;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private string description;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Reason()
         {
             this.id = -1;
@@ -21,6 +38,12 @@ namespace DPXDatabase
             this.description = string.Empty;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="credit"></param>
+        /// <param name="description"></param>
         public Reason(int id, bool credit, string description)
         {
             this.id = id;
@@ -28,21 +51,34 @@ namespace DPXDatabase
             this.description = description;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int Id
         {
             get { return this.id; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool Credit
         {
             get { return this.credit; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string Description
         {
             get { return this.description; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return this.description;

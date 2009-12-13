@@ -24,9 +24,19 @@ namespace DPX
     /// </summary>
     public partial class ImportFile : Page
     {   
+        /// <summary>
+        /// 
+        /// </summary>
         private Controller c = Controller.Instance();
+
+        /// <summary>
+        /// 
+        /// </summary>
         private DyKnowReader dr;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ImportFile()
         {
             InitializeComponent();
@@ -37,12 +47,20 @@ namespace DPX
             this.c.SetComboBoxDateImport(comboBoxDates);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void ClearDyKnowGrid()
         {
             grid1.Children.Clear();
             grid1.RowDefinitions.Clear();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void ShowPreview(object sender, System.EventArgs e)
         {
             Button b = sender as Button;
@@ -52,6 +70,10 @@ namespace DPX
             pp.ShowDialog();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="file"></param>
         private void DisplayFile(string file)
         {
             this.dr = new DyKnowReader(file);
@@ -130,6 +152,11 @@ namespace DPX
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             // Configure open file dialog box
@@ -152,8 +179,8 @@ namespace DPX
         /// <summary>
         ///  Import a file into the database.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             if (this.dr == null)
@@ -189,6 +216,11 @@ namespace DPX
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void ButtonAddDate_Click(object sender, RoutedEventArgs e)
         {
             if (!this.c.IsDatabaseOpen())

@@ -1,6 +1,7 @@
 ﻿// <copyright file="DyKnowReader.cs" company="DPX">
 // GNU General Public License v3
 // </copyright>
+// <summary>DyKnow Reader class.</summary>
 namespace QuickReader
 {
     using System;
@@ -11,28 +12,65 @@ namespace QuickReader
     using System.Text;
     using System.Xml;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class DyKnowReader
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private FileStream inputFile;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private GZipStream gzipFile;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private XmlTextReader xmlFile;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private string fileName;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private List<DyKnowPage> dyKnowPages;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private List<ImageData> imageInformation;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private double meanStrokes;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private double stdDevStrokes;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private double meanStrokeDistance;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private double stdDevStrokeDistance;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
         public DyKnowReader(string name)
         {
             // The name of the DyKnow file used
@@ -90,16 +128,25 @@ namespace QuickReader
             this.FillInFinished();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string FileName
         {
             get { return this.fileName; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public double MeanStrokes
         {
             get { return this.meanStrokes; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public double StdDevStrokes
         {
             get
@@ -115,11 +162,17 @@ namespace QuickReader
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public double MeanStrokeDistance
         {
             get { return this.meanStrokeDistance; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public double StdDevStrokeDistance
         {
             get
@@ -135,6 +188,9 @@ namespace QuickReader
             }
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
         public int MinStrokeCount
         {
             get
@@ -159,6 +215,9 @@ namespace QuickReader
             }
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
         public int MaxStrokeCount
         {
             get
@@ -183,6 +242,9 @@ namespace QuickReader
             }
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
         public long MinStrokeDistance
         {
             get
@@ -207,6 +269,9 @@ namespace QuickReader
             }
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
         public long MaxStrokeDistance
         {
             get
@@ -231,11 +296,19 @@ namespace QuickReader
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public List<ImageData> ImageInformation
         {
             get { return this.imageInformation; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <returns></returns>
         public ImageData GetImageData(Guid uid)
         {
             for (int i = 0; i < this.imageInformation.Count; i++)
@@ -249,6 +322,9 @@ namespace QuickReader
             return null;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Close()
         {
             this.inputFile.Close();
@@ -256,27 +332,49 @@ namespace QuickReader
             this.xmlFile.Close();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
         public DyKnowPage GetDyKnowPage(int i)
         {
             return this.dyKnowPages[i];
         }
 
-        // Used in testing
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
         public string GetPagestring(int i)
         {
             return this.dyKnowPages[i].ToString();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
         public object[] GetRowData(int i)
         {
             return this.dyKnowPages[i].GetRowData();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public int NumOfPages()
         {
             return this.dyKnowPages.Count;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return "Mean Number of Strokes: " + this.meanStrokes + "\n" +
@@ -285,6 +383,10 @@ namespace QuickReader
                 "Standard Deviation of Stroke Distance " + this.stdDevStrokeDistance + "\n";
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subfile"></param>
         private void ParseIMGD(XmlReader subfile)
         {
             int num = 0;
@@ -300,6 +402,9 @@ namespace QuickReader
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void FillInFinished()
         {
             for (int i = 0; i < this.NumOfPages(); i++)
@@ -319,7 +424,10 @@ namespace QuickReader
             }
         }
 
-        // Performs the calculation to determine the mean number of pen strokes per page in this file
+        /// <summary>
+        /// Performs the calculation to determine the mean number of pen strokes per page in this file.
+        /// </summary>
+        /// <returns></returns>
         private double CalcMeanStrokes()
         {
             long total = 0;
@@ -331,7 +439,11 @@ namespace QuickReader
             return (double)total / (double)this.NumOfPages();
         }
 
-        // Performs the calculation to determine the standard deviation of pen strokes per page in this file
+        /// <summary>
+        /// Performs the calculation to determine the standard deviation of pen strokes per page in this file.
+        /// </summary>
+        /// <param name="mean"></param>
+        /// <returns></returns>
         private double CalcStdDevStrokes(double mean)
         {
             double total = 0;
@@ -343,7 +455,10 @@ namespace QuickReader
             return Math.Sqrt((double)total / (double)(this.NumOfPages() - 1));
         }
 
-        // Performs the calculation to determine the mean stroke data distance per page in this specific file
+        /// <summary>
+        /// Performs the calculation to determine the mean stroke data distance per page in this specific file.
+        /// </summary>
+        /// <returns></returns>
         private double CalcMeanStrokeDistance()
         {
             long total = 0;
@@ -355,7 +470,11 @@ namespace QuickReader
             return (double)total / (double)this.NumOfPages();
         }
 
-        // Performs the calculation to determine the standard deviation of the stroke data distance per page in this specific file
+        /// <summary>
+        /// Performs the calculation to determine the standard deviation of the stroke data distance per page in this specific file.
+        /// </summary>
+        /// <param name="mean"></param>
+        /// <returns></returns>
         private double CalcStdDevStrokeDistance(double mean)
         {
             double total = 0;
@@ -367,6 +486,10 @@ namespace QuickReader
             return Math.Sqrt((double)total / (double)(this.NumOfPages() - 1));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subfile"></param>
         private void ParseIMGS(XmlReader subfile)
         {
             while (subfile.Read())

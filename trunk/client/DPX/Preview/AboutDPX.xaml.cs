@@ -21,12 +21,20 @@ namespace Preview
     /// </summary>
     public partial class AboutDPX : Window
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public AboutDPX()
         {
             InitializeComponent();
             buttonOk.Focus();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void Button_ok(object sender, RoutedEventArgs e)
         {
             this.Close();

@@ -33,8 +33,8 @@ namespace DPX
         /// <summary>
         /// Close the window.
         /// </summary>
-        /// <param name="sender">Who called this function.</param>
-        /// <param name="e">The parameters for this call.</param>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void Button_ok(object sender, RoutedEventArgs e)
         {
             this.Close();

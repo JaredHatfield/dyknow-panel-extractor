@@ -27,24 +27,62 @@ namespace DPX
         private Database db;
 
         // Collections of data kept in the interface
+
+        /// <summary>
+        /// 
+        /// </summary>
         private ComboBox comboBoxDateImport;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private ComboBox comboBoxDateException;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private ComboBox comboBoxSections;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private ComboBox comboBoxReasons;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private ListBox listBoxStudents;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private ListBox listBoxReportDates;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private ProgressBar progressBarMaster;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private Controller()
         {
             this.db = null;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Database DB
         {
             get { return this.db; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static Controller Instance()
         {
             if (c == null)
@@ -55,6 +93,10 @@ namespace DPX
             return c;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cbd"></param>
         public void SetComboBoxDateImport(ComboBox cbd)
         {
             if (this.comboBoxDateImport == null)
@@ -63,6 +105,10 @@ namespace DPX
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cbd"></param>
         public void SetComboBoxDateException(ComboBox cbd)
         {
             if (this.comboBoxDateException == null)
@@ -71,6 +117,10 @@ namespace DPX
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cbs"></param>
         public void SetComboBoxSections(ComboBox cbs)
         {
             if (this.comboBoxSections == null)
@@ -79,6 +129,10 @@ namespace DPX
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cbr"></param>
         public void SetComboBoxReason(ComboBox cbr)
         {
             if (this.comboBoxReasons == null)
@@ -87,6 +141,10 @@ namespace DPX
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stu"></param>
         public void SetListBoxStudents(ListBox stu)
         {
             if (this.listBoxStudents == null)
@@ -95,6 +153,10 @@ namespace DPX
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="r"></param>
         public void SetListBoxReportDates(ListBox r)
         {
             if (this.listBoxReportDates == null)
@@ -103,6 +165,10 @@ namespace DPX
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pb"></param>
         public void SetProgressBarMaster(ProgressBar pb)
         {
             if (this.progressBarMaster == null)
@@ -111,6 +177,10 @@ namespace DPX
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public bool IsDatabaseOpen()
         {
             if (this.db == null)
@@ -123,6 +193,10 @@ namespace DPX
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filename"></param>
         public void OpenDatabaseFile(string filename)
         {
             this.db = new Database(filename);
@@ -133,6 +207,9 @@ namespace DPX
             this.RefreshReasons();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void RefreshClassdate()
         {
             this.comboBoxDateImport.Items.Clear();
@@ -149,6 +226,9 @@ namespace DPX
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void RefreshSections()
         {
             this.comboBoxSections.Items.Clear();
@@ -163,6 +243,9 @@ namespace DPX
             this.comboBoxSections.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void RefreshReasons()
         {
             this.comboBoxReasons.Items.Clear();
@@ -177,6 +260,9 @@ namespace DPX
             this.comboBoxReasons.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void RefreshStudents()
         {
             this.listBoxStudents.Items.Clear();
@@ -190,6 +276,13 @@ namespace DPX
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dr"></param>
+        /// <param name="filename"></param>
+        /// <param name="cd"></param>
+        /// <returns></returns>
         public int AddDyKnowFile(DyKnowReader dr, string filename, Classdate cd)
         {
             File f = new File(
@@ -223,6 +316,9 @@ namespace DPX
             return fileId;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void CloseDatabase()
         {
             if (this.db != null)

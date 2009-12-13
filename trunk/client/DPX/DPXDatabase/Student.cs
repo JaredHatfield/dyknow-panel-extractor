@@ -9,16 +9,50 @@ namespace DPXDatabase
     using System.Text;
     using QuickReader;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class Student
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private int id;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private string username;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private string fullName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private string firstName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private string lastName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private int section;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private bool isEnrolled;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dp"></param>
         public Student(DyKnowPage dp)
         {
             this.id = -1;
@@ -45,6 +79,16 @@ namespace DPXDatabase
             this.isEnrolled = true;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="username"></param>
+        /// <param name="fullName"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="section"></param>
+        /// <param name="isEnrolled"></param>
         public Student(
             int id, 
             string username, 
@@ -63,6 +107,15 @@ namespace DPXDatabase
             this.isEnrolled = isEnrolled;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="fullName"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="section"></param>
+        /// <param name="isEnrolled"></param>
         public Student(
             string username, 
             string fullName, 
@@ -80,6 +133,9 @@ namespace DPXDatabase
             this.isEnrolled = isEnrolled;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Student()
         {
             this.id = -1;
@@ -91,43 +147,67 @@ namespace DPXDatabase
             this.isEnrolled = false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int Id
         {
             get { return this.id; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string Username
         {
             get { return this.username; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string FullName
         {
             get { return this.fullName; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string FirstName
         {
             get { return this.firstName; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string LastName
         {
             get { return this.lastName; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int Section
         {
             get { return this.section; }
             set { this.section = value; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool IsEnrolled
         {
             get { return this.isEnrolled; }
             set { this.isEnrolled = value; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool IsInSection
         {
             get
@@ -143,6 +223,10 @@ namespace DPXDatabase
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return this.fullName + " (" + this.username + ")";

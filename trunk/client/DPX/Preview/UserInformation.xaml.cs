@@ -21,11 +21,18 @@ namespace Preview
     /// </summary>
     public partial class UserInformation : Window
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public UserInformation()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="content"></param>
         public UserInformation(FlowDocument content)
         {
             InitializeComponent();

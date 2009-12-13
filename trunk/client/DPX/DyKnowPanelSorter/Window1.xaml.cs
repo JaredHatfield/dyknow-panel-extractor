@@ -24,11 +24,19 @@ namespace DyKnowPanelSorter
     /// </summary>
     public partial class Window1 : Window
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public Window1()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void OpenDialog_Box(object sender, RoutedEventArgs e)
         {
             // Configure open file dialog box
@@ -47,6 +55,11 @@ namespace DyKnowPanelSorter
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void SaveDialog_Box(object sender, RoutedEventArgs e)
         {
             // Configure save file dialog box
@@ -65,16 +78,31 @@ namespace DyKnowPanelSorter
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void InputFileName_TextChanged(object sender, TextChangedEventArgs e)
         {
             // Nothing here yet.
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void OutputFileName_TextChanged(object sender, TextChangedEventArgs e)
         {
             // Nothing here yet.
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void ProcessSort_Click(object sender, RoutedEventArgs e)
         {
             // Perform some checks so we don't do any damage
@@ -107,7 +135,12 @@ namespace DyKnowPanelSorter
                 MessageBox.Show("A destination file must be specified.", "Alert");
             }
         }
-
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void DisplayAboutWindow(object sender, RoutedEventArgs e)
         {
             AboutDPX popupWindow = new AboutDPX();

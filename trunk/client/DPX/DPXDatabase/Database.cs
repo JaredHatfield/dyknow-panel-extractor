@@ -10,10 +10,20 @@ namespace DPXDatabase
     using System.Text;
     using QuickReader;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class Database
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private OleDbConnection connection;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filename"></param>
         public Database(string filename)
         {
             this.connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filename + ";Persist Security Info=False");
@@ -21,12 +31,21 @@ namespace DPXDatabase
             this.Close();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public OleDbConnection Connection
         {
             get { return this.connection; }
         }
 
         // QUERIES ON THE SECTION TABLE
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public string GetSectionName(int id)
         {
             string mySelectQuery = "SELECT S.[sectionName] FROM Sections S WHERE S.[ID] = @parm1";
@@ -59,6 +78,11 @@ namespace DPXDatabase
             return section;
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public bool AddSection(string name)
         {
             this.Open();
@@ -94,6 +118,10 @@ namespace DPXDatabase
             return true;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<Section> GetSections()
         {
             string mySelectQuery = "SELECT S.[ID], S.[sectionName] FROM Sections S ORDER BY [sectionName] ASC";
@@ -123,6 +151,11 @@ namespace DPXDatabase
         }
 
         // QUERIES ON THE STUDENT TABLE
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<Student> GetAllStudents()
         {
             string mySelectQuery = "SELECT S.[ID], S.[username], S.[fullName], S.[firstName], S.[lastName], S.[Section], S.[isEnrolled] FROM Students S ORDER BY S.[fullName]";
@@ -172,6 +205,11 @@ namespace DPXDatabase
             return students;
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Student GetStudent(int id)
         {
             string mySelectQuery = "SELECT S.[ID], S.[username], S.[fullName], S.[firstName], S.[lastName], ";
@@ -226,6 +264,11 @@ namespace DPXDatabase
             return student;
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
         public bool AddStudent(Student s)
         {
             // The section is going to be null
@@ -309,6 +352,11 @@ namespace DPXDatabase
             }
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public bool IsStudentUsername(string username)
         {
             string mySelectQuery = "SELECT S.[ID], S.[username], S.[fullName], S.[firstName], S.[lastName], ";
@@ -342,6 +390,12 @@ namespace DPXDatabase
             return studentTest;
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="section"></param>
+        /// <param name="studentId"></param>
+        /// <returns></returns>
         public bool UpdateStudentSection(int section, int studentId)
         {
             if (section == -1)
@@ -412,6 +466,12 @@ namespace DPXDatabase
             return true;
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="val"></param>
+        /// <param name="studentId"></param>
+        /// <returns></returns>
         public bool UpdateStudentSetEnrolled(bool val, int studentId)
         {
             this.Open();
@@ -457,6 +517,12 @@ namespace DPXDatabase
         }
 
         // QUERIES ON THE FILE TABLE
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="f"></param>
+        /// <returns></returns>
         public int AddFile(File f)
         {
             this.Open();
@@ -498,6 +564,12 @@ namespace DPXDatabase
             return insertId;
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dr"></param>
+        /// <param name="d"></param>
+        /// <returns></returns>
         public int AddFile(DyKnowReader dr, DateTime d)
         {
             int classdateId = -1;
@@ -524,6 +596,12 @@ namespace DPXDatabase
         }
 
         // QUERIES ON THE CLASSDATE TABLE
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="d"></param>
+        /// <returns></returns>
         public bool AddClassdate(DateTime d)
         {
             this.Open();
@@ -559,6 +637,11 @@ namespace DPXDatabase
             return true;
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="d"></param>
+        /// <returns></returns>
         public bool IsClassdate(DateTime d)
         {
             string mySelectQuery = "SELECT C.[ID], C.[classDate] FROM Classdates C WHERE C.[classDate] = @parm1";
@@ -589,6 +672,11 @@ namespace DPXDatabase
             return panelFound;
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="d"></param>
+        /// <returns></returns>
         public int GetClassdateId(DateTime d)
         {
             string mySelectQuery = "SELECT C.[ID], C.[classDate] FROM Classdates C WHERE C.[classDate] = @parm1";
@@ -621,6 +709,10 @@ namespace DPXDatabase
             return id;
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<Classdate> GetClassdates()
         {
             string mySelectQuery = "SELECT C.[ID], C.[classDate] FROM Classdates C ORDER BY [classDate] DESC";
@@ -649,6 +741,13 @@ namespace DPXDatabase
         }
 
         // QUERIES ON THE PANELS TABLE
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileid"></param>
+        /// <param name="d"></param>
+        /// <returns></returns>
         public bool AddPanel(int fileid, DyKnowPage d)
         {
             this.Open();
@@ -697,6 +796,11 @@ namespace DPXDatabase
             return true;
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="studentid"></param>
+        /// <returns></returns>
         public List<DisplayPanelInfo> GetPanelsForStudent(int studentid)
         {
             string mySelectQuery = "SELECT Classdates.classDate, Files.fileName, Panels.slideNumber, Panels.totalStrokeCount, Panels.netStrokeCount, Panels.isBlank, Panels.analysis FROM (Classdates INNER JOIN Files ON Classdates.ID = Files.Classdate) INNER JOIN (Students INNER JOIN Panels ON Students.username = Panels.username) ON Files.ID = Panels.File WHERE (((Students.ID)= @parm1)) ORDER BY Classdates.classDate DESC;";
@@ -733,6 +837,12 @@ namespace DPXDatabase
         }
 
         // QUERIES ON THE EXCEPTIONS TABLE
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
         public bool AddException(Exceptions e)
         {
             this.Open();
@@ -772,6 +882,11 @@ namespace DPXDatabase
             return true;
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="studentid"></param>
+        /// <returns></returns>
         public List<DisplayExceptionInfo> GetExceptionsForStudent(int studentid)
         {
             string mySelectQuery = "SELECT Classdates.classDate, Reasons.Credit, Reasons.description, Exceptions.notes FROM Classdates INNER JOIN (Reasons INNER JOIN (Students INNER JOIN Exceptions ON Students.ID = Exceptions.Student) ON Reasons.ID = Exceptions.Reason) ON Classdates.ID = Exceptions.Classdate WHERE Students.ID = @parm1 ORDER BY Classdates.classDate DESC;";
@@ -805,6 +920,11 @@ namespace DPXDatabase
         }
 
         // QUERIES ON THE REASON TABLE
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<Reason> GetReasons()
         {
             string mySelectQuery = "SELECT R.[ID], R.[Credit], R.[description] FROM Reasons R ORDER BY [ID] ASC";
@@ -836,6 +956,12 @@ namespace DPXDatabase
         }
 
         // REPORT GENERATION
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dates"></param>
+        /// <returns></returns>
         public string GenerateReport(List<Classdate> dates)
         {
             List<string> report = new List<string>();
@@ -844,11 +970,18 @@ namespace DPXDatabase
         }
 
         // DATABASE MANAGEMENT
+
+        /// <summary>
+        /// 
+        /// </summary>
         private void Open()
         {
             this.connection.Open();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void Close()
         {
             this.connection.Close();

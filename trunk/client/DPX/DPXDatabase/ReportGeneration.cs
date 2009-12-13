@@ -8,18 +8,41 @@ namespace DPXDatabase
     using System.Linq;
     using System.Text;
 
+    /// <summary>
+    /// 
+    /// </summary>
     internal class ReportGeneration
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private Database db;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private List<Student> students;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private List<Section> sections;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private List<Classdate> dates;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private List<StudentReport> studentReport;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="dates"></param>
         public ReportGeneration(Database db, List<Classdate> dates)
         {
             this.db = db;
@@ -35,6 +58,10 @@ namespace DPXDatabase
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string GetReport()
         {
             string report = "Report for - ";

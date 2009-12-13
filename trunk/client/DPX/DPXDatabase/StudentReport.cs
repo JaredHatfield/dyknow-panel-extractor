@@ -8,18 +8,42 @@ namespace DPXDatabase
     using System.Linq;
     using System.Text;
 
+    /// <summary>
+    /// 
+    /// </summary>
     internal class StudentReport
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private Student student;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private List<Classdate> dates;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private List<DisplayExceptionInfo> exception;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private List<DisplayPanelInfo> panels;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private List<StudentDate> studentDate;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="student"></param>
+        /// <param name="dates"></param>
         public StudentReport(Database db, Student student, List<Classdate> dates)
         {
             this.student = student;
@@ -72,11 +96,18 @@ namespace DPXDatabase
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Student Student
         {
             get { return this.student; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public int Credit()
         {
             int num = 0;
@@ -91,6 +122,10 @@ namespace DPXDatabase
             return num;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return this.Credit() + "\t" + this.student.FullName;

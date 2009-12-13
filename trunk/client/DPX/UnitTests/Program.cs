@@ -11,14 +11,26 @@ namespace UnitTests
     using DPXDatabase;
     using QuickReader;
 
-    private class Program
+    /// <summary>
+    /// 
+    /// </summary>
+    class Program
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="inputfile"></param>
+        /// <param name="outputfile"></param>
         public static void SortFile(string inputfile, string outputfile)
         {
             PanelSorter ps = new PanelSorter(inputfile, outputfile);
             ps.ProcessSort();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
         private static void Main(string[] args)
         {
             Console.WriteLine("DyKnow Panel eXtractor Unit Tests");

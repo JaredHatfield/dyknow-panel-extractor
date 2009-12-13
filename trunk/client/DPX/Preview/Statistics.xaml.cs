@@ -22,8 +22,15 @@ namespace Preview
     /// </summary>
     public partial class Statistics : Window
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private DyKnowReader dr;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dr"></param>
         public Statistics(DyKnowReader dr)
         {
             InitializeComponent();
