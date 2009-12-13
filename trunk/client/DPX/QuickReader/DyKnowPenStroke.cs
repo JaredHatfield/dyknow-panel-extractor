@@ -55,7 +55,7 @@ namespace QuickReader
         }
 
 
-        public String ToString()
+        public override string ToString()
         {
             return "UT=" + ut.ToString() + " PW=" + pw.ToString() + " UID=" + uid + 
                 " DATA=" + data + " DEL=" + deleted.ToString();

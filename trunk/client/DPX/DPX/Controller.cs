@@ -1,25 +1,29 @@
-﻿// <copyright file="Controller.cs" company="DPX on Google Code">
+﻿// <copyright file="Controller.cs" company="DPX">
 // GNU General Public License v3
 // </copyright>
 namespace DPX
 {
-    using DPXDatabase;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Windows.Controls;
+    using DPXDatabase;
     using QuickReader;
 
     /// <summary>
     /// 
     /// </summary>
-    class Controller
+    internal class Controller
     {
-        //Singleton instance of the class
+        /// <summary>
+        /// Singleton instance of the class.
+        /// </summary>
         private static Controller c;
 
-        //Instance of the database
+        /// <summary>
+        /// Instance of the database.
+        /// </summary>
         private Database db;
 
         // Collections of data kept in the interface
@@ -33,7 +37,12 @@ namespace DPX
 
         private Controller()
         {
-            db = null;
+            this.db = null;
+        }
+
+        public Database DB
+        {
+            get { return this.db; }
         }
 
         public static Controller Instance()
@@ -42,73 +51,69 @@ namespace DPX
             {
                 c = new Controller();
             }
+
             return c;
         }
 
-        public Database DB
+        public void SetComboBoxDateImport(ComboBox cbd)
         {
-            get { return db; }
-        }
-
-        public void setComboBoxDateImport(ComboBox cbd)
-        {
-            if (comboBoxDateImport == null)
+            if (this.comboBoxDateImport == null)
             {
-                comboBoxDateImport = cbd;
+                this.comboBoxDateImport = cbd;
             }
         }
 
-        public void setComboBoxDateException(ComboBox cbd)
+        public void SetComboBoxDateException(ComboBox cbd)
         {
-            if (comboBoxDateException == null)
+            if (this.comboBoxDateException == null)
             {
-                comboBoxDateException = cbd;
+                this.comboBoxDateException = cbd;
             }
         }
 
-        public void setComboBoxSections(ComboBox cbs)
+        public void SetComboBoxSections(ComboBox cbs)
         {
-            if (comboBoxSections == null)
+            if (this.comboBoxSections == null)
             {
-                comboBoxSections = cbs;
+                this.comboBoxSections = cbs;
             }
         }
 
-        public void setComboBoxReason(ComboBox cbr)
+        public void SetComboBoxReason(ComboBox cbr)
         {
-            if (comboBoxReasons == null)
+            if (this.comboBoxReasons == null)
             {
-                comboBoxReasons = cbr;
+                this.comboBoxReasons = cbr;
             }
         }
 
-        public void setListBoxStudents(ListBox stu)
+        public void SetListBoxStudents(ListBox stu)
         {
-            if (listBoxStudents == null)
+            if (this.listBoxStudents == null)
             {
-                listBoxStudents = stu;
+                this.listBoxStudents = stu;
             }
         }
 
-        public void setListBoxReportDates(ListBox r)
+        public void SetListBoxReportDates(ListBox r)
         {
-            if (listBoxReportDates == null)
+            if (this.listBoxReportDates == null)
             {
-                listBoxReportDates = r;
+                this.listBoxReportDates = r;
             }
         }
 
-        public void setProgressBarMaster(ProgressBar pb)
+        public void SetProgressBarMaster(ProgressBar pb)
         {
-            if (progressBarMaster == null)
+            if (this.progressBarMaster == null)
             {
-                progressBarMaster = pb;
+                this.progressBarMaster = pb;
             }
         }
 
-        public Boolean isDatabaseOpen()
+        public bool IsDatabaseOpen()
         {
-            if (db == null)
+            if (this.db == null)
             {
                 return false;
             }
@@ -118,74 +123,87 @@ namespace DPX
             }
         }
 
-        public void openDatabaseFile(String filename)
+        public void OpenDatabaseFile(string filename)
         {
-            db = new Database(filename);
+            this.db = new Database(filename);
 
-            refreshClassdate();
-            refreshStudents();
-            refreshSections();
-            refreshReasons();
+            this.RefreshClassdate();
+            this.RefreshStudents();
+            this.RefreshSections();
+            this.RefreshReasons();
         }
 
-        public void refreshClassdate()
+        public void RefreshClassdate()
         {
-            comboBoxDateImport.Items.Clear();
-            comboBoxDateException.Items.Clear();
-            listBoxReportDates.Items.Clear();
+            this.comboBoxDateImport.Items.Clear();
+            this.comboBoxDateException.Items.Clear();
+            this.listBoxReportDates.Items.Clear();
+
             // Fill in all of the currently available dates
-            List<Classdate> cdl = db.GetClassdates();
+            List<Classdate> cdl = this.db.GetClassdates();
             for (int i = 0; i < cdl.Count; i++)
             {
-                comboBoxDateImport.Items.Add(cdl[i]);
-                comboBoxDateException.Items.Add(cdl[i]);
-                listBoxReportDates.Items.Add(cdl[i]);
+                this.comboBoxDateImport.Items.Add(cdl[i]);
+                this.comboBoxDateException.Items.Add(cdl[i]);
+                this.listBoxReportDates.Items.Add(cdl[i]);
             }
         }
 
-        public void refreshSections()
+        public void RefreshSections()
         {
-            comboBoxSections.Items.Clear();
+            this.comboBoxSections.Items.Clear();
+
             // Fill in all of the sections
-            List<Section> s = db.GetSections();
+            List<Section> s = this.db.GetSections();
             for (int i = 0; i < s.Count; i++)
             {
-                comboBoxSections.Items.Add(s[i]);
+                this.comboBoxSections.Items.Add(s[i]);
             }
-            comboBoxSections.SelectedIndex = 0;
+
+            this.comboBoxSections.SelectedIndex = 0;
         }
 
-        public void refreshReasons()
+        public void RefreshReasons()
         {
-            comboBoxReasons.Items.Clear();
+            this.comboBoxReasons.Items.Clear();
+
             // Fill in all of the sections
-            List<Reason> res = db.GetReasons();
+            List<Reason> res = this.db.GetReasons();
             for (int i = 0; i < res.Count; i++)
             {
-                comboBoxReasons.Items.Add(res[i]);
+                this.comboBoxReasons.Items.Add(res[i]);
             }
-            comboBoxReasons.SelectedIndex = 0;
+
+            this.comboBoxReasons.SelectedIndex = 0;
         }
 
-        public void refreshStudents()
+        public void RefreshStudents()
         {
-            listBoxStudents.Items.Clear();
+            this.listBoxStudents.Items.Clear();
+
             // Fill in all of the students
             List<Student> allStudents = c.DB.GetAllStudents();
-            listBoxStudents.Items.Clear();
+            this.listBoxStudents.Items.Clear();
             for (int i = 0; i < allStudents.Count; i++)
             {
-                listBoxStudents.Items.Add(allStudents[i]);
+                this.listBoxStudents.Items.Add(allStudents[i]);
             }
         }
 
-        public int addDyKnowFile(DyKnowReader dr, String filename, Classdate cd)
+        public int AddDyKnowFile(DyKnowReader dr, string filename, Classdate cd)
         {
-            
-            File f = new File(cd.Id, filename, dr.MeanStrokes, dr.StdDevStrokes, dr.MinStrokeCount,
-                dr.MaxStrokeCount, dr.MeanStrokeDistance, dr.StdDevStrokeDistance,
-                dr.MinStrokeDistance, dr.MaxStrokeDistance);
-            int fileId = db.AddFile(f);
+            File f = new File(
+                cd.Id, 
+                filename, 
+                dr.MeanStrokes, 
+                dr.StdDevStrokes, 
+                dr.MinStrokeCount,
+                dr.MaxStrokeCount, 
+                dr.MeanStrokeDistance, 
+                dr.StdDevStrokeDistance,
+                dr.MinStrokeDistance, 
+                dr.MaxStrokeDistance);
+            int fileId = this.db.AddFile(f);
             
             if (fileId < 0)
             {
@@ -194,29 +212,30 @@ namespace DPX
 
             for (int i = 0; i < dr.NumOfPages(); i++)
             {
-                if (!db.IsStudentUsername(dr.getDyKnowPage(i).UserName))
+                if (!this.db.IsStudentUsername(dr.getDyKnowPage(i).UserName))
                 {
-                    db.AddStudent(new Student(dr.getDyKnowPage(i)));
+                    this.db.AddStudent(new Student(dr.getDyKnowPage(i)));
                 }
-                db.AddPanel(fileId, dr.getDyKnowPage(i));
+
+                this.db.AddPanel(fileId, dr.getDyKnowPage(i));
             }
 
             return fileId;
         }
 
-        public void closeDatabase()
+        public void CloseDatabase()
         {
-            if (db != null)
+            if (this.db != null)
             {
-                db.Connection.Dispose();
-                db = null;
+                this.db.Connection.Dispose();
+                this.db = null;
             }
 
-            comboBoxDateImport.Items.Clear();
-            comboBoxDateException.Items.Clear();
-            comboBoxSections.Items.Clear();
-            comboBoxReasons.Items.Clear();
-            listBoxStudents.Items.Clear();
+            this.comboBoxDateImport.Items.Clear();
+            this.comboBoxDateException.Items.Clear();
+            this.comboBoxSections.Items.Clear();
+            this.comboBoxReasons.Items.Clear();
+            this.listBoxStudents.Items.Clear();
         }
     }
 }

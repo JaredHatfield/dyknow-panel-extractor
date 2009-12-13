@@ -1,11 +1,11 @@
-﻿// <copyright file="ManageStudent.xaml.cs" company="DPX on Google Code">
+﻿// <copyright file="ManageStudent.xaml.cs" company="DPX">
 // GNU General Public License v3
 // </copyright>
 namespace DPX
 {
-    using DPXDatabase;
     using System;
     using System.Collections.Generic;
+    using System.Data.OleDb;
     using System.Linq;
     using System.Text;
     using System.Windows;
@@ -17,37 +17,22 @@ namespace DPX
     using System.Windows.Media.Imaging;
     using System.Windows.Navigation;
     using System.Windows.Shapes;
-    using System.Data.OleDb;
+    using DPXDatabase;
 
     /// <summary>
     /// Interaction logic for ManageStudent.xaml
     /// </summary>
     public partial class ManageStudent : Page
     {
-        Controller c = Controller.Instance();
+        private Controller c = Controller.Instance();
 
         public ManageStudent()
         {
             InitializeComponent();
-            c.setListBoxStudents(listBoxStudents);
-            c.setComboBoxSections(comboBoxSection);
-            c.setComboBoxDateException(comboBoxDate);
-            c.setComboBoxReason(comboBoxReason);
-        }
-
-        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            FilterText(textBoxFilter.Text, checkBoxFilterNoSection.IsChecked == true);
-        }
-
-        private void checkBoxFilterNoSection_Checked(object sender, RoutedEventArgs e)
-        {
-            FilterText(textBoxFilter.Text, checkBoxFilterNoSection.IsChecked == true);
-        }
-
-        private void checkBoxFilterNoSection_Unchecked(object sender, RoutedEventArgs e)
-        {
-            FilterText(textBoxFilter.Text, checkBoxFilterNoSection.IsChecked == true);
+            this.c.SetListBoxStudents(listBoxStudents);
+            this.c.SetComboBoxSections(comboBoxSection);
+            this.c.SetComboBoxDateException(comboBoxDate);
+            this.c.SetComboBoxReason(comboBoxReason);
         }
 
         public void FilterText(string searchText, bool sectionless)
@@ -55,22 +40,54 @@ namespace DPX
             listBoxStudents.Items.Filter = delegate(object obj)
             {
                 Student s = (Student)obj;
-                if (s == null) return false;
-                else if (sectionless && s.IsInSection) return false;
-                else if (s.FirstName.ToLower().IndexOf(searchText.ToLower(), 0) > -1) return true;
-                else if (s.LastName.ToLower().IndexOf(searchText.ToLower(), 0) > -1) return true;
-                else if (s.Username.ToLower().IndexOf(searchText.ToLower(), 0) > -1) return true;
-                else return false;
+                if (s == null)
+                {
+                    return false;
+                }
+                else if (sectionless && s.IsInSection)
+                {
+                    return false;
+                }
+                else if (s.FirstName.ToLower().IndexOf(searchText.ToLower(), 0) > -1)
+                {
+                    return true;
+                }
+                else if (s.LastName.ToLower().IndexOf(searchText.ToLower(), 0) > -1)
+                {
+                    return true;
+                }
+                else if (s.Username.ToLower().IndexOf(searchText.ToLower(), 0) > -1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             };
         }
 
+        private void TxtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.FilterText(textBoxFilter.Text, checkBoxFilterNoSection.IsChecked == true);
+        }
 
-        private void listBoxStudents_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CheckBoxFilterNoSection_Checked(object sender, RoutedEventArgs e)
+        {
+            this.FilterText(textBoxFilter.Text, checkBoxFilterNoSection.IsChecked == true);
+        }
+
+        private void CheckBoxFilterNoSection_Unchecked(object sender, RoutedEventArgs e)
+        {
+            this.FilterText(textBoxFilter.Text, checkBoxFilterNoSection.IsChecked == true);
+        }
+        
+        private void ListBoxStudents_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Student s = listBoxStudents.SelectedValue as Student;
             if (s != null)
             {
-                //Display the student information
+                // Display the student information
                 textBoxStudentFirstName.Text = s.FirstName;
                 textBoxStudentFullName.Text = s.FullName;
                 textBoxStudentLastName.Text = s.LastName;
@@ -91,6 +108,7 @@ namespace DPX
                         }
                     }
                 }
+
                 if (s.IsEnrolled)
                 {
                     checkBoxStudentIsEnrolled.IsChecked = true;
@@ -100,16 +118,16 @@ namespace DPX
                     checkBoxStudentIsEnrolled.IsChecked = false;
                 }
 
-                //Display the panel information
-                displayExceptions(s.Id);
-                displayPanels(s.Id);
+                // Display the panel information
+                this.DisplayExceptions(s.Id);
+                this.DisplayPanels(s.Id);
             }
             else
             {
-                textBoxStudentFirstName.Text = "";
-                textBoxStudentFullName.Text = "";
-                textBoxStudentLastName.Text = "";
-                textBoxStudentUserName.Text = "";
+                textBoxStudentFirstName.Text = string.Empty;
+                textBoxStudentFullName.Text = string.Empty;
+                textBoxStudentLastName.Text = string.Empty;
+                textBoxStudentUserName.Text = string.Empty;
                 comboBoxSection.SelectedIndex = 0;
                 checkBoxStudentIsEnrolled.IsChecked = false;
 
@@ -120,14 +138,13 @@ namespace DPX
             }
         }
 
-
-        private void displayExceptions(int studentId)
+        private void DisplayExceptions(int studentId)
         {
             gridException.Children.Clear();
             gridException.RowDefinitions.Clear();
 
             // Display the exceptions for this user
-            List<DisplayExceptionInfo> dei = c.DB.GetExceptionsForStudent(studentId);
+            List<DisplayExceptionInfo> dei = this.c.DB.GetExceptionsForStudent(studentId);
             for (int i = 0; i < dei.Count; i++)
             {
                 RowDefinition rd = new RowDefinition();
@@ -169,13 +186,14 @@ namespace DPX
                 gridException.Children.Add(notes);
             }
         }
-        private void displayPanels(int studentId)
+
+        private void DisplayPanels(int studentId)
         {
             gridPanels.Children.Clear();
             gridPanels.RowDefinitions.Clear();
 
             // Display the panels for this user
-            List<DisplayPanelInfo> dpi = c.DB.GetPanelsForStudent(studentId);
+            List<DisplayPanelInfo> dpi = this.c.DB.GetPanelsForStudent(studentId);
             for (int i = 0; i < dpi.Count; i++)
             {
                 RowDefinition rd = new RowDefinition();
@@ -242,44 +260,43 @@ namespace DPX
             }
         }
 
-
-        private void comboBoxSection_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ComboBoxSection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Student s = listBoxStudents.SelectedValue as Student;
-            if (s != null && c.isDatabaseOpen())
+            if (s != null && this.c.IsDatabaseOpen())
             {
                 DPXDatabase.Section section = comboBoxSection.SelectedValue as DPXDatabase.Section;
-                c.DB.UpdateStudentSection(section.Id, s.Id);
+                this.c.DB.UpdateStudentSection(section.Id, s.Id);
                 s.Section = section.Id;
             }
         }
 
-        private void checkBoxStudentIsEnrolled_Checked(object sender, RoutedEventArgs e)
+        private void CheckBoxStudentIsEnrolled_Checked(object sender, RoutedEventArgs e)
         {
             Student s = listBoxStudents.SelectedValue as Student;
-            if (s != null && c.isDatabaseOpen())
+            if (s != null && this.c.IsDatabaseOpen())
             {
-                c.DB.UpdateStudentSetEnrolled(true, s.Id);
+                this.c.DB.UpdateStudentSetEnrolled(true, s.Id);
                 s.IsEnrolled = true;
             }
         }
 
-        private void checkBoxStudentIsEnrolled_Unchecked(object sender, RoutedEventArgs e)
+        private void CheckBoxStudentIsEnrolled_Unchecked(object sender, RoutedEventArgs e)
         {
             Student s = listBoxStudents.SelectedValue as Student;
-            if (s != null && c.isDatabaseOpen())
+            if (s != null && this.c.IsDatabaseOpen())
             {
-                c.DB.UpdateStudentSetEnrolled(false, s.Id);
+                this.c.DB.UpdateStudentSetEnrolled(false, s.Id);
                 s.IsEnrolled = false;
             }
         }
 
-        private void buttonAddException_Click(object sender, RoutedEventArgs e)
+        private void ButtonAddException_Click(object sender, RoutedEventArgs e)
         {
             Student s = listBoxStudents.SelectedValue as Student;
             Classdate d = comboBoxDate.SelectedValue as Classdate;
             Reason r = comboBoxReason.SelectedValue as Reason;
-            if (!c.isDatabaseOpen())
+            if (!this.c.IsDatabaseOpen())
             {
                 MessageBox.Show("No file is open.", "Error");
             }
@@ -298,15 +315,12 @@ namespace DPX
             else
             {
                 Exceptions ex = new Exceptions(d.Id, s.Id, r.Id, textBoxNotes.Text);
-                c.DB.AddException(ex);
-                //comboBoxDate.SelectedIndex = -1;
+                this.c.DB.AddException(ex);
                 comboBoxReason.SelectedIndex = -1;
-                textBoxNotes.Text = "";
+                textBoxNotes.Text = string.Empty;
             }
 
-            displayExceptions(s.Id);
+            this.DisplayExceptions(s.Id);
         }
-
-
     }
 }

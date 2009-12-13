@@ -5,7 +5,7 @@
     <DockPanel>
         <DockPanel HorizontalAlignment="Left" DockPanel.Dock="Left" Width="150">
             <Label VerticalAlignment="Top" DockPanel.Dock="Top" TextBlock.TextAlignment="Center" TextBlock.FontWeight="Bold">Dates for Report</Label>
-            <Button Name="buttonGenerateReport" DockPanel.Dock="Bottom" Click="buttonGenerateReport_Click">Generate Report</Button>
+            <Button Name="buttonGenerateReport" DockPanel.Dock="Bottom" Click="ButtonGenerateReport_Click">Generate Report</Button>
             <ListBox Name="listBoxDates" SelectionMode="Multiple"></ListBox>
         </DockPanel>
         <RichTextBox Name="richTextBoxReport" ScrollViewer.VerticalScrollBarVisibility="Visible"></RichTextBox>

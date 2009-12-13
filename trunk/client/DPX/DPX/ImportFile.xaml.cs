@@ -1,9 +1,8 @@
-﻿// <copyright file="ImportFile.xaml.cs" company="DPX on Google Code">
+﻿// <copyright file="ImportFile.xaml.cs" company="DPX">
 // GNU General Public License v3
 // </copyright>
 namespace DPX
 {
-    using DPXDatabase;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -17,6 +16,7 @@ namespace DPX
     using System.Windows.Media.Imaging;
     using System.Windows.Navigation;
     using System.Windows.Shapes;
+    using DPXDatabase;
     using QuickReader;
 
     /// <summary>
@@ -24,47 +24,42 @@ namespace DPX
     /// </summary>
     public partial class ImportFile : Page
     {   
-        Controller c = Controller.Instance();
-        DyKnowReader dr;
+        private Controller c = Controller.Instance();
+        private DyKnowReader dr;
 
         public ImportFile()
         {
             InitializeComponent();
-            //grid1.ShowGridLines = true;
             textBoxSaveFileName.IsReadOnly = true;
             grid1.Background = Brushes.White;
             buttonImport.IsEnabled = false;
 
-            c.setComboBoxDateImport(comboBoxDates);
+            this.c.SetComboBoxDateImport(comboBoxDates);
         }
 
-
-        public void clearDyKnowGrid()
+        public void ClearDyKnowGrid()
         {
             grid1.Children.Clear();
             grid1.RowDefinitions.Clear();
         }
 
-        private void show_preview(object sender, System.EventArgs e)
+        private void ShowPreview(object sender, System.EventArgs e)
         {
             Button b = sender as Button;
             int i = (int)b.Tag;
-            PanelPreview pp = new PanelPreview(dr);
-            pp.displayPanel(i);
+            PanelPreview pp = new PanelPreview(this.dr);
+            pp.DisplayPanel(i);
             pp.ShowDialog();
         }
 
-        private void displayFile(String file)
+        private void DisplayFile(string file)
         {
-            dr = new DyKnowReader(file);
-            clearDyKnowGrid();
-
+            this.dr = new DyKnowReader(file);
+            this.ClearDyKnowGrid();
             buttonImport.IsEnabled = true;
-
-
-            for (int i = 0; i < dr.NumOfPages(); i++)
+            for (int i = 0; i < this.dr.NumOfPages(); i++)
             {
-                DyKnowPage dp = dr.getDyKnowPage(i);
+                DyKnowPage dp = this.dr.getDyKnowPage(i);
 
                 RowDefinition rd = new RowDefinition();
                 rd.Height = new GridLength(30);
@@ -116,6 +111,7 @@ namespace DPX
                 {
                     analysis.Background = Brushes.LightPink;
                 }
+
                 Grid.SetColumn(analysis, 4);
                 Grid.SetRow(analysis, i);
                 analysis.BorderThickness = new Thickness(1);
@@ -126,7 +122,7 @@ namespace DPX
                 buttonNum.Content = "Show";
                 Grid.SetColumn(buttonNum, 5);
                 Grid.SetRow(buttonNum, i);
-                buttonNum.AddHandler(Button.ClickEvent, new RoutedEventHandler(this.show_preview));
+                buttonNum.AddHandler(Button.ClickEvent, new RoutedEventHandler(this.ShowPreview));
                 buttonNum.Tag = i;
                 buttonNum.BorderBrush = Brushes.Black;
                 buttonNum.BorderThickness = new Thickness(1);
@@ -138,7 +134,6 @@ namespace DPX
         {
             // Configure open file dialog box
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            //dlg.FileName = "DyKnow"; // Default file name
             dlg.DefaultExt = ".dyz"; // Default file extension
             dlg.Filter = "DyKnow Files (.dyz)|*.dyz"; // Filter files by extension
 
@@ -150,19 +145,22 @@ namespace DPX
             {
                 // Open document
                 textBoxSaveFileName.Text = dlg.FileName;
-                displayFile(dlg.FileName);
+                this.DisplayFile(dlg.FileName);
             }
         }
 
-
-        // Import a file into the database
+        /// <summary>
+        ///  Import a file into the database.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            if (dr == null)
+            if (this.dr == null)
             {
                 MessageBox.Show("Please open a DyKnow file", "Error");
             }
-            else if (!c.isDatabaseOpen())
+            else if (!this.c.IsDatabaseOpen())
             {
                 MessageBox.Show("Please open a database file.", "Error");
             }
@@ -172,7 +170,9 @@ namespace DPX
             }
             else
             {
-                int i = c.addDyKnowFile(dr, System.IO.Path.GetFileNameWithoutExtension(textBoxSaveFileName.Text), 
+                int i = this.c.AddDyKnowFile(
+                    this.dr, 
+                    System.IO.Path.GetFileNameWithoutExtension(textBoxSaveFileName.Text), 
                     comboBoxDates.SelectedValue as Classdate);
                 if (i < 0)
                 {
@@ -180,28 +180,26 @@ namespace DPX
                 }
                 else
                 {
-                    clearDyKnowGrid();
+                    this.ClearDyKnowGrid();
                     textBoxSaveFileName.Clear();
                     buttonImport.IsEnabled = false;
-                    c.refreshStudents();
-                    c.refreshStudents();
+                    this.c.RefreshStudents();
+                    this.c.RefreshStudents();
                 }
             }
         }
 
-        private void buttonAddDate_Click(object sender, RoutedEventArgs e)
+        private void ButtonAddDate_Click(object sender, RoutedEventArgs e)
         {
-            if (!c.isDatabaseOpen())
+            if (!this.c.IsDatabaseOpen())
             {
                 MessageBox.Show("Error: No database is open.");
             }
             else
             {
                 AddNewDate popupWindow = new AddNewDate();
-                //popupWindow.Owner = this.Pare;
                 popupWindow.ShowDialog();
             }
         }
-
     }
 }

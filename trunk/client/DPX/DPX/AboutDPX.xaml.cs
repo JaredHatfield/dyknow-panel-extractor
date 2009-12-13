@@ -1,4 +1,4 @@
-﻿// <copyright file="AboutDPX.xaml.cs" company="DPX on Google Code">
+﻿// <copyright file="AboutDPX.xaml.cs" company="DPX">
 // GNU General Public License v3
 // </copyright>
 namespace DPX

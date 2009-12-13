@@ -1,9 +1,8 @@
-﻿// <copyright file="GenerateReport.xaml.cs" company="DPX on Google Code">
+﻿// <copyright file="GenerateReport.xaml.cs" company="DPX">
 // GNU General Public License v3
 // </copyright>
 namespace DPX
 {
-    using DPXDatabase;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -17,23 +16,24 @@ namespace DPX
     using System.Windows.Media.Imaging;
     using System.Windows.Navigation;
     using System.Windows.Shapes;
+    using DPXDatabase;
 
     /// <summary>
     /// Interaction logic for GenerateReport.xaml
     /// </summary>
     public partial class GenerateReport : Page
     {
-        Controller c = Controller.Instance();
+        private Controller c = Controller.Instance();
 
         public GenerateReport()
         {
             InitializeComponent();
-            c.setListBoxReportDates(listBoxDates);
+            this.c.SetListBoxReportDates(listBoxDates);
         }
 
-        private void buttonGenerateReport_Click(object sender, RoutedEventArgs e)
+        private void ButtonGenerateReport_Click(object sender, RoutedEventArgs e)
         {
-            if (c.isDatabaseOpen())
+            if (this.c.IsDatabaseOpen())
             {
                 List<Classdate> selectedDates = new List<Classdate>();
                 for (int i = 0; i < listBoxDates.SelectedItems.Count; i++)
@@ -42,7 +42,7 @@ namespace DPX
                 }
 
                 Paragraph para = new Paragraph();
-                para.Inlines.Add(new Run(c.DB.GenerateReport(selectedDates)));
+                para.Inlines.Add(new Run(this.c.DB.GenerateReport(selectedDates)));
                 richTextBoxReport.Document.Blocks.Add(para);
             }
             else

@@ -9,7 +9,7 @@
             <Button Height="23" Width="75" Click="Button_Click">Open File</Button>
         </StackPanel>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
-            <Button Height="23" Width="27" Name="buttonAddDate" Click="buttonAddDate_Click">Add Date</Button>
+            <Button Height="23" Width="27" Name="buttonAddDate" Click="ButtonAddDate_Click">Add Date</Button>
             <ComboBox Name="comboBoxDates" Width="200"></ComboBox>
             <Button Height="23" Width="75" Name="buttonImport" Click="Button_Click_1">Import</Button>
         </StackPanel>

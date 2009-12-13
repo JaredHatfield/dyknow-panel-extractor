@@ -1,4 +1,4 @@
-﻿// <copyright file="Window1.xaml.cs" company="DPX on Google Code">
+﻿// <copyright file="Window1.xaml.cs" company="DPX">
 // GNU General Public License v3
 // </copyright>
 namespace DPX
@@ -23,13 +23,13 @@ namespace DPX
     /// </summary>
     public partial class Window1 : Window
     {
-        Controller c = Controller.Instance();
+        private Controller c = Controller.Instance();
 
         public Window1()
         {
             InitializeComponent();
             FileMenuClose.IsEnabled = false;
-            c.setProgressBarMaster(progressBarMaster);
+            this.c.SetProgressBarMaster(progressBarMaster);
         }
 
         private void DisplayAboutWindow(object sender, RoutedEventArgs e)
@@ -41,8 +41,8 @@ namespace DPX
 
         private void OpenFile(object sender, RoutedEventArgs e)
         {
-            //The database is not open
-            if (!c.isDatabaseOpen())
+            // The database is not open
+            if (!this.c.IsDatabaseOpen())
             {
                     // Configure open file dialog box
                     Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
@@ -56,23 +56,18 @@ namespace DPX
                     if (result == true)
                     {
                         // Open document
-                        c.openDatabaseFile(dlg.FileName);
+                        this.c.OpenDatabaseFile(dlg.FileName);
                         FileMenuOpen.IsEnabled = false;
                         FileMenuClose.IsEnabled = true;
                     }
-                
             }
         }
 
         private void CloseFile(object sender, RoutedEventArgs e)
         {
-            c.closeDatabase();
+            this.c.CloseDatabase();
             FileMenuOpen.IsEnabled = true;
             FileMenuClose.IsEnabled = false;
         }
-
-
-
-
     }
 }

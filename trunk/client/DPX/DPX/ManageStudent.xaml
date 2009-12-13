@@ -5,12 +5,12 @@
     <DockPanel Height="Auto" Width="Auto">
         <DockPanel DockPanel.Dock="Left" Margin="10,10,10,10" Width="250">
             <Label Height="28" VerticalAlignment="Top" DockPanel.Dock="Top">Manage Students</Label>
-            <TextBox Height="23" Name="textBoxFilter" DockPanel.Dock="Top" TextChanged="txtSearch_TextChanged"/>
+            <TextBox Height="23" Name="textBoxFilter" DockPanel.Dock="Top" TextChanged="TxtSearch_TextChanged"/>
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
                 <Label>Show Only Students not in a Section:</Label>
-                <CheckBox Name="checkBoxFilterNoSection" Margin="0,8,0,0" Checked="checkBoxFilterNoSection_Checked" Unchecked="checkBoxFilterNoSection_Unchecked"></CheckBox>
+                <CheckBox Name="checkBoxFilterNoSection" Margin="0,8,0,0" Checked="CheckBoxFilterNoSection_Checked" Unchecked="CheckBoxFilterNoSection_Unchecked"></CheckBox>
             </StackPanel>
-            <ListBox Name="listBoxStudents" SelectionChanged="listBoxStudents_SelectionChanged" />
+            <ListBox Name="listBoxStudents" SelectionChanged="ListBoxStudents_SelectionChanged" />
         </DockPanel>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
             <StackPanel HorizontalAlignment="Left" Margin="10,10,10,10" Width="250">
@@ -32,11 +32,11 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Width="100">Section</Label>
-                    <ComboBox Name="comboBoxSection" Width="150" SelectionChanged="comboBoxSection_SelectionChanged"></ComboBox>
+                    <ComboBox Name="comboBoxSection" Width="150" SelectionChanged="ComboBoxSection_SelectionChanged"></ComboBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Width="100">Is Enrolled</Label>
-                    <CheckBox Name="checkBoxStudentIsEnrolled" Margin="0,8,0,0" Checked="checkBoxStudentIsEnrolled_Checked" Unchecked="checkBoxStudentIsEnrolled_Unchecked"></CheckBox>
+                    <CheckBox Name="checkBoxStudentIsEnrolled" Margin="0,8,0,0" Checked="CheckBoxStudentIsEnrolled_Checked" Unchecked="CheckBoxStudentIsEnrolled_Unchecked"></CheckBox>
                 </StackPanel>
             </StackPanel>
             <StackPanel HorizontalAlignment="Left" Margin="10,10,10,10" Width="250">
@@ -52,7 +52,7 @@
                     <Label Width="50">Notes</Label>
                     <TextBox Name="textBoxNotes" Width="200" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="60"></TextBox>
                 </StackPanel>
-                <Button Name="buttonAddException" HorizontalAlignment="Right" Click="buttonAddException_Click">Add Exception</Button>
+                <Button Name="buttonAddException" HorizontalAlignment="Right" Click="ButtonAddException_Click">Add Exception</Button>
             </StackPanel>
         </StackPanel>
         <DockPanel>

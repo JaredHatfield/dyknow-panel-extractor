@@ -1,4 +1,4 @@
-﻿// <copyright file="AddNewDate.xaml.cs" company="DPX on Google Code">
+﻿// <copyright file="AddNewDate.xaml.cs" company="DPX">
 // GNU General Public License v3
 // </copyright>
 namespace DPX
@@ -68,7 +68,7 @@ namespace DPX
         private void ButtonAddDate_Click(object sender, RoutedEventArgs e)
         {
             this.c.DB.AddClassdate(dateTimePicker.Value.Date);
-            this.c.refreshClassdate();
+            this.c.RefreshClassdate();
             this.Close();
         }
     }
