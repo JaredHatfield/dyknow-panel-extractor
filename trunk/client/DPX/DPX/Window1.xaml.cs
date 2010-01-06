@@ -35,6 +35,7 @@ namespace DPX
         {
             InitializeComponent();
             FileMenuClose.IsEnabled = false;
+            FileMenuRoster.IsEnabled = false;
             this.c.SetProgressBarMaster(progressBarMaster);
         }
 
@@ -75,6 +76,7 @@ namespace DPX
                         this.c.OpenDatabaseFile(dlg.FileName);
                         FileMenuOpen.IsEnabled = false;
                         FileMenuClose.IsEnabled = true;
+                        FileMenuRoster.IsEnabled = true;
                     }
             }
         }
@@ -89,6 +91,21 @@ namespace DPX
             this.c.CloseDatabase();
             FileMenuOpen.IsEnabled = true;
             FileMenuClose.IsEnabled = false;
+            FileMenuRoster.IsEnabled = false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ImportRoster_Click(object sender, RoutedEventArgs e)
+        {
+            RosterImporter ri = new RosterImporter();
+            if (ri.IsOpened)
+            {
+                ri.ShowDialog();
+            }
         }
     }
 }

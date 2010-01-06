@@ -121,6 +121,44 @@ namespace DPXDatabase
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public int GetSectionId(string name)
+        {
+            // IMPLEMENT ME
+            string mySelectQuery = "SELECT S.[ID], S.[sectionName] FROM Sections S WHERE S.[sectionName] = @parm1";
+            OleDbCommand myCommand = new OleDbCommand(mySelectQuery, this.connection);
+            myCommand.Parameters.AddWithValue("@parm1", name);
+            this.Open();
+            OleDbDataReader myReader = myCommand.ExecuteReader();
+            int id = -1;
+            try
+            {
+                if (myReader.Read())
+                {
+                    id = myReader.GetInt32(0);
+                }
+                else
+                {
+                    throw new Exception("Probelm retreiving student from database");
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+            finally
+            {
+                myReader.Close();
+                this.Close();
+            }
+
+            return id;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         public List<Section> GetSections()
         {

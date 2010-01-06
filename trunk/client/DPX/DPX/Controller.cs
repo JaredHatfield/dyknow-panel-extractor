@@ -319,6 +319,24 @@ namespace DPX
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="student"></param>
+        public void AddStudentToRoster(string firstname, string lastname, string username, string section)
+        {
+            // Get the section id or add it to the database if it doesn't exist
+            int sectionId = this.DB.GetSectionId(section);
+            if (sectionId == -1)
+            {
+                this.DB.AddSection(section);
+                sectionId = this.DB.GetSectionId(section);
+            }
+
+            Student student = new Student(username, lastname + ", " + firstname, firstname, lastname, sectionId, true);
+            this.db.AddStudent(student);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void CloseDatabase()
         {
             if (this.db != null)

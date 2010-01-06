@@ -7,6 +7,7 @@
     <DockPanel Height="Auto" Name="stackPanel1" Width="Auto" Margin="0,0,0,0">
         <Menu Height="22.22" Name="menu1" Width="Auto" DockPanel.Dock="Top">
             <MenuItem Header="_File">
+                <MenuItem Header="_Import Roster" Name="FileMenuRoster" Click="ImportRoster_Click" />
                 <MenuItem Header="_Open" Name="FileMenuOpen" Click="OpenFile" />
                 <MenuItem Header="_Close" Name="FileMenuClose" Click="CloseFile" />
             </MenuItem>
