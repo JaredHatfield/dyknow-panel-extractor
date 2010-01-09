@@ -251,6 +251,7 @@ namespace DPX
                 }
 
                 this.controller.RefreshStudents();
+                this.controller.RefreshSections();
                 this.Close();
             }
         }
