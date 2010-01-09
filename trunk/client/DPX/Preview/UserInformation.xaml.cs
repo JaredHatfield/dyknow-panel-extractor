@@ -17,12 +17,12 @@ namespace Preview
     using System.Windows.Shapes;
 
     /// <summary>
-    /// Interaction logic for UserInformation.xaml
+    /// Interaction logic for UserInformation.xaml.
     /// </summary>
     public partial class UserInformation : Window
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the UserInformation class.
         /// </summary>
         public UserInformation()
         {
@@ -30,9 +30,9 @@ namespace Preview
         }
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the UserInformation class.
         /// </summary>
-        /// <param name="content"></param>
+        /// <param name="content">The information to be displayed.</param>
         public UserInformation(FlowDocument content)
         {
             InitializeComponent();

@@ -18,19 +18,19 @@ namespace Preview
     using QuickReader;
 
     /// <summary>
-    /// Interaction logic for Statistics.xaml
+    /// Interaction logic for Statistics.xaml.
     /// </summary>
     public partial class Statistics : Window
     {
         /// <summary>
-        /// 
+        /// Instance of DyKnowReader.
         /// </summary>
         private DyKnowReader dr;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the Statistics class.
         /// </summary>
-        /// <param name="dr"></param>
+        /// <param name="dr">Instance of DyKnowReader.</param>
         public Statistics(DyKnowReader dr)
         {
             InitializeComponent();

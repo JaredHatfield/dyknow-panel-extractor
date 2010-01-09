@@ -17,12 +17,12 @@ namespace Preview
     using System.Windows.Shapes;
 
     /// <summary>
-    /// Interaction logic for AboutDPX.xaml
+    /// Interaction logic for AboutDPX.xaml.
     /// </summary>
     public partial class AboutDPX : Window
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the AboutDPX class.
         /// </summary>
         public AboutDPX()
         {
@@ -31,7 +31,7 @@ namespace Preview
         }
 
         /// <summary>
-        /// 
+        /// Closes the about window.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>

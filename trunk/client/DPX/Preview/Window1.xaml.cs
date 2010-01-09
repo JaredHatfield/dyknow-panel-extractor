@@ -21,22 +21,22 @@ namespace Preview
     using QuickReader;
 
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for Window1.xaml.
     /// </summary>
     public partial class Window1 : Window
     {
         /// <summary>
-        /// 
+        /// Instance of DyKnowReader.
         /// </summary>
         private DyKnowReader dr;
 
         /// <summary>
-        /// 
+        /// The current page being displayed.
         /// </summary>
         private int currentPanelNumber = 0;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the Window1 class.
         /// </summary>
         public Window1()
         {
@@ -47,7 +47,7 @@ namespace Preview
         }
 
         /// <summary>
-        /// 
+        /// Load a new DyKnow file.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
@@ -70,7 +70,7 @@ namespace Preview
         }
 
         /// <summary>
-        /// 
+        /// Display the next slide.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
@@ -88,7 +88,7 @@ namespace Preview
         }
 
         /// <summary>
-        /// 
+        /// Display the previous slide.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
@@ -106,7 +106,7 @@ namespace Preview
         }
 
         /// <summary>
-        /// 
+        /// Update the page number.
         /// </summary>
         private void UpdatePageNumber()
         {
@@ -114,7 +114,7 @@ namespace Preview
         }
 
         /// <summary>
-        /// 
+        /// Export the image of the current slide.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
@@ -136,9 +136,9 @@ namespace Preview
         }
 
         /// <summary>
-        /// 
+        /// Display the specified panel.
         /// </summary>
-        /// <param name="n"></param>
+        /// <param name="n">The panel number.</param>
         private void DisplayPanel(int n)
         {
             // Some error checking to make sure we don't crash
@@ -217,7 +217,7 @@ namespace Preview
         }
 
         /// <summary>
-        /// 
+        /// Display the AboutDPX window.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
@@ -229,7 +229,7 @@ namespace Preview
         }
 
         /// <summary>
-        /// 
+        /// Display the UserInformation window.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
@@ -255,7 +255,7 @@ namespace Preview
         }
 
         /// <summary>
-        /// 
+        /// Display the Statistics window.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
@@ -267,7 +267,7 @@ namespace Preview
         }
 
         /// <summary>
-        /// 
+        /// Change the size of the panel being displayed.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
