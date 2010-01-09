@@ -20,22 +20,22 @@ namespace DPX
     using QuickReader;
 
     /// <summary>
-    /// Interaction logic for Page1.xaml
+    /// Interaction logic for Page1.xaml.
     /// </summary>
     public partial class ImportFile : Page
     {   
         /// <summary>
-        /// 
+        /// Creates an instance of the singleton controller.
         /// </summary>
         private Controller c = Controller.Instance();
 
         /// <summary>
-        /// 
+        /// DyKnowReader used to read the contents of the specified file.
         /// </summary>
         private DyKnowReader dr;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the ImportFile class.
         /// </summary>
         public ImportFile()
         {
@@ -48,7 +48,7 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Clears the grid of all information that was previously loaded.
         /// </summary>
         public void ClearDyKnowGrid()
         {
@@ -57,7 +57,7 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Loads the preview for the panel which was specified by this specific button.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
@@ -71,9 +71,9 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Loads the file using the DyKnow reader and displays its contents in the grid.
         /// </summary>
-        /// <param name="file"></param>
+        /// <param name="file">The path to the file to oepn.</param>
         private void DisplayFile(string file)
         {
             this.dr = new DyKnowReader(file);
@@ -153,7 +153,7 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Open a DyKnow file to be read into the application.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
@@ -217,7 +217,7 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Provides the window to add a new date to the database.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>

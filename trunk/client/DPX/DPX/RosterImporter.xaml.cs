@@ -25,7 +25,7 @@ namespace DPX
     public partial class RosterImporter : Window
     {
         /// <summary>
-        /// An instance of the controller for DPX.
+        /// Creates an instance of the singleton controller.
         /// </summary>
         private Controller controller = Controller.Instance();
 

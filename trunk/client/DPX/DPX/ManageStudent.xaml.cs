@@ -20,17 +20,17 @@ namespace DPX
     using DPXDatabase;
 
     /// <summary>
-    /// Interaction logic for ManageStudent.xaml
+    /// Interaction logic for ManageStudent.xaml.
     /// </summary>
     public partial class ManageStudent : Page
     {
         /// <summary>
-        /// 
+        /// Creates an instance of the singleton controller.
         /// </summary>
         private Controller c = Controller.Instance();
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the ManageStudent class.
         /// </summary>
         public ManageStudent()
         {
@@ -42,10 +42,10 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Filter the list of students based on input.
         /// </summary>
-        /// <param name="searchText"></param>
-        /// <param name="sectionless"></param>
+        /// <param name="searchText">The string to search based on first name, last name, or username.</param>
+        /// <param name="sectionless">Only display students who are not in a section.</param>
         public void FilterText(string searchText, bool sectionless)
         {
             listBoxStudents.Items.Filter = delegate(object obj)
@@ -79,7 +79,7 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// The text box for searching changed.  The filter needs to be updated.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
@@ -89,7 +89,7 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// The check box for filtering changed.  The filter needs to be updated.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
@@ -99,7 +99,7 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// The check box for filtering changed.  The filter needs to be updated.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
@@ -109,7 +109,7 @@ namespace DPX
         }
         
         /// <summary>
-        /// 
+        /// The selected student changed so the display information needs to be updated.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
@@ -170,9 +170,9 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Display all of the exceptions for a specific student.
         /// </summary>
-        /// <param name="studentId"></param>
+        /// <param name="studentId">The ID for the student.</param>
         private void DisplayExceptions(int studentId)
         {
             gridException.Children.Clear();
@@ -223,9 +223,9 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Display all of the panel information for a specific student.
         /// </summary>
-        /// <param name="studentId"></param>
+        /// <param name="studentId">The ID for the student.</param>
         private void DisplayPanels(int studentId)
         {
             gridPanels.Children.Clear();
@@ -300,7 +300,7 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Change the section which a student is enrolled in.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
@@ -316,7 +316,7 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Change a students status so they are enrolled.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
@@ -331,7 +331,7 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Change a students status so they are no longer enrolled.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
@@ -346,7 +346,7 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Add an exception for a student.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>

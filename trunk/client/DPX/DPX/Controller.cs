@@ -12,7 +12,7 @@ namespace DPX
     using QuickReader;
 
     /// <summary>
-    /// 
+    /// Singleton class used for accessing the datbase.
     /// </summary>
     internal class Controller
     {
@@ -29,42 +29,37 @@ namespace DPX
         // Collections of data kept in the interface
 
         /// <summary>
-        /// 
+        /// List of dates.
         /// </summary>
         private ComboBox comboBoxDateImport;
 
         /// <summary>
-        /// 
+        /// List of exceptions.
         /// </summary>
         private ComboBox comboBoxDateException;
 
         /// <summary>
-        /// 
+        /// List of sections.
         /// </summary>
         private ComboBox comboBoxSections;
 
         /// <summary>
-        /// 
+        /// List of reasons.
         /// </summary>
         private ComboBox comboBoxReasons;
 
         /// <summary>
-        /// 
+        /// List of students.
         /// </summary>
         private ListBox listBoxStudents;
 
         /// <summary>
-        /// 
+        /// List of dates.
         /// </summary>
         private ListBox listBoxReportDates;
 
         /// <summary>
-        /// 
-        /// </summary>
-        private ProgressBar progressBarMaster;
-
-        /// <summary>
-        /// 
+        /// Prevents a default instance of the Controller class from being created.
         /// </summary>
         private Controller()
         {
@@ -72,7 +67,7 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Gets an instance of the database.
         /// </summary>
         public Database DB
         {
@@ -80,9 +75,9 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Gets an instance of the Controller class using a Singleton accessor.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>An instance of the Controller class.</returns>
         public static Controller Instance()
         {
             if (c == null)
@@ -94,9 +89,9 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Sets a reference to the comboBoxDateImport object.
         /// </summary>
-        /// <param name="cbd"></param>
+        /// <param name="cbd">The instance of comboBoxDateImport found in the GUI.</param>
         public void SetComboBoxDateImport(ComboBox cbd)
         {
             if (this.comboBoxDateImport == null)
@@ -106,9 +101,9 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Sets a reference to the comboBoxDateException object.
         /// </summary>
-        /// <param name="cbd"></param>
+        /// <param name="cbd">The instance of comboBoxDateException found in the GUI.</param>
         public void SetComboBoxDateException(ComboBox cbd)
         {
             if (this.comboBoxDateException == null)
@@ -118,9 +113,9 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Sets a reference to the comboBoxSections object.
         /// </summary>
-        /// <param name="cbs"></param>
+        /// <param name="cbs">The instance of comboBoxSections found in the GUI.</param>
         public void SetComboBoxSections(ComboBox cbs)
         {
             if (this.comboBoxSections == null)
@@ -130,9 +125,9 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Sets a reference to the comboBoxReason object.
         /// </summary>
-        /// <param name="cbr"></param>
+        /// <param name="cbr">The instance of comboBoxReason found in the GUI.</param>
         public void SetComboBoxReason(ComboBox cbr)
         {
             if (this.comboBoxReasons == null)
@@ -142,9 +137,9 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Sets a reference to the listBoxStudents found in the GUI.
         /// </summary>
-        /// <param name="stu"></param>
+        /// <param name="stu">The instance of listBoxStudents found in the GUI.</param>
         public void SetListBoxStudents(ListBox stu)
         {
             if (this.listBoxStudents == null)
@@ -154,9 +149,9 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Sets a reference to the listBoxReportDates found in the GUI.
         /// </summary>
-        /// <param name="r"></param>
+        /// <param name="r">The instance of listBoxReportDates found in the GUI.</param>
         public void SetListBoxReportDates(ListBox r)
         {
             if (this.listBoxReportDates == null)
@@ -166,21 +161,9 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Determine if the database is open.
         /// </summary>
-        /// <param name="pb"></param>
-        public void SetProgressBarMaster(ProgressBar pb)
-        {
-            if (this.progressBarMaster == null)
-            {
-                this.progressBarMaster = pb;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the database is open.</returns>
         public bool IsDatabaseOpen()
         {
             if (this.db == null)
@@ -194,9 +177,9 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Open the specified database.
         /// </summary>
-        /// <param name="filename"></param>
+        /// <param name="filename">Path to the database to open.</param>
         public void OpenDatabaseFile(string filename)
         {
             this.db = new Database(filename);
@@ -208,7 +191,7 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Refresh the class dates.
         /// </summary>
         public void RefreshClassdate()
         {
@@ -227,7 +210,7 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Refresh the sections.
         /// </summary>
         public void RefreshSections()
         {
@@ -244,7 +227,7 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Refresh the reasons.
         /// </summary>
         public void RefreshReasons()
         {
@@ -261,7 +244,7 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Refresh the students.
         /// </summary>
         public void RefreshStudents()
         {
@@ -277,12 +260,12 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Add a DyKnow file to the database.
         /// </summary>
-        /// <param name="dr"></param>
-        /// <param name="filename"></param>
-        /// <param name="cd"></param>
-        /// <returns></returns>
+        /// <param name="dr">DyKnow file to add.</param>
+        /// <param name="filename">The filename of the DyKnow file.</param>
+        /// <param name="cd">The class date for the DyKnow fiel.</param>
+        /// <returns>ID for the file that was added to the datbase.</returns>
         public int AddDyKnowFile(DyKnowReader dr, string filename, Classdate cd)
         {
             File f = new File(
@@ -317,9 +300,12 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Add a student to the class roster.
         /// </summary>
-        /// <param name="student"></param>
+        /// <param name="firstname">First name of the student.</param>
+        /// <param name="lastname">Last name of the student.</param>
+        /// <param name="username">Username of the student.</param>
+        /// <param name="section">Section of the student (automatically added if it does not exist).</param>
         public void AddStudentToRoster(string firstname, string lastname, string username, string section)
         {
             // Get the section id or add it to the database if it doesn't exist
@@ -335,7 +321,7 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Close the database.
         /// </summary>
         public void CloseDatabase()
         {

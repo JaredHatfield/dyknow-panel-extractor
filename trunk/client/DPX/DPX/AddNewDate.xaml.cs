@@ -17,7 +17,7 @@ namespace DPX
     using System.Windows.Shapes;
 
     /// <summary>
-    /// Interaction logic for AddNewDate.xaml
+    /// Interaction logic for AddNewDate.xaml.
     /// </summary>
     public partial class AddNewDate : Window
     {

@@ -19,19 +19,19 @@ namespace DPX
     using QuickReader;
 
     /// <summary>
-    /// Interaction logic for PanelPreview.xaml
+    /// Interaction logic for PanelPreview.xaml.
     /// </summary>
     public partial class PanelPreview : Window
     {
         /// <summary>
-        /// 
+        /// DyKnow reader instance which contains the information about the file.
         /// </summary>
         private DyKnowReader dr;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the PanelPreview class.
         /// </summary>
-        /// <param name="dr"></param>
+        /// <param name="dr">Already opened instance of the DyKnow reader class.</param>
         public PanelPreview(DyKnowReader dr)
         {
             InitializeComponent();
@@ -39,9 +39,9 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Display the panel specified by an index.
         /// </summary>
-        /// <param name="n"></param>
+        /// <param name="n">The panel number to display.</param>
         public void DisplayPanel(int n)
         {
             // Some error checking to make sure we don't crash

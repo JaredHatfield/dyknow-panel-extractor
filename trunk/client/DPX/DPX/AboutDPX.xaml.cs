@@ -17,7 +17,7 @@ namespace DPX
     using System.Windows.Shapes;
 
     /// <summary>
-    /// Interaction logic for AboutDPX.xaml
+    /// Interaction logic for AboutDPX.xaml.
     /// </summary>
     public partial class AboutDPX : Window
     {

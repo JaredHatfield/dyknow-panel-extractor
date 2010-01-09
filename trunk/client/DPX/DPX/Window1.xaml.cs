@@ -19,17 +19,17 @@ namespace DPX
     using System.Windows.Shapes;
 
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for Window1.xaml.
     /// </summary>
     public partial class Window1 : Window
     {
         /// <summary>
-        /// 
+        /// Creates an instance of the singleton controller.
         /// </summary>
         private Controller c = Controller.Instance();
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the Window1 class.
         /// </summary>
         public Window1()
         {
@@ -40,7 +40,7 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Display the AboutDPX window.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
@@ -52,7 +52,7 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Open a database file.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
@@ -83,7 +83,7 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Close the database file.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
@@ -97,10 +97,10 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Display the Import Roster window.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void ImportRoster_Click(object sender, RoutedEventArgs e)
         {
             RosterImporter ri = new RosterImporter();
@@ -111,14 +111,14 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Create a new database file by creating a copy of the template database.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
         private void NewFile(object sender, RoutedEventArgs e)
         {
             // Location of the empty database that is included as part of the installer
-            String locationOfNewDatabase = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase) + "\\NewDPXDatabase.accdb";
+            string locationOfNewDatabase = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase) + "\\NewDPXDatabase.accdb";
             
             // Remove file:\ from the beginning of the string
             locationOfNewDatabase = locationOfNewDatabase.Substring(6);
@@ -150,7 +150,6 @@ namespace DPX
                     MessageBox.Show("File not found: " + locationOfNewDatabase, "Error: file not found");
                 }
             }
-            
         }
     }
 }

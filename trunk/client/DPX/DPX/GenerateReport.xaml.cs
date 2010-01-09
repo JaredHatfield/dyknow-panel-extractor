@@ -19,17 +19,17 @@ namespace DPX
     using DPXDatabase;
 
     /// <summary>
-    /// Interaction logic for GenerateReport.xaml
+    /// Interaction logic for GenerateReport.xaml.
     /// </summary>
     public partial class GenerateReport : Page
     {
         /// <summary>
-        /// 
+        /// Creates an instance of the singleton controller.
         /// </summary>
         private Controller c = Controller.Instance();
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the GenerateReport class.
         /// </summary>
         public GenerateReport()
         {
@@ -38,7 +38,7 @@ namespace DPX
         }
 
         /// <summary>
-        /// 
+        /// Gather the information needed to generate the report, create the report and then display it.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
