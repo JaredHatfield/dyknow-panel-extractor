@@ -20,12 +20,12 @@ namespace DyKnowPanelSorter
     using QuickReader;
 
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for Window1.xaml.
     /// </summary>
     public partial class Window1 : Window
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the Window1 class.
         /// </summary>
         public Window1()
         {
@@ -33,7 +33,7 @@ namespace DyKnowPanelSorter
         }
 
         /// <summary>
-        /// 
+        /// Open a DyKnow file.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
@@ -56,7 +56,7 @@ namespace DyKnowPanelSorter
         }
 
         /// <summary>
-        /// 
+        /// Save a thumbnail of the current panel.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
@@ -79,27 +79,7 @@ namespace DyKnowPanelSorter
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender">The object that raised the event.</param>
-        /// <param name="e">Event arguments.</param>
-        private void InputFileName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            // Nothing here yet.
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender">The object that raised the event.</param>
-        /// <param name="e">Event arguments.</param>
-        private void OutputFileName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            // Nothing here yet.
-        }
-
-        /// <summary>
-        /// 
+        /// Sort the Dyknow pages and save the output to a new file.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
@@ -137,7 +117,7 @@ namespace DyKnowPanelSorter
         }
         
         /// <summary>
-        /// 
+        /// Display the DPXAbout window.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">Event arguments.</param>
