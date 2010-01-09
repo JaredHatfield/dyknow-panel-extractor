@@ -36,7 +36,6 @@ namespace DPX
             InitializeComponent();
             FileMenuClose.IsEnabled = false;
             FileMenuRoster.IsEnabled = false;
-            this.c.SetProgressBarMaster(progressBarMaster);
         }
 
         /// <summary>
