@@ -84,10 +84,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="AboutDPX.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="AddNewDate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -126,9 +122,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutDPX.xaml.cs">
-      <DependentUpon>AboutDPX.xaml</DependentUpon>
-    </Compile>
     <Compile Include="AddNewDate.xaml.cs">
       <DependentUpon>AddNewDate.xaml</DependentUpon>
     </Compile>
@@ -173,6 +166,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DPXCommon\DPXCommon.csproj">
+      <Project>{B3EA1278-7F1D-4ED1-850B-B68DC59C0EA2}</Project>
+      <Name>DPXCommon</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DPXDatabase\DPXDatabase.csproj">
       <Project>{0EB8D572-1B0A-43F0-B491-17373A9288B9}</Project>
       <Name>DPXDatabase</Name>

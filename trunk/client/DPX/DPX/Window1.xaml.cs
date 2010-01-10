@@ -17,6 +17,7 @@ namespace DPX
     using System.Windows.Media.Imaging;
     using System.Windows.Navigation;
     using System.Windows.Shapes;
+    using DPXCommon;
 
     /// <summary>
     /// Interaction logic for Window1.xaml.

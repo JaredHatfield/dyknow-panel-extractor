@@ -18,6 +18,7 @@ namespace Preview
     using System.Windows.Media.Imaging;
     using System.Windows.Navigation;
     using System.Windows.Shapes;
+    using DPXCommon;
     using QuickReader;
 
     /// <summary>

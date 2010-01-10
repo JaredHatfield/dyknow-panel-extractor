@@ -14,7 +14,7 @@ namespace UnitTests
     /// <summary>
     /// The sample program used for code testing.
     /// </summary>
-    private class Program
+    class Program
     {
         /// <summary>
         /// Sorts the file.

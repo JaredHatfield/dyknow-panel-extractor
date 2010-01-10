@@ -89,10 +89,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="AboutDPX.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Window1.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -107,9 +103,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutDPX.xaml.cs">
-      <DependentUpon>AboutDPX.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -136,6 +129,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DPXCommon\DPXCommon.csproj">
+      <Project>{B3EA1278-7F1D-4ED1-850B-B68DC59C0EA2}</Project>
+      <Name>DPXCommon</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QuickReader\QuickReader.csproj">
       <Project>{C05354D4-086C-4DF8-BC63-F42CD0F7A036}</Project>
       <Name>QuickReader</Name>
