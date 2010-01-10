@@ -9,12 +9,12 @@ namespace DPXDatabase
     using System.Text;
 
     /// <summary>
-    /// 
+    /// Object for a file as represented in the database.
     /// </summary>
     public class File
     {
         /// <summary>
-        /// 
+        /// The database identifier.
         /// </summary>
         private int id;
 
@@ -69,7 +69,7 @@ namespace DPXDatabase
         private double maxDataLength;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the File class.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="classdate"></param>
@@ -109,7 +109,7 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the File class.
         /// </summary>
         /// <param name="classdate"></param>
         /// <param name="fileName"></param>
@@ -147,7 +147,7 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the File class.
         /// </summary>
         public File()
         {

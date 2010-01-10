@@ -9,22 +9,22 @@ namespace DPXDatabase
     using System.Text;
 
     /// <summary>
-    /// 
+    /// Object for a Classdate as represented in the database.
     /// </summary>
     public class Classdate
     {
         /// <summary>
-        /// 
+        /// The database identifier.
         /// </summary>
         private int id;
 
         /// <summary>
-        /// 
+        /// The date object.
         /// </summary>
         private DateTime classDate;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the Classdate class.
         /// </summary>
         public Classdate()
         {
@@ -33,10 +33,10 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the Classdate class.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="classdate"></param>
+        /// <param name="id">The database identifier.</param>
+        /// <param name="classdate">The date for the class.</param>
         public Classdate(int id, DateTime classdate)
         {
             this.id = id;
@@ -44,25 +44,27 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Gets the database identifier.
         /// </summary>
+        /// <value>The database identifier.</value>
         public int Id
         {
             get { return this.id; }
         }
 
         /// <summary>
-        /// 
+        /// Gets the date of the class.
         /// </summary>
+        /// <value>The date for the class.</value>
         public DateTime ClassDate
         {
             get { return this.classDate; }
         }
 
         /// <summary>
-        /// 
+        /// Gets a string representation of the class date.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>String representation of the class date.</returns>
         public override string ToString()
         {
             return this.classDate.Date.ToShortDateString();

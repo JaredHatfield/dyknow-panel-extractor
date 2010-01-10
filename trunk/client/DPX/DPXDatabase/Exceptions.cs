@@ -9,37 +9,37 @@ namespace DPXDatabase
     using System.Text;
 
     /// <summary>
-    /// 
+    /// Object for an Exceptions as represented in the database.
     /// </summary>
     public class Exceptions
     {
         /// <summary>
-        /// 
+        /// The date for the exception.
         /// </summary>
         private int classdate;
         
         /// <summary>
-        /// 
+        /// The identifier for the student.
         /// </summary>
         private int student;
 
         /// <summary>
-        /// 
+        /// The identifier for the reason.
         /// </summary>
         private int reason;
 
         /// <summary>
-        /// 
+        /// The notes explaining the exception.
         /// </summary>
         private string notes;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the Exceptions class.
         /// </summary>
-        /// <param name="classdate"></param>
-        /// <param name="student"></param>
-        /// <param name="reason"></param>
-        /// <param name="notes"></param>
+        /// <param name="classdate">The date for the exception.</param>
+        /// <param name="student">The identifier for a student.</param>
+        /// <param name="reason">The identifier for a reason.</param>
+        /// <param name="notes">The notes explaining the exception.</param>
         public Exceptions(int classdate, int student, int reason, string notes)
         {
             this.classdate = classdate;
@@ -49,8 +49,9 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Gets the date for the exception.
         /// </summary>
+        /// <value>The date for the exception.</value>
         public int Classdate
         {
             get { return this.classdate; }

@@ -9,7 +9,7 @@ namespace DPXDatabase
     using System.Text;
 
     /// <summary>
-    /// 
+    /// Generate a report for a student.
     /// </summary>
     internal class StudentReport
     {
@@ -39,7 +39,7 @@ namespace DPXDatabase
         private List<StudentDate> studentDate;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the StudentReport class.
         /// </summary>
         /// <param name="db"></param>
         /// <param name="student"></param>

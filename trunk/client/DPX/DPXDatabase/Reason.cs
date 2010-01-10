@@ -9,12 +9,12 @@ namespace DPXDatabase
     using System.Text;
 
     /// <summary>
-    /// 
+    /// Object for a Reason as represented in the database.
     /// </summary>
     public class Reason
     {
         /// <summary>
-        /// 
+        /// The database identifier.
         /// </summary>
         private int id;
 
@@ -29,7 +29,7 @@ namespace DPXDatabase
         private string description;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the Reason class.
         /// </summary>
         public Reason()
         {
@@ -39,7 +39,7 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the Reason class.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="credit"></param>

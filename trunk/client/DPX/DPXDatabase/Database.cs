@@ -11,7 +11,7 @@ namespace DPXDatabase
     using QuickReader;
 
     /// <summary>
-    /// 
+    /// Manager for the database.
     /// </summary>
     public class Database
     {
@@ -21,7 +21,7 @@ namespace DPXDatabase
         private OleDbConnection connection;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the Database class.
         /// </summary>
         /// <param name="filename"></param>
         public Database(string filename)

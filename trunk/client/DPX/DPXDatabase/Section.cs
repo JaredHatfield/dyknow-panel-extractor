@@ -9,12 +9,12 @@ namespace DPXDatabase
     using System.Text;
 
     /// <summary>
-    /// 
+    /// Object for a Section as represented in the database.
     /// </summary>
     public class Section
     {
         /// <summary>
-        /// 
+        /// The database identifier.
         /// </summary>
         private int id;
         
@@ -24,7 +24,7 @@ namespace DPXDatabase
         private string sectionName;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the Section class.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="sectionName"></param>
@@ -35,7 +35,7 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the Section class.
         /// </summary>
         public Section()
         {

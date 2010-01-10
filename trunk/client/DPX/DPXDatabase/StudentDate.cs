@@ -9,7 +9,7 @@ namespace DPXDatabase
     using System.Text;
 
     /// <summary>
-    /// 
+    /// Object for a StudentDate as represented in the database.
     /// </summary>
     internal class StudentDate
     {
@@ -44,7 +44,7 @@ namespace DPXDatabase
         private bool panelWithoutCredit;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the StudentDate class.
         /// </summary>
         /// <param name="student"></param>
         /// <param name="date"></param>

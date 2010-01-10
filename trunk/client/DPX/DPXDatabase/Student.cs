@@ -10,12 +10,12 @@ namespace DPXDatabase
     using QuickReader;
 
     /// <summary>
-    /// 
+    /// Object for a Student as represented in the database.
     /// </summary>
     public class Student
     {
         /// <summary>
-        /// 
+        /// The database identifier.
         /// </summary>
         private int id;
 
@@ -50,7 +50,7 @@ namespace DPXDatabase
         private bool isEnrolled;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the Student class.
         /// </summary>
         /// <param name="dp"></param>
         public Student(DyKnowPage dp)
@@ -108,7 +108,7 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the Student class.
         /// </summary>
         /// <param name="username"></param>
         /// <param name="fullName"></param>
@@ -134,7 +134,7 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the Student class.
         /// </summary>
         public Student()
         {
