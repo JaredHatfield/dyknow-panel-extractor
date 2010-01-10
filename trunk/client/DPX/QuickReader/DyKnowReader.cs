@@ -13,64 +13,64 @@ namespace QuickReader
     using System.Xml;
 
     /// <summary>
-    /// 
+    /// Reads in the contents of a DyKnow file.
     /// </summary>
     public class DyKnowReader
     {
         /// <summary>
-        /// 
+        /// THe input file stream..
         /// </summary>
         private FileStream inputFile;
 
         /// <summary>
-        /// 
+        /// The gzip file stream.
         /// </summary>
         private GZipStream gzipFile;
 
         /// <summary>
-        /// 
+        /// The xml file stream.
         /// </summary>
         private XmlTextReader xmlFile;
 
         /// <summary>
-        /// 
+        /// The file name.
         /// </summary>
         private string fileName;
 
         /// <summary>
-        /// 
+        /// The collection of DyKnow pages.
         /// </summary>
         private List<DyKnowPage> dyKnowPages;
 
         /// <summary>
-        /// 
+        /// The collection of DyKnow background image data.
         /// </summary>
         private List<ImageData> imageInformation;
 
         /// <summary>
-        /// 
+        /// The mean number of pen strokes on the panels.
         /// </summary>
         private double meanStrokes;
 
         /// <summary>
-        /// 
+        /// The standard deviation of the pen strokes.
         /// </summary>
         private double stdDevStrokes;
 
         /// <summary>
-        /// 
+        /// The mean storke data.
         /// </summary>
         private double meanStrokeDistance;
 
         /// <summary>
-        /// 
+        /// The standard deviation of the stroke data.
         /// </summary>
         private double stdDevStrokeDistance;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="DyKnowReader"/> class.
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">The name of the file.</param>
         public DyKnowReader(string name)
         {
             // The name of the DyKnow file used
@@ -129,24 +129,27 @@ namespace QuickReader
         }
 
         /// <summary>
-        /// 
+        /// Gets the name of the file.
         /// </summary>
+        /// <value>The name of the file.</value>
         public string FileName
         {
             get { return this.fileName; }
         }
 
         /// <summary>
-        /// 
+        /// Gets the mean pen strokes per panel.
         /// </summary>
+        /// <value>The mean pen strokes per panel.</value>
         public double MeanStrokes
         {
             get { return this.meanStrokes; }
         }
 
         /// <summary>
-        /// 
+        /// Gets the standard deviation of the pen strokes.
         /// </summary>
+        /// <value>The standard deviation of the pen strokes.</value>
         public double StdDevStrokes
         {
             get
@@ -163,16 +166,18 @@ namespace QuickReader
         }
 
         /// <summary>
-        /// 
+        /// Gets the mean stroke distance.
         /// </summary>
+        /// <value>The mean stroke distance.</value>
         public double MeanStrokeDistance
         {
             get { return this.meanStrokeDistance; }
         }
 
         /// <summary>
-        /// 
+        /// Gets the standard deviation of the stroke distance.
         /// </summary>
+        /// <value>The standard deviation of the stroke distance.</value>
         public double StdDevStrokeDistance
         {
             get
@@ -187,10 +192,11 @@ namespace QuickReader
                 }
             }
         }
-        
+
         /// <summary>
-        /// 
+        /// Gets the minimum stroke count.
         /// </summary>
+        /// <value>The minimum stroke count.</value>
         public int MinStrokeCount
         {
             get
@@ -214,10 +220,11 @@ namespace QuickReader
                 }
             }
         }
-        
+
         /// <summary>
-        /// 
+        /// Gets the maximum stroke count.
         /// </summary>
+        /// <value>The maximum stroke count.</value>
         public int MaxStrokeCount
         {
             get
@@ -241,10 +248,11 @@ namespace QuickReader
                 }
             }
         }
-        
+
         /// <summary>
-        /// 
+        /// Gets the minimum stroke distance.
         /// </summary>
+        /// <value>The minimum stroke distance.</value>
         public long MinStrokeDistance
         {
             get
@@ -268,10 +276,11 @@ namespace QuickReader
                 }
             }
         }
-        
+
         /// <summary>
-        /// 
+        /// Gets the maximum stroke distance.
         /// </summary>
+        /// <value>The maximum stroke distance.</value>
         public long MaxStrokeDistance
         {
             get
@@ -297,18 +306,19 @@ namespace QuickReader
         }
 
         /// <summary>
-        /// 
+        /// Gets the collection of image information.
         /// </summary>
+        /// <value>The collection of image information.</value>
         public List<ImageData> ImageInformation
         {
             get { return this.imageInformation; }
         }
 
         /// <summary>
-        /// 
+        /// Gets the image data for a specific uid.
         /// </summary>
-        /// <param name="uid"></param>
-        /// <returns></returns>
+        /// <param name="uid">The uid to location image data for.</param>
+        /// <returns>The image data.</returns>
         public ImageData GetImageData(Guid uid)
         {
             for (int i = 0; i < this.imageInformation.Count; i++)
@@ -323,7 +333,7 @@ namespace QuickReader
         }
 
         /// <summary>
-        /// 
+        /// Closes this instance.
         /// </summary>
         public void Close()
         {
@@ -333,48 +343,50 @@ namespace QuickReader
         }
 
         /// <summary>
-        /// 
+        /// Gets the DyKnow page.
         /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
+        /// <param name="i">The page number.</param>
+        /// <returns>The requiested DyKnow page.</returns>
         public DyKnowPage GetDyKnowPage(int i)
         {
             return this.dyKnowPages[i];
         }
 
         /// <summary>
-        /// 
+        /// Gets the string representation of the requested page..
         /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
+        /// <param name="i">The page number.</param>
+        /// <returns>The string representation of the requested page.</returns>
         public string GetPagestring(int i)
         {
             return this.dyKnowPages[i].ToString();
         }
 
         /// <summary>
-        /// 
+        /// Gets the row data for the requested page..
         /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
+        /// <param name="i">The requested page.</param>
+        /// <returns>An object array for the requested page.</returns>
         public object[] GetRowData(int i)
         {
             return this.dyKnowPages[i].GetRowData();
         }
 
         /// <summary>
-        /// 
+        /// Gets the number of panels.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The number of panels.</returns>
         public int NumOfPages()
         {
             return this.dyKnowPages.Count;
         }
 
         /// <summary>
-        /// 
+        /// Returns a <see cref="System.String"/> that represents this instance.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
             return "Mean Number of Strokes: " + this.meanStrokes + "\n" +
@@ -384,9 +396,9 @@ namespace QuickReader
         }
 
         /// <summary>
-        /// 
+        /// Parses the IMGD.
         /// </summary>
-        /// <param name="subfile"></param>
+        /// <param name="subfile">The subfile.</param>
         private void ParseIMGD(XmlReader subfile)
         {
             int num = 0;
@@ -403,7 +415,7 @@ namespace QuickReader
         }
 
         /// <summary>
-        /// 
+        /// Fills the in finished flags.
         /// </summary>
         private void FillInFinished()
         {
@@ -427,7 +439,7 @@ namespace QuickReader
         /// <summary>
         /// Performs the calculation to determine the mean number of pen strokes per page in this file.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The mean number of pen strokes.</returns>
         private double CalcMeanStrokes()
         {
             long total = 0;
@@ -442,8 +454,8 @@ namespace QuickReader
         /// <summary>
         /// Performs the calculation to determine the standard deviation of pen strokes per page in this file.
         /// </summary>
-        /// <param name="mean"></param>
-        /// <returns></returns>
+        /// <param name="mean">The mean number of pen strokes.</param>
+        /// <returns>The standard deviation of the pen strokes.</returns>
         private double CalcStdDevStrokes(double mean)
         {
             double total = 0;
@@ -458,7 +470,7 @@ namespace QuickReader
         /// <summary>
         /// Performs the calculation to determine the mean stroke data distance per page in this specific file.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The mean stroke data length.</returns>
         private double CalcMeanStrokeDistance()
         {
             long total = 0;
@@ -473,8 +485,8 @@ namespace QuickReader
         /// <summary>
         /// Performs the calculation to determine the standard deviation of the stroke data distance per page in this specific file.
         /// </summary>
-        /// <param name="mean"></param>
-        /// <returns></returns>
+        /// <param name="mean">The mean stroke data length.</param>
+        /// <returns>The standard deviation of the stroke data length.</returns>
         private double CalcStdDevStrokeDistance(double mean)
         {
             double total = 0;
@@ -487,9 +499,9 @@ namespace QuickReader
         }
 
         /// <summary>
-        /// 
+        /// Parses the IMGS.
         /// </summary>
-        /// <param name="subfile"></param>
+        /// <param name="subfile">The data to parse.</param>
         private void ParseIMGS(XmlReader subfile)
         {
             while (subfile.Read())

@@ -13,30 +13,30 @@ namespace QuickReader
     using System.Xml;
 
     /// <summary>
-    /// 
+    /// Parser that is able to sort the panels in a DyKnow file and produce a new output.
     /// </summary>
     public class PanelSorter
     {
         /// <summary>
-        /// 
+        /// The location of the input file.
         /// </summary>
         private string inputfile;
 
         /// <summary>
-        /// 
+        /// The location of the new output file.
         /// </summary>
         private string outputfile;
 
         /// <summary>
-        /// 
+        /// The way the file will be sorted (true for by name, false for by username).
         /// </summary>
-        private bool sorttype; // True sorts by name, false sorts by username
+        private bool sorttype;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="PanelSorter"/> class.
         /// </summary>
-        /// <param name="input"></param>
-        /// <param name="output"></param>
+        /// <param name="input">The input file name.</param>
+        /// <param name="output">The output file name.</param>
         public PanelSorter(string input, string output)
         {
             this.inputfile = input;
@@ -45,7 +45,7 @@ namespace QuickReader
         }
 
         /// <summary>
-        /// 
+        /// Sets sort by user name.
         /// </summary>
         public void SetSortByUsername()
         {
@@ -53,7 +53,7 @@ namespace QuickReader
         }
 
         /// <summary>
-        /// 
+        /// Sets sort by full name.
         /// </summary>
         public void SetSortByFullName()
         {
@@ -61,7 +61,7 @@ namespace QuickReader
         }
 
         /// <summary>
-        /// 
+        /// Processes the sort.
         /// </summary>
         public void ProcessSort()
         {
@@ -157,9 +157,9 @@ namespace QuickReader
         }
 
         /// <summary>
-        /// 
+        /// Sorts the pages.
         /// </summary>
-        /// <param name="pages"></param>
+        /// <param name="pages">The pages to be sorted.</param>
         private void SortPages(List<XmlDocument> pages)
         {
             // Bubble sort algorithm to put all of the pages in the correct order

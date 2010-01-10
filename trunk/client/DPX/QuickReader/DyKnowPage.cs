@@ -11,50 +11,50 @@ namespace QuickReader
     using System.Xml;
 
     /// <summary>
-    /// 
+    /// A representation of a DyKnow panel.
     /// </summary>
     public class DyKnowPage
     {
         /// <summary>
-        /// 
+        /// The panel number this represents in a file.
         /// </summary>
         private int pageNumber;
 
         /// <summary>
-        /// 
+        /// The user name.
         /// </summary>
         private string userName;
 
         /// <summary>
-        /// 
+        /// The full name.
         /// </summary>
         private string fullName;
 
         /// <summary>
-        /// 
+        /// The number of strokes on the panel.
         /// </summary>
         private int strokes;
 
         /// <summary>
-        /// 
+        /// The analysis of the panel.
         /// </summary>
         private string finished;
 
         /// <summary>
-        /// 
+        /// The collection of pen strokes on the panel.
         /// </summary>
         private List<DyKnowPenStroke> pens;
 
         /// <summary>
-        /// 
+        /// The collection of images on the panel.
         /// </summary>
         private List<DyKnowImage> images;
 
         /// <summary>
-        /// Constructor accepts the XML sub tree
+        /// Initializes a new instance of the <see cref="DyKnowPage"/> class.
         /// </summary>
-        /// <param name="xmlFile"></param>
-        /// <param name="pageNum"></param>
+        /// <param name="xmlFile">The XML file.</param>
+        /// <param name="pageNum">The page num.</param>
         public DyKnowPage(XmlReader xmlFile, int pageNum)
         {
             // Set some default values if the xml parsing doesn't workout
@@ -130,48 +130,54 @@ namespace QuickReader
         }
 
         /// <summary>
-        /// 
+        /// Gets the page number.
         /// </summary>
+        /// <value>The page number.</value>
         public int PageNumber
         {
             get { return this.pageNumber; }
         }
 
         /// <summary>
-        /// 
+        /// Gets the name of the user.
         /// </summary>
+        /// <value>The name of the user.</value>
         public string UserName
         {
             get { return this.userName; }
         }
 
         /// <summary>
-        /// 
+        /// Gets the full name.
         /// </summary>
+        /// <value>The full name.</value>
         public string FullName
         {
             get { return this.fullName; }
         }
 
         /// <summary>
-        /// 
+        /// Gets the net stroke count.
         /// </summary>
+        /// <value>The net stroke count.</value>
         public int NetStrokeCount
         {
             get { return this.strokes; }
         }
 
         /// <summary>
-        /// 
+        /// Gets the analysis of the panel.
         /// </summary>
+        /// <value>The analysis of the panel.</value>
         public string Finished
         {
             get { return this.finished; }
         }
 
         /// <summary>
-        /// 
+        /// Gets the net stroke distance.
         /// </summary>
+        /// <value>The net stroke distance.</value>
         public long NetStrokeDistance
         {
             get
@@ -193,8 +199,9 @@ namespace QuickReader
         }
 
         /// <summary>
-        /// 
+        /// Gets the deleted stroke count.
         /// </summary>
+        /// <value>The deleted stroke count.</value>
         public int DeletedStrokeCount
         {
             get
@@ -213,8 +220,9 @@ namespace QuickReader
         }
 
         /// <summary>
-        /// 
+        /// Gets the deleted stroke distance.
         /// </summary>
+        /// <value>The deleted stroke distance.</value>
         public long DeletedStrokeDistance
         {
             get
@@ -233,8 +241,9 @@ namespace QuickReader
         }
 
         /// <summary>
-        /// 
+        /// Gets the total stroke count.
         /// </summary>
+        /// <value>The total stroke count.</value>
         public int TotalStrokeCount
         {
             get
@@ -253,8 +262,9 @@ namespace QuickReader
         }
 
         /// <summary>
-        /// 
+        /// Gets the total stroke distance.
         /// </summary>
+        /// <value>The total stroke distance.</value>
         public long TotalStrokeDistance
         {
             get
@@ -273,8 +283,9 @@ namespace QuickReader
         }
 
         /// <summary>
-        /// 
+        /// Gets a value indicating whether the panel is blank.
         /// </summary>
+        /// <value><c>True</c> if the panel is blank; otherwise, <c>false</c>.</value>
         public bool IsBlank
         {
             get
@@ -291,25 +302,27 @@ namespace QuickReader
         }
 
         /// <summary>
-        /// 
+        /// Gets the collection of pen strokes.
         /// </summary>
+        /// <value>The collection of pens strokes.</value>
         public List<DyKnowPenStroke> Pens
         {
             get { return this.pens; }
         }
 
         /// <summary>
-        /// 
+        /// Gets the collection of images.
         /// </summary>
+        /// <value>The collection of images.</value>
         public List<DyKnowImage> Images
         {
             get { return this.images; }
         }
 
         /// <summary>
-        /// 
+        /// Sets the finished.
         /// </summary>
-        /// <param name="st"></param>
+        /// <param name="st">The st value.</param>
         public void SetFinished(string st)
         {
             this.finished = st;
@@ -318,7 +331,7 @@ namespace QuickReader
         /// <summary>
         /// Used to get the information form the page for display purposes.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A string representation of the data on the page.</returns>
         public string[] GetData()
         {
             string[] data = { this.pageNumber.ToString(), this.userName, this.fullName, this.strokes.ToString(), this.finished };
@@ -326,9 +339,9 @@ namespace QuickReader
         }
 
         /// <summary>
-        /// 
+        /// Gets the row data.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The object array representation of the data.</returns>
         public object[] GetRowData()
         {
             object[] data = { this.pageNumber, this.userName, this.fullName, this.strokes, this.finished };
@@ -336,9 +349,11 @@ namespace QuickReader
         }
 
         /// <summary>
-        /// 
+        /// Returns a <see cref="System.String"/> that represents this instance.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
             return this.pageNumber.ToString() + ", " + this.userName + ", " + this.fullName + ", " +
@@ -346,10 +361,10 @@ namespace QuickReader
         }
 
         /// <summary>
-        /// Used to delete strokes from the list of strokes
+        /// Used to delete strokes from the list of strokes.
         /// </summary>
-        /// <param name="myStrokes"></param>
-        /// <param name="xmlFile"></param>
+        /// <param name="myStrokes">My strokes.</param>
+        /// <param name="xmlFile">The XML file.</param>
         private void DeleteStrokes(List<string> myStrokes, XmlReader xmlFile)
         {
             while (xmlFile.Read())
