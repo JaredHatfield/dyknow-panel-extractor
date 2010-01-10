@@ -14,35 +14,35 @@ namespace DPXDatabase
     internal class ReportGeneration
     {
         /// <summary>
-        /// 
+        /// A database object.
         /// </summary>
         private Database db;
 
         /// <summary>
-        /// 
+        /// The list of students.
         /// </summary>
         private List<Student> students;
 
         /// <summary>
-        /// 
+        /// The list of sections.
         /// </summary>
         private List<Section> sections;
 
         /// <summary>
-        /// 
+        /// The list of dates.
         /// </summary>
         private List<Classdate> dates;
 
         /// <summary>
-        /// 
+        /// The student report objects.
         /// </summary>
         private List<StudentReport> studentReport;
 
         /// <summary>
         /// Initializes a new instance of the ReportGeneration class.
         /// </summary>
-        /// <param name="db"></param>
-        /// <param name="dates"></param>
+        /// <param name="db">A database instance.</param>
+        /// <param name="dates">The list of dates to generate the report for.</param>
         public ReportGeneration(Database db, List<Classdate> dates)
         {
             this.db = db;
@@ -59,9 +59,9 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Gets the report for the given dates broken down by section and then by students.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The string representation of the report.</returns>
         public string GetReport()
         {
             string report = "Report for - ";

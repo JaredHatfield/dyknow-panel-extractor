@@ -14,36 +14,36 @@ namespace DPXDatabase
     internal class StudentReport
     {
         /// <summary>
-        /// 
+        /// The student.
         /// </summary>
         private Student student;
 
         /// <summary>
-        /// 
+        /// The dates to include in the report.
         /// </summary>
         private List<Classdate> dates;
 
         /// <summary>
-        /// 
+        /// The list of exceptions.
         /// </summary>
         private List<DisplayExceptionInfo> exception;
 
         /// <summary>
-        /// 
+        /// The list of panels.
         /// </summary>
         private List<DisplayPanelInfo> panels;
 
         /// <summary>
-        /// 
+        /// The list of studentDates.
         /// </summary>
         private List<StudentDate> studentDate;
 
         /// <summary>
         /// Initializes a new instance of the StudentReport class.
         /// </summary>
-        /// <param name="db"></param>
-        /// <param name="student"></param>
-        /// <param name="dates"></param>
+        /// <param name="db">Database connections.</param>
+        /// <param name="student">The student.</param>
+        /// <param name="dates">The dates for the report.</param>
         public StudentReport(Database db, Student student, List<Classdate> dates)
         {
             this.student = student;
@@ -97,17 +97,18 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Gets the student.
         /// </summary>
+        /// <value>The student.</value>
         public Student Student
         {
             get { return this.student; }
         }
 
         /// <summary>
-        /// 
+        /// Gets the number of credits.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The number of credits.</returns>
         public int Credit()
         {
             int num = 0;
@@ -123,9 +124,9 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// A string representation of the student report.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A string representation.</returns>
         public override string ToString()
         {
             return this.Credit() + "\t" + this.student.FullName;

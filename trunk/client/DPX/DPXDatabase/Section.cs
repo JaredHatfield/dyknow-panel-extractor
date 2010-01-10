@@ -19,15 +19,15 @@ namespace DPXDatabase
         private int id;
         
         /// <summary>
-        /// 
+        /// The name of the section.
         /// </summary>
         private string sectionName;
 
         /// <summary>
         /// Initializes a new instance of the Section class.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="sectionName"></param>
+        /// <param name="id">The database identifier.</param>
+        /// <param name="sectionName">The name of the section.</param>
         public Section(int id, string sectionName)
         {
             this.id = id;
@@ -44,25 +44,27 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Gets the database identifier.
         /// </summary>
+        /// <value>The database identifier.</value>
         public int Id
         {
             get { return this.id; }
         }
 
         /// <summary>
-        /// 
+        /// Gets the name of the section.
         /// </summary>
+        /// <value>The name of the section.</value>
         public string SectionName
         {
             get { return this.sectionName; }
         }
 
         /// <summary>
-        /// 
+        /// Gets the string representation of a section.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The string representation.</returns>
         public override string ToString()
         {
             return this.sectionName;

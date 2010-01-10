@@ -58,24 +58,27 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Gets the identifier for the student.
         /// </summary>
+        /// <value>The identifier for the student.</value>
         public int Student
         {
             get { return this.student; }
         }
 
         /// <summary>
-        /// 
+        /// Gets the identifier for the reason.
         /// </summary>
+        /// <value>The identifier for the reason.</value>
         public int Reason
         {
             get { return this.reason; }
         }
 
         /// <summary>
-        /// 
+        /// Gets the notes for the exception.
         /// </summary>
+        /// <value>The notes for the exception.</value>
         public string Notes
         {
             get { return this.notes; }

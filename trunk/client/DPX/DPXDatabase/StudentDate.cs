@@ -9,45 +9,45 @@ namespace DPXDatabase
     using System.Text;
 
     /// <summary>
-    /// Object for a StudentDate as represented in the database.
+    /// Object for a StudentDate.
     /// </summary>
     internal class StudentDate
     {
         /// <summary>
-        /// 
+        /// The date of student.
         /// </summary>
         private Classdate date;
 
         /// <summary>
-        /// 
+        /// The student.
         /// </summary>
         private Student student;
 
         /// <summary>
-        /// 
+        /// Flag to indicate no credit should be given.
         /// </summary>
         private bool noCredit;
 
         /// <summary>
-        /// 
+        /// Flag to indicate an exception with credit.
         /// </summary>
         private bool exception;
 
         /// <summary>
-        /// 
+        /// Flag to indicate a panel with credit.
         /// </summary>
         private bool panelWithCredit;
 
         /// <summary>
-        /// 
+        /// Flag to indicate a panel without credit.
         /// </summary>
         private bool panelWithoutCredit;
 
         /// <summary>
         /// Initializes a new instance of the StudentDate class.
         /// </summary>
-        /// <param name="student"></param>
-        /// <param name="date"></param>
+        /// <param name="student">The student.</param>
+        /// <param name="date">The dates.</param>
         public StudentDate(Student student, Classdate date)
         {
             this.date = date;
@@ -59,8 +59,9 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Gets or sets a value indicating whether the students gets no credit.
         /// </summary>
+        /// <value>Indicates whether the students gets no credit.</value>
         public bool NoCredit
         {
             get { return this.noCredit; }
@@ -68,8 +69,9 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Gets or sets a value indicating whether the student gets an exception.
         /// </summary>
+        /// <value>Indicates whether there is an exception.</value>
         public bool Exception
         {
             get { return this.exception; }
@@ -77,8 +79,9 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Gets or sets a value indicating whether there is a panel with credit.
         /// </summary>
+        /// <value>Indicates whether there is a panel with credit.</value>
         public bool PanelWithCredit
         {
             get { return this.panelWithCredit; }
@@ -86,8 +89,9 @@ namespace DPXDatabase
         }
         
         /// <summary>
-        /// 
+        /// Gets or sets a value indicating whether there is a panel without credit.
         /// </summary>
+        /// <value>Indicates whether there is a panel without credit.</value>
         public bool PanelWithoutCredit
         {
             get { return this.panelWithoutCredit; }
@@ -95,8 +99,9 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Gets a value indicating whether the students gets credit.
         /// </summary>
+        /// <value>Indicates whether the student gets credit.</value>
         public bool Result
         {
             get
@@ -121,9 +126,9 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Gets a string representation of student date.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A string representation.</returns>
         public override string ToString()
         {
             return this.student.FullName + " " + this.date.ToString() + "\n" +

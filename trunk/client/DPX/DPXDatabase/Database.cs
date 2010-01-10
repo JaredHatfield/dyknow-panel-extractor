@@ -16,14 +16,14 @@ namespace DPXDatabase
     public class Database
     {
         /// <summary>
-        /// 
+        /// The connection to the database.
         /// </summary>
         private OleDbConnection connection;
 
         /// <summary>
         /// Initializes a new instance of the Database class.
         /// </summary>
-        /// <param name="filename"></param>
+        /// <param name="filename">The path to the database file.</param>
         public Database(string filename)
         {
             this.connection = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filename + ";Persist Security Info=False");
@@ -32,7 +32,7 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Gets the connection to the database.
         /// </summary>
         public OleDbConnection Connection
         {
@@ -42,10 +42,10 @@ namespace DPXDatabase
         // QUERIES ON THE SECTION TABLE
 
         /// <summary>
-        /// 
+        /// Gets a specific sections name.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">The database identifier.</param>
+        /// <returns>The sections name.</returns>
         public string GetSectionName(int id)
         {
             string mySelectQuery = "SELECT S.[sectionName] FROM Sections S WHERE S.[ID] = @parm1";
@@ -79,10 +79,10 @@ namespace DPXDatabase
         }
         
         /// <summary>
-        /// 
+        /// Adds a specific section to the database.
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="name">The section to add.</param>
+        /// <returns>True if operation was successful.</returns>
         public bool AddSection(string name)
         {
             this.Open();
@@ -119,10 +119,10 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Gets a sections database identifier.
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="name">The name of the section.</param>
+        /// <returns>The database identifier.</returns>
         public int GetSectionId(string name)
         {
             // IMPLEMENT ME
@@ -157,9 +157,9 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Gets all of the sections.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A list of all of the sections.</returns>
         public List<Section> GetSections()
         {
             string mySelectQuery = "SELECT S.[ID], S.[sectionName] FROM Sections S ORDER BY [sectionName] ASC";
@@ -191,9 +191,9 @@ namespace DPXDatabase
         // QUERIES ON THE STUDENT TABLE
 
         /// <summary>
-        /// 
+        /// Gets a list of the students.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A list of all of the students.</returns>
         public List<Student> GetAllStudents()
         {
             string mySelectQuery = "SELECT S.[ID], S.[username], S.[fullName], S.[firstName], S.[lastName], S.[Section], S.[isEnrolled] FROM Students S ORDER BY S.[fullName]";
@@ -244,10 +244,10 @@ namespace DPXDatabase
         }
         
         /// <summary>
-        /// 
+        /// Gets a specific student.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">The student database identifier.</param>
+        /// <returns>The student.</returns>
         public Student GetStudent(int id)
         {
             string mySelectQuery = "SELECT S.[ID], S.[username], S.[fullName], S.[firstName], S.[lastName], ";
@@ -303,10 +303,10 @@ namespace DPXDatabase
         }
         
         /// <summary>
-        /// 
+        /// Add a student to the database.
         /// </summary>
-        /// <param name="s"></param>
-        /// <returns></returns>
+        /// <param name="s">The student to add.</param>
+        /// <returns>True on a successful add.</returns>
         public bool AddStudent(Student s)
         {
             // The section is going to be null
@@ -391,10 +391,10 @@ namespace DPXDatabase
         }
         
         /// <summary>
-        /// 
+        /// Test to see if a username is already in the database.
         /// </summary>
-        /// <param name="username"></param>
-        /// <returns></returns>
+        /// <param name="username">The username to test.</param>
+        /// <returns>True if the username exists in the database.</returns>
         public bool IsStudentUsername(string username)
         {
             string mySelectQuery = "SELECT S.[ID], S.[username], S.[fullName], S.[firstName], S.[lastName], ";
@@ -429,11 +429,11 @@ namespace DPXDatabase
         }
         
         /// <summary>
-        /// 
+        /// Changes the section that a student is enrolled in.
         /// </summary>
-        /// <param name="section"></param>
-        /// <param name="studentId"></param>
-        /// <returns></returns>
+        /// <param name="section">The section database identifier.</param>
+        /// <param name="studentId">The student database identifier.</param>
+        /// <returns>True if the change was successful.</returns>
         public bool UpdateStudentSection(int section, int studentId)
         {
             if (section == -1)
@@ -505,11 +505,11 @@ namespace DPXDatabase
         }
         
         /// <summary>
-        /// 
+        /// Changes the enrollment status for a student.
         /// </summary>
-        /// <param name="val"></param>
-        /// <param name="studentId"></param>
-        /// <returns></returns>
+        /// <param name="val">The enrollment status.</param>
+        /// <param name="studentId">The student database identifier.</param>
+        /// <returns>True if the change was successful.</returns>
         public bool UpdateStudentSetEnrolled(bool val, int studentId)
         {
             this.Open();
@@ -557,10 +557,10 @@ namespace DPXDatabase
         // QUERIES ON THE FILE TABLE
 
         /// <summary>
-        /// 
+        /// Adds a file to the database.
         /// </summary>
-        /// <param name="f"></param>
-        /// <returns></returns>
+        /// <param name="f">The file to add to the database.</param>
+        /// <returns>The database identifer for the new file object.</returns>
         public int AddFile(File f)
         {
             this.Open();
@@ -603,11 +603,11 @@ namespace DPXDatabase
         }
         
         /// <summary>
-        /// 
+        /// Add a DyKnow file to the database.
         /// </summary>
-        /// <param name="dr"></param>
-        /// <param name="d"></param>
-        /// <returns></returns>
+        /// <param name="dr">The DyKnow file to add.</param>
+        /// <param name="d">The date of the file.</param>
+        /// <returns>The database identifier for the new file.</returns>
         public int AddFile(DyKnowReader dr, DateTime d)
         {
             int classdateId = -1;
@@ -636,10 +636,10 @@ namespace DPXDatabase
         // QUERIES ON THE CLASSDATE TABLE
 
         /// <summary>
-        /// 
+        /// Add a classdate to the database..
         /// </summary>
-        /// <param name="d"></param>
-        /// <returns></returns>
+        /// <param name="d">The class date to add.</param>
+        /// <returns>True if the change was successful.</returns>
         public bool AddClassdate(DateTime d)
         {
             this.Open();
@@ -676,10 +676,10 @@ namespace DPXDatabase
         }
         
         /// <summary>
-        /// 
+        /// Determines if a class date is already in the database.
         /// </summary>
-        /// <param name="d"></param>
-        /// <returns></returns>
+        /// <param name="d">The date to check.</param>
+        /// <returns>True if the date is already in the database.</returns>
         public bool IsClassdate(DateTime d)
         {
             string mySelectQuery = "SELECT C.[ID], C.[classDate] FROM Classdates C WHERE C.[classDate] = @parm1";
@@ -711,10 +711,10 @@ namespace DPXDatabase
         }
         
         /// <summary>
-        /// 
+        /// Gets the database identifier for a specified date.
         /// </summary>
-        /// <param name="d"></param>
-        /// <returns></returns>
+        /// <param name="d">The date to look up an identifier for.</param>
+        /// <returns>The database identifier.</returns>
         public int GetClassdateId(DateTime d)
         {
             string mySelectQuery = "SELECT C.[ID], C.[classDate] FROM Classdates C WHERE C.[classDate] = @parm1";
@@ -748,9 +748,9 @@ namespace DPXDatabase
         }
         
         /// <summary>
-        /// 
+        /// Get a list of class dates.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The list of class dates.</returns>
         public List<Classdate> GetClassdates()
         {
             string mySelectQuery = "SELECT C.[ID], C.[classDate] FROM Classdates C ORDER BY [classDate] DESC";
@@ -781,11 +781,11 @@ namespace DPXDatabase
         // QUERIES ON THE PANELS TABLE
 
         /// <summary>
-        /// 
+        /// Adds a panel to the database.
         /// </summary>
-        /// <param name="fileid"></param>
-        /// <param name="d"></param>
-        /// <returns></returns>
+        /// <param name="fileid">The file that the panel is part of.</param>
+        /// <param name="d">The panel to add to the database.</param>
+        /// <returns>True if the operation was successful.</returns>
         public bool AddPanel(int fileid, DyKnowPage d)
         {
             this.Open();
@@ -835,10 +835,10 @@ namespace DPXDatabase
         }
         
         /// <summary>
-        /// 
+        /// Gets all of the panels for the specified student.
         /// </summary>
-        /// <param name="studentid"></param>
-        /// <returns></returns>
+        /// <param name="studentid">The students database identifier.</param>
+        /// <returns>The list of panels.</returns>
         public List<DisplayPanelInfo> GetPanelsForStudent(int studentid)
         {
             string mySelectQuery = "SELECT Classdates.classDate, Files.fileName, Panels.slideNumber, Panels.totalStrokeCount, Panels.netStrokeCount, Panels.isBlank, Panels.analysis FROM (Classdates INNER JOIN Files ON Classdates.ID = Files.Classdate) INNER JOIN (Students INNER JOIN Panels ON Students.username = Panels.username) ON Files.ID = Panels.File WHERE (((Students.ID)= @parm1)) ORDER BY Classdates.classDate DESC;";
@@ -877,10 +877,10 @@ namespace DPXDatabase
         // QUERIES ON THE EXCEPTIONS TABLE
 
         /// <summary>
-        /// 
+        /// Add an exception to the database.
         /// </summary>
-        /// <param name="e"></param>
-        /// <returns></returns>
+        /// <param name="e">Exception to be added.</param>
+        /// <returns>True if the operation was successful.</returns>
         public bool AddException(Exceptions e)
         {
             this.Open();
@@ -921,10 +921,10 @@ namespace DPXDatabase
         }
         
         /// <summary>
-        /// 
+        /// Gets all of the exceptions for the specified student.
         /// </summary>
-        /// <param name="studentid"></param>
-        /// <returns></returns>
+        /// <param name="studentid">The students database identifier.</param>
+        /// <returns>List of exceptions for the student.</returns>
         public List<DisplayExceptionInfo> GetExceptionsForStudent(int studentid)
         {
             string mySelectQuery = "SELECT Classdates.classDate, Reasons.Credit, Reasons.description, Exceptions.notes FROM Classdates INNER JOIN (Reasons INNER JOIN (Students INNER JOIN Exceptions ON Students.ID = Exceptions.Student) ON Reasons.ID = Exceptions.Reason) ON Classdates.ID = Exceptions.Classdate WHERE Students.ID = @parm1 ORDER BY Classdates.classDate DESC;";
@@ -960,9 +960,9 @@ namespace DPXDatabase
         // QUERIES ON THE REASON TABLE
 
         /// <summary>
-        /// 
+        /// Get the list of reasons.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The list of reasons.</returns>
         public List<Reason> GetReasons()
         {
             string mySelectQuery = "SELECT R.[ID], R.[Credit], R.[description] FROM Reasons R ORDER BY [ID] ASC";
@@ -996,10 +996,10 @@ namespace DPXDatabase
         // REPORT GENERATION
 
         /// <summary>
-        /// 
+        /// Generate a report for the specifed dates.
         /// </summary>
-        /// <param name="dates"></param>
-        /// <returns></returns>
+        /// <param name="dates">The list of dates.</param>
+        /// <returns>The report.</returns>
         public string GenerateReport(List<Classdate> dates)
         {
             List<string> report = new List<string>();
@@ -1010,7 +1010,7 @@ namespace DPXDatabase
         // DATABASE MANAGEMENT
 
         /// <summary>
-        /// 
+        /// Open the database.
         /// </summary>
         private void Open()
         {
@@ -1018,7 +1018,7 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Close the database.
         /// </summary>
         private void Close()
         {

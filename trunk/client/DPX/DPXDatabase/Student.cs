@@ -20,39 +20,39 @@ namespace DPXDatabase
         private int id;
 
         /// <summary>
-        /// 
+        /// The student's user name.
         /// </summary>
         private string username;
 
         /// <summary>
-        /// 
+        /// The student's full name.
         /// </summary>
         private string fullName;
 
         /// <summary>
-        /// 
+        /// The student's first name.
         /// </summary>
         private string firstName;
 
         /// <summary>
-        /// 
+        /// The student's last name.
         /// </summary>
         private string lastName;
 
         /// <summary>
-        /// 
+        /// The student's section.
         /// </summary>
         private int section;
 
         /// <summary>
-        /// 
+        /// Determines whether the student is enrolled.
         /// </summary>
         private bool isEnrolled;
 
         /// <summary>
         /// Initializes a new instance of the Student class.
         /// </summary>
-        /// <param name="dp"></param>
+        /// <param name="dp">A DyKnow page with user information embedded in it.</param>
         public Student(DyKnowPage dp)
         {
             this.id = -1;
@@ -80,15 +80,15 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the Student class.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="username"></param>
-        /// <param name="fullName"></param>
-        /// <param name="firstName"></param>
-        /// <param name="lastName"></param>
-        /// <param name="section"></param>
-        /// <param name="isEnrolled"></param>
+        /// <param name="id">The database identifier.</param>
+        /// <param name="username">Student's user name.</param>
+        /// <param name="fullName">Student's full name.</param>
+        /// <param name="firstName">Student's first name.</param>
+        /// <param name="lastName">Student's last name.</param>
+        /// <param name="section">Student's section.</param>
+        /// <param name="isEnrolled">Indicates whether student is enrolled.</param>
         public Student(
             int id, 
             string username, 
@@ -110,12 +110,12 @@ namespace DPXDatabase
         /// <summary>
         /// Initializes a new instance of the Student class.
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="fullName"></param>
-        /// <param name="firstName"></param>
-        /// <param name="lastName"></param>
-        /// <param name="section"></param>
-        /// <param name="isEnrolled"></param>
+        /// <param name="username">Student's user name.</param>
+        /// <param name="fullName">Student's full name.</param>
+        /// <param name="firstName">Student's first name.</param>
+        /// <param name="lastName">Student's last name.</param>
+        /// <param name="section">Student's section.</param>
+        /// <param name="isEnrolled">Indicates whether student is enrolled.</param>
         public Student(
             string username, 
             string fullName, 
@@ -148,48 +148,54 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Gets the database identifier.
         /// </summary>
+        /// <value>The database identifier.</value>
         public int Id
         {
             get { return this.id; }
         }
 
         /// <summary>
-        /// 
+        /// Gets the student's username.
         /// </summary>
+        /// <value>The student's username.</value>
         public string Username
         {
             get { return this.username; }
         }
 
         /// <summary>
-        /// 
+        /// Gets the student's full name.
         /// </summary>
+        /// <value>The student's full name.</value>
         public string FullName
         {
             get { return this.fullName; }
         }
 
         /// <summary>
-        /// 
+        /// Gets the student's first name.
         /// </summary>
+        /// <value>The student's first name.</value>
         public string FirstName
         {
             get { return this.firstName; }
         }
 
         /// <summary>
-        /// 
+        /// Gets the student's last name.
         /// </summary>
+        /// <value>The student's last name.</value>
         public string LastName
         {
             get { return this.lastName; }
         }
 
         /// <summary>
-        /// 
+        /// Gets or sets the student's section.
         /// </summary>
+        /// <value>The student's section.</value>
         public int Section
         {
             get { return this.section; }
@@ -197,8 +203,9 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Gets or sets a value indicating whether the student is enrolled.
         /// </summary>
+        /// <value>Value indicating whether the student is enrolled.</value>
         public bool IsEnrolled
         {
             get { return this.isEnrolled; }
@@ -206,8 +213,9 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Gets a value indicating whether the student is in a section.
         /// </summary>
+        /// <value>Value indicating whether the student is in a section.</value>
         public bool IsInSection
         {
             get
@@ -224,9 +232,9 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Gets a string representation of the student.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A string representation of the student.</returns>
         public override string ToString()
         {
             return this.fullName + " (" + this.username + ")";

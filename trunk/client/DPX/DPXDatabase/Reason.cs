@@ -19,12 +19,12 @@ namespace DPXDatabase
         private int id;
 
         /// <summary>
-        /// 
+        /// Indicates whether this reason grants credit.
         /// </summary>
         private bool credit;
 
         /// <summary>
-        /// 
+        /// The description of the reason.
         /// </summary>
         private string description;
 
@@ -41,9 +41,9 @@ namespace DPXDatabase
         /// <summary>
         /// Initializes a new instance of the Reason class.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="credit"></param>
-        /// <param name="description"></param>
+        /// <param name="id">The database identifier.</param>
+        /// <param name="credit">Indicates whether the reason grants credit.</param>
+        /// <param name="description">The description for the reason.</param>
         public Reason(int id, bool credit, string description)
         {
             this.id = id;
@@ -52,33 +52,36 @@ namespace DPXDatabase
         }
 
         /// <summary>
-        /// 
+        /// Gets the database identifier for the reason.
         /// </summary>
+        /// <value>The database identifier for the reason.</value>
         public int Id
         {
             get { return this.id; }
         }
 
         /// <summary>
-        /// 
+        /// Gets a value indicating whether the reason grants credit.
         /// </summary>
+        /// <value>A value indicating whether the reason grants credit.</value>
         public bool Credit
         {
             get { return this.credit; }
         }
 
         /// <summary>
-        /// 
+        /// Gets the description for the reason.
         /// </summary>
+        /// <value>The description for the reason.</value>
         public string Description
         {
             get { return this.description; }
         }
 
         /// <summary>
-        /// 
+        /// A string representation for the reason.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The string representation for the reason.</returns>
         public override string ToString()
         {
             return this.description;
