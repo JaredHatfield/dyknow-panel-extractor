@@ -12,15 +12,15 @@ namespace UnitTests
     using QuickReader;
 
     /// <summary>
-    /// 
+    /// The sample program used for code testing.
     /// </summary>
-    class Program
+    private class Program
     {
         /// <summary>
-        /// 
+        /// Sorts the file.
         /// </summary>
-        /// <param name="inputfile"></param>
-        /// <param name="outputfile"></param>
+        /// <param name="inputfile">The inputfile.</param>
+        /// <param name="outputfile">The outputfile.</param>
         public static void SortFile(string inputfile, string outputfile)
         {
             PanelSorter ps = new PanelSorter(inputfile, outputfile);
@@ -28,9 +28,9 @@ namespace UnitTests
         }
 
         /// <summary>
-        /// 
+        /// Mains the specified args.
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="args">The program arguments.</param>
         private static void Main(string[] args)
         {
             Console.WriteLine("DyKnow Panel eXtractor Unit Tests");
