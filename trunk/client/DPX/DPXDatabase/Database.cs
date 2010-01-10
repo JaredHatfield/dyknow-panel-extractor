@@ -34,6 +34,7 @@ namespace DPXDatabase
         /// <summary>
         /// Gets the connection to the database.
         /// </summary>
+        /// <value>The connection.</value>
         public OleDbConnection Connection
         {
             get { return this.connection; }

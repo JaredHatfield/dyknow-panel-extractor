@@ -71,7 +71,7 @@ namespace DPXDatabase
         /// <summary>
         /// Initializes a new instance of the File class.
         /// </summary>
-        /// <param name="id">The database identifier</param>
+        /// <param name="id">The database identifier.</param>
         /// <param name="classdate">The date for the file.</param>
         /// <param name="fileName">The filename.</param>
         /// <param name="meanStrokes">The mean number of pen strokes per panel.</param>
