@@ -5,6 +5,7 @@ namespace DPX
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
     using System.Windows.Controls;
@@ -316,7 +317,8 @@ namespace DPX
                 sectionId = this.DB.GetSectionId(section);
             }
 
-            Student student = new Student(username, lastname + ", " + firstname, firstname, lastname, sectionId, true);
+            string fullname = lastname.ToString() + ", ".ToString() + firstname.ToString();
+            Student student = new Student(username, fullname, firstname, lastname, sectionId, true);
             this.db.AddStudent(student);
         }
 

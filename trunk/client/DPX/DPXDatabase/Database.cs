@@ -6,6 +6,7 @@ namespace DPXDatabase
     using System;
     using System.Collections.Generic;
     using System.Data.OleDb;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
     using QuickReader;
@@ -362,7 +363,7 @@ namespace DPXDatabase
                     cmdInsert.CommandType = System.Data.CommandType.Text; // Type of query
                     // Add parameters to the query
                     cmdInsert.Parameters.AddWithValue("@parm1", s.Username);
-                    cmdInsert.Parameters.AddWithValue("@parm2", s.FirstName);
+                    cmdInsert.Parameters.AddWithValue("@parm2", s.FullName);
                     cmdInsert.Parameters.AddWithValue("@parm3", s.FirstName);
                     cmdInsert.Parameters.AddWithValue("@parm4", s.LastName);
                     cmdInsert.Parameters.AddWithValue("@parm5", s.Section);
