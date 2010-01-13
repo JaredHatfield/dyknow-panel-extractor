@@ -57,7 +57,7 @@
         </StackPanel>
         <DockPanel>
             <ScrollViewer VerticalScrollBarVisibility="Visible" DockPanel.Dock="Top">
-                <Grid Name="gridPanels">
+                <Grid Name="gridPanels" MinHeight="200">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="75" />
                         <ColumnDefinition />
@@ -70,7 +70,7 @@
                 </Grid>
             </ScrollViewer>
             <ScrollViewer VerticalScrollBarVisibility="Visible" DockPanel.Dock="Bottom">
-                <Grid Name="gridException">
+                <Grid Name="gridException" MinHeight="200">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="75" />
                         <ColumnDefinition Width="75" />

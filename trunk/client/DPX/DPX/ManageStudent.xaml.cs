@@ -188,6 +188,7 @@ namespace DPX
 
                 DisplayExceptionInfo d = dei[i];
 
+                // Date column
                 Label date = new Label();
                 date.Content = d.Date.Date.ToShortDateString();
                 Grid.SetColumn(date, 0);
@@ -196,14 +197,25 @@ namespace DPX
                 date.BorderBrush = Brushes.Black;
                 gridException.Children.Add(date);
 
+                // Credit column
                 Label credit = new Label();
                 credit.Content = d.Credit;
+                if (d.Credit)
+                {
+                    credit.Background = Brushes.LightGreen;
+                }
+                else
+                {
+                    credit.Background = Brushes.LightPink;
+                }
+
                 Grid.SetColumn(credit, 1);
                 Grid.SetRow(credit, i);
                 credit.BorderThickness = new Thickness(1);
                 credit.BorderBrush = Brushes.Black;
                 gridException.Children.Add(credit);
 
+                // Description column
                 Label description = new Label();
                 description.Content = d.Description;
                 Grid.SetColumn(description, 2);
@@ -212,6 +224,7 @@ namespace DPX
                 description.BorderBrush = Brushes.Black;
                 gridException.Children.Add(description);
 
+                // Notes column
                 Label notes = new Label();
                 notes.Content = d.Notes;
                 Grid.SetColumn(notes, 3);
@@ -241,6 +254,7 @@ namespace DPX
 
                 DisplayPanelInfo d = dpi[i];
 
+                // Date column
                 Label date = new Label();
                 date.Content = d.Date.Date.ToShortDateString();
                 Grid.SetColumn(date, 0);
@@ -249,6 +263,7 @@ namespace DPX
                 date.BorderBrush = Brushes.Black;
                 gridPanels.Children.Add(date);
 
+                // File column
                 Label file = new Label();
                 file.Content = d.Filename;
                 Grid.SetColumn(file, 1);
@@ -257,6 +272,7 @@ namespace DPX
                 file.BorderBrush = Brushes.Black;
                 gridPanels.Children.Add(file);
 
+                // Slide number column
                 Label slidenum = new Label();
                 slidenum.Content = d.SlideNumber;
                 Grid.SetColumn(slidenum, 2);
@@ -265,6 +281,7 @@ namespace DPX
                 slidenum.BorderBrush = Brushes.Black;
                 gridPanels.Children.Add(slidenum);
 
+                // Total stroke count column
                 Label tstrokecount = new Label();
                 tstrokecount.Content = d.TotalStrokeCount;
                 Grid.SetColumn(tstrokecount, 3);
@@ -273,6 +290,7 @@ namespace DPX
                 tstrokecount.BorderBrush = Brushes.Black;
                 gridPanels.Children.Add(tstrokecount);
 
+                // Net stroke count column
                 Label nstrokecount = new Label();
                 nstrokecount.Content = d.NetStrokeCount;
                 Grid.SetColumn(nstrokecount, 4);
@@ -281,6 +299,7 @@ namespace DPX
                 nstrokecount.BorderBrush = Brushes.Black;
                 gridPanels.Children.Add(nstrokecount);
 
+                // Is blank column
                 Label isblank = new Label();
                 isblank.Content = d.IsBlank.ToString();
                 Grid.SetColumn(isblank, 5);
@@ -289,8 +308,22 @@ namespace DPX
                 isblank.BorderBrush = Brushes.Black;
                 gridPanels.Children.Add(isblank);
 
+                // Analysis column
                 Label analysis = new Label();
                 analysis.Content = d.Analysis;
+                if (d.Analysis.Equals("Yes"))
+                {
+                    analysis.Background = Brushes.LightGreen;
+                }
+                else if (d.Analysis.Equals("Maybe"))
+                {
+                    analysis.Background = Brushes.LightYellow;
+                }
+                else if (d.Analysis.Equals("No"))
+                {
+                    analysis.Background = Brushes.LightPink;
+                }
+
                 Grid.SetColumn(analysis, 6);
                 Grid.SetRow(analysis, i);
                 analysis.BorderThickness = new Thickness(1);
