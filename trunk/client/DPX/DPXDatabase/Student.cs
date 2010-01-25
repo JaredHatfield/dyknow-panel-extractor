@@ -62,8 +62,8 @@ namespace DPXDatabase
             // First name
             if (dp.FullName.IndexOf(',') > 0)
             {
-                this.firstName = dp.FullName.Substring(0, dp.FullName.IndexOf(','));
-                this.lastName = dp.FullName.Substring(dp.FullName.IndexOf(',') + 2);
+                this.lastName = dp.FullName.Substring(0, dp.FullName.IndexOf(','));
+                this.firstName = dp.FullName.Substring(dp.FullName.IndexOf(',') + 2);
                 if (this.lastName.IndexOf(' ') > 0)
                 {
                     this.lastName = this.lastName.Substring(0, this.lastName.IndexOf(' '));
