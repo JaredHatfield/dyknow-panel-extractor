@@ -408,7 +408,6 @@ namespace DPX
             {
                 Exceptions ex = new Exceptions(d.Id, s.Id, r.Id, textBoxNotes.Text);
                 this.c.DB.AddException(ex);
-                comboBoxReason.SelectedIndex = -1;
                 textBoxNotes.Text = string.Empty;
             }
 
