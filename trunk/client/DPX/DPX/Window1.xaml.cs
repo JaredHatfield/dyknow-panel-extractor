@@ -59,8 +59,10 @@ namespace DPX
         private void OpenFile(object sender, RoutedEventArgs e)
         {
             // The database is not open
-            if (!this.c.IsDatabaseOpen())
+            try
             {
+                if (!this.c.IsDatabaseOpen())
+                {
                     // Configure open file dialog box
                     Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
                     dlg.DefaultExt = ".accdb"; // Default file extension
@@ -79,6 +81,11 @@ namespace DPX
                         FileMenuRoster.IsEnabled = true;
                         FileMenuNew.IsEnabled = false;
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
             }
         }
 
@@ -117,38 +124,45 @@ namespace DPX
         /// <param name="e">Event arguments.</param>
         private void NewFile(object sender, RoutedEventArgs e)
         {
-            // Location of the empty database that is included as part of the installer
-            string locationOfNewDatabase = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase) + "\\NewDPXDatabase.accdb";
-            
-            // Remove file:\ from the beginning of the string
-            locationOfNewDatabase = locationOfNewDatabase.Substring(6);
-
-            // Configure save file dialog box
-            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-            dlg.DefaultExt = ".seat"; // Default file extension
-            dlg.Filter = "Database (.accdb)|*.accdb"; // Filter files by extension
-
-            // Show open file dialog box
-            Nullable<bool> result = dlg.ShowDialog();
-
-            // Process open file dialog box results
-            if (result == true)
+            try
             {
-                if (System.IO.File.Exists(locationOfNewDatabase))
-                {
-                    System.IO.File.Copy(locationOfNewDatabase, dlg.FileName);
+                // Location of the empty database that is included as part of the installer
+                string locationOfNewDatabase = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase) + "\\NewDPXDatabase.accdb";
 
-                    // Open document
-                    this.c.OpenDatabaseFile(dlg.FileName);
-                    FileMenuOpen.IsEnabled = false;
-                    FileMenuClose.IsEnabled = true;
-                    FileMenuRoster.IsEnabled = true;
-                    FileMenuNew.IsEnabled = false;
-                }
-                else
+                // Remove file:\ from the beginning of the string
+                locationOfNewDatabase = locationOfNewDatabase.Substring(6);
+
+                // Configure save file dialog box
+                Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+                dlg.DefaultExt = ".seat"; // Default file extension
+                dlg.Filter = "Database (.accdb)|*.accdb"; // Filter files by extension
+
+                // Show open file dialog box
+                Nullable<bool> result = dlg.ShowDialog();
+
+                // Process open file dialog box results
+                if (result == true)
                 {
-                    MessageBox.Show("File not found: " + locationOfNewDatabase, "Error: file not found");
+                    if (System.IO.File.Exists(locationOfNewDatabase))
+                    {
+                        System.IO.File.Copy(locationOfNewDatabase, dlg.FileName);
+
+                        // Open document
+                        this.c.OpenDatabaseFile(dlg.FileName);
+                        FileMenuOpen.IsEnabled = false;
+                        FileMenuClose.IsEnabled = true;
+                        FileMenuRoster.IsEnabled = true;
+                        FileMenuNew.IsEnabled = false;
+                    }
+                    else
+                    {
+                        MessageBox.Show("File not found: " + locationOfNewDatabase, "Error: file not found");
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
             }
         }
     }
