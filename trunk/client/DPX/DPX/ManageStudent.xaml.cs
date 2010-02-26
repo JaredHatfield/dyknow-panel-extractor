@@ -188,9 +188,21 @@ namespace DPX
 
                 DisplayExceptionInfo d = dei[i];
 
+                // Determine if the exception is for today
+                bool today = false;
+                if (d.Date.Date.Equals(DateTime.Today.Date))
+                {
+                    today = true;
+                }
+
                 // Date column
                 Label date = new Label();
                 date.Content = d.Date.Date.ToShortDateString();
+                if (today)
+                {
+                    date.Background = Brushes.LightBlue;
+                }
+
                 Grid.SetColumn(date, 0);
                 Grid.SetRow(date, i);
                 date.BorderThickness = new Thickness(1);
@@ -218,6 +230,11 @@ namespace DPX
                 // Description column
                 Label description = new Label();
                 description.Content = d.Description;
+                if (today)
+                {
+                    description.Background = Brushes.LightBlue;
+                }
+
                 Grid.SetColumn(description, 2);
                 Grid.SetRow(description, i);
                 description.BorderThickness = new Thickness(1);
@@ -227,6 +244,11 @@ namespace DPX
                 // Notes column
                 Label notes = new Label();
                 notes.Content = d.Notes;
+                if (today)
+                {
+                    notes.Background = Brushes.LightBlue;
+                }
+
                 Grid.SetColumn(notes, 3);
                 Grid.SetRow(notes, i);
                 notes.BorderThickness = new Thickness(1);
@@ -254,9 +276,21 @@ namespace DPX
 
                 DisplayPanelInfo d = dpi[i];
 
+                // Determine if the panel is for today
+                bool today = false;
+                if (d.Date.Date.Equals(DateTime.Today.Date))
+                {
+                    today = true;
+                }
+
                 // Date column
                 Label date = new Label();
                 date.Content = d.Date.Date.ToShortDateString();
+                if (today)
+                {
+                    date.Background = Brushes.LightBlue;
+                }
+
                 Grid.SetColumn(date, 0);
                 Grid.SetRow(date, i);
                 date.BorderThickness = new Thickness(1);
@@ -266,6 +300,11 @@ namespace DPX
                 // File column
                 Label file = new Label();
                 file.Content = d.Filename;
+                if (today)
+                {
+                    file.Background = Brushes.LightBlue;
+                }
+
                 Grid.SetColumn(file, 1);
                 Grid.SetRow(file, i);
                 file.BorderThickness = new Thickness(1);
@@ -275,6 +314,11 @@ namespace DPX
                 // Slide number column
                 Label slidenum = new Label();
                 slidenum.Content = d.SlideNumber;
+                if (today)
+                {
+                    slidenum.Background = Brushes.LightBlue;
+                }
+
                 Grid.SetColumn(slidenum, 2);
                 Grid.SetRow(slidenum, i);
                 slidenum.BorderThickness = new Thickness(1);
@@ -284,6 +328,11 @@ namespace DPX
                 // Total stroke count column
                 Label tstrokecount = new Label();
                 tstrokecount.Content = d.TotalStrokeCount;
+                if (today)
+                {
+                    tstrokecount.Background = Brushes.LightBlue;
+                }
+
                 Grid.SetColumn(tstrokecount, 3);
                 Grid.SetRow(tstrokecount, i);
                 tstrokecount.BorderThickness = new Thickness(1);
@@ -293,6 +342,11 @@ namespace DPX
                 // Net stroke count column
                 Label nstrokecount = new Label();
                 nstrokecount.Content = d.NetStrokeCount;
+                if (today)
+                {
+                    nstrokecount.Background = Brushes.LightBlue;
+                }
+
                 Grid.SetColumn(nstrokecount, 4);
                 Grid.SetRow(nstrokecount, i);
                 nstrokecount.BorderThickness = new Thickness(1);
@@ -302,6 +356,11 @@ namespace DPX
                 // Is blank column
                 Label isblank = new Label();
                 isblank.Content = d.IsBlank.ToString();
+                if (today)
+                {
+                    isblank.Background = Brushes.LightBlue;
+                }
+
                 Grid.SetColumn(isblank, 5);
                 Grid.SetRow(isblank, i);
                 isblank.BorderThickness = new Thickness(1);
