@@ -1,6 +1,7 @@
-﻿// <copyright file="GenerateReport.xaml.cs" company="DPX">
+﻿// <copyright file="GenerateReport.xaml.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
+// <summary>Tab that displays the interface for generating a report.</summary>
 namespace DPX
 {
     using System;
@@ -19,7 +20,7 @@ namespace DPX
     using DPXDatabase;
 
     /// <summary>
-    /// Interaction logic for GenerateReport.xaml.
+    /// Tab that displays the interface for generating a report.
     /// </summary>
     public partial class GenerateReport : Page
     {

@@ -1,6 +1,7 @@
-﻿// <copyright file="ManageStudent.xaml.cs" company="DPX">
+﻿// <copyright file="ManageStudent.xaml.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
+// <summary>The tab that displays the interface for managing students.</summary>
 namespace DPX
 {
     using System;
@@ -20,7 +21,7 @@ namespace DPX
     using DPXDatabase;
 
     /// <summary>
-    /// Interaction logic for ManageStudent.xaml.
+    /// The tab that displays the interface for managing students.
     /// </summary>
     public partial class ManageStudent : Page
     {

@@ -1,6 +1,7 @@
-﻿// <copyright file="App.xaml.cs" company="DPX">
+﻿// <copyright file="App.xaml.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
+// <summary>The main application for DyKnow Panel Sorter.</summary>
 namespace DyKnowPanelSorter
 {
     using System;
@@ -11,7 +12,7 @@ namespace DyKnowPanelSorter
     using System.Windows;
 
     /// <summary>
-    /// Interaction logic for App.xaml.
+    /// The main application for DyKnow Panel Sorter.
     /// </summary>
     public partial class App : Application
     {

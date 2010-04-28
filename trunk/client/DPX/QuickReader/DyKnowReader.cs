@@ -1,7 +1,7 @@
-﻿// <copyright file="DyKnowReader.cs" company="DPX">
+﻿// <copyright file="DyKnowReader.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
-// <summary>DyKnow Reader class.</summary>
+// <summary>Reads in the contents of a DyKnow file.</summary>
 namespace QuickReader
 {
     using System;
@@ -40,7 +40,7 @@ namespace QuickReader
         /// <summary>
         /// The collection of DyKnow pages.
         /// </summary>
-        private List<DyKnowPage> dyKnowPages;
+        private List<DyKnowPage> dyknowPages;
 
         /// <summary>
         /// The collection of DyKnow background image data.
@@ -86,7 +86,7 @@ namespace QuickReader
             this.xmlFile = new XmlTextReader(this.gzipFile);
 
             // The collection of pages
-            this.dyKnowPages = new List<DyKnowPage>();
+            this.dyknowPages = new List<DyKnowPage>();
 
             // The collection of inmageData
             this.imageInformation = new List<ImageData>();
@@ -108,7 +108,7 @@ namespace QuickReader
                         DyKnowPage panel = new DyKnowPage(this.xmlFile.ReadSubtree(), myRow++);
 
                         // Add the page information to the list of pages
-                        this.dyKnowPages.Add(panel);
+                        this.dyknowPages.Add(panel);
                     }
                     else if (this.xmlFile.Name.ToString() == "IMGS")
                     {
@@ -201,14 +201,14 @@ namespace QuickReader
         {
             get
             {
-                if (this.dyKnowPages.Count > 0)
+                if (this.dyknowPages.Count > 0)
                 {
-                    int min = this.dyKnowPages[0].NetStrokeCount;
-                    for (int i = 0; i < this.dyKnowPages.Count; i++)
+                    int min = this.dyknowPages[0].NetStrokeCount;
+                    for (int i = 0; i < this.dyknowPages.Count; i++)
                     {
-                        if (this.dyKnowPages[i].NetStrokeCount < min)
+                        if (this.dyknowPages[i].NetStrokeCount < min)
                         {
-                            min = this.dyKnowPages[i].NetStrokeCount;
+                            min = this.dyknowPages[i].NetStrokeCount;
                         }
                     }
 
@@ -229,14 +229,14 @@ namespace QuickReader
         {
             get
             {
-                if (this.dyKnowPages.Count > 0)
+                if (this.dyknowPages.Count > 0)
                 {
-                    int max = this.dyKnowPages[0].NetStrokeCount;
-                    for (int i = 0; i < this.dyKnowPages.Count; i++)
+                    int max = this.dyknowPages[0].NetStrokeCount;
+                    for (int i = 0; i < this.dyknowPages.Count; i++)
                     {
-                        if (this.dyKnowPages[i].NetStrokeCount > max)
+                        if (this.dyknowPages[i].NetStrokeCount > max)
                         {
-                            max = this.dyKnowPages[i].NetStrokeCount;
+                            max = this.dyknowPages[i].NetStrokeCount;
                         }
                     }
 
@@ -257,14 +257,14 @@ namespace QuickReader
         {
             get
             {
-                if (this.dyKnowPages.Count > 0)
+                if (this.dyknowPages.Count > 0)
                 {
-                    long min = this.dyKnowPages[0].NetStrokeDistance;
-                    for (int i = 0; i < this.dyKnowPages.Count; i++)
+                    long min = this.dyknowPages[0].NetStrokeDistance;
+                    for (int i = 0; i < this.dyknowPages.Count; i++)
                     {
-                        if (this.dyKnowPages[i].NetStrokeDistance < min)
+                        if (this.dyknowPages[i].NetStrokeDistance < min)
                         {
-                            min = this.dyKnowPages[i].NetStrokeDistance;
+                            min = this.dyknowPages[i].NetStrokeDistance;
                         }
                     }
 
@@ -285,14 +285,14 @@ namespace QuickReader
         {
             get
             {
-                if (this.dyKnowPages.Count > 0)
+                if (this.dyknowPages.Count > 0)
                 {
-                    long max = this.dyKnowPages[0].NetStrokeDistance;
-                    for (int i = 0; i < this.dyKnowPages.Count; i++)
+                    long max = this.dyknowPages[0].NetStrokeDistance;
+                    for (int i = 0; i < this.dyknowPages.Count; i++)
                     {
-                        if (this.dyKnowPages[i].NetStrokeDistance > max)
+                        if (this.dyknowPages[i].NetStrokeDistance > max)
                         {
-                            max = this.dyKnowPages[i].NetStrokeDistance;
+                            max = this.dyknowPages[i].NetStrokeDistance;
                         }
                     }
 
@@ -349,7 +349,7 @@ namespace QuickReader
         /// <returns>The requiested DyKnow page.</returns>
         public DyKnowPage GetDyKnowPage(int i)
         {
-            return this.dyKnowPages[i];
+            return this.dyknowPages[i];
         }
 
         /// <summary>
@@ -359,7 +359,7 @@ namespace QuickReader
         /// <returns>The string representation of the requested page.</returns>
         public string GetPagestring(int i)
         {
-            return this.dyKnowPages[i].ToString();
+            return this.dyknowPages[i].ToString();
         }
 
         /// <summary>
@@ -369,7 +369,7 @@ namespace QuickReader
         /// <returns>An object array for the requested page.</returns>
         public object[] GetRowData(int i)
         {
-            return this.dyKnowPages[i].GetRowData();
+            return this.dyknowPages[i].GetRowData();
         }
 
         /// <summary>
@@ -378,7 +378,7 @@ namespace QuickReader
         /// <returns>The number of panels.</returns>
         public int NumOfPages()
         {
-            return this.dyKnowPages.Count;
+            return this.dyknowPages.Count;
         }
 
         /// <summary>
@@ -421,17 +421,17 @@ namespace QuickReader
         {
             for (int i = 0; i < this.NumOfPages(); i++)
             {
-                if (this.dyKnowPages[i].NetStrokeCount == 0)
+                if (this.dyknowPages[i].NetStrokeCount == 0)
                 {
-                    this.dyKnowPages[i].SetFinished("No");
+                    this.dyknowPages[i].SetFinished("No");
                 }
-                else if (this.dyKnowPages[i].NetStrokeCount < (this.meanStrokes - (2 * this.stdDevStrokes)))
+                else if (this.dyknowPages[i].NetStrokeCount < (this.meanStrokes - (2 * this.stdDevStrokes)))
                 {
-                    this.dyKnowPages[i].SetFinished("Maybe");
+                    this.dyknowPages[i].SetFinished("Maybe");
                 }
                 else
                 {
-                    this.dyKnowPages[i].SetFinished("Yes");
+                    this.dyknowPages[i].SetFinished("Yes");
                 }
             }
         }
@@ -445,7 +445,7 @@ namespace QuickReader
             long total = 0;
             for (int i = 0; i < this.NumOfPages(); i++)
             {
-                total += this.dyKnowPages[i].NetStrokeCount;
+                total += this.dyknowPages[i].NetStrokeCount;
             }
 
             return (double)total / (double)this.NumOfPages();
@@ -461,7 +461,7 @@ namespace QuickReader
             double total = 0;
             for (int i = 0; i < this.NumOfPages(); i++)
             {
-                total += Math.Pow((this.dyKnowPages[i].NetStrokeCount - mean), 2);
+                total += Math.Pow((this.dyknowPages[i].NetStrokeCount - mean), 2);
             }
 
             return Math.Sqrt((double)total / (double)(this.NumOfPages() - 1));
@@ -476,7 +476,7 @@ namespace QuickReader
             long total = 0;
             for (int i = 0; i < this.NumOfPages(); i++)
             {
-                total += this.dyKnowPages[i].NetStrokeDistance;
+                total += this.dyknowPages[i].NetStrokeDistance;
             }
 
             return (double)total / (double)this.NumOfPages();
@@ -492,7 +492,7 @@ namespace QuickReader
             double total = 0;
             for (int i = 0; i < this.NumOfPages(); i++)
             {
-                total += Math.Pow((this.dyKnowPages[i].NetStrokeDistance - mean), 2);
+                total += Math.Pow((this.dyknowPages[i].NetStrokeDistance - mean), 2);
             }
 
             return Math.Sqrt((double)total / (double)(this.NumOfPages() - 1));

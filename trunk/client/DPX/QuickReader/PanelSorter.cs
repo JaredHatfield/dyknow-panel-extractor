@@ -1,7 +1,7 @@
-﻿// <copyright file="PanelSorter.cs" company="DPX">
+﻿// <copyright file="PanelSorter.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
-// <summary>Page Sorter class.</summary>
+// <summary>A parser that is able to sort the panels in a DyKnow file and produce a new file.</summary>
 namespace QuickReader
 {
     using System;
@@ -13,7 +13,7 @@ namespace QuickReader
     using System.Xml;
 
     /// <summary>
-    /// Parser that is able to sort the panels in a DyKnow file and produce a new output.
+    /// A parser that is able to sort the panels in a DyKnow file and produce a new file.
     /// </summary>
     public class PanelSorter
     {

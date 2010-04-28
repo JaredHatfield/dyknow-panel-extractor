@@ -1,6 +1,7 @@
-﻿// <copyright file="AddNewDate.xaml.cs" company="DPX">
+﻿// <copyright file="AddNewDate.xaml.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
+// <summary>The window that allows a new date to be added to the database.</summary>
 namespace DPX
 {
     using System;
@@ -17,7 +18,7 @@ namespace DPX
     using System.Windows.Shapes;
 
     /// <summary>
-    /// Interaction logic for AddNewDate.xaml.
+    /// The window that allows a new date to be added to the database.
     /// </summary>
     public partial class AddNewDate : Window
     {

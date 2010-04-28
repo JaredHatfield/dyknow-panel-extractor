@@ -1,6 +1,7 @@
-﻿// <copyright file="DisplayExceptionInfo.cs" company="DPX">
+﻿// <copyright file="DisplayExceptionInfo.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
+// <summary>Object for DisplayExceptionInfo.</summary>
 namespace DPXDatabase
 {
     using System;

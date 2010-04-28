@@ -1,6 +1,7 @@
-﻿// <copyright file="Section.cs" company="DPX">
+﻿// <copyright file="Section.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
+// <summary>Object for a Section as represented in the database.</summary>
 namespace DPXDatabase
 {
     using System;

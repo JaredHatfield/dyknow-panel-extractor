@@ -1,6 +1,7 @@
-﻿// <copyright file="AboutDPX.xaml.cs" company="DPX">
+﻿// <copyright file="AboutDPX.xaml.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
+// <summary>The about popup window for the application.</summary>
 namespace DPXCommon
 {
     using System;
@@ -17,7 +18,7 @@ namespace DPXCommon
     using System.Windows.Shapes;
 
     /// <summary>
-    /// Interaction logic for AboutDPX.xaml.
+    /// The about popup window for the application.
     /// </summary>
     public partial class AboutDPX : Window
     {
@@ -28,6 +29,8 @@ namespace DPXCommon
         {
             InitializeComponent();
             buttonOk.Focus();
+            this.VersionNumber.Text = "Version " + System.Reflection.Assembly.GetCallingAssembly().GetName().Version.ToString();
+            this.ApplicationName.Text = System.Reflection.Assembly.GetCallingAssembly().GetName().Name;
         }
 
         /// <summary>

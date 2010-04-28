@@ -1,6 +1,7 @@
-﻿// <copyright file="File.cs" company="DPX">
+﻿// <copyright file="File.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
+// <summary>Object for a file as represented in the database.</summary>
 namespace DPXDatabase
 {
     using System;

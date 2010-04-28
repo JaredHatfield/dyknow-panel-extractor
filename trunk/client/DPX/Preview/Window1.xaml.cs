@@ -1,6 +1,7 @@
-﻿// <copyright file="Window1.xaml.cs" company="DPX">
+﻿// <copyright file="Window1.xaml.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
+// <summary>The main window for Preview.</summary>
 namespace Preview
 {
     using System;
@@ -22,7 +23,7 @@ namespace Preview
     using QuickReader;
 
     /// <summary>
-    /// Interaction logic for Window1.xaml.
+    /// The main window for Preview.
     /// </summary>
     public partial class Window1 : Window
     {

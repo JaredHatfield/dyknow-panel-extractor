@@ -1,6 +1,7 @@
-﻿// <copyright file="Window1.xaml.cs" company="DPX">
+﻿// <copyright file="Window1.xaml.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
+// <summary>The main window of the application.</summary>
 namespace DPX
 {
     using System;
@@ -20,7 +21,7 @@ namespace DPX
     using DPXCommon;
 
     /// <summary>
-    /// Interaction logic for Window1.xaml.
+    /// The main window of the application.
     /// </summary>
     public partial class Window1 : Window
     {

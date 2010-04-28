@@ -1,6 +1,7 @@
-﻿// <copyright file="ImportFile.xaml.cs" company="DPX">
+﻿// <copyright file="ImportFile.xaml.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
+// <summary>The tab that displays the interface for importing a DyKnow file.</summary>
 namespace DPX
 {
     using System;
@@ -20,7 +21,7 @@ namespace DPX
     using QuickReader;
 
     /// <summary>
-    /// Interaction logic for Page1.xaml.
+    /// The tab that displays the interface for importing a DyKnow file.
     /// </summary>
     public partial class ImportFile : Page
     {   

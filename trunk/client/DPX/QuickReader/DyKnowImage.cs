@@ -1,7 +1,7 @@
-﻿// <copyright file="DyKnowImage.cs" company="DPX">
+﻿// <copyright file="DyKnowImage.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
-// <summary>DyKnow Image object.</summary>
+// <summary>A representation of an image embedded in a DyKnow panel.</summary>
 namespace QuickReader
 {
     using System;

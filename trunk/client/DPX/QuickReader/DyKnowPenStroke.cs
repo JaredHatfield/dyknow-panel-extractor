@@ -1,7 +1,7 @@
-﻿// <copyright file="DyKnowPenStroke.cs" company="DPX">
+﻿// <copyright file="DyKnowPenStroke.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
-// <summary>DyKnow Pen Stroke object.</summary>
+// <summary>A representation of a single pen stroke.</summary>
 namespace QuickReader
 {
     using System;

@@ -1,6 +1,7 @@
-﻿// <copyright file="DisplayPanelInfo.cs" company="DPX">
+﻿// <copyright file="DisplayPanelInfo.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
+// <summary>Object for DisplayPanelInfo.</summary>
 namespace DPXDatabase
 {
     using System;

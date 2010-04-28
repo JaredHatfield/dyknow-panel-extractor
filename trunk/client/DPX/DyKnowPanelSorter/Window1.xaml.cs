@@ -1,6 +1,7 @@
-﻿// <copyright file="Window1.xaml.cs" company="DPX">
+﻿// <copyright file="Window1.xaml.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
+// <summary>The window that displays the interface for DyKnow Panel Sorter.</summary>
 namespace DyKnowPanelSorter
 {
     using System;
@@ -21,7 +22,7 @@ namespace DyKnowPanelSorter
     using QuickReader;
 
     /// <summary>
-    /// Interaction logic for Window1.xaml.
+    /// The window that displays the interface for DyKnow Panel Sorter.
     /// </summary>
     public partial class Window1 : Window
     {

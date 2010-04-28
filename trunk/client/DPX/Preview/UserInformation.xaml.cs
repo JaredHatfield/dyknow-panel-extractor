@@ -1,6 +1,7 @@
-﻿// <copyright file="UserInformation.xaml.cs" company="DPX">
+﻿// <copyright file="UserInformation.xaml.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
+// <summary>The user information window.</summary>
 namespace Preview
 {
     using System;
@@ -17,7 +18,7 @@ namespace Preview
     using System.Windows.Shapes;
 
     /// <summary>
-    /// Interaction logic for UserInformation.xaml.
+    /// The user information window.
     /// </summary>
     public partial class UserInformation : Window
     {

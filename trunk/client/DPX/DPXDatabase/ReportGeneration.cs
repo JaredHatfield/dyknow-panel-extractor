@@ -1,6 +1,7 @@
-﻿// <copyright file="ReportGeneration.cs" company="DPX">
+﻿// <copyright file="ReportGeneration.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
+// <summary>Generates a report for a given set of dates.</summary>
 namespace DPXDatabase
 {
     using System;

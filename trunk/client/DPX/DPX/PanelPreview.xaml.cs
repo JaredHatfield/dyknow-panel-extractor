@@ -1,6 +1,7 @@
-﻿// <copyright file="PanelPreview.xaml.cs" company="DPX">
+﻿// <copyright file="PanelPreview.xaml.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
+// <summary>The window that displays the preview for a DyKnow panel.</summary>
 namespace DPX
 {
     using System;
@@ -19,7 +20,7 @@ namespace DPX
     using QuickReader;
 
     /// <summary>
-    /// Interaction logic for PanelPreview.xaml.
+    /// The window that displays the preview for a DyKnow panel.
     /// </summary>
     public partial class PanelPreview : Window
     {

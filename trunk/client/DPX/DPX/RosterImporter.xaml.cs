@@ -1,7 +1,7 @@
-﻿// <copyright file="RosterImporter.xaml.cs" company="DPX">
+﻿// <copyright file="RosterImporter.xaml.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
-// <summary>Window for importing a CVS roster file into the application.</summary>
+// <summary>Window for importing a CSV roster file into the database.</summary>
 namespace DPX
 {
     using System;
@@ -20,7 +20,7 @@ namespace DPX
     using DPXDatabase;
 
     /// <summary>
-    /// IWIndow for importing a CVS roster file into the application.
+    /// Window for importing CSV roster file into the database.
     /// </summary>
     public partial class RosterImporter : Window
     {

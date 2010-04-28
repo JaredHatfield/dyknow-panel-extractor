@@ -1,7 +1,7 @@
-﻿// <copyright file="DyKnowPage.cs" company="DPX">
+﻿// <copyright file="DyKnowPage.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
-// <summary>DyKnow Page object.</summary>
+// <summary>A representation of a DyKnow panel.</summary>
 namespace QuickReader
 {
     using System;

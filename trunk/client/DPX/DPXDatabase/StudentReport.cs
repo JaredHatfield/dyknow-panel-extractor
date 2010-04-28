@@ -1,6 +1,7 @@
-﻿// <copyright file="StudentReport.cs" company="DPX">
+﻿// <copyright file="StudentReport.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
+// <summary>Generate a report for a student.</summary>
 namespace DPXDatabase
 {
     using System;

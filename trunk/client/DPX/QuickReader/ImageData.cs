@@ -1,7 +1,7 @@
-﻿// <copyright file="ImageData.cs" company="DPX">
+﻿// <copyright file="ImageData.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
-// <summary>Image Data object.</summary>
+// <summary>A representation of an image stored in the DyKnow XML file.</summary>
 namespace QuickReader
 {
     using System;

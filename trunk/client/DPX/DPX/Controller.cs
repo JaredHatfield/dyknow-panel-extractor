@@ -1,6 +1,7 @@
-﻿// <copyright file="Controller.cs" company="DPX">
+﻿// <copyright file="Controller.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
+// <summary>Singleton class used for accessing the database.</summary>
 namespace DPX
 {
     using System;

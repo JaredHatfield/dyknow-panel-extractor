@@ -1,6 +1,7 @@
-﻿// <copyright file="Program.cs" company="DPX">
+﻿// <copyright file="Program.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
+// <summary>The sample program used for code testing.</summary>
 namespace UnitTests
 {
     using System;
@@ -14,7 +15,7 @@ namespace UnitTests
     /// <summary>
     /// The sample program used for code testing.
     /// </summary>
-    class Program
+    public class Program
     {
         /// <summary>
         /// Sorts the file.

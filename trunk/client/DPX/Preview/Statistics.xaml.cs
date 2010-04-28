@@ -1,6 +1,7 @@
-﻿// <copyright file="Statistics.xaml.cs" company="DPX">
+﻿// <copyright file="Statistics.xaml.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
+// <summary>The statistics information window.</summary>
 namespace Preview
 {
     using System;
@@ -18,7 +19,7 @@ namespace Preview
     using QuickReader;
 
     /// <summary>
-    /// Interaction logic for Statistics.xaml.
+    /// The statistics information window.
     /// </summary>
     public partial class Statistics : Window
     {
