@@ -2,7 +2,7 @@
 // GNU General Public License v3
 // </copyright>
 // <summary>The main application for DyKnow Panel Sorter.</summary>
-namespace DyKnowPanelSorter
+namespace DPXSorter
 {
     using System;
     using System.Collections.Generic;

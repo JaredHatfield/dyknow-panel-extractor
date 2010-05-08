@@ -2,7 +2,7 @@
 // GNU General Public License v3
 // </copyright>
 // <summary>Singleton class used for accessing the database.</summary>
-namespace DPX
+namespace DPXManager
 {
     using System;
     using System.Collections.Generic;

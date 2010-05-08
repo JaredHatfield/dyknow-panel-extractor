@@ -2,7 +2,7 @@
 // GNU General Public License v3
 // </copyright>
 // <summary>The user information window.</summary>
-namespace Preview
+namespace DPXPreview
 {
     using System;
     using System.Collections.Generic;

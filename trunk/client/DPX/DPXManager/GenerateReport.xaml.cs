@@ -2,7 +2,7 @@
 // GNU General Public License v3
 // </copyright>
 // <summary>Tab that displays the interface for generating a report.</summary>
-namespace DPX
+namespace DPXManager
 {
     using System;
     using System.Collections.Generic;

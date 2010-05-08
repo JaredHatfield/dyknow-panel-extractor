@@ -2,7 +2,7 @@
 // GNU General Public License v3
 // </copyright>
 // <summary>The window that allows a new date to be added to the database.</summary>
-namespace DPX
+namespace DPXManager
 {
     using System;
     using System.Collections.Generic;

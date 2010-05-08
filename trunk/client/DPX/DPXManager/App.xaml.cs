@@ -2,7 +2,7 @@
 // GNU General Public License v3
 // </copyright>
 // <summary>The main application for DPX.</summary>
-namespace DPX
+namespace DPXManager
 {
     using System;
     using System.Collections.Generic;

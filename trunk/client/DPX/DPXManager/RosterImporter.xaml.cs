@@ -2,7 +2,7 @@
 // GNU General Public License v3
 // </copyright>
 // <summary>Window for importing a CSV roster file into the database.</summary>
-namespace DPX
+namespace DPXManager
 {
     using System;
     using System.Collections.Generic;

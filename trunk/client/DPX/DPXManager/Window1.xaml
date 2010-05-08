@@ -1,4 +1,4 @@
-﻿<Window x:Class="DPX.Window1"
+﻿<Window x:Class="DPXManager.Window1"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="DPX Manager" Height="Auto" Width="780" 

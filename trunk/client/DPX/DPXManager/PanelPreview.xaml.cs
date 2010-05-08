@@ -2,7 +2,7 @@
 // GNU General Public License v3
 // </copyright>
 // <summary>The window that displays the preview for a DyKnow panel.</summary>
-namespace DPX
+namespace DPXManager
 {
     using System;
     using System.Collections.Generic;

@@ -2,7 +2,7 @@
 // GNU General Public License v3
 // </copyright>
 // <summary>The tab that displays the interface for importing a DyKnow file.</summary>
-namespace DPX
+namespace DPXManager
 {
     using System;
     using System.Collections.Generic;

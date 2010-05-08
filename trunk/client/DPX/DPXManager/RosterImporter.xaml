@@ -1,4 +1,4 @@
-﻿<Window x:Class="DPX.RosterImporter"
+﻿<Window x:Class="DPXManager.RosterImporter"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="Import Class Roster" Height="300" Width="618">
