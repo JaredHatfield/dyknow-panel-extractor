@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPX", "DPX\DPX.csproj", "{62771B0D-F779-413E-B344-CF4E2038E3EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPXManager", "DPXManager\DPXManager.csproj", "{62771B0D-F779-413E-B344-CF4E2038E3EF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickReader", "QuickReader\QuickReader.csproj", "{C05354D4-086C-4DF8-BC63-F42CD0F7A036}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{A19B1B47-2213-48DA-AE12-406FC665C73C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Preview", "Preview\Preview.csproj", "{107A5897-5275-476B-81D7-C0A01EF976B7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPXPreview", "DPXPreview\DPXPreview.csproj", "{107A5897-5275-476B-81D7-C0A01EF976B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DyKnowPanelSorter", "DyKnowPanelSorter\DyKnowPanelSorter.csproj", "{A282959D-2118-4A11-8A8A-A39939CEFD43}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPXSorter", "DPXSorter\DPXSorter.csproj", "{A282959D-2118-4A11-8A8A-A39939CEFD43}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPXDatabase", "DPXDatabase\DPXDatabase.csproj", "{0EB8D572-1B0A-43F0-B491-17373A9288B9}"
 EndProject
