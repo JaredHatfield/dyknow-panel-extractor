@@ -1,4 +1,4 @@
-﻿// <copyright file="Window1.xaml.cs" company="University of Louisville Speed School of Engineering">
+﻿// <copyright file="DPXManagerWindow.xaml.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
 // <summary>The main window of the application.</summary>
@@ -23,7 +23,7 @@ namespace DPXManager
     /// <summary>
     /// The main window of the application.
     /// </summary>
-    public partial class Window1 : Window
+    public partial class DPXManagerWindow : Window
     {
         /// <summary>
         /// Creates an instance of the singleton controller.
@@ -31,9 +31,9 @@ namespace DPXManager
         private Controller c = Controller.Instance();
 
         /// <summary>
-        /// Initializes a new instance of the Window1 class.
+        /// Initializes a new instance of the DPXManagerWindow class.
         /// </summary>
-        public Window1()
+        public DPXManagerWindow()
         {
             InitializeComponent();
             FileMenuClose.IsEnabled = false;

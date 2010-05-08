@@ -1,4 +1,4 @@
-﻿// <copyright file="Window1.xaml.cs" company="University of Louisville Speed School of Engineering">
+﻿// <copyright file="DPXSorterWindow.xaml.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
 // <summary>The window that displays the interface for DyKnow Panel Sorter.</summary>
@@ -24,12 +24,12 @@ namespace DPXSorter
     /// <summary>
     /// The window that displays the interface for DyKnow Panel Sorter.
     /// </summary>
-    public partial class Window1 : Window
+    public partial class DPXSorterWindow : Window
     {
         /// <summary>
-        /// Initializes a new instance of the Window1 class.
+        /// Initializes a new instance of the DPXSorterWindow class.
         /// </summary>
-        public Window1()
+        public DPXSorterWindow()
         {
             InitializeComponent();
         }

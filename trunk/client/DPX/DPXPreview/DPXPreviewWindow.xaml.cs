@@ -1,4 +1,4 @@
-﻿// <copyright file="Window1.xaml.cs" company="University of Louisville Speed School of Engineering">
+﻿// <copyright file="DPXPreviewWindow.xaml.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
 // <summary>The main window for Preview.</summary>
@@ -25,7 +25,7 @@ namespace DPXPreview
     /// <summary>
     /// The main window for Preview.
     /// </summary>
-    public partial class Window1 : Window
+    public partial class DPXPreviewWindow : Window
     {
         /// <summary>
         /// Instance of DyKnowReader.
@@ -38,9 +38,9 @@ namespace DPXPreview
         private int currentPanelNumber = 0;
 
         /// <summary>
-        /// Initializes a new instance of the Window1 class.
+        /// Initializes a new instance of the DPXPreviewWindow class.
         /// </summary>
-        public Window1()
+        public DPXPreviewWindow()
         {
             InitializeComponent();
             this.currentPanelNumber = 0;
