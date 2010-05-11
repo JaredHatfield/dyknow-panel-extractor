@@ -8,6 +8,10 @@
             <Button Name="buttonGenerateReport" DockPanel.Dock="Bottom" Click="ButtonGenerateReport_Click">Generate Report</Button>
             <ListBox Name="listBoxDates" SelectionMode="Multiple"></ListBox>
         </DockPanel>
-        <RichTextBox Name="richTextBoxReport" ScrollViewer.VerticalScrollBarVisibility="Visible"></RichTextBox>
+        <DockPanel>
+            <Button Name="buttonSaveReport" DockPanel.Dock="Bottom" Width="200" Click="ButtonSaveReport">Save Report</Button>
+            <RichTextBox Name="richTextBoxReport" ScrollViewer.VerticalScrollBarVisibility="Visible"></RichTextBox>
+            
+        </DockPanel>
     </DockPanel>
 </Page>
