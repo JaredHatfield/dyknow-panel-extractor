@@ -1,7 +1,14 @@
 #summary The release notes for DPX
 #labels Featured
 
-= Version 0.1.0.0 =
+== Version 0.2.0.0 ==
+*Released 5/12/2010*
+
+  * Updated the structure of the project so that the names of each executable match the actual applications name.
+  * Added a "Save Report" button to the report tab that saves the contents of the report window to a text file
+
+
+== Version 0.1.0.0 ==
 *Released 4/28/2010*
 
-This first release of DPX includes three software tools: DPX Manager, DPX Preview, and DPX Sorter.  DPX Manager is the main software tool capable of importing DyKnow panels into a database and generating reports based off of the dates that each panel was submitted.  This first release is still considered a beta quality product.
+  * This first release of DPX includes three software tools: DPX Manager, DPX Preview, and DPX Sorter.  DPX Manager is the main software tool capable of importing DyKnow panels into a database and generating reports based off of the dates that each panel was submitted.  This first release is still considered a beta quality product.
