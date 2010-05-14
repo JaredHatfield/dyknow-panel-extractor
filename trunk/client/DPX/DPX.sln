@@ -17,6 +17,8 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "DPX-Tools", "DPX-Tools\DPX-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPXCommon", "DPXCommon\DPXCommon.csproj", "{B3EA1278-7F1D-4ED1-850B-B68DC59C0EA2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPXGrader", "DPXGrader\DPXGrader.csproj", "{D92309B1-782C-4F7B-AEE1-8678B2DB6BBE}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -91,6 +93,12 @@ Global
 		{B3EA1278-7F1D-4ED1-850B-B68DC59C0EA2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B3EA1278-7F1D-4ED1-850B-B68DC59C0EA2}.Release|x86.ActiveCfg = Release|x86
 		{B3EA1278-7F1D-4ED1-850B-B68DC59C0EA2}.Release|x86.Build.0 = Release|x86
+		{D92309B1-782C-4F7B-AEE1-8678B2DB6BBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D92309B1-782C-4F7B-AEE1-8678B2DB6BBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D92309B1-782C-4F7B-AEE1-8678B2DB6BBE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D92309B1-782C-4F7B-AEE1-8678B2DB6BBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D92309B1-782C-4F7B-AEE1-8678B2DB6BBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D92309B1-782C-4F7B-AEE1-8678B2DB6BBE}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
