@@ -17,6 +17,7 @@ namespace DPXGrader
     using System.Windows.Media.Imaging;
     using System.Windows.Navigation;
     using System.Windows.Shapes;
+    using DPXCommon;
 
     /// <summary>
     /// Interaction logic for DPXGraderWindow.xaml
@@ -29,6 +30,18 @@ namespace DPXGrader
         public DPXGraderWindow()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Display the AboutDPX window.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
+        private void DisplayAboutWindow(object sender, RoutedEventArgs e)
+        {
+            AboutDPX popupWindow = new AboutDPX();
+            popupWindow.Owner = this;
+            popupWindow.ShowDialog();
         }
     }
 }
