@@ -6,6 +6,7 @@ namespace DPXCommon
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
     using System.Windows;
@@ -15,6 +16,7 @@ namespace DPXCommon
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
+    using System.Windows.Navigation;
     using System.Windows.Shapes;
 
     /// <summary>
@@ -29,8 +31,20 @@ namespace DPXCommon
         {
             InitializeComponent();
             buttonOk.Focus();
+            this.AddHandler(Hyperlink.RequestNavigateEvent, new RequestNavigateEventHandler(this.HyperlinkNavigate));
             this.VersionNumber.Text = "Version " + System.Reflection.Assembly.GetCallingAssembly().GetName().Version.ToString();
             this.ApplicationName.Text = System.Reflection.Assembly.GetCallingAssembly().GetName().Name;
+        }
+
+        /// <summary>
+        /// Load the clicked hyperlink in a new web broswer window.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
+        private void HyperlinkNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
         }
 
         /// <summary>
