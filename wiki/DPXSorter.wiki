@@ -1,10 +1,4 @@
-#summary A simple stand along application that sorts a DyKnow file which consists of collected panels by the username or full name of the user.
+#summary The application used for sorting panels within a DyKnow file.
 
 = Introduction =
-
 This program allows the user to select an input DyKnow file and a location to save a sorted version of the same file.  The DyKnow file must consist of slides that were collected from users.  The panels will be sorted by the user's name or the user's username.
-
-
-= Details =
-
-More information to come later.
