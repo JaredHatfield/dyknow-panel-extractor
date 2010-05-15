@@ -1,0 +1,4 @@
+#summary Library used for accessing the in class problem database.
+
+= Introduction =
+This library wraps the access to the database that is used to store the information used by DPXManager.  An Access database file is used by this class using the Microsoft.ACE.OLEDB.12.0.  This is installed as part of Office 2007.  If it is not available on a computer it can be downloaded and installed from Microsoft.  http://www.microsoft.com/downloads/details.aspx?FamilyID=7554F536-8C28-4598-9B72-EF94E038C891&displaylang=en
