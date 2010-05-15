@@ -8,7 +8,7 @@ namespace DPXDatabase
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using QuickReader;
+    using DPXReader;
 
     /// <summary>
     /// Object for a Student as represented in the database.

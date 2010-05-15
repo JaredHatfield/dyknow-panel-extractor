@@ -11,7 +11,7 @@ namespace DPXManager
     using System.Text;
     using System.Windows.Controls;
     using DPXDatabase;
-    using QuickReader;
+    using DPXReader;
 
     /// <summary>
     /// Singleton class used for accessing the datbase.

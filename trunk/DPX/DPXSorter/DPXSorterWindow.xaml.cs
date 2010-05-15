@@ -19,7 +19,7 @@ namespace DPXSorter
     using System.Windows.Navigation;
     using System.Windows.Shapes;
     using DPXCommon;
-    using QuickReader;
+    using DPXReader;
 
     /// <summary>
     /// The window that displays the interface for DyKnow Panel Sorter.

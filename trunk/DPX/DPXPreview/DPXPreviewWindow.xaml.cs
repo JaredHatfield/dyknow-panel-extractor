@@ -20,7 +20,7 @@ namespace DPXPreview
     using System.Windows.Navigation;
     using System.Windows.Shapes;
     using DPXCommon;
-    using QuickReader;
+    using DPXReader;
 
     /// <summary>
     /// The main window for Preview.

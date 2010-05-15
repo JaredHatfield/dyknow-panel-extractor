@@ -17,7 +17,7 @@ namespace DPXManager
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
-    using QuickReader;
+    using DPXReader;
 
     /// <summary>
     /// The window that displays the preview for a DyKnow panel.

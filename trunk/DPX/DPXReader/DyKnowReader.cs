@@ -2,7 +2,7 @@
 // GNU General Public License v3
 // </copyright>
 // <summary>Reads in the contents of a DyKnow file.</summary>
-namespace QuickReader
+namespace DPXReader
 {
     using System;
     using System.Collections.Generic;

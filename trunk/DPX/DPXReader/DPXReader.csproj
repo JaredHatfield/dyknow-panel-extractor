@@ -8,8 +8,8 @@
     <ProjectGuid>{C05354D4-086C-4DF8-BC63-F42CD0F7A036}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>QuickReader</RootNamespace>
-    <AssemblyName>QuickReader</AssemblyName>
+    <RootNamespace>DPXReader</RootNamespace>
+    <AssemblyName>DPXReader</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

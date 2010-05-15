@@ -10,7 +10,7 @@ namespace DPXDatabase
     using System.Diagnostics;
     using System.Linq;
     using System.Text;
-    using QuickReader;
+    using DPXReader;
 
     /// <summary>
     /// Manager for the database.

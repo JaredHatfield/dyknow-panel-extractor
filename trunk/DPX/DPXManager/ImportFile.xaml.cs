@@ -18,7 +18,7 @@ namespace DPXManager
     using System.Windows.Navigation;
     using System.Windows.Shapes;
     using DPXDatabase;
-    using QuickReader;
+    using DPXReader;
 
     /// <summary>
     /// The tab that displays the interface for importing a DyKnow file.

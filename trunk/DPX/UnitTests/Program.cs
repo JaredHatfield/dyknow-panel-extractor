@@ -10,7 +10,7 @@ namespace UnitTests
     using System.Linq;
     using System.Text;
     using DPXDatabase;
-    using QuickReader;
+    using DPXReader;
 
     /// <summary>
     /// The sample program used for code testing.

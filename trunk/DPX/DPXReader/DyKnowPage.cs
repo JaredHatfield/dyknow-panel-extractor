@@ -2,7 +2,7 @@
 // GNU General Public License v3
 // </copyright>
 // <summary>A representation of a DyKnow panel.</summary>
-namespace QuickReader
+namespace DPXReader
 {
     using System;
     using System.Collections.Generic;

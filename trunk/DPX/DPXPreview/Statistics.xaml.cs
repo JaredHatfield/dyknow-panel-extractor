@@ -16,7 +16,7 @@ namespace DPXPreview
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using System.Windows.Shapes;
-    using QuickReader;
+    using DPXReader;
 
     /// <summary>
     /// The statistics information window.
