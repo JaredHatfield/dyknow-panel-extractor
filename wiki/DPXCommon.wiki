@@ -1,0 +1,4 @@
+#summary Library for common UI elements.
+
+= Contains =
+  * *AboutDPX* - The about window for an application
