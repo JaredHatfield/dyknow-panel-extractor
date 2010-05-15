@@ -1,4 +1,4 @@
-#summary A simple application that reads in the ink strokes encoded in a DyKnow file
+#summary The application used for previewing DyKnow files.
 
 = Introduction =
 
