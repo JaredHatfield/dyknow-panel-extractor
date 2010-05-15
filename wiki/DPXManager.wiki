@@ -1,4 +1,4 @@
-#summary The Specification Requirements for DPX
+#summary The application used for managing in class problems.
 
 = Introduction =
 
