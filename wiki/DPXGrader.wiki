@@ -1,0 +1,5 @@
+#summary The application used for grading student work.
+
+= Introduction =
+
+This application provides a semi-automated method for grading student work that is contained within a DyKnow file.
