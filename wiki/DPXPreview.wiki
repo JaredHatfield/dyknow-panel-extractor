@@ -1,14 +1,9 @@
 #summary The application used for previewing DyKnow files.
 
 = Introduction =
-
-This application is currently under development.  The hope it to allow the contents of a file generate from DyKnow to be properly read and understood.
-
+DPXPreview is able to read in a DyKnow file and display the contents of each panel in an InkCanvas.
 
 = Details =
-
-  * Reads in the contents of a DyKnow file
-  * Is able to render each panel individually
-  * Able to save an image version of the ink strokes encoded in the panel.
-  * Thumbnail equivalents are able to be generated
-  * Much of the functionality of this program will be transfered back into a generic library once it is completed.
+  * Reads in the contents of a DyKnow file including the background image and ink strokes
+  * Currently not able to read in elements such as text and shapes
+  * Can export the rendered version of the InkCanvas as an image
