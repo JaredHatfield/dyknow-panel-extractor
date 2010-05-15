@@ -1,0 +1,4 @@
+#summary Library that is capable of reading a DyKnow file.
+
+= Introduction =
+Provides a means to read in DyKnow files.  DyKnowReader is capable of parsing the XML that is contained in a DyKnow file and reading the individual panels that are contained within the file.  This is a read only library that can also render a panel in an InkCanvas.
