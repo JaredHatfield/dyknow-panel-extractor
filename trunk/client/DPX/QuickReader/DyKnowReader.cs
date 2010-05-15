@@ -10,6 +10,10 @@ namespace QuickReader
     using System.IO.Compression;
     using System.Linq;
     using System.Text;
+    using System.Windows.Controls;
+    using System.Windows.Ink;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
     using System.Xml;
 
     /// <summary>
@@ -350,6 +354,82 @@ namespace QuickReader
         public DyKnowPage GetDyKnowPage(int i)
         {
             return this.dyknowPages[i];
+        }
+
+        /// <summary>
+        /// Fills the ink canvas.
+        /// </summary>
+        /// <param name="inky">The InkCanvas to write on.</param>
+        /// <param name="n">The panel number.</param>
+        public void FillInkCanvas(InkCanvas inky, int n)
+        {
+            // Read in the panel
+            DyKnowPage dp = this.GetDyKnowPage(n);
+
+            // Display all of the images
+            inky.Children.Clear();
+            List<DyKnowImage> dki = dp.Images;
+
+            // Add all of the images as children (there should only be 1, but this works for now)
+            for (int i = 0; i < dki.Count; i++)
+            {
+                // Get the actual image
+                ImageData id = this.GetImageData(dki[i].Id);
+                BitmapImage bi = new BitmapImage();
+                bi.BeginInit();
+                bi.StreamSource = new MemoryStream(System.Convert.FromBase64String(id.Img));
+                bi.EndInit();
+
+                // Resize the image if it is not the correct size
+                TransformedBitmap tb = new TransformedBitmap();
+                tb.BeginInit();
+                tb.Source = bi;
+                ScaleTransform sc = new ScaleTransform(inky.Width / bi.Width, inky.Height / bi.Height);
+                tb.Transform = sc;
+                tb.EndInit();
+
+                // Add the image to the canvas
+                Image im = new Image();
+                im.Source = tb;
+                inky.Children.Add(im);
+            }
+
+            // Get that Panel's pen strokes
+            List<DyKnowPenStroke> pens = dp.Pens;
+
+            // Loop through all of the pen strokes
+            for (int i = 0; i < pens.Count; i++)
+            {
+                // Only display the ink if it wasn't deleted
+                if (!pens[i].DELETED)
+                {
+                    // The data is encoded as a string
+                    string data = pens[i].DATA;
+
+                    // Truncate off the "base64:" from the beginning of the string
+                    data = data.Substring(7);
+
+                    // Decode the string
+                    byte[] bufferData = Convert.FromBase64String(data);
+
+                    // Turn the string into a stream
+                    Stream s = new MemoryStream(bufferData);
+
+                    // Convert the stream into an ink stroke
+                    StrokeCollection sc = new StrokeCollection(s);
+
+                    // Resize the panel if it is not the default resolution
+                    if (pens[i].PH != inky.Height || pens[i].PW != inky.Width)
+                    {
+                        Matrix inkTransform = new Matrix();
+                        inkTransform.Scale(inky.Width / (double)pens[i].PW, inky.Height / (double)pens[i].PH);
+                        sc.Transform(inkTransform, true);
+                    }
+
+                    // Add the ink stroke to the canvas
+                    inky.Strokes.Add(sc);
+                }
+            }
         }
 
         /// <summary>
