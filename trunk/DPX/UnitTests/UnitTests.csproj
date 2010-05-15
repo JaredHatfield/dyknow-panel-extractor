@@ -69,9 +69,9 @@
       <Project>{0EB8D572-1B0A-43F0-B491-17373A9288B9}</Project>
       <Name>DPXDatabase</Name>
     </ProjectReference>
-    <ProjectReference Include="..\QuickReader\QuickReader.csproj">
+    <ProjectReference Include="..\DPXReader\DPXReader.csproj">
       <Project>{C05354D4-086C-4DF8-BC63-F42CD0F7A036}</Project>
-      <Name>QuickReader</Name>
+      <Name>DPXReader</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

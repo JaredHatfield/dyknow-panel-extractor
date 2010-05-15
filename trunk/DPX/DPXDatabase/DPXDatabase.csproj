@@ -80,9 +80,9 @@
     <Compile Include="StudentReport.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\QuickReader\QuickReader.csproj">
+    <ProjectReference Include="..\DPXReader\DPXReader.csproj">
       <Project>{C05354D4-086C-4DF8-BC63-F42CD0F7A036}</Project>
-      <Name>QuickReader</Name>
+      <Name>DPXReader</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
