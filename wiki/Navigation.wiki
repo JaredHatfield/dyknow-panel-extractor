@@ -1,12 +1,11 @@
-#summary The navigation
+#summary Navigation
 
-=== Libraries ===
-  * DPXCommon
-  * DPXDatabase
-  * DPXReader
-
-=== Applications ===
-  * DPXGrader
-  * DPXManager
-  * DPXPreview
-  * DPXSorter
+  * Libraries
+    * [DPXCommon DPX Common]
+    * [DPXDatabase DPX Database]
+    * [DPXReader DPX Reader]
+  * Applications
+    * [DPXGrader DPX Grader]
+    * [DPXManager DPX Manager]
+    * [DPXPreview DPX Preview]
+    * [DPXSorter DPX Sorter]
