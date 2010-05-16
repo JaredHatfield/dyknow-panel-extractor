@@ -1,7 +1,8 @@
 #summary The application used for managing in class problems.
 
-= Introduction =
+http://lh5.ggpht.com/_l4Rv5VGKzLQ/S_AIbmqqHBI/AAAAAAAAAbY/CmbksmrExmE/s400/DPXManager.png
 
+= Introduction =
 This document describes the features of the DyKnow Panel eXtractor.
 
 = Interfaces =
