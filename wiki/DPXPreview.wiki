@@ -1,5 +1,7 @@
 #summary The application used for previewing DyKnow files.
 
+http://lh3.ggpht.com/_l4Rv5VGKzLQ/S_AH2w6LmAI/AAAAAAAAAbU/eOc9PRFWSew/s400/DPXPreview.png
+
 = Introduction =
 DPXPreview is able to read in a DyKnow file and display the contents of each panel in an InkCanvas.
 
