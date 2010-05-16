@@ -1,0 +1,12 @@
+#summary The navigation
+
+=== Libraries ===
+  * DPXCommon
+  * DPXDatabase
+  * DPXReader
+
+=== Applications ===
+  * DPXGrader
+  * DPXManager
+  * DPXPreview
+  * DPXSorter
