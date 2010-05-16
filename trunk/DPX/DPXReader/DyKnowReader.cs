@@ -6,6 +6,7 @@ namespace DPXReader
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.IO.Compression;
     using System.Linq;
@@ -370,7 +371,7 @@ namespace DPXReader
             inky.Children.Clear();
             List<DyKnowImage> dki = dp.Images;
 
-            // Add all of the images as children (there should only be 1, but this works for now)
+            // Add all of the images as children of the InkCanvas
             for (int i = 0; i < dki.Count; i++)
             {
                 // Get the actual image
@@ -380,11 +381,23 @@ namespace DPXReader
                 bi.StreamSource = new MemoryStream(System.Convert.FromBase64String(id.Img));
                 bi.EndInit();
 
+                // Sets do some complicated math to get the position and scale factors for the image
+                double scaleW = ((dki[i].ImageWidth * inky.Width) / bi.Width) * (inky.Width / dki[i].Pw);
+                double scaleH = ((dki[i].ImageHeight * inky.Height) / bi.Height) * (inky.Height / dki[i].Ph);
+                double left = dki[i].PositionLeft * inky.Width * inky.Width / dki[i].Pw;
+                double top = dki[i].PositionTop * inky.Height * inky.Height / dki[i].Ph;
+                
+                // Allows for indipendent canvas sizes. (Not sure why this was necessary...)
+                scaleW = scaleW * 1024 / inky.Width;
+                scaleH = scaleH * 768 / inky.Height;
+                left = left * 1024 / inky.Width;
+                top = top * 768 / inky.Height;
+
                 // Resize the image if it is not the correct size
                 TransformedBitmap tb = new TransformedBitmap();
                 tb.BeginInit();
                 tb.Source = bi;
-                ScaleTransform sc = new ScaleTransform(inky.Width / bi.Width, inky.Height / bi.Height);
+                ScaleTransform sc = new ScaleTransform(scaleW, scaleH);
                 tb.Transform = sc;
                 tb.EndInit();
 
@@ -392,6 +405,10 @@ namespace DPXReader
                 Image im = new Image();
                 im.Source = tb;
                 inky.Children.Add(im);
+                
+                // Set the position on the canvas
+                InkCanvas.SetLeft(im, left);
+                InkCanvas.SetTop(im, top);
             }
 
             // Get that Panel's pen strokes

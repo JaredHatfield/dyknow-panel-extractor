@@ -15,6 +15,16 @@ namespace DPXReader
     public class DyKnowImage
     {
         /// <summary>
+        /// The reference width used to transform the image dimensions.
+        /// </summary>
+        private const int ReferenceWidth = 27100;
+
+        /// <summary>
+        /// The reference height used to transform the image dimensions.
+        /// </summary>
+        private const int ReferenceHeight = 20325;
+
+        /// <summary>
         /// The ut value.
         /// </summary>
         private int ut;
@@ -104,7 +114,7 @@ namespace DPXReader
         /// Gets the id.
         /// </summary>
         /// <value>The unique id.</value>
-        public Guid Id
+        internal Guid Id
         {
             get { return this.id; }
         }
@@ -113,7 +123,7 @@ namespace DPXReader
         /// Gets the pw.
         /// </summary>
         /// <value>The pw value.</value>
-        public int Pw
+        internal int Pw
         {
             get { return this.pw; }
         }
@@ -122,9 +132,58 @@ namespace DPXReader
         /// Gets the ph.
         /// </summary>
         /// <value>The ph value.</value>
-        public int Ph
+        internal int Ph
         {
             get { return this.ph; }
+        }
+
+        /// <summary>
+        /// Gets the width of the image.
+        /// </summary>
+        /// <value>The width of the image.</value>
+        internal double ImageWidth
+        {
+            get { return (double)this.wid / (double)DyKnowImage.ReferenceWidth; }
+        }
+
+        /// <summary>
+        /// Gets the height of the image.
+        /// </summary>
+        /// <value>The height of the image.</value>
+        internal double ImageHeight
+        {
+            get { return (double)this.hei / (double)DyKnowImage.ReferenceHeight; }
+        }
+
+        /// <summary>
+        /// Gets the left position for the image.
+        /// </summary>
+        /// <value>The left position.</value>
+        internal double PositionLeft
+        {
+            get
+            {
+                int start = 0;
+                int end = this.sp.IndexOf(':');
+                string val = this.sp.Substring(start, end);
+                double num = int.Parse(val);
+                return num / DyKnowImage.ReferenceWidth;
+            }
+        }
+
+        /// <summary>
+        /// Gets the top position for the image.
+        /// </summary>
+        /// <value>The top position.</value>
+        internal double PositionTop
+        {
+            get
+            {
+                int start = this.sp.IndexOf(':') + 1;
+                string val = this.sp.Substring(start);
+                double num = int.Parse(val);
+                return num / DyKnowImage.ReferenceHeight;
+            }
         }
 
         /// <summary>
