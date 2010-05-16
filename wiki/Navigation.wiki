@@ -9,3 +9,4 @@
     * [DPXManager DPX Manager]
     * [DPXPreview DPX Preview]
     * [DPXSorter DPX Sorter]
+  * [ReleaseNotes Release Notes]
