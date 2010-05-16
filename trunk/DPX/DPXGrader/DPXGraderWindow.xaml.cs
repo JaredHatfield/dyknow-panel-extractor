@@ -18,6 +18,7 @@ namespace DPXGrader
     using System.Windows.Navigation;
     using System.Windows.Shapes;
     using DPXCommon;
+    using DPXReader;
 
     /// <summary>
     /// Interaction logic for DPXGraderWindow.xaml
@@ -42,6 +43,25 @@ namespace DPXGrader
             AboutDPX popupWindow = new AboutDPX();
             popupWindow.Owner = this;
             popupWindow.ShowDialog();
+        }
+
+        /// <summary>
+        /// Buttons the grade zone.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void ButtonGradeZone(object sender, RoutedEventArgs e)
+        {
+            // Let the user choose which file to open
+            Microsoft.Win32.OpenFileDialog openFileDialog1 = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog1.Filter = "DyKnow files (*.dyz)|*.dyz";
+            if (openFileDialog1.ShowDialog() == true)
+            {
+                // Open the DyKnow file
+                DyKnowReader dr = new DyKnowReader(openFileDialog1.FileName);
+                GradeZoneSelection gzs = new GradeZoneSelection(dr);
+                gzs.ShowDialog();
+            }
         }
     }
 }

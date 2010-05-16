@@ -6,6 +6,11 @@
     ResizeMode="NoResize"
     Icon="Icon.ico">
     <DockPanel Background="LightBlue">
+        <DockPanel Width="Auto" Margin="10" DockPanel.Dock="Bottom">
+            <Button Click="ButtonPrevious_Click" Width="100" DockPanel.Dock="Left">Previous</Button>
+            <Button Click="ButtonNext_Click" HorizontalAlignment="Right" Width="100" DockPanel.Dock="Right">Next</Button>
+            <Label Name="LabelPanelNumber" HorizontalAlignment="Center" DockPanel.Dock="Bottom">0 of 0</Label>
+        </DockPanel>
         <Canvas Width="400" Height="300" DockPanel.Dock="Left" VerticalAlignment="Top">
             <InkCanvas Name="Inky" Width="400" Height="300" IsEnabled="False"></InkCanvas>
             <Rectangle Name="Boxy" Width="50" Height="50" Fill="Green" Opacity=".3"></Rectangle>
@@ -21,6 +26,10 @@
                 <RadioButton Name="RadioBottomLeft" GroupName="BoxLocation" Checked="RadioLocationChanged">Bottom Left</RadioButton>
                 <RadioButton Name="RadioBottomRight" GroupName="BoxLocation" Checked="RadioLocationChanged">Bottom Right</RadioButton>
             </StackPanel>
+            <Separator Margin="5,15,5,15"></Separator>
+            <Button Name="ButtonAnalyze" Margin="10" Click="ButtonAnalyze_Click">Preview</Button>
+            <Separator Margin="5,15,5,15"></Separator>
         </StackPanel>
+        
     </DockPanel>
 </Window>

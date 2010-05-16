@@ -12,16 +12,28 @@ namespace DPXGrader
     using System.Windows.Controls;
     using System.Windows.Data;
     using System.Windows.Documents;
+    using System.Windows.Ink;
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using System.Windows.Shapes;
+    using DPXReader;
 
     /// <summary>
     /// Interaction logic for GradeZoneSelection.xaml
     /// </summary>
     public partial class GradeZoneSelection : Window
     {
+        /// <summary>
+        /// The DyKnow reader that contains a file.
+        /// </summary>
+        private DyKnowReader dr;
+
+        /// <summary>
+        /// The current page.
+        /// </summary>
+        private int currentPage;
+
         /// <summary>
         /// The size of the grade box.
         /// </summary>
@@ -35,11 +47,19 @@ namespace DPXGrader
         /// <summary>
         /// Initializes a new instance of the <see cref="GradeZoneSelection"/> class.
         /// </summary>
-        public GradeZoneSelection()
+        /// <param name="dr">The DyKnowReader.</param>
+        public GradeZoneSelection(DyKnowReader dr)
         {
             InitializeComponent();
             this.boxSize = 50;
             this.boxLocation = BoxLocation.TopLeft;
+            this.dr = dr;
+            this.currentPage = 0;
+            if (this.dr != null && this.dr.NumOfPages() > 0)
+            {
+                this.dr.FillInkCanvas(this.Inky, 0);
+                this.LabelPanelNumber.Content = (this.currentPage + 1) + " of " + dr.NumOfPages();
+            }
         }
 
         /// <summary>
@@ -138,6 +158,83 @@ namespace DPXGrader
             {
                 Canvas.SetLeft(this.Boxy, this.Inky.Width - this.boxSize);
                 Canvas.SetTop(this.Boxy, this.Inky.Height - this.boxSize);
+            }
+        }
+
+        /// <summary>
+        /// Gets the selected area.
+        /// </summary>
+        /// <returns>The rectangle that represents the area.</returns>
+        private Rect GetSelectedArea()
+        {
+            if (this.boxLocation.Equals(BoxLocation.TopLeft))
+            {
+                return new Rect(0, 0, this.boxSize, this.boxSize);
+            }
+            else if (this.boxLocation.Equals(BoxLocation.TopRight))
+            {
+                return new Rect(this.Inky.Width - this.boxSize, 0, this.boxSize, this.boxSize);
+            }
+            else if (this.boxLocation.Equals(BoxLocation.BottomLeft))
+            {
+                return new Rect(0, this.Inky.Height - this.boxSize, this.boxSize, this.boxSize);
+            }
+            else if (this.boxLocation.Equals(BoxLocation.BottomRight))
+            {
+                return new Rect(this.Inky.Width - this.boxSize, this.Inky.Height - this.boxSize, this.boxSize, this.boxSize);
+            }
+
+            throw new Exception("Rectangle could not be generated");
+        }
+
+        /// <summary>
+        /// Handles the Click event of the ButtonAnalyze control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void ButtonAnalyze_Click(object sender, RoutedEventArgs e)
+        {
+            StrokeCollection strokes = this.Inky.Strokes.Clone();
+            strokes.Clip(this.GetSelectedArea());
+            InkAnalyzer theInkAnalyzer = new InkAnalyzer();
+            theInkAnalyzer.AddStrokes(strokes);
+            AnalysisStatus status = theInkAnalyzer.Analyze();
+
+            if (status.Successful)
+            {
+                MessageBox.Show(theInkAnalyzer.GetRecognizedString(), "Converted Text Preview");
+            }
+        }
+
+        /// <summary>
+        /// Handles the Click event of the ButtonPrevious control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void ButtonPrevious_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.dr != null && this.currentPage > 0)
+            {
+                this.Inky.Strokes.Clear();
+                this.Inky.Children.Clear();
+                this.dr.FillInkCanvas(this.Inky, --this.currentPage);
+                this.LabelPanelNumber.Content = (this.currentPage + 1) + " of " + this.dr.NumOfPages();
+            }
+        }
+
+        /// <summary>
+        /// Handles the Click event of the ButtonNext control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void ButtonNext_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.dr != null && this.currentPage + 1 < this.dr.NumOfPages())
+            {
+                this.Inky.Strokes.Clear();
+                this.Inky.Children.Clear();
+                this.dr.FillInkCanvas(this.Inky, ++this.currentPage);
+                this.LabelPanelNumber.Content = (this.currentPage + 1) + " of " + this.dr.NumOfPages();
             }
         }
     }
