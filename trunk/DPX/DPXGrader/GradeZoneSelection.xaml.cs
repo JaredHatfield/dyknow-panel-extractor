@@ -237,5 +237,63 @@ namespace DPXGrader
                 this.LabelPanelNumber.Content = (this.currentPage + 1) + " of " + this.dr.NumOfPages();
             }
         }
+
+        /// <summary>
+        /// Handles the Click event of the ProcessFile control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void ProcessFile_Click(object sender, RoutedEventArgs e)
+        {
+            this.TextBoxResults.Text = string.Empty;
+            Rect r = this.GetSelectedArea();
+            List<double> numbers = new List<double>();
+
+            if (this.dr != null)
+            {
+                for (int i = 0; i < this.dr.NumOfPages(); i++)
+                {
+                    // Get all of the ink that we are concerned about
+                    InkCanvas ic = new InkCanvas();
+                    ic.Width = this.Inky.Width;
+                    ic.Height = this.Inky.Height;
+                    this.dr.FillInkCanvas(ic, i);
+                    ic.Strokes.Clip(r);
+
+                    // Perform the analysis
+                    if (ic.Strokes.Count > 0)
+                    {
+                        InkAnalyzer theInkAnalyzer = new InkAnalyzer();
+                        theInkAnalyzer.AddStrokes(ic.Strokes);
+                        AnalysisStatus status = theInkAnalyzer.Analyze();
+                        if (status.Successful)
+                        {
+                            this.TextBoxResults.Text += theInkAnalyzer.GetRecognizedString() + "\n";
+
+                            /* Display all of the alternatives for the recognized text
+                            AnalysisAlternateCollection a = theInkAnalyzer.GetAlternates();
+                            for (int j = 0; j < a.Count; j++)
+                            {
+                                this.TextBoxResults.Text += (j + 1) + ") " + a[j].RecognizedString + "\n";
+                            }
+
+                            this.TextBoxResults.Text += "----------";
+                             */
+
+                            try
+                            {
+                                double score = double.Parse(theInkAnalyzer.GetRecognizedString());
+                                numbers.Add(score);
+                            }
+                            catch
+                            {
+                            }
+                        }
+                    }
+                }
+
+                this.TextBoxResults.Text += "Total: " + numbers.Sum();
+            }
+        }
     }
 }
