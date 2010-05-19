@@ -34,7 +34,8 @@
         </StackPanel>
         <StackPanel DockPanel.Dock="Left" Background="White">
             <Button Name="ProcessFile" Margin="10" Click="ProcessFile_Click">Process</Button>
-            <ScrollViewer MaxHeight="280">
+            <CheckBox Name="CheckBoxAlternate" Margin="10">Show Alternates</CheckBox>
+            <ScrollViewer MaxHeight="230" Height="230">
                 <TextBox Name="TextBoxResults" AcceptsReturn="True" TextWrapping="Wrap" />
             </ScrollViewer>
         </StackPanel>

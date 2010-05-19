@@ -270,15 +270,16 @@ namespace DPXGrader
                         {
                             this.TextBoxResults.Text += theInkAnalyzer.GetRecognizedString() + "\n";
 
-                            /* Display all of the alternatives for the recognized text
-                            AnalysisAlternateCollection a = theInkAnalyzer.GetAlternates();
-                            for (int j = 0; j < a.Count; j++)
+                            if (this.CheckBoxAlternate.IsChecked.Value)
                             {
-                                this.TextBoxResults.Text += (j + 1) + ") " + a[j].RecognizedString + "\n";
-                            }
+                                AnalysisAlternateCollection a = theInkAnalyzer.GetAlternates();
+                                for (int j = 0; j < a.Count; j++)
+                                {
+                                    this.TextBoxResults.Text += (j + 1) + ") " + a[j].RecognizedString + "\n";
+                                }
 
-                            this.TextBoxResults.Text += "----------";
-                             */
+                                this.TextBoxResults.Text += "----------";
+                            }
 
                             try
                             {
