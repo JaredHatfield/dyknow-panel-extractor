@@ -28,6 +28,16 @@ namespace DPXReader.DyKnow
         private Guid uid;
 
         /// <summary>
+        /// The oner value;
+        /// </summary>
+        private string oner;
+
+        /// <summary>
+        /// The onern value.
+        /// </summary>
+        private string onern;
+
+        /// <summary>
         /// The olst list of objects.
         /// </summary>
         private ArrayList olst;
@@ -37,12 +47,7 @@ namespace DPXReader.DyKnow
         /// </summary>
         public Page()
         {
-            this.vrsn = "1.1.1.1";
-            this.uid = Guid.NewGuid();
             this.olst = new ArrayList();
-            this.olst.Add(new Pen(1, 1, 1, Guid.NewGuid(), "Test"));
-            this.olst.Add(new Img(1, "2:4", 12, 34, Guid.NewGuid(), Guid.NewGuid(), 200, 10));
-            this.olst.Add(new Group(1, 2, 3, "WHAT"));
         }
 
         /// <summary>
@@ -68,6 +73,28 @@ namespace DPXReader.DyKnow
         }
 
         /// <summary>
+        /// Gets or sets the ONER.
+        /// </summary>
+        /// <value>The ONER value.</value>
+        [XmlAttribute("ONER")]
+        public string ONER
+        {
+            get { return this.oner; }
+            set { this.oner = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the ONERN.
+        /// </summary>
+        /// <value>The ONERN value.</value>
+        [XmlAttribute("ONERN")]
+        public string ONERN
+        {
+            get { return this.onern; }
+            set { this.onern = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the OLST.
         /// </summary>
         /// <value>The OLST list of objects.</value>
@@ -75,6 +102,7 @@ namespace DPXReader.DyKnow
         [XmlArrayItem("PEN", typeof(Pen), IsNullable = true)]
         [XmlArrayItem("IMG", typeof(Img), IsNullable = true)]
         [XmlArrayItem("GRP", typeof(Group), IsNullable = true)]
+        [XmlArrayItem("DEOB", typeof(Deob), IsNullable = true)]
         public ArrayList OLST
         {
             get { return this.olst; }

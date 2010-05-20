@@ -5,7 +5,7 @@
 namespace DPXReader.DyKnow
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections;
     using System.Linq;
     using System.Text;
     using System.Xml;
@@ -14,6 +14,7 @@ namespace DPXReader.DyKnow
     /// <summary>
     /// The deob object.
     /// </summary>
+    [XmlRoot("DEOB")]
     public class Deob
     {
         /// <summary>
@@ -32,10 +33,16 @@ namespace DPXReader.DyKnow
         private bool ig;
 
         /// <summary>
+        /// The deli list.
+        /// </summary>
+        private ArrayList deli;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Deob"/> class.
         /// </summary>
         public Deob()
         {
+            this.deli = new ArrayList();
         }
 
         /// <summary>
@@ -46,6 +53,7 @@ namespace DPXReader.DyKnow
         /// <param name="ig">if set to <c>true</c> [ig].</param>
         public Deob(int ut, Guid uid, bool ig)
         {
+            this.deli = new ArrayList();
             this.ut = ut;
             this.uid = uid;
             this.ig = ig;
@@ -55,6 +63,7 @@ namespace DPXReader.DyKnow
         /// Gets or sets the UT.
         /// </summary>
         /// <value>The UT value.</value>
+        [XmlAttribute("UT")]
         public int UT
         {
             get { return this.ut; }
@@ -65,6 +74,7 @@ namespace DPXReader.DyKnow
         /// Gets or sets the UID.
         /// </summary>
         /// <value>The UID value.</value>
+        [XmlAttribute("UID")]
         public Guid UID
         {
             get { return this.uid; }
@@ -75,10 +85,23 @@ namespace DPXReader.DyKnow
         /// Gets or sets a value indicating whether this <see cref="Deob"/> is IG.
         /// </summary>
         /// <value><c>true</c> if IG; otherwise, <c>false</c>.</value>
+        [XmlAttribute("IG")]
         public bool IG
         {
             get { return this.ig; }
             set { this.ig = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the DELI.
+        /// </summary>
+        /// <value>The DELI value.</value>
+        [XmlArray("DELI")]
+        [XmlArrayItem("EDDE", typeof(Edde), IsNullable = true)]
+        public ArrayList DELI
+        {
+            get { return this.deli; }
+            set { this.deli = value; }
         }
     }
 }

@@ -18,6 +18,11 @@ namespace DPXReader.DyKnow
     public class DyKnow
     {
         /// <summary>
+        /// The data list.
+        /// </summary>
+        private ArrayList data;
+
+        /// <summary>
         /// The imgs list.
         /// </summary>
         private ArrayList imgs;
@@ -32,10 +37,21 @@ namespace DPXReader.DyKnow
         /// </summary>
         public DyKnow()
         {
+            this.data = new ArrayList();
             this.imgs = new ArrayList();
             this.imgd = new ArrayList();
-            this.imgs.Add("TEST");
-            this.imgd.Add(Guid.NewGuid());
+        }
+
+        /// <summary>
+        /// Gets or sets the DATA.
+        /// </summary>
+        /// <value>The DATA list.</value>
+        [XmlArray("DATA")]
+        [XmlArrayItem("PAGE", typeof(Page))]
+        public ArrayList DATA
+        {
+            get { return this.data; }
+            set { this.data = value; }
         }
 
         /// <summary>
