@@ -1,7 +1,7 @@
-﻿// <copyright file="Img.cs" company="University of Louisville Speed School of Engineering">
+﻿// <copyright file="WebPanel.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
-// <summary>The reference to an image contained on a panel.</summary>
+// <summary>The web panel object.</summary>
 namespace DPXReader.DyKnow
 {
     using System;
@@ -12,20 +12,15 @@ namespace DPXReader.DyKnow
     using System.Xml.Serialization;
 
     /// <summary>
-    /// The reference to an image contained on a panel.
+    /// The web panel object.
     /// </summary>
-    [XmlRoot("IMG")]
-    public class Img
+    [XmlRoot("WEBPNL")]
+    public class WebPanel
     {
         /// <summary>
         /// The ut value.
         /// </summary>
         private int ut;
-
-        /// <summary>
-        /// The sp value.
-        /// </summary>
-        private string sp;
 
         /// <summary>
         /// The pw value.
@@ -43,53 +38,46 @@ namespace DPXReader.DyKnow
         private Guid uid;
 
         /// <summary>
-        /// The id value.
+        /// The pos value.
         /// </summary>
-        private Guid id;
+        private int pos;
 
         /// <summary>
-        /// The wid value.
+        /// The cap value.
         /// </summary>
-        private int wid;
+        private bool cap;
 
         /// <summary>
-        /// The hei value.
+        /// The url value.
         /// </summary>
-        private int hei;
+        private string url;
 
         /// <summary>
-        /// The slidetxt value;
+        /// Initializes a new instance of the <see cref="WebPanel"/> class.
         /// </summary>
-        private string slidetxt;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Img"/> class.
-        /// </summary>
-        public Img()
+        public WebPanel()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Img"/> class.
+        /// Initializes a new instance of the <see cref="WebPanel"/> class.
         /// </summary>
         /// <param name="ut">The ut value.</param>
-        /// <param name="sp">The sp value.</param>
         /// <param name="pw">The pw value.</param>
         /// <param name="ph">The ph value.</param>
         /// <param name="uid">The uid value.</param>
-        /// <param name="id">The id value.</param>
-        /// <param name="wid">The wid value.</param>
-        /// <param name="hei">The hei value.</param>
-        public Img(int ut, string sp, int pw, int ph, Guid uid, Guid id, int wid, int hei)
+        /// <param name="pos">The pos value.</param>
+        /// <param name="cap">if set to <c>true</c> [cap].</param>
+        /// <param name="url">The URL value.</param>
+        public WebPanel(int ut, int pw, int ph, Guid uid, int pos, bool cap, string url)
         {
             this.ut = ut;
-            this.sp = sp;
             this.pw = pw;
             this.ph = ph;
             this.uid = uid;
-            this.id = id;
-            this.wid = wid;
-            this.hei = hei;
+            this.pos = pos;
+            this.cap = cap;
+            this.url = url;
         }
 
         /// <summary>
@@ -101,17 +89,6 @@ namespace DPXReader.DyKnow
         {
             get { return this.ut; }
             set { this.ut = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the SP.
-        /// </summary>
-        /// <value>The SP value.</value>
-        [XmlAttribute("SP")]
-        public string SP
-        {
-            get { return this.sp; }
-            set { this.sp = value; }
         }
 
         /// <summary>
@@ -148,47 +125,36 @@ namespace DPXReader.DyKnow
         }
 
         /// <summary>
-        /// Gets or sets the ID.
+        /// Gets or sets the POS.
         /// </summary>
-        /// <value>The ID value.</value>
-        [XmlAttribute("ID")]
-        public Guid ID
+        /// <value>The POS value.</value>
+        [XmlAttribute("POS")]
+        public int POS
         {
-            get { return this.id; }
-            set { this.id = value; }
+            get { return this.pos; }
+            set { this.pos = value; }
         }
 
         /// <summary>
-        /// Gets or sets the WID.
+        /// Gets or sets a value indicating whether this <see cref="WebPanel"/> is CAP.
         /// </summary>
-        /// <value>The WID value.</value>
-        [XmlAttribute("WID")]
-        public int WID
+        /// <value><c>true</c> if CAP; otherwise, <c>false</c>.</value>
+        [XmlAttribute("CAP")]
+        public bool CAP
         {
-            get { return this.wid; }
-            set { this.wid = value; }
+            get { return this.cap; }
+            set { this.cap = value; }
         }
 
         /// <summary>
-        /// Gets or sets the HEI.
+        /// Gets or sets the URL.
         /// </summary>
-        /// <value>The HEI value.</value>
-        [XmlAttribute("HEI")]
-        public int HEI
+        /// <value>The URL value.</value>
+        [XmlAttribute("URL")]
+        public string URL
         {
-            get { return this.hei; }
-            set { this.hei = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the SLIDETXT.
-        /// </summary>
-        /// <value>The SLIDETXT.</value>
-        [XmlElement("SLIDETXT")]
-        public string SLIDETXT
-        {
-            get { return this.slidetxt; }
-            set { this.slidetxt = value; }
+            get { return this.url; }
+            set { this.url = value; }
         }
     }
 }

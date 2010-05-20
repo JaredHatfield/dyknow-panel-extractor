@@ -1,7 +1,7 @@
-﻿// <copyright file="Img.cs" company="University of Louisville Speed School of Engineering">
+﻿// <copyright file="Animation.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
-// <summary>The reference to an image contained on a panel.</summary>
+// <summary>The animation object.</summary>
 namespace DPXReader.DyKnow
 {
     using System;
@@ -12,20 +12,15 @@ namespace DPXReader.DyKnow
     using System.Xml.Serialization;
 
     /// <summary>
-    /// The reference to an image contained on a panel.
+    /// The animation object.
     /// </summary>
-    [XmlRoot("IMG")]
-    public class Img
+    [XmlRoot("A")]
+    public class Animation
     {
         /// <summary>
         /// The ut value.
         /// </summary>
         private int ut;
-
-        /// <summary>
-        /// The sp value.
-        /// </summary>
-        private string sp;
 
         /// <summary>
         /// The pw value.
@@ -43,53 +38,58 @@ namespace DPXReader.DyKnow
         private Guid uid;
 
         /// <summary>
-        /// The id value.
+        /// The tb value.
         /// </summary>
-        private Guid id;
+        private Guid tb;
 
         /// <summary>
-        /// The wid value.
+        /// The typ value.
         /// </summary>
-        private int wid;
+        private int typ;
 
         /// <summary>
-        /// The hei value.
+        /// The par value.
         /// </summary>
-        private int hei;
+        private int par;
 
         /// <summary>
-        /// The slidetxt value;
+        /// The lvl value.
         /// </summary>
-        private string slidetxt;
+        private int lvl;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Img"/> class.
+        /// The xaml value.
         /// </summary>
-        public Img()
+        private string xaml;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Animation"/> class.
+        /// </summary>
+        public Animation()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Img"/> class.
+        /// Initializes a new instance of the <see cref="Animation"/> class.
         /// </summary>
         /// <param name="ut">The ut value.</param>
-        /// <param name="sp">The sp value.</param>
         /// <param name="pw">The pw value.</param>
         /// <param name="ph">The ph value.</param>
         /// <param name="uid">The uid value.</param>
-        /// <param name="id">The id value.</param>
-        /// <param name="wid">The wid value.</param>
-        /// <param name="hei">The hei value.</param>
-        public Img(int ut, string sp, int pw, int ph, Guid uid, Guid id, int wid, int hei)
+        /// <param name="tb">The tb value.</param>
+        /// <param name="typ">The typ value.</param>
+        /// <param name="par">The par value.</param>
+        /// <param name="lvl">The LVL value.</param>
+        public Animation(int ut, int pw, int ph, Guid uid, Guid tb, int typ, int par, int lvl)
         {
             this.ut = ut;
-            this.sp = sp;
             this.pw = pw;
             this.ph = ph;
             this.uid = uid;
-            this.id = id;
-            this.wid = wid;
-            this.hei = hei;
+            this.tb = tb;
+            this.typ = typ;
+            this.par = par;
+            this.lvl = lvl;
         }
 
         /// <summary>
@@ -101,17 +101,6 @@ namespace DPXReader.DyKnow
         {
             get { return this.ut; }
             set { this.ut = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the SP.
-        /// </summary>
-        /// <value>The SP value.</value>
-        [XmlAttribute("SP")]
-        public string SP
-        {
-            get { return this.sp; }
-            set { this.sp = value; }
         }
 
         /// <summary>
@@ -148,47 +137,58 @@ namespace DPXReader.DyKnow
         }
 
         /// <summary>
-        /// Gets or sets the ID.
+        /// Gets or sets the TB.
         /// </summary>
-        /// <value>The ID value.</value>
-        [XmlAttribute("ID")]
-        public Guid ID
+        /// <value>The TB value.</value>
+        [XmlAttribute("TB")]
+        public Guid TB
         {
-            get { return this.id; }
-            set { this.id = value; }
+            get { return this.tb; }
+            set { this.tb = value; }
         }
 
         /// <summary>
-        /// Gets or sets the WID.
+        /// Gets or sets the TYP.
         /// </summary>
-        /// <value>The WID value.</value>
-        [XmlAttribute("WID")]
-        public int WID
+        /// <value>The TYP value.</value>
+        [XmlAttribute("TYP")]
+        public int TYP
         {
-            get { return this.wid; }
-            set { this.wid = value; }
+            get { return this.typ; }
+            set { this.typ = value; }
         }
 
         /// <summary>
-        /// Gets or sets the HEI.
+        /// Gets or sets the PAR.
         /// </summary>
-        /// <value>The HEI value.</value>
-        [XmlAttribute("HEI")]
-        public int HEI
+        /// <value>The PAR value.</value>
+        [XmlAttribute("PAR")]
+        public int PAR
         {
-            get { return this.hei; }
-            set { this.hei = value; }
+            get { return this.par; }
+            set { this.par = value; }
         }
 
         /// <summary>
-        /// Gets or sets the SLIDETXT.
+        /// Gets or sets the LVL.
         /// </summary>
-        /// <value>The SLIDETXT.</value>
-        [XmlElement("SLIDETXT")]
-        public string SLIDETXT
+        /// <value>The LVL value.</value>
+        [XmlAttribute("LVL")]
+        public int LVL
         {
-            get { return this.slidetxt; }
-            set { this.slidetxt = value; }
+            get { return this.lvl; }
+            set { this.lvl = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the XAML.
+        /// </summary>
+        /// <value>The XAML value.</value>
+        [XmlElement("XAML")]
+        public string XAML
+        {
+            get { return this.xaml; }
+            set { this.xaml = value; }
         }
     }
 }

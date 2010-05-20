@@ -14,6 +14,7 @@ namespace DPXReader.DyKnow
     /// <summary>
     /// The edde object.
     /// </summary>
+    [XmlRoot("EDDE")]
     public class Edde
     {
         /// <summary>
@@ -48,6 +49,7 @@ namespace DPXReader.DyKnow
         /// Gets or sets the STI.
         /// </summary>
         /// <value>The STI value.</value>
+        [System.ComponentModel.DefaultValue(0)]
         [XmlAttribute("STI")]
         public int STI
         {

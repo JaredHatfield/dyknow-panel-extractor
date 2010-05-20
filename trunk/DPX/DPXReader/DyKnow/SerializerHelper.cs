@@ -31,7 +31,8 @@ namespace DPXReader.DyKnow
                 MemoryStream memoryStream = new MemoryStream();
                 XmlSerializer xs = new XmlSerializer(type);
                 XmlTextWriter xmlTextWriter = new XmlTextWriter(memoryStream, Encoding.UTF8);
-                xmlTextWriter.Formatting = Formatting.Indented;
+                
+                // xmlTextWriter.Formatting = Formatting.Indented;
                 XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
                 ns.Add(string.Empty, string.Empty);
                 
@@ -57,9 +58,19 @@ namespace DPXReader.DyKnow
         {
             XmlSerializer xs = new XmlSerializer(type);
             MemoryStream memoryStream = new MemoryStream(this.StringToUTF8ByteArray(str));
-            XmlTextWriter xmlTextWriter = new XmlTextWriter(memoryStream, Encoding.UTF8);
-
             return xs.Deserialize(memoryStream);
+        }
+
+        /// <summary>
+        /// Deserializes the object.
+        /// </summary>
+        /// <param name="s">The stream to deserialize.</param>
+        /// <param name="type">The object type.</param>
+        /// <returns>The object that was created from the XML.</returns>
+        public object DeserializeObject(Stream s, Type type)
+        {
+            XmlSerializer xs = new XmlSerializer(type);
+            return xs.Deserialize(s);
         }
 
         /// <summary>

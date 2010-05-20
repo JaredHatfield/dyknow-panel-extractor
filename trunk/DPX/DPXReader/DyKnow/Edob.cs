@@ -1,21 +1,21 @@
-﻿// <copyright file="Img.cs" company="University of Louisville Speed School of Engineering">
+﻿// <copyright file="Edob.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
-// <summary>The reference to an image contained on a panel.</summary>
+// <summary>The edob object.</summary>
 namespace DPXReader.DyKnow
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections;
     using System.Linq;
     using System.Text;
     using System.Xml;
     using System.Xml.Serialization;
 
     /// <summary>
-    /// The reference to an image contained on a panel.
+    /// The edob object.
     /// </summary>
-    [XmlRoot("IMG")]
-    public class Img
+    [XmlRoot("EDOB")]
+    public class Edob
     {
         /// <summary>
         /// The ut value.
@@ -26,6 +26,11 @@ namespace DPXReader.DyKnow
         /// The sp value.
         /// </summary>
         private string sp;
+
+        /// <summary>
+        /// The ep value.
+        /// </summary>
+        private string ep;
 
         /// <summary>
         /// The pw value.
@@ -43,53 +48,49 @@ namespace DPXReader.DyKnow
         private Guid uid;
 
         /// <summary>
-        /// The id value.
+        /// The isrem value.
         /// </summary>
-        private Guid id;
+        private bool isrem;
 
         /// <summary>
-        /// The wid value.
+        /// The sti value.
         /// </summary>
-        private int wid;
+        private int sti;
 
         /// <summary>
-        /// The hei value.
+        /// The edli list.
         /// </summary>
-        private int hei;
+        private ArrayList edli;
 
         /// <summary>
-        /// The slidetxt value;
+        /// Initializes a new instance of the <see cref="Edob"/> class.
         /// </summary>
-        private string slidetxt;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Img"/> class.
-        /// </summary>
-        public Img()
+        public Edob()
         {
+            this.edli = new ArrayList();
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Img"/> class.
+        /// Initializes a new instance of the <see cref="Edob"/> class.
         /// </summary>
         /// <param name="ut">The ut value.</param>
         /// <param name="sp">The sp value.</param>
+        /// <param name="ep">The ep value.</param>
         /// <param name="pw">The pw value.</param>
         /// <param name="ph">The ph value.</param>
         /// <param name="uid">The uid value.</param>
-        /// <param name="id">The id value.</param>
-        /// <param name="wid">The wid value.</param>
-        /// <param name="hei">The hei value.</param>
-        public Img(int ut, string sp, int pw, int ph, Guid uid, Guid id, int wid, int hei)
+        /// <param name="isrem">if set to <c>true</c> [isrem].</param>
+        /// <param name="sti">The sti value.</param>
+        public Edob(int ut, string sp, string ep, int pw, int ph, Guid uid, bool isrem, int sti)
         {
+            this.edli = new ArrayList();
             this.ut = ut;
             this.sp = sp;
+            this.ep = ep;
             this.pw = pw;
             this.ph = ph;
             this.uid = uid;
-            this.id = id;
-            this.wid = wid;
-            this.hei = hei;
+            this.isrem = isrem;
         }
 
         /// <summary>
@@ -112,6 +113,17 @@ namespace DPXReader.DyKnow
         {
             get { return this.sp; }
             set { this.sp = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the EP.
+        /// </summary>
+        /// <value>The EP value.</value>
+        [XmlAttribute("EP")]
+        public string EP
+        {
+            get { return this.ep; }
+            set { this.ep = value; }
         }
 
         /// <summary>
@@ -148,47 +160,38 @@ namespace DPXReader.DyKnow
         }
 
         /// <summary>
-        /// Gets or sets the ID.
+        /// Gets or sets a value indicating whether this <see cref="Edob"/> is ISREM.
         /// </summary>
-        /// <value>The ID value.</value>
-        [XmlAttribute("ID")]
-        public Guid ID
+        /// <value><c>true</c> if ISREM; otherwise, <c>false</c>.</value>
+        [XmlAttribute("ISREM")]
+        public bool ISREM
         {
-            get { return this.id; }
-            set { this.id = value; }
+            get { return this.isrem; }
+            set { this.isrem = value; }
         }
 
         /// <summary>
-        /// Gets or sets the WID.
+        /// Gets or sets the STI.
         /// </summary>
-        /// <value>The WID value.</value>
-        [XmlAttribute("WID")]
-        public int WID
+        /// <value>The STI value.</value>
+        [System.ComponentModel.DefaultValue(0)]
+        [XmlAttribute("STI")]
+        public int STI
         {
-            get { return this.wid; }
-            set { this.wid = value; }
+            get { return this.sti; }
+            set { this.sti = value; }
         }
 
         /// <summary>
-        /// Gets or sets the HEI.
+        /// Gets or sets the DELI.
         /// </summary>
-        /// <value>The HEI value.</value>
-        [XmlAttribute("HEI")]
-        public int HEI
+        /// <value>The DELI value.</value>
+        [XmlArray("EDLI")]
+        [XmlArrayItem("EDDE", typeof(Edde), IsNullable = true)]
+        public ArrayList EDLI
         {
-            get { return this.hei; }
-            set { this.hei = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the SLIDETXT.
-        /// </summary>
-        /// <value>The SLIDETXT.</value>
-        [XmlElement("SLIDETXT")]
-        public string SLIDETXT
-        {
-            get { return this.slidetxt; }
-            set { this.slidetxt = value; }
+            get { return this.edli; }
+            set { this.edli = value; }
         }
     }
 }

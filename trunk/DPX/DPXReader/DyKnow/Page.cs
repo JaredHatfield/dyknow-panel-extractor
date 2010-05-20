@@ -38,16 +38,52 @@ namespace DPXReader.DyKnow
         private string onern;
 
         /// <summary>
+        /// The animlist list of objects.
+        /// </summary>
+        private ArrayList animlist;
+
+        /// <summary>
+        /// The txtmodecontentsmod value.
+        /// </summary>
+        private string txtmodecontentsmod;
+
+        /// <summary>
+        /// The txtmodecontentspart value.
+        /// </summary>
+        private string txtmodecontentspart;
+
+        /// <summary>
+        /// The txtmodemodxaml value.
+        /// </summary>
+        private string txtmodemodxaml;
+
+        /// <summary>
+        /// The txtmodepartxaml value.
+        /// </summary>
+        private string txtmodepartxaml;
+
+        /// <summary>
         /// The olst list of objects.
         /// </summary>
         private ArrayList olst;
+
+        /// <summary>
+        /// The mrgn object.
+        /// </summary>
+        private Mrgn mrgn;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Page"/> class.
         /// </summary>
         public Page()
         {
+            this.animlist = new ArrayList();
+            this.txtmodecontentsmod = string.Empty;
+            this.txtmodecontentspart = string.Empty;
+            this.txtmodemodxaml = string.Empty;
+            this.txtmodepartxaml = string.Empty;
             this.olst = new ArrayList();
+            this.mrgn = new Mrgn();
         }
 
         /// <summary>
@@ -95,6 +131,62 @@ namespace DPXReader.DyKnow
         }
 
         /// <summary>
+        /// Gets or sets the ANIMLIST.
+        /// </summary>
+        /// <value>The ANIMLIST value.</value>
+        [XmlArray("ANIMLIST")]
+        [XmlArrayItem("A", typeof(Animation), IsNullable = true)]
+        public ArrayList ANIMLIST
+        {
+            get { return this.animlist; }
+            set { this.animlist = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the TXTMODECONTENTSMOD.
+        /// </summary>
+        /// <value>The TXTMODECONTENTSMOD value.</value>
+        [XmlElement("TXTMODECONTENTSMOD")]
+        public string TXTMODECONTENTSMOD
+        {
+            get { return this.txtmodecontentsmod; }
+            set { this.txtmodecontentsmod = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the TXTMODECONTENTSPART.
+        /// </summary>
+        /// <value>The TXTMODECONTENTSPART value.</value>
+        [XmlElement("TXTMODECONTENTSPART")]
+        public string TXTMODECONTENTSPART
+        {
+            get { return this.txtmodecontentspart; }
+            set { this.txtmodecontentspart = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the TXTMODEMODXAML.
+        /// </summary>
+        /// <value>The TXTMODEMODXAML value.</value>
+        [XmlElement("TXTMODEMODXAML")]
+        public string TXTMODEMODXAML
+        {
+            get { return this.txtmodemodxaml; }
+            set { this.txtmodemodxaml = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the TXTMODEPARTXAML.
+        /// </summary>
+        /// <value>The TXTMODEPARTXAML value.</value>
+        [XmlElement("TXTMODEPARTXAML")]
+        public string TXTMODEPARTXAML
+        {
+            get { return this.txtmodepartxaml; }
+            set { this.txtmodepartxaml = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the OLST.
         /// </summary>
         /// <value>The OLST list of objects.</value>
@@ -103,10 +195,24 @@ namespace DPXReader.DyKnow
         [XmlArrayItem("IMG", typeof(Img), IsNullable = true)]
         [XmlArrayItem("GRP", typeof(Group), IsNullable = true)]
         [XmlArrayItem("DEOB", typeof(Deob), IsNullable = true)]
+        [XmlArrayItem("EDOB", typeof(Edob), IsNullable = true)]
+        [XmlArrayItem("WEBPNL", typeof(WebPanel), IsNullable = true)]
+        [XmlArrayItem("RTEXT", typeof(Rtext), IsNullable = true)]
         public ArrayList OLST
         {
             get { return this.olst; }
             set { this.olst = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the MRGN.
+        /// </summary>
+        /// <value>The MRGN value.</value>
+        [XmlElement("MRGN")]
+        public Mrgn MRGN
+        {
+            get { return this.mrgn; }
+            set { this.mrgn = value; }
         }
     }
 }

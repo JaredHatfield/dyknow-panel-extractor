@@ -18,6 +18,11 @@ namespace DPXReader.DyKnow
     public class DyKnow
     {
         /// <summary>
+        /// The vrsn value.
+        /// </summary>
+        private string vrsn;
+
+        /// <summary>
         /// The data list.
         /// </summary>
         private ArrayList data;
@@ -33,13 +38,31 @@ namespace DPXReader.DyKnow
         private ArrayList imgd;
 
         /// <summary>
+        /// The chat list of objects.
+        /// </summary>
+        private ArrayList chats;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DyKnow"/> class.
         /// </summary>
         public DyKnow()
         {
             this.data = new ArrayList();
-            this.imgs = new ArrayList();
-            this.imgd = new ArrayList();
+            this.chats = new ArrayList();
+
+            // this.imgs = new ArrayList();
+            // this.imgd = new ArrayList();
+        }
+
+        /// <summary>
+        /// Gets or sets the VRSN.
+        /// </summary>
+        /// <value>The VRSN value.</value>
+        [XmlAttribute("VRSN")]
+        public string VRSN
+        {
+            get { return this.vrsn; }
+            set { this.vrsn = value; }
         }
 
         /// <summary>
@@ -74,8 +97,33 @@ namespace DPXReader.DyKnow
         [XmlArrayItem("ID", typeof(Guid))]
         public ArrayList IMGD
         {
-            get { return this.imgd; }
-            set { this.imgd = value; }
+            get
+            {
+                /*
+                if (this.imgs != null && this.imgs.Count == 0)
+                {
+                    return null;
+                }
+                 */
+
+                return this.imgd;
+            }
+
+            set
+            {
+                this.imgd = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the CHATS.
+        /// </summary>
+        /// <value>The CHATS list of objects.</value>
+        [XmlArray("CHATS")]
+        public ArrayList CHATS
+        {
+            get { return this.chats; }
+            set { this.chats = value; }
         }
     }
 }

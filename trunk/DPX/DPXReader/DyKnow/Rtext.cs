@@ -1,7 +1,7 @@
-﻿// <copyright file="Img.cs" company="University of Louisville Speed School of Engineering">
+﻿// <copyright file="Rtext.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
-// <summary>The reference to an image contained on a panel.</summary>
+// <summary>The rtext object.</summary>
 namespace DPXReader.DyKnow
 {
     using System;
@@ -12,10 +12,10 @@ namespace DPXReader.DyKnow
     using System.Xml.Serialization;
 
     /// <summary>
-    /// The reference to an image contained on a panel.
+    /// The rtext object.
     /// </summary>
-    [XmlRoot("IMG")]
-    public class Img
+    [XmlRoot("RTEXT")]
+    public class Rtext
     {
         /// <summary>
         /// The ut value.
@@ -43,9 +43,19 @@ namespace DPXReader.DyKnow
         private Guid uid;
 
         /// <summary>
-        /// The id value.
+        /// The vrsn value.
         /// </summary>
-        private Guid id;
+        private string vrsn;
+
+        /// <summary>
+        /// The rtf value.
+        /// </summary>
+        private string rtf;
+
+        /// <summary>
+        /// The xaml value.
+        /// </summary>
+        private string xaml;
 
         /// <summary>
         /// The wid value.
@@ -58,38 +68,10 @@ namespace DPXReader.DyKnow
         private int hei;
 
         /// <summary>
-        /// The slidetxt value;
+        /// Initializes a new instance of the <see cref="Rtext"/> class.
         /// </summary>
-        private string slidetxt;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Img"/> class.
-        /// </summary>
-        public Img()
+        public Rtext()
         {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Img"/> class.
-        /// </summary>
-        /// <param name="ut">The ut value.</param>
-        /// <param name="sp">The sp value.</param>
-        /// <param name="pw">The pw value.</param>
-        /// <param name="ph">The ph value.</param>
-        /// <param name="uid">The uid value.</param>
-        /// <param name="id">The id value.</param>
-        /// <param name="wid">The wid value.</param>
-        /// <param name="hei">The hei value.</param>
-        public Img(int ut, string sp, int pw, int ph, Guid uid, Guid id, int wid, int hei)
-        {
-            this.ut = ut;
-            this.sp = sp;
-            this.pw = pw;
-            this.ph = ph;
-            this.uid = uid;
-            this.id = id;
-            this.wid = wid;
-            this.hei = hei;
         }
 
         /// <summary>
@@ -148,21 +130,43 @@ namespace DPXReader.DyKnow
         }
 
         /// <summary>
-        /// Gets or sets the ID.
+        /// Gets or sets the VRSN.
         /// </summary>
-        /// <value>The ID value.</value>
-        [XmlAttribute("ID")]
-        public Guid ID
+        /// <value>The VRSN value.</value>
+        [XmlAttribute("VRSN")]
+        public string VRSN
         {
-            get { return this.id; }
-            set { this.id = value; }
+            get { return this.vrsn; }
+            set { this.vrsn = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the RTF.
+        /// </summary>
+        /// <value>The RTF value.</value>
+        [XmlElement("RTF")]
+        public string RTF
+        {
+            get { return this.rtf; }
+            set { this.rtf = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the XAML.
+        /// </summary>
+        /// <value>The XAML value.</value>
+        [XmlElement("XAML")]
+        public string XAML
+        {
+            get { return this.xaml; }
+            set { this.xaml = value; }
         }
 
         /// <summary>
         /// Gets or sets the WID.
         /// </summary>
         /// <value>The WID value.</value>
-        [XmlAttribute("WID")]
+        [XmlElement("WID")]
         public int WID
         {
             get { return this.wid; }
@@ -173,22 +177,11 @@ namespace DPXReader.DyKnow
         /// Gets or sets the HEI.
         /// </summary>
         /// <value>The HEI value.</value>
-        [XmlAttribute("HEI")]
+        [XmlElement("HEI")]
         public int HEI
         {
             get { return this.hei; }
             set { this.hei = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the SLIDETXT.
-        /// </summary>
-        /// <value>The SLIDETXT.</value>
-        [XmlElement("SLIDETXT")]
-        public string SLIDETXT
-        {
-            get { return this.slidetxt; }
-            set { this.slidetxt = value; }
         }
     }
 }
