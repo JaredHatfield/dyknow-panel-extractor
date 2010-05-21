@@ -6,8 +6,11 @@ namespace DPXReader.DyKnow
 {
     using System;
     using System.Collections;
+    using System.IO;
     using System.Linq;
     using System.Text;
+    using System.Windows.Documents;
+    using System.Windows.Markup;
     using System.Xml;
     using System.Xml.Serialization;
 
@@ -21,7 +24,7 @@ namespace DPXReader.DyKnow
         /// The page version number.
         /// </summary>
         private string vrsn;
-
+        
         /// <summary>
         /// The uid value.
         /// </summary>
@@ -36,7 +39,7 @@ namespace DPXReader.DyKnow
         /// The onern value.
         /// </summary>
         private string onern;
-
+        
         /// <summary>
         /// The animlist list of objects.
         /// </summary>
@@ -55,12 +58,12 @@ namespace DPXReader.DyKnow
         /// <summary>
         /// The txtmodemodxaml value.
         /// </summary>
-        private string txtmodemodxaml;
+        private FlowDocument txtmodemodxaml;
 
         /// <summary>
         /// The txtmodepartxaml value.
         /// </summary>
-        private string txtmodepartxaml;
+        private FlowDocument txtmodepartxaml;
 
         /// <summary>
         /// The olst list of objects.
@@ -78,10 +81,6 @@ namespace DPXReader.DyKnow
         public Page()
         {
             this.animlist = new ArrayList();
-            this.txtmodecontentsmod = string.Empty;
-            this.txtmodecontentspart = string.Empty;
-            this.txtmodemodxaml = string.Empty;
-            this.txtmodepartxaml = string.Empty;
             this.olst = new ArrayList();
             this.mrgn = new Mrgn();
         }
@@ -149,8 +148,15 @@ namespace DPXReader.DyKnow
         [XmlElement("TXTMODECONTENTSMOD")]
         public string TXTMODECONTENTSMOD
         {
-            get { return this.txtmodecontentsmod; }
-            set { this.txtmodecontentsmod = value; }
+            get
+            {
+                return this.txtmodecontentsmod;
+            }
+
+            set
+            {
+                this.txtmodecontentsmod = value;
+            }
         }
 
         /// <summary>
@@ -160,8 +166,15 @@ namespace DPXReader.DyKnow
         [XmlElement("TXTMODECONTENTSPART")]
         public string TXTMODECONTENTSPART
         {
-            get { return this.txtmodecontentspart; }
-            set { this.txtmodecontentspart = value; }
+            get
+            {
+                return this.txtmodecontentspart;
+            }
+
+            set
+            {
+                this.txtmodecontentspart = value;
+            }
         }
 
         /// <summary>
@@ -171,8 +184,28 @@ namespace DPXReader.DyKnow
         [XmlElement("TXTMODEMODXAML")]
         public string TXTMODEMODXAML
         {
-            get { return this.txtmodemodxaml; }
-            set { this.txtmodemodxaml = value; }
+            get
+            {
+                if (this.txtmodemodxaml == null)
+                {
+                    return string.Empty;
+                }
+                else
+                {
+                    return XamlWriter.Save(this.txtmodemodxaml);
+                }
+            }
+
+            set
+            {
+                if (value.Length > 0)
+                {
+                    this.txtmodemodxaml = new FlowDocument();
+                    byte[] byteArray = Encoding.ASCII.GetBytes(value);
+                    MemoryStream stream = new MemoryStream(byteArray);
+                    this.txtmodemodxaml = XamlReader.Load(stream) as FlowDocument;
+                }
+            }
         }
 
         /// <summary>
@@ -182,8 +215,28 @@ namespace DPXReader.DyKnow
         [XmlElement("TXTMODEPARTXAML")]
         public string TXTMODEPARTXAML
         {
-            get { return this.txtmodepartxaml; }
-            set { this.txtmodepartxaml = value; }
+            get
+            {
+                if (this.txtmodepartxaml == null)
+                {
+                    return string.Empty;
+                }
+                else
+                {
+                    return XamlWriter.Save(this.txtmodepartxaml);
+                }
+            }
+
+            set
+            {
+                if (value.Length > 0)
+                {
+                    this.txtmodepartxaml = new FlowDocument();
+                    byte[] byteArray = Encoding.ASCII.GetBytes(value);
+                    MemoryStream stream = new MemoryStream(byteArray);
+                    this.txtmodepartxaml = XamlReader.Load(stream) as FlowDocument;
+                }
+            }
         }
 
         /// <summary>
@@ -199,6 +252,7 @@ namespace DPXReader.DyKnow
         [XmlArrayItem("WEBPNL", typeof(WebPanel), IsNullable = true)]
         [XmlArrayItem("RTEXT", typeof(Rtext), IsNullable = true)]
         [XmlArrayItem("LINK", typeof(Link), IsNullable = true)]
+        [XmlArrayItem("EPOLL", typeof(Epoll), IsNullable = true)]
         public ArrayList OLST
         {
             get { return this.olst; }
