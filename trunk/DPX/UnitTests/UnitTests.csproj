@@ -69,11 +69,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DyKnowFiles\TestAdvancedInking.dyz" />
+    <None Include="DyKnowFiles\TestAnimation.dyz" />
     <None Include="DyKnowFiles\TestDeleteInking.dyz" />
     <None Include="DyKnowFiles\TestFullPanelTextModerator.dyz" />
+    <None Include="DyKnowFiles\TestHyperlink.dyz" />
+    <None Include="DyKnowFiles\TestMultipleImages.dyz" />
     <None Include="DyKnowFiles\TestScaleInking.dyz" />
     <None Include="DyKnowFiles\TestSimpleImage.dyz" />
     <None Include="DyKnowFiles\TestSimpleInking.dyz" />
+    <None Include="DyKnowFiles\TestSimplePoll.dyz" />
+    <None Include="DyKnowFiles\TestSimpleTextBox.dyz" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

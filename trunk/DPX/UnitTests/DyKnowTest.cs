@@ -45,23 +45,7 @@ namespace UnitTests
         [TestMethod()]
         public void SerializationTestSimpleInking()
         {
-            // Read in the file as a string
-            string original = this.GetFileContent("TestSimpleInking");
-            DyKnow dyknow = this.DeserializeDyKnow(original);
-
-            if (dyknow == null)
-            {
-                Assert.Fail("The XML could not be deserialized properly.");
-                Debug.WriteLine("Simple Inking Test Failed to Serialize");
-            }
-            else
-            {
-                string repacked = this.SerializeDyKnow(dyknow);
-                Assert.AreEqual(original, repacked, "The reserialized object did not match the original xml");
-                Debug.WriteLine("Simple Inking Test Results:");
-                Debug.WriteLine(original);
-                Debug.WriteLine(repacked);
-            }
+            this.PerformSerializationTest("TestSimpleInking", "Simple Inking");
         }
 
         /// <summary>
@@ -70,23 +54,7 @@ namespace UnitTests
         [TestMethod()]
         public void SerilicationTestAdvancedInking()
         {
-            // Read in the file as a string
-            string original = this.GetFileContent("TestAdvancedInking");
-            DyKnow dyknow = this.DeserializeDyKnow(original);
-
-            if (dyknow == null)
-            {
-                Assert.Fail("The XML could not be deserialized properly.");
-                Debug.WriteLine("Advanced Inking Test Failed to Serialize");
-            }
-            else
-            {
-                string repacked = this.SerializeDyKnow(dyknow);
-                Assert.AreEqual(original, repacked, "The reserialized object did not match the original xml");
-                Debug.WriteLine("Advanced Inking Test Results: ");
-                Debug.WriteLine(original);
-                Debug.WriteLine(repacked);
-            }
+            this.PerformSerializationTest("TestAdvancedInking", "Advanced Inking");
         }
 
         /// <summary>
@@ -95,23 +63,7 @@ namespace UnitTests
         [TestMethod()]
         public void SerilicationTestDeleteInking()
         {
-            // Read in the file as a string
-            string original = this.GetFileContent("TestDeleteInking");
-            DyKnow dyknow = this.DeserializeDyKnow(original);
-
-            if (dyknow == null)
-            {
-                Assert.Fail("The XML could not be deserialized properly.");
-                Debug.WriteLine("Delete Inking Test Failed to Serialize");
-            }
-            else
-            {
-                string repacked = this.SerializeDyKnow(dyknow);
-                Assert.AreEqual(original, repacked, "The reserialized object did not match the original xml");
-                Debug.WriteLine("Delete Inking Test Results: ");
-                Debug.WriteLine(original);
-                Debug.WriteLine(repacked);
-            }
+            this.PerformSerializationTest("TestDeleteInking", "DeleteInking");
         }
 
         /// <summary>
@@ -120,23 +72,7 @@ namespace UnitTests
         [TestMethod()]
         public void SerilicationTestScaleInking()
         {
-            // Read in the file as a string
-            string original = this.GetFileContent("TestScaleInking");
-            DyKnow dyknow = this.DeserializeDyKnow(original);
-
-            if (dyknow == null)
-            {
-                Assert.Fail("The XML could not be deserialized properly.");
-                Debug.WriteLine("Scale Inking Test Failed to Serialize");
-            }
-            else
-            {
-                string repacked = this.SerializeDyKnow(dyknow);
-                Assert.AreEqual(original, repacked, "The reserialized object did not match the original xml");
-                Debug.WriteLine("Scale Inking Test Results: ");
-                Debug.WriteLine(original);
-                Debug.WriteLine(repacked);
-            }
+            this.PerformSerializationTest("TestScaleInking", "Scale Inking");
         }
 
         /// <summary>
@@ -145,23 +81,16 @@ namespace UnitTests
         [TestMethod()]
         public void SerilicationTestSimpleImage()
         {
-            // Read in the file as a string
-            string original = this.GetFileContent("TestSimpleImage");
-            DyKnow dyknow = this.DeserializeDyKnow(original);
+            this.PerformSerializationTest("TestSimpleImage", "Simple Image");
+        }
 
-            if (dyknow == null)
-            {
-                Assert.Fail("The XML could not be deserialized properly.");
-                Debug.WriteLine("Simple Image Test Failed to Serialize");
-            }
-            else
-            {
-                string repacked = this.SerializeDyKnow(dyknow);
-                Assert.AreEqual(original, repacked, "The reserialized object did not match the original xml");
-                Debug.WriteLine("Simple Image Test Results: ");
-                Debug.WriteLine(original);
-                Debug.WriteLine(repacked);
-            }
+        /// <summary>
+        /// Test the serilization and deserilization of a DyKnow file that contains a multiple images.
+        /// </summary>
+        [TestMethod()]
+        public void SerilicationTestMultipleImages()
+        {
+            this.PerformSerializationTest("TestMultipleImages", "Multiple Images");
         }
 
         /// <summary>
@@ -170,22 +99,80 @@ namespace UnitTests
         [TestMethod()]
         public void SerilicationTestFullPanelTextModerator()
         {
+            this.PerformSerializationTest("TestFullPanelTextModerator", "Full Panel Text Moderator");
+        }
+
+        /// <summary>
+        /// Test the serialization and deserialization of a DyKnow file that contains an animation.
+        /// </summary>
+        [TestMethod()]
+        public void SerializationTestAnimation()
+        {
+            this.PerformSerializationTest("TestAnimation", "Animation");
+        }
+
+        /// <summary>
+        /// Test the serialization and deserialization of a DyKnow file that contains a simple text box.
+        /// </summary>
+        [TestMethod()]
+        public void SerializationTestSimpleTextBox()
+        {
+            this.PerformSerializationTest("TestSimpleTextBox", "Simple Text Box");
+        }
+
+        /// <summary>
+        /// Test the serialization and deserialization of a DyKnow file that contains a hyperlink.
+        /// </summary>
+        [TestMethod()]
+        public void SerializationTestHyperlink()
+        {
+            this.PerformSerializationTest("TestHyperlink", "Hyperlink");
+        }
+
+        /// <summary>
+        /// Test the serialization and deserialization of a DyKnow file that contains a simple poll.
+        /// </summary>
+        [TestMethod()]
+        public void SerializationTestSimplePoll()
+        {
+            this.PerformSerializationTest("TestSimplePoll", "Simple Poll");
+        }
+
+        /// <summary>
+        /// Performs the serialization test.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <param name="name">The name.</param>
+        private void PerformSerializationTest(string file, string name)
+        {
             // Read in the file as a string
-            string original = this.GetFileContent("TestFullPanelTextModerator");
+            string original = this.GetFileContent(file);
             DyKnow dyknow = this.DeserializeDyKnow(original);
 
             if (dyknow == null)
             {
                 Assert.Fail("The XML could not be deserialized properly.");
-                Debug.WriteLine("Full Panel Text Moderator Test Failed to Serialize");
+                Debug.WriteLine(name + " Test Failed to Serialize");
             }
             else
             {
                 string repacked = this.SerializeDyKnow(dyknow);
+
+                // Perform a test to determine if the string are equal so we can write out the results.
+                if (!original.Equals(repacked))
+                {
+                    // Write the original XML (with line breaks) to a file
+                    TextWriter tro = new StreamWriter(file + "-Original" + ".txt");
+                    tro.WriteLine(original.Replace("><", ">\n<"));
+                    tro.Close();
+
+                    // Write the repacked XML (with line breaks) to a file
+                    TextWriter trr = new StreamWriter(file + "-Repacked" + ".txt");
+                    trr.WriteLine(repacked.Replace("><", ">\n<"));
+                    trr.Close();
+                }
+
                 Assert.AreEqual(original, repacked, "The reserialized object did not match the original xml");
-                Debug.WriteLine("Full Panel Text Moderator Test Results: ");
-                Debug.WriteLine(original);
-                Debug.WriteLine(repacked);
             }
         }
 
