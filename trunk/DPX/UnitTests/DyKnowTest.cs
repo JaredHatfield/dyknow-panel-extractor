@@ -139,10 +139,19 @@ namespace UnitTests
         }
 
         /// <summary>
+        /// Test the serialization and deserialization of a DyKnow file that contains multiple panels with various content.
+        /// </summary>
+        [TestMethod()]
+        public void SerializationTestAdvancedMultiplePanels()
+        {
+            this.PerformSerializationTest("TestAdvancedMultiplePanels", "Advanced Multiple Panels");
+        }
+
+        /// <summary>
         /// Performs the serialization test.
         /// </summary>
-        /// <param name="file">The file.</param>
-        /// <param name="name">The name.</param>
+        /// <param name="file">The file to process.</param>
+        /// <param name="name">The name of the task.</param>
         private void PerformSerializationTest(string file, string name)
         {
             // Read in the file as a string
@@ -151,6 +160,12 @@ namespace UnitTests
 
             if (dyknow == null)
             {
+                // Write the XML (with line breaks) that could not be parsed to a file
+                TextWriter tre = new StreamWriter(file + "-Failed" + ".txt");
+                tre.WriteLine(original.Replace("><", ">\n<"));
+                tre.Close();
+
+                // Assert that the test failed.
                 Assert.Fail("The XML could not be deserialized properly.");
                 Debug.WriteLine(name + " Test Failed to Serialize");
             }

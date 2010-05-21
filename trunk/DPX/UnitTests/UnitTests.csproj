@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DyKnowFiles\TestAdvancedInking.dyz" />
+    <None Include="DyKnowFiles\TestAdvancedMultiplePanels.dyz" />
     <None Include="DyKnowFiles\TestAnimation.dyz" />
     <None Include="DyKnowFiles\TestDeleteInking.dyz" />
     <None Include="DyKnowFiles\TestFullPanelTextModerator.dyz" />

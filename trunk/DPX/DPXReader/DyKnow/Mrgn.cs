@@ -81,6 +81,7 @@ namespace DPXReader.DyKnow
         [XmlArrayItem("EDOB", typeof(Edob), IsNullable = true)]
         [XmlArrayItem("WEBPNL", typeof(WebPanel), IsNullable = true)]
         [XmlArrayItem("RTEXT", typeof(Rtext), IsNullable = true)]
+        [XmlArrayItem("LINK", typeof(Link), IsNullable = true)]
         public ArrayList OLST
         {
             get { return this.olst; }
