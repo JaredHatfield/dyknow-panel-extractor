@@ -38,6 +38,11 @@ namespace DPXReader.DyKnow
         private Guid uid;
 
         /// <summary>
+        /// The ispri value.
+        /// </summary>
+        private bool ispri;
+
+        /// <summary>
         /// The data value.
         /// </summary>
         private string data;
@@ -108,6 +113,18 @@ namespace DPXReader.DyKnow
         {
             get { return this.uid; }
             set { this.uid = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="Pen"/> is ISPRI.
+        /// </summary>
+        /// <value><c>true</c> if ISPRI; otherwise, <c>false</c>.</value>
+        [System.ComponentModel.DefaultValue(false)]
+        [XmlAttribute("ISPRI")]
+        public bool ISPRI
+        {
+            get { return this.ispri; }
+            set { this.ispri = value; }
         }
 
         /// <summary>

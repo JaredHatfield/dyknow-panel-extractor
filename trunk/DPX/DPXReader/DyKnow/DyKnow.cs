@@ -49,9 +49,6 @@ namespace DPXReader.DyKnow
         {
             this.data = new ArrayList();
             this.chats = new ArrayList();
-
-            // this.imgs = new ArrayList();
-            // this.imgd = new ArrayList();
         }
 
         /// <summary>
@@ -97,22 +94,8 @@ namespace DPXReader.DyKnow
         [XmlArrayItem("ID", typeof(Guid))]
         public ArrayList IMGD
         {
-            get
-            {
-                /*
-                if (this.imgs != null && this.imgs.Count == 0)
-                {
-                    return null;
-                }
-                 */
-
-                return this.imgd;
-            }
-
-            set
-            {
-                this.imgd = value;
-            }
+            get { return this.imgd; }
+            set { this.imgd = value; }
         }
 
         /// <summary>
@@ -124,6 +107,49 @@ namespace DPXReader.DyKnow
         {
             get { return this.chats; }
             set { this.chats = value; }
+        }
+
+        /// <summary>
+        /// Deserializes the specified data.
+        /// </summary>
+        /// <param name="data">The data to deserialize.</param>
+        /// <returns>The instance of the class.</returns>
+        public static DyKnow Deserialize(string data)
+        {
+            DyKnow d = SerializerHelper.DeserializeObject(data, typeof(DyKnow)) as DyKnow;
+            return d;
+        }
+
+        /// <summary>
+        /// Serializes this instance of DyKnow.
+        /// </summary>
+        /// <returns>The string representation of the class.</returns>
+        public string Serialize()
+        {
+            // Remember these arrays
+            ArrayList s = this.imgs;
+            ArrayList d = this.imgd;
+
+            // If the arrays are blank set them to null
+            if (this.imgs != null && this.imgs.Count == 0)
+            {
+                this.imgs = null;
+            }
+
+            if (this.imgd != null && this.imgd.Count == 0)
+            {
+                this.imgd = null;
+            }
+
+            // Serialize the object
+            string str = SerializerHelper.SerializeObject(this, typeof(DyKnow));
+
+            // Restore the arrays
+            this.imgs = s;
+            this.imgd = d;
+
+            // Return the result
+            return str;
         }
     }
 }

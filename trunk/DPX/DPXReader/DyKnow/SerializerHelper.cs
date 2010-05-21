@@ -15,7 +15,7 @@ namespace DPXReader.DyKnow
     /// <summary>
     /// Provides methods for serialization and deserialization.
     /// </summary>
-    public class SerializerHelper
+    internal class SerializerHelper
     {
         /// <summary>
         /// Method to convert a custom Object to XML string
@@ -23,7 +23,7 @@ namespace DPXReader.DyKnow
         /// <param name="obj">Object that is to be serialized to XML</param>
         /// <param name="type">The object type.</param>
         /// <returns>XML string</returns>
-        public string SerializeObject(object obj, Type type)
+        internal static string SerializeObject(object obj, Type type)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace DPXReader.DyKnow
                 
                 xs.Serialize(xmlTextWriter, obj, ns);
                 memoryStream = (MemoryStream)xmlTextWriter.BaseStream;
-                result = this.UTF8ByteArrayToString(memoryStream.ToArray());
+                result = SerializerHelper.UTF8ByteArrayToString(memoryStream.ToArray());
                 return result;
             }
             catch (Exception e)
@@ -54,10 +54,10 @@ namespace DPXReader.DyKnow
         /// <param name="str">The p xmlizedstring.</param>
         /// <param name="type">The object type.</param>
         /// <returns>The object that was created from the XML.</returns>
-        public object DeserializeObject(string str, Type type)
+        internal static object DeserializeObject(string str, Type type)
         {
             XmlSerializer xs = new XmlSerializer(type);
-            MemoryStream memoryStream = new MemoryStream(this.StringToUTF8ByteArray(str));
+            MemoryStream memoryStream = new MemoryStream(SerializerHelper.StringToUTF8ByteArray(str));
             return xs.Deserialize(memoryStream);
         }
 
@@ -67,7 +67,7 @@ namespace DPXReader.DyKnow
         /// <param name="s">The stream to deserialize.</param>
         /// <param name="type">The object type.</param>
         /// <returns>The object that was created from the XML.</returns>
-        public object DeserializeObject(Stream s, Type type)
+        internal static object DeserializeObject(Stream s, Type type)
         {
             XmlSerializer xs = new XmlSerializer(type);
             return xs.Deserialize(s);
@@ -78,7 +78,7 @@ namespace DPXReader.DyKnow
         /// </summary>
         /// <param name="characters">Unicode byte Array to be converted to string</param>
         /// <returns>string converted from Unicode byte Array</returns>
-        private string UTF8ByteArrayToString(byte[] characters)
+        private static string UTF8ByteArrayToString(byte[] characters)
         {
             UTF8Encoding encoding = new UTF8Encoding();
             string constructedstring = encoding.GetString(characters);
@@ -90,7 +90,7 @@ namespace DPXReader.DyKnow
         /// </summary>
         /// <param name="str">The p xmlstring.</param>
         /// <returns>A byte array of the characters.</returns>
-        private byte[] StringToUTF8ByteArray(string str)
+        private static byte[] StringToUTF8ByteArray(string str)
         {
             UTF8Encoding encoding = new UTF8Encoding();
             byte[] byteArray = encoding.GetBytes(str);
