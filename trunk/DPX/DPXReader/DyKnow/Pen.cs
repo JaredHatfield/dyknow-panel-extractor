@@ -40,7 +40,7 @@ namespace DPXReader.DyKnow
         /// <summary>
         /// The ispri value.
         /// </summary>
-        private bool ispri;
+        private string ispri;
 
         /// <summary>
         /// The data value.
@@ -116,12 +116,11 @@ namespace DPXReader.DyKnow
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="Pen"/> is ISPRI.
+        /// Gets or sets the ISPRI.
         /// </summary>
-        /// <value><c>true</c> if ISPRI; otherwise, <c>false</c>.</value>
-        [System.ComponentModel.DefaultValue(false)]
+        /// <value>The ISPRI.</value>
         [XmlAttribute("ISPRI")]
-        public bool ISPRI
+        public string ISPRI
         {
             get { return this.ispri; }
             set { this.ispri = value; }

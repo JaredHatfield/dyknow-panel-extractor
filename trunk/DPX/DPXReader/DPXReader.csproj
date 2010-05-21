@@ -58,7 +58,6 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -81,6 +80,7 @@
     <Compile Include="DyKnow\DyKnow.cs" />
     <Compile Include="DyKnow\Edde.cs" />
     <Compile Include="DyKnow\Edob.cs" />
+    <Compile Include="DyKnow\Epoll.cs" />
     <Compile Include="DyKnow\Group.cs" />
     <Compile Include="DyKnow\Img.cs" />
     <Compile Include="DyKnow\Link.cs" />

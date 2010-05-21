@@ -4,6 +4,7 @@
 // <summary>Performs the serialization / deserialization regression tests on a DyKnow file.</summary>
 namespace UnitTests
 {
+    using System;
     using System.Diagnostics;
     using System.IO;
     using System.IO.Compression;
@@ -174,6 +175,7 @@ namespace UnitTests
                 string repacked = this.SerializeDyKnow(dyknow);
 
                 // Perform a test to determine if the string are equal so we can write out the results.
+                Debug.WriteLine("Original: " + original.Length + " - Repacked: " + repacked.Length);
                 if (!original.Equals(repacked))
                 {
                     // Write the original XML (with line breaks) to a file
@@ -218,9 +220,10 @@ namespace UnitTests
             {
                 dyknow = DyKnow.Deserialize(data);
             }
-            catch
+            catch (Exception e)
             {
                 Debug.WriteLine("DyKnow object could not be deserialized.");
+                Debug.WriteLine(e.Message);
             }
 
             return dyknow;
