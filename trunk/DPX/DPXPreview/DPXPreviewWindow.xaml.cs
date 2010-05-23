@@ -21,6 +21,7 @@ namespace DPXPreview
     using System.Windows.Shapes;
     using DPXCommon;
     using DPXReader;
+    using DPXReader.DyKnow;
 
     /// <summary>
     /// The main window for Preview.
@@ -30,7 +31,7 @@ namespace DPXPreview
         /// <summary>
         /// Instance of DyKnowReader.
         /// </summary>
-        private DyKnowReader dr;
+        private DyKnow dyknow;
 
         /// <summary>
         /// The current page being displayed.
@@ -61,7 +62,7 @@ namespace DPXPreview
             if (openFileDialog1.ShowDialog() == true)
             {
                 // Open the DyKnow file
-                this.dr = new DyKnowReader(openFileDialog1.FileName);
+                this.dyknow = DyKnow.DeserializeFromFile(openFileDialog1.FileName);
                 this.currentPanelNumber = 0;
                 Inky.Strokes.Clear();
                 this.DisplayPanel(this.currentPanelNumber);
@@ -78,11 +79,10 @@ namespace DPXPreview
         /// <param name="e">Event arguments.</param>
         private void ButtonNextClick(object sender, RoutedEventArgs e)
         {
-            if (this.dr != null)
+            if (this.dyknow != null)
             {
-                if ((this.currentPanelNumber + 1) < this.dr.NumOfPages())
+                if ((this.currentPanelNumber + 1) < this.dyknow.DATA.Count)
                 {
-                    Inky.Strokes.Clear();
                     this.DisplayPanel(++this.currentPanelNumber);
                     this.UpdatePageNumber();
                 }
@@ -96,11 +96,10 @@ namespace DPXPreview
         /// <param name="e">Event arguments.</param>
         private void ButtonPreviousClick(object sender, RoutedEventArgs e)
         {
-            if (this.dr != null)
+            if (this.dyknow != null)
             {
                 if (this.currentPanelNumber > 0)
                 {
-                    Inky.Strokes.Clear();
                     this.DisplayPanel(--this.currentPanelNumber);
                     this.UpdatePageNumber();
                 }
@@ -112,7 +111,7 @@ namespace DPXPreview
         /// </summary>
         private void UpdatePageNumber()
         {
-            labelPageNumber.Content = (this.currentPanelNumber + 1).ToString() + " of " + this.dr.NumOfPages().ToString();
+            labelPageNumber.Content = (this.currentPanelNumber + 1).ToString() + " of " + this.dyknow.DATA.Count;
         }
 
         /// <summary>
@@ -143,10 +142,10 @@ namespace DPXPreview
         /// <param name="n">The panel number.</param>
         private void DisplayPanel(int n)
         {
-            if (this.dr != null && n >= 0 && n < this.dr.NumOfPages())
+            if (this.dyknow != null && n >= 0 && n < this.dyknow.DATA.Count)
             {
                 this.currentPanelNumber = n;
-                this.dr.FillInkCanvas(Inky, n);
+                this.dyknow.Render(Inky, n);
             }
         }
 
@@ -169,6 +168,7 @@ namespace DPXPreview
         /// <param name="e">Event arguments.</param>
         private void DisplayUserInformationWindow(object sender, RoutedEventArgs e)
         {
+            /*
             FlowDocument fd = new FlowDocument();
             fd.Blocks.Add(new Paragraph(new Run("Students")));
             if (fd != null)
@@ -186,6 +186,7 @@ namespace DPXPreview
             UserInformation popupWindow = new UserInformation(fd);
             popupWindow.Owner = this;
             popupWindow.ShowDialog();
+             */
         }
 
         /// <summary>
@@ -195,9 +196,11 @@ namespace DPXPreview
         /// <param name="e">Event arguments.</param>
         private void DisplayStatisticsWindow(object sender, RoutedEventArgs e)
         {
+            /*
             Statistics popupWindow = new Statistics(this.dr);
             popupWindow.Owner = this;
             popupWindow.ShowDialog();
+             */
         }
 
         /// <summary>

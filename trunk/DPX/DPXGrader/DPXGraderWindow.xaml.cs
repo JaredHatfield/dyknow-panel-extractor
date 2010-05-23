@@ -18,7 +18,8 @@ namespace DPXGrader
     using System.Windows.Navigation;
     using System.Windows.Shapes;
     using DPXCommon;
-    using DPXReader;
+    using DPXGrader.Accuracy;
+    using DPXReader.DyKnow;
 
     /// <summary>
     /// Interaction logic for DPXGraderWindow.xaml
@@ -50,7 +51,7 @@ namespace DPXGrader
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
-        private void ButtonGradeZone(object sender, RoutedEventArgs e)
+        private void ButtonGradeZone_Click(object sender, RoutedEventArgs e)
         {
             // Let the user choose which file to open
             Microsoft.Win32.OpenFileDialog openFileDialog1 = new Microsoft.Win32.OpenFileDialog();
@@ -58,10 +59,21 @@ namespace DPXGrader
             if (openFileDialog1.ShowDialog() == true)
             {
                 // Open the DyKnow file
-                DyKnowReader dr = new DyKnowReader(openFileDialog1.FileName);
+                DyKnow dr = DyKnow.DeserializeFromFile(openFileDialog1.FileName);
                 GradeZoneSelection gzs = new GradeZoneSelection(dr);
                 gzs.ShowDialog();
             }
+        }
+
+        /// <summary>
+        /// Handles the Click event of the ButtonAccuracy control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void ButtonAccuracy_Click(object sender, RoutedEventArgs e)
+        {
+            AccuracyWindow aw = new AccuracyWindow();
+            aw.ShowDialog();
         }
     }
 }

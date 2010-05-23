@@ -71,10 +71,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DyKnowImage.cs" />
-    <Compile Include="DyKnowPage.cs" />
-    <Compile Include="DyKnowPenStroke.cs" />
-    <Compile Include="DyKnowReader.cs" />
+    <Compile Include="LegacyReader\DyKnowImage.cs" />
+    <Compile Include="LegacyReader\DyKnowPage.cs" />
+    <Compile Include="LegacyReader\DyKnowPenStroke.cs" />
+    <Compile Include="LegacyReader\DyKnowReader.cs" />
     <Compile Include="DyKnow\Animation.cs" />
     <Compile Include="DyKnow\Answer.cs" />
     <Compile Include="DyKnow\Deob.cs" />
@@ -91,7 +91,7 @@
     <Compile Include="DyKnow\Rtext.cs" />
     <Compile Include="DyKnow\SerializerHelper.cs" />
     <Compile Include="DyKnow\WebPanel.cs" />
-    <Compile Include="ImageData.cs" />
+    <Compile Include="LegacyReader\ImageData.cs" />
     <Compile Include="PanelSorter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

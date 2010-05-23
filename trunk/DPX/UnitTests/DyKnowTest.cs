@@ -211,7 +211,10 @@ namespace UnitTests
             FileStream inputFile = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read);
             GZipStream gzipFile = new GZipStream(inputFile, CompressionMode.Decompress, true);
             StreamReader reader = new StreamReader(gzipFile);
-            return reader.ReadToEnd();
+            string content = reader.ReadToEnd();
+            gzipFile.Close();
+            inputFile.Close();
+            return content;
         }
 
         /// <summary>

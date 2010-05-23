@@ -18,6 +18,16 @@ namespace DPXReader.DyKnow
     public class Img
     {
         /// <summary>
+        /// The reference width used to transform the image dimensions.
+        /// </summary>
+        private const int ReferenceWidth = 27100;
+
+        /// <summary>
+        /// The reference height used to transform the image dimensions.
+        /// </summary>
+        private const int ReferenceHeight = 20325;
+
+        /// <summary>
         /// The ut value.
         /// </summary>
         private int ut;
@@ -189,6 +199,61 @@ namespace DPXReader.DyKnow
         {
             get { return this.slidetxt; }
             set { this.slidetxt = value; }
+        }
+
+        // Custom, non serialized attributes
+
+        /// <summary>
+        /// Gets the width of the image.
+        /// </summary>
+        /// <value>The width of the image.</value>
+        [XmlIgnore]
+        internal double CustomImageWidth
+        {
+            get { return (double)this.wid / (double)Img.ReferenceWidth; }
+        }
+
+        /// <summary>
+        /// Gets the height of the image.
+        /// </summary>
+        /// <value>The height of the image.</value>
+        [XmlIgnore]
+        internal double CustomImageHeight
+        {
+            get { return (double)this.hei / (double)Img.ReferenceHeight; }
+        }
+
+        /// <summary>
+        /// Gets the left position for the image.
+        /// </summary>
+        /// <value>The left position.</value>
+        [XmlIgnore]
+        internal double CustomPositionLeft
+        {
+            get
+            {
+                int start = 0;
+                int end = this.sp.IndexOf(':');
+                string val = this.sp.Substring(start, end);
+                double num = int.Parse(val);
+                return num / Img.ReferenceWidth;
+            }
+        }
+
+        /// <summary>
+        /// Gets the top position for the image.
+        /// </summary>
+        /// <value>The top position.</value>
+        [XmlIgnore]
+        internal double CustomPositionTop
+        {
+            get
+            {
+                int start = this.sp.IndexOf(':') + 1;
+                string val = this.sp.Substring(start);
+                double num = int.Parse(val);
+                return num / Img.ReferenceHeight;
+            }
         }
     }
 }

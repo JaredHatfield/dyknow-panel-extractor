@@ -17,7 +17,7 @@ namespace DPXGrader
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using System.Windows.Shapes;
-    using DPXReader;
+    using DPXReader.DyKnow;
 
     /// <summary>
     /// Interaction logic for GradeZoneSelection.xaml
@@ -27,7 +27,7 @@ namespace DPXGrader
         /// <summary>
         /// The DyKnow reader that contains a file.
         /// </summary>
-        private DyKnowReader dr;
+        private DyKnow dr;
 
         /// <summary>
         /// The current page.
@@ -48,17 +48,17 @@ namespace DPXGrader
         /// Initializes a new instance of the <see cref="GradeZoneSelection"/> class.
         /// </summary>
         /// <param name="dr">The DyKnowReader.</param>
-        public GradeZoneSelection(DyKnowReader dr)
+        public GradeZoneSelection(DyKnow dr)
         {
             InitializeComponent();
             this.boxSize = 50;
             this.boxLocation = BoxLocation.TopLeft;
             this.dr = dr;
             this.currentPage = 0;
-            if (this.dr != null && this.dr.NumOfPages() > 0)
+            if (this.dr != null && this.dr.DATA.Count > 0)
             {
-                this.dr.FillInkCanvas(this.Inky, 0);
-                this.LabelPanelNumber.Content = (this.currentPage + 1) + " of " + dr.NumOfPages();
+                this.dr.Render(this.Inky, 0);
+                this.LabelPanelNumber.Content = (this.currentPage + 1) + " of " + dr.DATA.Count;
             }
         }
 
@@ -217,8 +217,8 @@ namespace DPXGrader
             {
                 this.Inky.Strokes.Clear();
                 this.Inky.Children.Clear();
-                this.dr.FillInkCanvas(this.Inky, --this.currentPage);
-                this.LabelPanelNumber.Content = (this.currentPage + 1) + " of " + this.dr.NumOfPages();
+                this.dr.Render(this.Inky, --this.currentPage);
+                this.LabelPanelNumber.Content = (this.currentPage + 1) + " of " + this.dr.DATA.Count;
             }
         }
 
@@ -229,12 +229,12 @@ namespace DPXGrader
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ButtonNext_Click(object sender, RoutedEventArgs e)
         {
-            if (this.dr != null && this.currentPage + 1 < this.dr.NumOfPages())
+            if (this.dr != null && this.currentPage + 1 < this.dr.DATA.Count)
             {
                 this.Inky.Strokes.Clear();
                 this.Inky.Children.Clear();
-                this.dr.FillInkCanvas(this.Inky, ++this.currentPage);
-                this.LabelPanelNumber.Content = (this.currentPage + 1) + " of " + this.dr.NumOfPages();
+                this.dr.Render(this.Inky, ++this.currentPage);
+                this.LabelPanelNumber.Content = (this.currentPage + 1) + " of " + this.dr.DATA.Count;
             }
         }
 
@@ -251,13 +251,13 @@ namespace DPXGrader
 
             if (this.dr != null)
             {
-                for (int i = 0; i < this.dr.NumOfPages(); i++)
+                for (int i = 0; i < this.dr.DATA.Count; i++)
                 {
                     // Get all of the ink that we are concerned about
                     InkCanvas ic = new InkCanvas();
                     ic.Width = this.Inky.Width;
                     ic.Height = this.Inky.Height;
-                    this.dr.FillInkCanvas(ic, i);
+                    this.dr.Render(ic, i);
                     ic.Strokes.Clip(r);
 
                     // Perform the analysis

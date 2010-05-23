@@ -269,5 +269,73 @@ namespace DPXReader.DyKnow
             get { return this.mrgn; }
             set { this.mrgn = value; }
         }
+
+        // Custom elements that are not serialized / deserialized
+
+        /// <summary>
+        /// Gets the list of images.
+        /// </summary>
+        /// <value>The list of images.</value>
+        [XmlIgnore]
+        internal ArrayList CustomImages
+        {
+            get
+            {
+                ArrayList arr = new ArrayList();
+                for (int i = 0; i < this.olst.Count; i++)
+                {
+                    if (this.olst[i].GetType().Equals(typeof(Img)))
+                    {
+                        arr.Add(this.olst[i]);
+                    }
+                }
+
+                return arr;
+            }
+        }
+
+        /// <summary>
+        /// Gets the list of ink strokes.
+        /// </summary>
+        /// <value>The list of ink strokes.</value>
+        [XmlIgnore]
+        internal ArrayList CustomInkStrokes
+        {
+            get
+            {
+                ArrayList arr = new ArrayList();
+                for (int i = 0; i < this.olst.Count; i++)
+                {
+                    if (this.olst[i].GetType().Equals(typeof(Pen)))
+                    {
+                        arr.Add(this.olst[i]);
+                    }
+                }
+
+                return arr;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether the specified object is deleted.
+        /// </summary>
+        /// <param name="id">The object identifier.</param>
+        /// <returns><c>true</c> if specified object is deleted; otherwise, <c>false</c>.</returns>
+        internal bool IsObjectDeleted(Guid id)
+        {
+            for (int i = 0; i < this.olst.Count; i++)
+            {
+                if (this.olst[i].GetType().Equals(typeof(Deob)))
+                {
+                    Deob d = this.olst[i] as Deob;
+                    if (d.Contains(id))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
     }
 }

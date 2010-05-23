@@ -103,5 +103,24 @@ namespace DPXReader.DyKnow
             get { return this.deli; }
             set { this.deli = value; }
         }
+
+        /// <summary>
+        /// Determines whether the object was deleted.
+        /// </summary>
+        /// <param name="id">The object identifier.</param>
+        /// <returns><c>true</c> if [contains] the object was deleted; otherwise, <c>false</c>.</returns>
+        public bool Contains(Guid id)
+        {
+            for (int i = 0; i < this.deli.Count; i++)
+            {
+                Edde e = this.deli[i] as Edde;
+                if (e.OBJID.Equals(id))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }
