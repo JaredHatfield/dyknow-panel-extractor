@@ -5,7 +5,8 @@
 namespace DPXGrader
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
     using System.Threading;
@@ -13,6 +14,7 @@ namespace DPXGrader
     using System.Windows.Controls;
     using System.Windows.Data;
     using System.Windows.Documents;
+    using System.Windows.Ink;
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
@@ -28,6 +30,11 @@ namespace DPXGrader
         /// The dyknow file that is read in.
         /// </summary>
         private DyKnow dyknow;
+
+        /// <summary>
+        /// The collection of results.
+        /// </summary>
+        private Collection<object[]> results;
 
         /// <summary>
         /// The size of the grade box.
@@ -60,6 +67,7 @@ namespace DPXGrader
             this.boxLocation = BoxLocation.TopLeft;
             this.selectedThumbnail = new Border();
             this.selectedPanelId = -1;
+            this.results = new Collection<object[]>();
         }
 
         /// <summary>
@@ -194,12 +202,9 @@ namespace DPXGrader
             this.TextBoxFileName.Text = file;
             this.DisplayPanel(0);
             this.selectedPanelId = 1;
-            this.ProgressBarFileLoading.Minimum = 0;
-            this.ProgressBarFileLoading.Maximum = this.dyknow.DATA.Count;
             this.PanelScrollView.Children.Clear();
             for (int i = 0; i < this.dyknow.DATA.Count; i++)
             {
-                this.ProgressBarFileLoading.Value++;
                 InkCanvas ink = new InkCanvas();
                 ink.Width = this.Inky.ActualWidth;
                 ink.Height = this.Inky.ActualHeight;
@@ -298,6 +303,27 @@ namespace DPXGrader
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ButtonPreview_Click(object sender, RoutedEventArgs e)
         {
+            StrokeCollection strokes = this.Inky.Strokes.Clone();
+            strokes.Clip(this.GetRectangleArea());
+            if (strokes.Count > 0)
+            {
+                InkAnalyzer theInkAnalyzer = new InkAnalyzer();
+                theInkAnalyzer.AddStrokes(strokes);
+                AnalysisStatus status = theInkAnalyzer.Analyze();
+
+                if (status.Successful)
+                {
+                    this.TextBoxPreviewOutput.Text = theInkAnalyzer.GetRecognizedString();
+                }
+                else
+                {
+                    this.TextBoxPreviewOutput.Text = string.Empty;
+                }
+            }
+            else
+            {
+                this.TextBoxPreviewOutput.Text = string.Empty;
+            }
         }
 
         /// <summary>
@@ -307,6 +333,96 @@ namespace DPXGrader
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ButtonProcess_Click(object sender, RoutedEventArgs e)
         {
+            this.results.Clear();
+            this.GridResults.Children.Clear();
+
+            for (int i = 0; i < this.dyknow.DATA.Count; i++)
+            {
+                DPXReader.DyKnow.Page page = this.dyknow.DATA[i] as DPXReader.DyKnow.Page;
+                InkCanvas ink = new InkCanvas();
+                ink.Width = Inky.Width;
+                ink.Height = Inky.Height;
+                this.dyknow.Render(ink, i);
+                ink.Strokes.Clip(this.GetRectangleArea());
+                string val = string.Empty;
+                double valDigit = 0;
+                if (ink.Strokes.Count > 0)
+                {
+                    InkAnalyzer theInkAnalyzer = new InkAnalyzer();
+                    theInkAnalyzer.AddStrokes(ink.Strokes);
+                    AnalysisStatus status = theInkAnalyzer.Analyze();
+
+                    if (status.Successful)
+                    {
+                        val = theInkAnalyzer.GetRecognizedString();
+                        try
+                        {
+                            valDigit = double.Parse(val);
+                        }
+                        catch
+                        {
+                        }
+                    }
+                }
+
+                RowDefinition rd = new RowDefinition();
+                rd.Height = GridLength.Auto;
+                this.GridResults.RowDefinitions.Add(rd);
+
+                // Add the panel number
+                Label num = new Label();
+                num.Content = i.ToString();
+                num.BorderBrush = Brushes.DarkGray;
+                num.BorderThickness = new Thickness(1);
+                Grid.SetRow(num, i);
+                Grid.SetColumn(num, 0);
+                this.GridResults.Children.Add(num);
+
+                // Add the name
+                Label name = new Label();
+                name.Content = page.ONERN;
+                name.BorderBrush = Brushes.DarkGray;
+                name.BorderThickness = new Thickness(1);
+                Grid.SetRow(name, i);
+                Grid.SetColumn(name, 1);
+                this.GridResults.Children.Add(name);
+
+                // Add the username
+                Label user = new Label();
+                user.Content = page.ONER;
+                user.BorderBrush = Brushes.DarkGray;
+                user.BorderThickness = new Thickness(1);
+                Grid.SetRow(user, i);
+                Grid.SetColumn(user, 2);
+                this.GridResults.Children.Add(user);
+
+                // Add the recognized text
+                Label cont = new Label();
+                cont.Content = val;
+                cont.BorderBrush = Brushes.DarkGray;
+                cont.BorderThickness = new Thickness(1);
+                Grid.SetRow(cont, i);
+                Grid.SetColumn(cont, 3);
+                this.GridResults.Children.Add(cont);
+
+                // Add the recognized text converted to a number
+                Label digit = new Label();
+                digit.Content = valDigit;
+                digit.BorderBrush = Brushes.DarkGray;
+                digit.BorderThickness = new Thickness(1);
+                Grid.SetRow(digit, i);
+                Grid.SetColumn(digit, 4);
+                this.GridResults.Children.Add(digit);
+
+                // Add the values to the results collection
+                object[] record = new object[5];
+                record[0] = i;
+                record[1] = page.ONERN;
+                record[2] = page.ONER;
+                record[3] = val;
+                record[4] = valDigit;
+                this.results.Add(record);
+            }
         }
 
         /// <summary>
@@ -316,6 +432,8 @@ namespace DPXGrader
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
+            // TODO: Implement me!
+            MessageBox.Show("Not Implemented Yet.");
         }
     }
 }
