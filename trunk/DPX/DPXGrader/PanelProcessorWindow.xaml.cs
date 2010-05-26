@@ -68,6 +68,8 @@ namespace DPXGrader
             this.selectedThumbnail = new Border();
             this.selectedPanelId = -1;
             this.results = new Collection<object[]>();
+            this.DisableStepTwo();
+            this.DisableStepThree();
         }
 
         /// <summary>
@@ -94,6 +96,46 @@ namespace DPXGrader
             /// Location represented by the bottom right corner.
             /// </summary>
             BottomRight
+        }
+
+        /// <summary>
+        /// Disables the part of the interface related to step two.
+        /// </summary>
+        private void DisableStepTwo()
+        {
+            this.TextBoxPreviewOutput.IsEnabled = false;
+            this.TextBoxStudentName.IsEnabled = false;
+            this.TextBoxUserName.IsEnabled = false;
+            this.ButtonPreview.IsEnabled = false;
+            this.ButtonProcess.IsEnabled = false;
+        }
+
+        /// <summary>
+        /// Enables the part of the interface related to step two.
+        /// </summary>
+        private void EnableStepTwo()
+        {
+            this.TextBoxPreviewOutput.IsEnabled = true;
+            this.TextBoxStudentName.IsEnabled = true;
+            this.TextBoxUserName.IsEnabled = true;
+            this.ButtonPreview.IsEnabled = true;
+            this.ButtonProcess.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// Disables the part of the interface related to step three.
+        /// </summary>
+        private void DisableStepThree()
+        {
+            this.ButtonSave.IsEnabled = false;
+        }
+
+        /// <summary>
+        /// Enables the part of the interface related to step three.
+        /// </summary>
+        private void EnableStepThree()
+        {
+            this.ButtonSave.IsEnabled = true;
         }
 
         /// <summary>
@@ -165,8 +207,7 @@ namespace DPXGrader
             Border b = sender as Border;
             this.selectedThumbnail = b;
             b.BorderBrush = Brushes.Gold;
-            this.selectedPanelId = (int)b.Tag;
-            this.DisplayPanel(this.selectedPanelId);
+            this.DisplayPanel((int)b.Tag);
         }
 
         /// <summary>
@@ -177,6 +218,7 @@ namespace DPXGrader
         {
             if (this.dyknow != null && n >= 0 && n < this.dyknow.DATA.Count)
             {
+                this.selectedPanelId = n;
                 this.dyknow.Render(this.Inky, n);
                 string oner = (this.dyknow.DATA[n] as DPXReader.DyKnow.Page).ONER;
                 string onern = (this.dyknow.DATA[n] as DPXReader.DyKnow.Page).ONERN;
@@ -198,11 +240,26 @@ namespace DPXGrader
         /// <param name="file">The file to load.</param>
         private void LoadDyKnowFile(string file)
         {
-            this.dyknow = DyKnow.DeserializeFromFile(file);
-            this.TextBoxFileName.Text = file;
-            this.DisplayPanel(0);
-            this.selectedPanelId = 1;
+            // Reset the GUI
+            this.EnableStepTwo();
+            this.DisableStepThree();
+            this.GridResults.Children.Clear();
+            this.Inky.Children.Clear();
+            this.Inky.Strokes.Clear();
             this.PanelScrollView.Children.Clear();
+            this.TextBoxPreviewOutput.Text = string.Empty;
+            this.TextBoxStudentName.Text = string.Empty;
+            this.TextBoxUserName.Text = string.Empty;
+            this.TextBoxFileName.Text = file;
+            this.selectedPanelId = -1;
+
+            this.dyknow = DyKnow.DeserializeFromFile(file);
+            if (this.dyknow.DATA.Count > 0)
+            {
+                this.DisplayPanel(0);
+                this.selectedPanelId = 0;
+            }
+
             for (int i = 0; i < this.dyknow.DATA.Count; i++)
             {
                 InkCanvas ink = new InkCanvas();
@@ -423,6 +480,8 @@ namespace DPXGrader
                 record[4] = valDigit;
                 this.results.Add(record);
             }
+
+            this.EnableStepThree();
         }
 
         /// <summary>
