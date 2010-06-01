@@ -7,6 +7,7 @@ namespace DPXGrader
     using System;
     using System.Collections.ObjectModel;
     using System.Diagnostics;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading;
@@ -491,8 +492,46 @@ namespace DPXGrader
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Implement me!
-            MessageBox.Show("Not Implemented Yet.");
+            try
+            {
+                // Let the user choose which file to open
+                Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
+                saveFileDialog.Filter = "CSV (*.csv)|*.csv";
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    // Save the CSV file
+                    string file = saveFileDialog.FileName;
+                    StreamWriter sr = new StreamWriter(file);
+                    for (int i = 0; i < this.results.Count; i++)
+                    {
+                        for (int j = 0; j < this.results[i].Length; j++)
+                        {
+                            // TODO: This code is really sloppy, lots of error checking and escaping action needs to happen here!
+                            string val = this.results[i][j].ToString();
+                            val = val.Replace("\n", " ");
+                            val = val.Replace(',', ' ');
+                            sr.Write(val);
+
+                            if (j + i < this.results[i].Length)
+                            {
+                                sr.Write(',');
+                            }
+                        }
+
+                        sr.WriteLine();
+                    }
+
+                    sr.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Error: The file could not be saved.");
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("The file was not saved successfully.");
+            }
         }
     }
 }
