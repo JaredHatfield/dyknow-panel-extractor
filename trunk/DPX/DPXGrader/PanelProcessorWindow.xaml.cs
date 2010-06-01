@@ -35,7 +35,7 @@ namespace DPXGrader
         /// <summary>
         /// The collection of results.
         /// </summary>
-        private Collection<object[]> results;
+        private Collection<string[]> results;
 
         /// <summary>
         /// The size of the grade box.
@@ -68,7 +68,7 @@ namespace DPXGrader
             this.boxLocation = BoxLocation.TopLeft;
             this.selectedThumbnail = new Border();
             this.selectedPanelId = -1;
-            this.results = new Collection<object[]>();
+            this.results = new Collection<string[]>();
             this.DisableStepTwo();
             this.DisableStepThree();
         }
@@ -473,12 +473,12 @@ namespace DPXGrader
                 this.GridResults.Children.Add(digit);
 
                 // Add the values to the results collection
-                object[] record = new object[5];
-                record[0] = i;
+                string[] record = new string[5];
+                record[0] = string.Empty + i;
                 record[1] = page.ONERN;
                 record[2] = page.ONER;
                 record[3] = val;
-                record[4] = valDigit;
+                record[4] = string.Empty + valDigit;
                 this.results.Add(record);
             }
 
@@ -504,21 +504,25 @@ namespace DPXGrader
                     StreamWriter sr = new StreamWriter(file);
                     for (int i = 0; i < this.results.Count; i++)
                     {
-                        for (int j = 0; j < this.results[i].Length; j++)
+                        string[] val = this.results[i];
+                        for (int j = 0; j < val.Length; j++)
                         {
-                            // TODO: This code is really sloppy, lots of error checking and escaping action needs to happen here!
-                            string val = this.results[i][j].ToString();
-                            val = val.Replace("\n", " ");
-                            val = val.Replace(',', ' ');
-                            sr.Write(val);
-
-                            if (j + i < this.results[i].Length)
+                            // Remove any line breaks that may be part of the elements and replace them with spaces
+                            if (val[j].Contains(Environment.NewLine))
                             {
-                                sr.Write(',');
+                                val[j] = val[j].Replace(Environment.NewLine, " ");
+                            }
+
+                            // Any of the strings that contain a comma need to be surrounded with double quotes
+                            if (val[j].Contains(','))
+                            {
+                                // TODO: What if there are double quotes contained within the string, these should be escaped.
+                                val[j] = "\"" + val[j] + "\"";
                             }
                         }
 
-                        sr.WriteLine();
+                        string output = string.Join(",", val);
+                        sr.WriteLine(output);
                     }
 
                     sr.Close();
