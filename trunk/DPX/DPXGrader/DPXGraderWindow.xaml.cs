@@ -47,25 +47,6 @@ namespace DPXGrader
         }
 
         /// <summary>
-        /// Buttons the grade zone.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
-        private void ButtonGradeZone_Click(object sender, RoutedEventArgs e)
-        {
-            // Let the user choose which file to open
-            Microsoft.Win32.OpenFileDialog openFileDialog1 = new Microsoft.Win32.OpenFileDialog();
-            openFileDialog1.Filter = "DyKnow files (*.dyz)|*.dyz";
-            if (openFileDialog1.ShowDialog() == true)
-            {
-                // Open the DyKnow file
-                DyKnow dr = DyKnow.DeserializeFromFile(openFileDialog1.FileName);
-                GradeZoneSelection gzs = new GradeZoneSelection(dr);
-                gzs.ShowDialog();
-            }
-        }
-
-        /// <summary>
         /// Handles the Click event of the ButtonAccuracy control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>

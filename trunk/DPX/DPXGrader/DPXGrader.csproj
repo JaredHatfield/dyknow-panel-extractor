@@ -91,10 +91,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GradeZoneSelection.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="PanelProcessorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -118,9 +114,6 @@
     <Compile Include="Accuracy\RecognitionWordTest.cs" />
     <Compile Include="GradeInputBox.xaml.cs">
       <DependentUpon>GradeInputBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GradeZoneSelection.xaml.cs">
-      <DependentUpon>GradeZoneSelection.xaml</DependentUpon>
     </Compile>
     <Compile Include="PanelProcessorWindow.xaml.cs">
       <DependentUpon>PanelProcessorWindow.xaml</DependentUpon>
