@@ -45,6 +45,7 @@
                     <Label Style="{StaticResource StepLabel}">Step 1</Label>
                     <Label Style="{StaticResource DescriptionLabel}">Select File</Label>
                     <Button Name="ButtonOpen" Width="100" Click="ButtonOpen_Click">Open</Button>
+                    <ProgressBar Height="20" Name="ProgressBarOpen" Width="100" />
                 </StackPanel>
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
@@ -72,7 +73,8 @@
                 <StackPanel Width="150" Background="LightSteelBlue">
                     <Label Style="{StaticResource StepLabel}">Step 2</Label>
                     <Label Style="{StaticResource DescriptionLabel}">Choose Region</Label>
-                    <Button Name="ButtonProcess" Click="ButtonProcess_Click">Process</Button>
+                    <Button Name="ButtonProcess" Width="100" Click="ButtonProcess_Click">Process</Button>
+                    <ProgressBar Height="20" Name="ProgressBarProcess" Width="100" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel>
