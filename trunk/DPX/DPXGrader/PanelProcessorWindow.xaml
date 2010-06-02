@@ -1,7 +1,7 @@
 ﻿<Window x:Class="DPXGrader.PanelProcessorWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="PanelProcessorWindow" 
+    Title="DPX Grader" 
     Height="685" Width="790" 
     ResizeMode="NoResize"
     Icon="Icon.ico">

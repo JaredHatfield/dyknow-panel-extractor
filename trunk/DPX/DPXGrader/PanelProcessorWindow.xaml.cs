@@ -429,7 +429,7 @@ namespace DPXGrader
 
                 // Add the panel number
                 Label num = new Label();
-                num.Content = i.ToString();
+                num.Content = (i + 1).ToString();
                 num.BorderBrush = Brushes.DarkGray;
                 num.BorderThickness = new Thickness(1);
                 Grid.SetRow(num, i);
@@ -474,7 +474,7 @@ namespace DPXGrader
 
                 // Add the values to the results collection
                 string[] record = new string[5];
-                record[0] = string.Empty + i;
+                record[0] = (i + 1).ToString();
                 record[1] = page.ONERN;
                 record[2] = page.ONER;
                 record[3] = val;
