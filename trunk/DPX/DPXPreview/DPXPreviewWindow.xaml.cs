@@ -212,5 +212,17 @@ namespace DPXPreview
         {
             // Nothing here yet.
         }
+
+        /// <summary>
+        /// Parsers the validator window.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void ParserValidatorWindow(object sender, RoutedEventArgs e)
+        {
+            // Display the window that is able to validate a DyKnow file.
+            ParserValidatorWindow pvw = new ParserValidatorWindow();
+            pvw.ShowDialog();
+        }
     }
 }
