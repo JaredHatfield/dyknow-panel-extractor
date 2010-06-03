@@ -149,6 +149,24 @@ namespace UnitTests
         }
 
         /// <summary>
+        /// Test the serialization and deserialization of a DyKnow file that was retreived from a session.
+        /// </summary>
+        [TestMethod()]
+        public void SerializationTestRetreivedPanels()
+        {
+            this.PerformSerializationTest("TestRetrievedPanels", "Retreived Panels");
+        }
+
+        /// <summary>
+        /// Test the serialization and deserialization of a DyKnow file that contains chat content.
+        /// </summary>
+        [TestMethod()]
+        public void SerializationTestSessionChat()
+        {
+            this.PerformSerializationTest("TestSessionChat", "Session Chat");
+        }
+
+        /// <summary>
         /// Performs the serialization test.
         /// </summary>
         /// <param name="file">The file to process.</param>

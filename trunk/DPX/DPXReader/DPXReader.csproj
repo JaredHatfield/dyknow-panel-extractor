@@ -71,6 +71,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DyKnow\Message.cs" />
     <Compile Include="LegacyReader\DyKnowImage.cs" />
     <Compile Include="LegacyReader\DyKnowPage.cs" />
     <Compile Include="LegacyReader\DyKnowPenStroke.cs" />

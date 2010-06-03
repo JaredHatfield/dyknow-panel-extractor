@@ -14,6 +14,7 @@ namespace DPXReader.DyKnow
     /// <summary>
     /// The mrgn object.
     /// </summary>
+    [XmlRoot("MRGN")]
     public class Mrgn
     {
         /// <summary>

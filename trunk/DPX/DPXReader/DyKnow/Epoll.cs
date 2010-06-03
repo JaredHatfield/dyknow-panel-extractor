@@ -14,6 +14,7 @@ namespace DPXReader.DyKnow
     /// <summary>
     /// The representation of a poll.
     /// </summary>
+    [XmlRoot("EPOLL")]
     public class Epoll
     {
         /// <summary>

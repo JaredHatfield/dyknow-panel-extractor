@@ -109,6 +109,7 @@ namespace DPXReader.DyKnow
         /// </summary>
         /// <value>The CHATS list of objects.</value>
         [XmlArray("CHATS")]
+        [XmlArrayItem("MSG", typeof(Message))]
         public ArrayList CHATS
         {
             get { return this.chats; }
