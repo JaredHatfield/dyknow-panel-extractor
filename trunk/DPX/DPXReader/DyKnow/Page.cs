@@ -82,7 +82,7 @@ namespace DPXReader.DyKnow
         {
             this.animlist = new ArrayList();
             this.olst = new ArrayList();
-            this.mrgn = new Mrgn();
+            this.mrgn = null;
         }
 
         /// <summary>
