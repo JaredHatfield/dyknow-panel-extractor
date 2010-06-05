@@ -21,6 +21,7 @@ namespace DPXPreview
     using System.Windows.Media.Imaging;
     using System.Windows.Shapes;
     using System.Windows.Threading;
+    using DiffMatchPatch;
     using DPXReader.DyKnow;
 
     /// <summary>
@@ -95,6 +96,7 @@ namespace DPXPreview
         private void OutputMessage(string message)
         {
             this.TextBoxResults.Text += message + "\n";
+            this.TextBoxResults.ScrollToEnd();
         }
 
         /// <summary>
@@ -104,6 +106,24 @@ namespace DPXPreview
         private void OutputMessageDispatch(string message)
         {
             Dispatcher.Invoke(new OutputMessageDelegate(this.OutputMessage), DispatcherPriority.Input, message);
+        }
+
+        /// <summary>
+        /// Outputs the content of the web.
+        /// </summary>
+        /// <param name="html">The HTML content.</param>
+        private void OutputWebContent(string html)
+        {
+            this.WebBrowserResults.NavigateToString(html);
+        }
+
+        /// <summary>
+        /// Outputs the web content dispatch.
+        /// </summary>
+        /// <param name="html">The HTML content.</param>
+        private void OutputWebContentDispatch(string html)
+        {
+            Dispatcher.Invoke(new OutputMessageDelegate(this.OutputWebContent), DispatcherPriority.Input, html);
         }
 
         /// <summary>
@@ -157,19 +177,18 @@ namespace DPXPreview
                 Debug.WriteLine("Original: " + original.Length + " - Repacked: " + repacked.Length);
                 if (!original.Equals(repacked))
                 {
-                    // Write the original XML (with line breaks) to a file
-                    /*
-                    TextWriter tro = new StreamWriter(file + "-Original" + ".txt");
-                    tro.WriteLine(original.Replace("><", ">\n<"));
-                    tro.Close();
-                     */
+                    diff_match_patch d = new diff_match_patch();
+                    List<Diff> diff = d.diff_main(original.Replace("><", ">\n<"), repacked.Replace("><", ">\n<"));
+                    d.diff_cleanupSemantic(diff);
+                    this.OutputWebContentDispatch(d.diff_prettyHtml(diff));
+                    for (int i = 0; i < diff.Count; i++)
+                    {
+                        if (!diff[i].operation.Equals(Operation.EQUAL))
+                        {
+                            this.OutputMessageDispatch(diff[i].operation + " - \t" + diff[i].text);
+                        }
+                    }
 
-                    // Write the repacked XML (with line breaks) to a file
-                    /*
-                    TextWriter trr = new StreamWriter(file + "-Repacked" + ".txt");
-                    trr.WriteLine(repacked.Replace("><", ">\n<"));
-                    trr.Close();
-                     */
                     this.OutputMessageDispatch("Failed...");
                 }
                 else

@@ -1,9 +1,10 @@
 ﻿<Window x:Class="DPXPreview.ParserValidatorWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="ParserValidatorWindow" Height="300" Width="300">
+    Title="ParserValidatorWindow" Height="300" Width="800">
     <DockPanel>
         <Button Name="ButtonSelectFiles" Width="150" Height="30" DockPanel.Dock="Top" Click="ButtonSelectFiles_Click">Select Files</Button>
-        <TextBox Name="TextBoxResults"></TextBox>
+        <TextBox Name="TextBoxResults" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Width="300"></TextBox>
+        <WebBrowser Name="WebBrowserResults" DockPanel.Dock="Right" Width="800" />
     </DockPanel>
 </Window>
