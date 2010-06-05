@@ -28,10 +28,16 @@ namespace DPXReader.DyKnow
         private Guid objid;
 
         /// <summary>
+        /// The vrsn value;
+        /// </summary>
+        private string vrsn;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Edde"/> class.
         /// </summary>
         public Edde()
         {
+            this.vrsn = null;
         }
 
         /// <summary>
@@ -66,6 +72,17 @@ namespace DPXReader.DyKnow
         {
             get { return this.objid; }
             set { this.objid = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the VRSN.
+        /// </summary>
+        /// <value>The VRSN value.</value>
+        [XmlAttribute("VRSN")]
+        public string VRSN
+        {
+            get { return this.vrsn; }
+            set { this.vrsn = value; }
         }
     }
 }
