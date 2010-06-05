@@ -71,6 +71,16 @@ namespace DPXReader.DyKnow
         private ArrayList olst;
 
         /// <summary>
+        /// The ulst object.
+        /// </summary>
+        private Ulst ulst;
+
+        /// <summary>
+        /// The nlst object.
+        /// </summary>
+        private Nlst nlst;
+
+        /// <summary>
         /// The mrgn object.
         /// </summary>
         private Mrgn mrgn;
@@ -82,6 +92,8 @@ namespace DPXReader.DyKnow
         {
             this.animlist = new ArrayList();
             this.olst = new ArrayList();
+            this.ulst = null;
+            this.nlst = null;
             this.mrgn = null;
         }
 
@@ -257,6 +269,28 @@ namespace DPXReader.DyKnow
         {
             get { return this.olst; }
             set { this.olst = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the ULST.
+        /// </summary>
+        /// <value>The ULST value.</value>
+        [XmlElement("ULST")]
+        public Ulst ULST
+        {
+            get { return this.ulst; }
+            set { this.ulst = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the NLST.
+        /// </summary>
+        /// <value>The NLST value.</value>
+        [XmlElement("NLST")]
+        public Nlst NLST
+        {
+            get { return this.nlst; }
+            set { this.nlst = value; }
         }
 
         /// <summary>
