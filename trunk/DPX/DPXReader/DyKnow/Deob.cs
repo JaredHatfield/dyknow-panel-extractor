@@ -25,7 +25,7 @@ namespace DPXReader.DyKnow
         /// <summary>
         /// The uid value.
         /// </summary>
-        private Guid uid;
+        private Guid? uid;
 
         /// <summary>
         /// The ig value.
@@ -43,6 +43,7 @@ namespace DPXReader.DyKnow
         public Deob()
         {
             this.deli = new ArrayList();
+            this.uid = null;
         }
 
         /// <summary>
@@ -75,10 +76,22 @@ namespace DPXReader.DyKnow
         /// </summary>
         /// <value>The UID value.</value>
         [XmlAttribute("UID")]
-        public Guid UID
+        public string UID
         {
-            get { return this.uid; }
-            set { this.uid = value; }
+            get
+            {
+                if (this.uid.HasValue)
+                {
+                    return this.uid.Value.ToString();
+                }
+
+                return null;
+            }
+
+            set
+            {
+                this.uid = new Guid(value);
+            }
         }
 
         /// <summary>
