@@ -2,7 +2,7 @@
 // GNU General Public License v3
 // </copyright>
 // <summary>Recognition test for a word.</summary>
-namespace DPXGrader.Accuracy
+namespace HandwritingAccuracy
 {
     using System;
     using System.Collections.Generic;

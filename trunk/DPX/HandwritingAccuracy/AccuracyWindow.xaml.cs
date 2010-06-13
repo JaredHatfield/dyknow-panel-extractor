@@ -2,7 +2,7 @@
 // GNU General Public License v3
 // </copyright>
 // <summary>The window for the accuracy test..</summary>
-namespace DPXGrader.Accuracy
+namespace HandwritingAccuracy
 {
     using System;
     using System.Collections.ObjectModel;

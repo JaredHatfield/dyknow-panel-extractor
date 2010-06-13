@@ -1,8 +1,8 @@
-﻿// <copyright file="RecognitionDoubleTest.cs" company="University of Louisville Speed School of Engineering">
+﻿// <copyright file="RecognitionIntegerTest.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
-// <summary>Recognition test for a double.</summary>
-namespace DPXGrader.Accuracy
+// <summary>Recognition test for an integer.</summary>
+namespace HandwritingAccuracy
 {
     using System;
     using System.Collections.Generic;
@@ -10,22 +10,22 @@ namespace DPXGrader.Accuracy
     using System.Text;
 
     /// <summary>
-    /// Recognition test for a double.
+    /// Recognition test for an integer.
     /// </summary>
-    public class RecognitionDoubleTest : RecognitionTest
+    public class RecognitionIntegerTest : RecognitionTest
     {
         /// <summary>
         /// The number that is being tested.
         /// </summary>
-        private double target;
+        private int target;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RecognitionDoubleTest"/> class.
+        /// Initializes a new instance of the <see cref="RecognitionIntegerTest"/> class.
         /// </summary>
-        public RecognitionDoubleTest()
+        public RecognitionIntegerTest()
             : base()
         {
-            this.target = Math.Round(RecognitionTest.Random.NextDouble() * 10, 2);
+            this.target = RecognitionTest.Random.Next(0, 101);
         }
 
         /// <summary>
