@@ -37,7 +37,7 @@ namespace HandwritingAccuracy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("HandwritingAccuracy")]
+        [global::System.Configuration.DefaultSettingValueAttribute("handwritingaccuracy")]
         public string DBName {
             get {
                 return ((string)(this["DBName"]));
@@ -49,7 +49,7 @@ namespace HandwritingAccuracy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("handwriting")]
+        [global::System.Configuration.DefaultSettingValueAttribute("root")]
         public string DBUid {
             get {
                 return ((string)(this["DBUid"]));
@@ -61,7 +61,7 @@ namespace HandwritingAccuracy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("accuracy")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string DBPass {
             get {
                 return ((string)(this["DBPass"]));

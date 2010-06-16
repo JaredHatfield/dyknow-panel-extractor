@@ -5,8 +5,9 @@
 namespace HandwritingAccuracy
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Data.Odbc;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
 
@@ -38,7 +39,7 @@ namespace HandwritingAccuracy
         /// Instances this instance.
         /// </summary>
         /// <returns>The singleton instance.</returns>
-        private static DatabaseManager Instance()
+        internal static DatabaseManager Instance()
         {
             if (DatabaseManager.instance == null)
             {
@@ -46,6 +47,51 @@ namespace HandwritingAccuracy
             }
 
             return DatabaseManager.instance;
+        }
+
+        /// <summary>
+        /// Gets the participant.
+        /// </summary>
+        /// <param name="firstname">The firstname.</param>
+        /// <param name="lastname">The lastname.</param>
+        /// <returns>The participant.</returns>
+        internal Participant GetParticipant(string firstname, string lastname)
+        {
+            OdbcCommand command = new OdbcCommand("SELECT `pid`, `firstname`, `lastname`, `handedness`, `gender`, `own`, `use` FROM `participant` WHERE `firstname` = ? AND `lastname` = ? LIMIT 1;", this.connection);
+            OdbcParameter first = new OdbcParameter("firstname", firstname);
+            command.Parameters.Add(first);
+            OdbcParameter last = new OdbcParameter("lastname", lastname);
+            command.Parameters.Add(last);
+            OdbcDataReader reader = command.ExecuteReader();
+            reader.Read();
+            Participant p = new Participant(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(6));
+            return p;
+        }
+
+        /// <summary>
+        /// Gets all tablets.
+        /// </summary>
+        /// <returns>A collection of all of the tablets.</returns>
+        internal Collection<TabletPC> GetAllTablets()
+        {
+            Collection<TabletPC> results = new Collection<TabletPC>();
+            OdbcCommand command = new OdbcCommand("SELECT `pid`, `manufacturer`, `model` FROM `tablet`", this.connection);
+            try
+            {
+                this.Connect();
+                OdbcDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    TabletPC tablet = new TabletPC(reader.GetInt32(0), reader.GetString(1), reader.GetString(2));
+                    results.Add(tablet);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Could not execute query " + e.Message);
+            }
+
+            return results;
         }
 
         /// <summary>
