@@ -50,6 +50,29 @@ namespace HandwritingAccuracy
         }
 
         /// <summary>
+        /// Inserts the experiment.
+        /// </summary>
+        /// <param name="participant">The participant.</param>
+        /// <param name="tablet">The tablet.</param>
+        /// <returns>The id of the new experiment.</returns>
+        internal int InsertExperiment(Participant participant, TabletPC tablet)
+        {
+            OdbcCommand command = new OdbcCommand("INSERT INTO `experiment` (`participant`, `tablet`, `time`) VALUES(?, ?, NOW());", this.connection);
+            OdbcParameter p = new OdbcParameter("participant", participant.PID);
+            command.Parameters.Add(p);
+            OdbcParameter t = new OdbcParameter("tablet", tablet.PID);
+            command.Parameters.Add(t);
+            int n = command.ExecuteNonQuery();
+            
+            // Get the last inserted 
+            OdbcCommand command2 = new OdbcCommand("SELECT LAST_INSERT_ID()", this.connection);
+            object result = command2.ExecuteScalar();
+            int value = Int32.Parse(result.ToString());
+            Debug.WriteLine("Inserted Experiment with PID = " + value);
+            return value;
+        }
+
+        /// <summary>
         /// Gets the participant.
         /// </summary>
         /// <param name="firstname">The firstname.</param>
@@ -63,9 +86,13 @@ namespace HandwritingAccuracy
             OdbcParameter last = new OdbcParameter("lastname", lastname);
             command.Parameters.Add(last);
             OdbcDataReader reader = command.ExecuteReader();
-            reader.Read();
-            Participant p = new Participant(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(6));
-            return p;
+            if (reader.Read())
+            {
+                Participant p = new Participant(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(6));
+                return p;
+            }
+
+            return null;
         }
 
         /// <summary>

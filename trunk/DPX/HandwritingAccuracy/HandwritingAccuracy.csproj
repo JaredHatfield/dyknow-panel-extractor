@@ -96,7 +96,9 @@
     <Compile Include="AccuracyWindow.xaml.cs">
       <DependentUpon>AccuracyWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Alternative.cs" />
     <Compile Include="DatabaseManager.cs" />
+    <Compile Include="Experiment.cs" />
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -118,6 +120,7 @@
     <Compile Include="RecognitionIntegerTest.cs" />
     <Compile Include="RecognitionTest.cs" />
     <Compile Include="RecognitionWordTest.cs" />
+    <Compile Include="Run.cs" />
     <Compile Include="TabletPC.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

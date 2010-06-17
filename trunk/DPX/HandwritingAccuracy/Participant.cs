@@ -12,7 +12,7 @@ namespace HandwritingAccuracy
     /// <summary>
     /// The representation of a Participant.
     /// </summary>
-    internal class Participant
+    public class Participant
     {
         /// <summary>
         /// The pid value.
@@ -94,7 +94,7 @@ namespace HandwritingAccuracy
         /// Gets or sets the last name.
         /// </summary>
         /// <value>The last name value.</value>
-        private string LastName
+        public string LastName
         {
             get { return this.lastname; }
             set { this.lastname = value; }
@@ -104,7 +104,7 @@ namespace HandwritingAccuracy
         /// Gets or sets the handedness.
         /// </summary>
         /// <value>The handedness value.</value>
-        private string Handedness
+        public string Handedness
         {
             get { return this.handedness; }
             set { this.handedness = value; }
@@ -114,7 +114,7 @@ namespace HandwritingAccuracy
         /// Gets or sets the gender.
         /// </summary>
         /// <value>The gender value.</value>
-        private string Gender
+        public string Gender
         {
             get { return this.gender; }
             set { this.gender = value; }
@@ -124,7 +124,7 @@ namespace HandwritingAccuracy
         /// Gets or sets the own.
         /// </summary>
         /// <value>The own value.</value>
-        private int Own
+        public int Own
         {
             get { return this.own; }
             set { this.own = value; }
@@ -134,7 +134,7 @@ namespace HandwritingAccuracy
         /// Gets or sets the use.
         /// </summary>
         /// <value>The use value.</value>
-        private int Use
+        public int Use
         {
             get { return this.use; }
             set { this.use = value; }

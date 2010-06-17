@@ -12,7 +12,7 @@ namespace HandwritingAccuracy
     /// <summary>
     /// The representation of a Tablet PC.
     /// </summary>
-    internal class TabletPC
+    public class TabletPC
     {
         /// <summary>
         /// The primary id.

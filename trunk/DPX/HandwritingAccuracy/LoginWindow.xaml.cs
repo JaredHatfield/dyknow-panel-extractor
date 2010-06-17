@@ -40,6 +40,26 @@ namespace HandwritingAccuracy
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ButtonLogin_Click(object sender, RoutedEventArgs e)
         {
+            TabletPC t = this.ComboBoxTablet.SelectedItem as TabletPC;
+
+            if (t == null)
+            {
+                MessageBox.Show("Tablet not selected");
+            }
+            else
+            {
+                Participant p = DatabaseManager.Instance().GetParticipant(this.TextBoxFirstName.Text, this.TextBoxLastName.Text);
+                
+                if (p == null)
+                {
+                    MessageBox.Show("User not found!");
+                }
+                else
+                {
+                    AccuracyWindow a = new AccuracyWindow(p, t);
+                    a.ShowDialog();
+                }
+            }
         }
     }
 }

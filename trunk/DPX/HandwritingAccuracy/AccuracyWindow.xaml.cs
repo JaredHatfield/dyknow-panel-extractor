@@ -24,6 +24,11 @@ namespace HandwritingAccuracy
     public partial class AccuracyWindow : Window
     {
         /// <summary>
+        /// The total number of tests.
+        /// </summary>
+        private const int TotalTests = 60;
+            
+        /// <summary>
         /// The list of tests that have been run.
         /// </summary>
         private Collection<RecognitionTest> tests = new Collection<RecognitionTest>();
@@ -34,12 +39,49 @@ namespace HandwritingAccuracy
         private RecognitionTest rt;
 
         /// <summary>
+        /// The experiment id.
+        /// </summary>
+        private int experimentId;
+
+        /// <summary>
+        /// The participant.
+        /// </summary>
+        private Participant participant;
+
+        /// <summary>
+        /// The tablet pc.
+        /// </summary>
+        private TabletPC tablet;
+
+        /// <summary>
+        /// The current test number.
+        /// </summary>
+        private int currentTestNumber;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AccuracyWindow"/> class.
         /// </summary>
-        public AccuracyWindow()
+        /// <param name="participant">The participant.</param>
+        /// <param name="tablet">The tablet.</param>
+        public AccuracyWindow(Participant participant, TabletPC tablet)
         {
+            this.participant = participant;
+            this.tablet = tablet;
+            this.currentTestNumber = 0;
             InitializeComponent();
-            this.NewTest();
+
+            // Display all of the information on the GUI
+            this.TextBoxParticipant.Text = this.participant.LastName + ", " + this.participant.FirstName;
+            this.TextBoxTablet.Text = tablet.ToString();
+
+            // Insert the new experiment into the database
+            this.experimentId = DatabaseManager.Instance().InsertExperiment(this.participant, this.tablet);
+            Debug.WriteLine("The experiment ID is: " + this.experimentId);
+
+            // Enable the required parts of the interface
+            this.Inky.IsEnabled = false;
+            this.ButtonClear.IsEnabled = false;
+            this.ButtonConfirm.IsEnabled = false;
         }
 
         /// <summary>
@@ -79,6 +121,7 @@ namespace HandwritingAccuracy
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ButtonConfirm_Click(object sender, RoutedEventArgs e)
         {
+            this.ProgressBar.Value = ++this.currentTestNumber;
             this.TextBoxResults.Text += this.rt.Text + "\t" + this.rt.RecognizedText + "\t";
             if (this.rt.Passed)
             {
@@ -89,6 +132,25 @@ namespace HandwritingAccuracy
                 this.TextBoxResults.Text += "Failed\n";
             }
 
+            this.NewTest();
+        }
+
+        /// <summary>
+        /// Handles the Click event of the ButtonStart control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void ButtonStart_Click(object sender, RoutedEventArgs e)
+        {
+            // Disable the start button
+            this.ButtonStart.IsEnabled = false;
+
+            // Enable the required parts of the interface
+            this.Inky.IsEnabled = true;
+            this.ButtonClear.IsEnabled = true;
+            this.ButtonConfirm.IsEnabled = true;
+
+            // Start the experiment
             this.NewTest();
         }
     }
