@@ -30,9 +30,29 @@ namespace DPXPreview
     public partial class ParserValidatorWindow : Window
     {
         /// <summary>
-        /// The list of files to validate.
+        /// The random number generator.
         /// </summary>
-        private string[] fileNames;
+        private Random r = new Random();
+
+        /// <summary>
+        /// The collection of KnownMistakes that will not produce a failure of the serialization algorithm.
+        /// </summary>
+        private List<KnownMistake> knownMistakes;
+
+        /// <summary>
+        /// The queue that contains all of the work that needs to be performed.
+        /// </summary>
+        private Queue<FileProcessRow> workerQueue;
+
+        /// <summary>
+        /// The list of threads.
+        /// </summary>
+        private List<Thread> threadList;
+
+        /// <summary>
+        /// The current row counter.
+        /// </summary>
+        private int currentRow;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ParserValidatorWindow"/> class.
@@ -40,6 +60,29 @@ namespace DPXPreview
         public ParserValidatorWindow()
         {
             InitializeComponent();
+
+            // Set the row count
+            this.currentRow = 0;
+
+            // Create the worker queue
+            this.workerQueue = new Queue<FileProcessRow>();
+
+            // Add all of the known mistakes to the collection
+            this.knownMistakes = new List<KnownMistake>();
+            this.knownMistakes.Add(new KnownMistake(Operation.INSERT, "<ANIMLIST />\n"));
+
+            // Start all of the worker threads
+            this.threadList = new List<Thread>();
+            for (int i = 0; i < 3; i++)
+            {
+                Thread t = new Thread(new ThreadStart(this.Worker));
+                t.Name = "Queue Worker " + i;
+                t.Start();
+                this.threadList.Add(t);
+            }
+
+            // Subscribe the shutdown method.
+            Dispatcher.ShutdownStarted += this.DispatcherShutdownStarted;
         }
 
         /// <summary>
@@ -54,6 +97,19 @@ namespace DPXPreview
         private delegate void OutputMessageDelegate(string message);
 
         /// <summary>
+        /// Handles the ShutdownStarted event of the Dispatcher control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void DispatcherShutdownStarted(object sender, EventArgs e)
+        {
+            for (int i = 0; i < this.threadList.Count; i++)
+            {
+                this.threadList[i].Abort();
+            }
+        }
+
+        /// <summary>
         /// Handles the Click event of the ButtonSelectFiles control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -66,64 +122,47 @@ namespace DPXPreview
             openFileDialog.Multiselect = true;
             if (openFileDialog.ShowDialog() == true)
             {
-                this.ButtonSelectFiles.IsEnabled = false;
-                this.fileNames = openFileDialog.FileNames;
-                Thread t = new Thread(new ThreadStart(this.ValidateFiles));
-                t.Start();
+                string[] files = openFileDialog.FileNames;
+                
+                // TODO: Add all of the files to the GUI and add them to the worker queue
+                for (int i = 0; i < files.Length; i++)
+                {
+                    // Add the row definition
+                    RowDefinition rd = new RowDefinition();
+                    rd.Height = GridLength.Auto;
+                    this.GridResults.RowDefinitions.Add(rd);
+
+                    // Add the file name
+                    Label num = new Label();
+                    num.Content = files[i];
+                    num.BorderBrush = Brushes.DarkGray;
+                    num.BorderThickness = new Thickness(1);
+                    Grid.SetRow(num, this.currentRow);
+                    Grid.SetColumn(num, 0);
+                    this.GridResults.Children.Add(num);
+
+                    // Add the progress
+                    Label progress = new Label();
+                    progress.Content = "Processing...";
+                    progress.BorderBrush = Brushes.DarkGray;
+                    progress.BorderThickness = new Thickness(1);
+                    progress.Background = Brushes.LightBlue;
+                    Grid.SetRow(progress, this.currentRow);
+                    Grid.SetColumn(progress, 1);
+                    this.GridResults.Children.Add(progress);
+
+                    // Increment the row
+                    this.currentRow++;
+
+                    // Create the progress
+                    FileProcessRow f = new FileProcessRow(Dispatcher, files[i], progress);
+                    lock (this.workerQueue)
+                    {
+                        this.workerQueue.Enqueue(f);
+                        Monitor.Pulse(this.workerQueue);
+                    }
+                }
             }
-        }
-
-        /// <summary>
-        /// Validates the list of the files.
-        /// </summary>
-        private void ValidateFiles()
-        {
-            // Loop through all of the files and validate the parsers
-            for (int i = 0; i < this.fileNames.Length; i++)
-            {
-                // Compare the files
-                this.PerformSerializationTest(this.fileNames[i]);
-            }
-
-            // All Done
-            Dispatcher.BeginInvoke(new NoArgsDelegate(this.EnableButtons), DispatcherPriority.Loaded);
-        }
-
-        /// <summary>
-        /// Outputs the message.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        private void OutputMessage(string message)
-        {
-            this.TextBoxResults.Text += message + "\n";
-            this.TextBoxResults.ScrollToEnd();
-        }
-
-        /// <summary>
-        /// Outpots the message dispatch.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        private void OutputMessageDispatch(string message)
-        {
-            Dispatcher.Invoke(new OutputMessageDelegate(this.OutputMessage), DispatcherPriority.Input, message);
-        }
-
-        /// <summary>
-        /// Outputs the content of the web.
-        /// </summary>
-        /// <param name="html">The HTML content.</param>
-        private void OutputWebContent(string html)
-        {
-            this.WebBrowserResults.NavigateToString(html);
-        }
-
-        /// <summary>
-        /// Outputs the web content dispatch.
-        /// </summary>
-        /// <param name="html">The HTML content.</param>
-        private void OutputWebContentDispatch(string html)
-        {
-            Dispatcher.Invoke(new OutputMessageDelegate(this.OutputWebContent), DispatcherPriority.Input, html);
         }
 
         /// <summary>
@@ -135,33 +174,52 @@ namespace DPXPreview
         }
 
         /// <summary>
+        /// The loop for a worker thread.
+        /// </summary>
+        private void Worker()
+        {
+            while (true)
+            {
+                FileProcessRow f = null;
+                lock (this.workerQueue)
+                {
+                    if (this.workerQueue.Count > 0)
+                    {
+                        f = this.workerQueue.Dequeue();
+                    }
+                }
+
+                if (f != null)
+                {
+                    this.PerformSerializationTest(f);
+                }
+                else
+                {
+                    Thread.Sleep(this.r.Next(1000, 5000));
+                }
+            }
+        }
+
+        /// <summary>
         /// Performs the serialization test.
         /// </summary>
-        /// <param name="file">The file to test.</param>
-        private void PerformSerializationTest(string file)
+        /// <param name="f">The FileProcessRow to perform the test on.</param>
+        private void PerformSerializationTest(FileProcessRow f)
         {
             // Read in the file as a string
-            FileStream inputFile = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read);
+            FileStream inputFile = new FileStream(f.FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
             GZipStream gzipFile = new GZipStream(inputFile, CompressionMode.Decompress, true);
             StreamReader reader = new StreamReader(gzipFile);
             string original = reader.ReadToEnd();
             gzipFile.Close();
             inputFile.Close();
             DyKnow dyknow = this.DeserializeDyKnow(original);
-            this.OutputMessageDispatch("Processing: " + file);
-            
+
             if (dyknow == null)
             {
-                // Write the XML (with line breaks) that could not be parsed to a file
-                /*
-                TextWriter tre = new StreamWriter(file + "-Failed" + ".txt");
-                tre.WriteLine(original.Replace("><", ">\n<"));
-                tre.Close();
-                 */
-
                 // Assert that the test failed.
-                Debug.WriteLine(file + " Test Failed to Serialize");
-                this.OutputMessageDispatch("File could not be deserialized.");
+                Debug.WriteLine(f.FileName + " Test Failed to Serialize");
+                f.SetFileFailed();
             }
             else
             {
@@ -180,20 +238,37 @@ namespace DPXPreview
                     diff_match_patch d = new diff_match_patch();
                     List<Diff> diff = d.diff_main(original.Replace("><", ">\n<"), repacked.Replace("><", ">\n<"));
                     d.diff_cleanupSemantic(diff);
-                    this.OutputWebContentDispatch(d.diff_prettyHtml(diff));
+
+                    bool hasKnown = false;
+                    bool hasUnknown = false;
                     for (int i = 0; i < diff.Count; i++)
                     {
                         if (!diff[i].operation.Equals(Operation.EQUAL))
                         {
-                            this.OutputMessageDispatch(diff[i].operation + " - \t" + diff[i].text);
+                            if (this.knownMistakes.Contains(new KnownMistake(diff[i])))
+                            {
+                                hasKnown = true;
+                            }
+                            else
+                            {
+                                hasUnknown = true;
+                            }
                         }
                     }
 
-                    this.OutputMessageDispatch("Failed...");
+                    // Set the warning or failed flag
+                    if (hasKnown && !hasUnknown)
+                    {
+                        f.SetFileWarning();
+                    }
+                    else
+                    {
+                        f.SetFileFailed();
+                    }
                 }
                 else
                 {
-                    this.OutputMessageDispatch("Success!");
+                    f.SetFilePassed();
                 }
             }
         }

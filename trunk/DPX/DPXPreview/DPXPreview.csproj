@@ -121,6 +121,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileProcessRow.cs" />
+    <Compile Include="KnownMistake.cs" />
     <Compile Include="ParserValidatorWindow.xaml.cs">
       <DependentUpon>ParserValidatorWindow.xaml</DependentUpon>
     </Compile>

@@ -3,8 +3,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="ParserValidatorWindow" Height="300" Width="800">
     <DockPanel>
-        <Button Name="ButtonSelectFiles" Width="150" Height="30" DockPanel.Dock="Top" Click="ButtonSelectFiles_Click">Select Files</Button>
-        <TextBox Name="TextBoxResults" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Width="300"></TextBox>
-        <WebBrowser Name="WebBrowserResults" DockPanel.Dock="Right" Width="800" />
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
+            <Button Name="ButtonSelectFiles" Width="150" Height="30" Click="ButtonSelectFiles_Click">Select Files</Button>
+        </StackPanel>
+        <ScrollViewer>
+            <Grid Name="GridResults">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="200" />
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </ScrollViewer>
     </DockPanel>
 </Window>
