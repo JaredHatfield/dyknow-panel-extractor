@@ -48,6 +48,11 @@ namespace DPXReader.DyKnow
         private string vrsn;
 
         /// <summary>
+        /// The ani value.
+        /// </summary>
+        private string ani;
+
+        /// <summary>
         /// The rtf value.
         /// </summary>
         private string rtf;
@@ -138,6 +143,17 @@ namespace DPXReader.DyKnow
         {
             get { return this.vrsn; }
             set { this.vrsn = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the ANI.
+        /// </summary>
+        /// <value>The ANI value.</value>
+        [XmlAttribute("ANI")]
+        public string ANI
+        {
+            get { return this.ani; }
+            set { this.ani = value; }
         }
 
         /// <summary>
