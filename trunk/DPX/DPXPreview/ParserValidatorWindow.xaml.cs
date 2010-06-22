@@ -264,6 +264,29 @@ namespace DPXPreview
                     else
                     {
                         f.SetFileFailed();
+
+                        // NOTE: The following code will write the analysis of the comparison out to files.
+                        /*
+                        // Write out all of the differences
+                        StreamWriter summary = new StreamWriter(f.FileName + ".out");
+                        for (int i = 0; i < diff.Count; i++)
+                        {
+                            if (diff[i].operation != Operation.EQUAL && !this.knownMistakes.Contains(new KnownMistake(diff[i])))
+                            {
+                                summary.WriteLine(diff[i].operation);
+                                summary.WriteLine(diff[i].text);
+                                summary.WriteLine("----------------------------------------------------");
+                            }
+                        }
+
+                        summary.Close();
+
+                        // Write out a pretty HTML file of the differences
+                        string html = d.diff_prettyHtml(diff);
+                        StreamWriter outfile = new StreamWriter(f.FileName + ".html");
+                        outfile.Write(html);
+                        outfile.Close();
+                         */
                     }
                 }
                 else
