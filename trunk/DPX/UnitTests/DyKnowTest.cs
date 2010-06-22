@@ -176,6 +176,15 @@ namespace UnitTests
         }
 
         /// <summary>
+        /// Test the serialization and deserialization of a DyKnow file that contains an edited text box.
+        /// </summary>
+        [TestMethod()]
+        public void SerializationTestSimpleTextBoxEdit()
+        {
+            this.PerformSerializationTest("TestSimpleTextBoxEdit", "Simple Text Box Edit");
+        }
+
+        /// <summary>
         /// Performs the serialization test.
         /// </summary>
         /// <param name="file">The file to process.</param>

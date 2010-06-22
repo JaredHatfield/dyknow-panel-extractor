@@ -83,6 +83,7 @@
     <None Include="DyKnowFiles\TestSimpleInking.dyz" />
     <None Include="DyKnowFiles\TestSimplePoll.dyz" />
     <None Include="DyKnowFiles\TestSimpleTextBox.dyz" />
+    <None Include="DyKnowFiles\TestSimpleTextBoxEdit.dyz" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

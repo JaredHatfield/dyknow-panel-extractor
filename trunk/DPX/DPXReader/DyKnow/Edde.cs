@@ -28,9 +28,19 @@ namespace DPXReader.DyKnow
         private Guid objid;
 
         /// <summary>
+        /// The rtf value.
+        /// </summary>
+        private string rtf;
+
+        /// <summary>
         /// The vrsn value;
         /// </summary>
         private string vrsn;
+
+        /// <summary>
+        /// The xaml value.
+        /// </summary>
+        private string xaml;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Edde"/> class.
@@ -75,6 +85,17 @@ namespace DPXReader.DyKnow
         }
 
         /// <summary>
+        /// Gets or sets the RTF.
+        /// </summary>
+        /// <value>The RTF value.</value>
+        [XmlAttribute("RTF")]
+        public string RTF
+        {
+            get { return this.rtf; }
+            set { this.rtf = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the VRSN.
         /// </summary>
         /// <value>The VRSN value.</value>
@@ -83,6 +104,17 @@ namespace DPXReader.DyKnow
         {
             get { return this.vrsn; }
             set { this.vrsn = value; }
+        }
+        
+        /// <summary>
+        /// Gets or sets the XAML.
+        /// </summary>
+        /// <value>The XAML value.</value>
+        [XmlElement("XAML")]
+        public string XAML
+        {
+            get { return this.xaml; }
+            set { this.xaml = value; }
         }
     }
 }
