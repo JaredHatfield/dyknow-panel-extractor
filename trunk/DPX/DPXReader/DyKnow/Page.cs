@@ -265,6 +265,7 @@ namespace DPXReader.DyKnow
         [XmlArrayItem("RTEXT", typeof(Rtext), IsNullable = true)]
         [XmlArrayItem("LINK", typeof(Link), IsNullable = true)]
         [XmlArrayItem("EPOLL", typeof(Epoll), IsNullable = true)]
+        [XmlArrayItem("ABOX", typeof(Abox), IsNullable = true)]
         public ArrayList OLST
         {
             get { return this.olst; }

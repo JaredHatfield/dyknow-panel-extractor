@@ -167,6 +167,15 @@ namespace UnitTests
         }
 
         /// <summary>
+        /// Test the serialization and deserialization of a DyKnow file that contains an answer box.
+        /// </summary>
+        [TestMethod()]
+        public void SerializationTestAnswerBox()
+        {
+            this.PerformSerializationTest("TestAnswerBox", "Answer Box");
+        }
+
+        /// <summary>
         /// Performs the serialization test.
         /// </summary>
         /// <param name="file">The file to process.</param>
