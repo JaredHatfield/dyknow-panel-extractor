@@ -70,6 +70,7 @@ namespace DPXPreview
             // Add all of the known mistakes to the collection
             this.knownMistakes = new List<KnownMistake>();
             this.knownMistakes.Add(new KnownMistake(Operation.INSERT, "<ANIMLIST />\n"));
+            this.knownMistakes.Add(new KnownMistake(Operation.INSERT, " xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\""));
 
             // Start all of the worker threads
             this.threadList = new List<Thread>();
@@ -143,10 +144,10 @@ namespace DPXPreview
 
                     // Add the progress
                     Label progress = new Label();
-                    progress.Content = "Processing...";
+                    progress.Content = "Queued";
                     progress.BorderBrush = Brushes.DarkGray;
                     progress.BorderThickness = new Thickness(1);
-                    progress.Background = Brushes.LightBlue;
+                    progress.Background = Brushes.LightGray;
                     Grid.SetRow(progress, this.currentRow);
                     Grid.SetColumn(progress, 1);
                     this.GridResults.Children.Add(progress);
@@ -206,6 +207,9 @@ namespace DPXPreview
         /// <param name="f">The FileProcessRow to perform the test on.</param>
         private void PerformSerializationTest(FileProcessRow f)
         {
+            // Indicate that the record is being processed
+            f.SetFileProcessing();
+
             // Read in the file as a string
             FileStream inputFile = new FileStream(f.FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
             GZipStream gzipFile = new GZipStream(inputFile, CompressionMode.Decompress, true);
@@ -265,28 +269,29 @@ namespace DPXPreview
                     {
                         f.SetFileFailed();
 
-                        // NOTE: The following code will write the analysis of the comparison out to files.
-                        /*
-                        // Write out all of the differences
-                        StreamWriter summary = new StreamWriter(f.FileName + ".out");
-                        for (int i = 0; i < diff.Count; i++)
+                        // Write out the comparison if it was requested
+                        if (this.CheckBoxAnalysis.IsChecked.Value)
                         {
-                            if (diff[i].operation != Operation.EQUAL && !this.knownMistakes.Contains(new KnownMistake(diff[i])))
+                            // Write out all of the differences
+                            StreamWriter summary = new StreamWriter(f.FileName + ".out");
+                            for (int i = 0; i < diff.Count; i++)
                             {
-                                summary.WriteLine(diff[i].operation);
-                                summary.WriteLine(diff[i].text);
-                                summary.WriteLine("----------------------------------------------------");
+                                if (diff[i].operation != Operation.EQUAL && !this.knownMistakes.Contains(new KnownMistake(diff[i])))
+                                {
+                                    summary.WriteLine(diff[i].operation);
+                                    summary.WriteLine(diff[i].text);
+                                    summary.WriteLine("----------------------------------------------------");
+                                }
                             }
+
+                            summary.Close();
+
+                            // Write out a pretty HTML file of the differences
+                            string html = d.diff_prettyHtml(diff);
+                            StreamWriter outfile = new StreamWriter(f.FileName + ".html");
+                            outfile.Write(html);
+                            outfile.Close();
                         }
-
-                        summary.Close();
-
-                        // Write out a pretty HTML file of the differences
-                        string html = d.diff_prettyHtml(diff);
-                        StreamWriter outfile = new StreamWriter(f.FileName + ".html");
-                        outfile.Write(html);
-                        outfile.Close();
-                         */
                     }
                 }
                 else

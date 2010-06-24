@@ -49,7 +49,7 @@ namespace DPXPreview
             this.dispatcher = dispatcher;
             this.filename = filename;
             this.progress = progress;
-            this.result = ParserTestResult.PROCESSING;
+            this.result = ParserTestResult.QUEUED;
         }
 
         /// <summary>
@@ -63,6 +63,11 @@ namespace DPXPreview
         /// </summary>
         internal enum ParserTestResult
         {
+            /// <summary>
+            /// The test is currently sitting in the queue.
+            /// </summary>
+            QUEUED,
+
             /// <summary>
             /// The test is currently being processed.
             /// </summary>
@@ -94,14 +99,26 @@ namespace DPXPreview
         }
 
         /// <summary>
+        /// Sets the file processing.
+        /// </summary>
+        internal void SetFileProcessing()
+        {
+            if (this.result.Equals(ParserTestResult.QUEUED))
+            {
+                this.result = ParserTestResult.PROCESSING;
+                this.dispatcher.Invoke(new ProcessUpdateDelegate(this.DispatchedProcessUpdate), DispatcherPriority.Input, this.result);
+            }
+        }
+
+        /// <summary>
         /// Sets the file passed.
         /// </summary>
         internal void SetFilePassed()
         {
             if (this.result.Equals(ParserTestResult.PROCESSING))
             {
-                ParserTestResult result = ParserTestResult.PASSED;
-                this.dispatcher.Invoke(new ProcessUpdateDelegate(this.DispatchedProcessUpdate), DispatcherPriority.Input, result);
+                this.result = ParserTestResult.PASSED;
+                this.dispatcher.Invoke(new ProcessUpdateDelegate(this.DispatchedProcessUpdate), DispatcherPriority.Input, this.result);
             }
         }
 
@@ -112,8 +129,8 @@ namespace DPXPreview
         {
             if (this.result.Equals(ParserTestResult.PROCESSING))
             {
-                ParserTestResult result = ParserTestResult.WARNING;
-                this.dispatcher.Invoke(new ProcessUpdateDelegate(this.DispatchedProcessUpdate), DispatcherPriority.Input, result);
+                this.result = ParserTestResult.WARNING;
+                this.dispatcher.Invoke(new ProcessUpdateDelegate(this.DispatchedProcessUpdate), DispatcherPriority.Input, this.result);
             }
         }
 
@@ -124,8 +141,8 @@ namespace DPXPreview
         {
             if (this.result.Equals(ParserTestResult.PROCESSING) || this.result.Equals(ParserTestResult.WARNING))
             {
-                ParserTestResult result = ParserTestResult.FAILED;
-                this.dispatcher.Invoke(new ProcessUpdateDelegate(this.DispatchedProcessUpdate), DispatcherPriority.Input, result);
+                this.result = ParserTestResult.FAILED;
+                this.dispatcher.Invoke(new ProcessUpdateDelegate(this.DispatchedProcessUpdate), DispatcherPriority.Input, this.result);
             }
         }
 
@@ -149,6 +166,11 @@ namespace DPXPreview
             {
                 this.progress.Content = "Failed";
                 this.progress.Background = Brushes.Salmon;
+            }
+            else if (result.Equals(ParserTestResult.PROCESSING))
+            {
+                this.progress.Content = "Processing...";
+                this.progress.Background = Brushes.LightBlue;
             }
         }
     }
