@@ -1,6 +1,12 @@
 #summary The release notes for DPX
 #labels Featured
 
+== [http://dyknow-panel-extractor.googlecode.com/files/DPX-Tools%200.3.0.0.msi Version 0.3.0.0] ==
+*Released 6/24/2010*
+  * Newly added [DPXGrader DPX Grader] application is able to recognize hand written text located in the corner of a page and convert it to text.  The results can then be saved as a CSV file which includes the participant's username and full name if it was collected in a DyKnow session..
+  * A completely new serialization technique is now being used by [DPXPreview DPX Preview] as well as [DPXGrader DPX Grader].  This properly deserializes all known elements in a DyKnow file.  Additionally, images on DyKnow files are now more accurately rendered on the InkCanvas.  The other applications are still using manual XML parsing.
+  * Included with [DPXPreview DPX Preview] is a tool that tests the accuracy of the new serialization technique.  This new "Parser Validator" is able to perform a test on a set of DyKnow files to identify any errors that occur during the serialization and deserialization process.
+
 == [http://dyknow-panel-extractor.googlecode.com/files/DPX-Tools%200.2.0.0.msi Version 0.2.0.0] ==
 *Released 5/12/2010*
 
