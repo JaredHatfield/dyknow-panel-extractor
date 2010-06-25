@@ -1,0 +1,84 @@
+﻿<Page x:Class="DPXManager.ManageStudent"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="ManageStudent">
+    <DockPanel Height="Auto" Width="Auto">
+        <DockPanel DockPanel.Dock="Left" Margin="10,10,10,10" Width="250">
+            <Label Height="28" VerticalAlignment="Top" DockPanel.Dock="Top">Manage Students</Label>
+            <TextBox Height="23" Name="textBoxFilter" DockPanel.Dock="Top" TextChanged="TxtSearch_TextChanged"/>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
+                <Label>Show Only Students not in a Section:</Label>
+                <CheckBox Name="checkBoxFilterNoSection" Margin="0,8,0,0" Checked="CheckBoxFilterNoSection_Checked" Unchecked="CheckBoxFilterNoSection_Unchecked"></CheckBox>
+            </StackPanel>
+            <ListBox Name="listBoxStudents" SelectionChanged="ListBoxStudents_SelectionChanged" />
+        </DockPanel>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+            <StackPanel HorizontalAlignment="Left" Margin="10,10,10,10" Width="250">
+                <StackPanel Orientation="Horizontal">
+                    <Label Width="100">Username</Label>
+                    <TextBox Name="textBoxStudentUserName" Width="150" IsEnabled="False"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Width="100">Full Name</Label>
+                    <TextBox Name="textBoxStudentFullName" Width="150" IsEnabled="False"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Width="100">First Name</Label>
+                    <TextBox Name="textBoxStudentFirstName" Width="150" IsEnabled="False"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Width="100">Last Name</Label>
+                    <TextBox Name="textBoxStudentLastName" Width="150" IsEnabled="False"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Width="100">Section</Label>
+                    <ComboBox Name="comboBoxSection" Width="150" SelectionChanged="ComboBoxSection_SelectionChanged"></ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Width="100">Is Enrolled</Label>
+                    <CheckBox Name="checkBoxStudentIsEnrolled" Margin="0,8,0,0" Checked="CheckBoxStudentIsEnrolled_Checked" Unchecked="CheckBoxStudentIsEnrolled_Unchecked"></CheckBox>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left" Margin="10,10,10,10" Width="250">
+                <StackPanel Orientation="Horizontal">
+                    <Label Width="50">Date</Label>
+                    <ComboBox Name="comboBoxDate" Width="200"></ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Width="50">Reason</Label>
+                    <ComboBox Name="comboBoxReason" Width="200"></ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Width="50">Notes</Label>
+                    <TextBox Name="textBoxNotes" Width="200" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="60"></TextBox>
+                </StackPanel>
+                <Button Name="buttonAddException" HorizontalAlignment="Right" Click="ButtonAddException_Click">Add Exception</Button>
+            </StackPanel>
+        </StackPanel>
+        <DockPanel>
+            <ScrollViewer VerticalScrollBarVisibility="Visible" DockPanel.Dock="Top" MinHeight="200" MaxHeight="300">
+                <Grid Name="gridPanels" MinHeight="200">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition Width="75" />
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </ScrollViewer>
+            <ScrollViewer VerticalScrollBarVisibility="Visible" DockPanel.Dock="Bottom" MinHeight="200" MaxHeight="300">
+                <Grid Name="gridException" MinHeight="200">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </ScrollViewer>
+        </DockPanel>
+    </DockPanel>
+</Page>
