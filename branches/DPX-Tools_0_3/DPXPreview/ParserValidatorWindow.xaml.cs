@@ -55,11 +55,25 @@ namespace DPXPreview
         private int currentRow;
 
         /// <summary>
+        /// The flag that indicates that the resutls should be written out.
+        /// </summary>
+        private bool writeResultsFlag;
+
+        /// <summary>
+        /// The lock that is used to access the write results flag.
+        /// </summary>
+        private object writeResultsLock;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ParserValidatorWindow"/> class.
         /// </summary>
         public ParserValidatorWindow()
         {
             InitializeComponent();
+
+            // Set the write flag
+            this.writeResultsFlag = false;
+            this.writeResultsLock = new object();
 
             // Set the row count
             this.currentRow = 0;
@@ -71,6 +85,7 @@ namespace DPXPreview
             this.knownMistakes = new List<KnownMistake>();
             this.knownMistakes.Add(new KnownMistake(Operation.INSERT, "<ANIMLIST />\n"));
             this.knownMistakes.Add(new KnownMistake(Operation.INSERT, " xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\""));
+            this.knownMistakes.Add(new KnownMistake(Operation.INSERT, "<TXTMODEMODXAML />\n<TXTMODEPARTXAML />\n"));
 
             // Start all of the worker threads
             this.threadList = new List<Thread>();
@@ -270,7 +285,16 @@ namespace DPXPreview
                         f.SetFileFailed();
 
                         // Write out the comparison if it was requested
-                        if (this.CheckBoxAnalysis.IsChecked.Value)
+                        bool shouldWriteAnalysis = false;
+                        lock (this.writeResultsLock)
+                        {
+                            if (this.writeResultsFlag)
+                            {
+                                shouldWriteAnalysis = true;
+                            }
+                        }
+
+                        if (shouldWriteAnalysis)
                         {
                             // Write out all of the differences
                             StreamWriter summary = new StreamWriter(f.FileName + ".out");
@@ -345,6 +369,26 @@ namespace DPXPreview
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Handles the Click event of the CheckBoxAnalysis control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void CheckBoxAnalysis_Click(object sender, RoutedEventArgs e)
+        {
+            lock (this.writeResultsLock)
+            {
+                if (this.CheckBoxAnalysis.IsChecked.Value)
+                {
+                    this.writeResultsFlag = true;
+                }
+                else
+                {
+                    this.writeResultsFlag = false;
+                }
+            }
         }
     }
 }

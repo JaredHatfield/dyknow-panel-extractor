@@ -31,6 +31,11 @@ namespace DPXReader.DyKnow
         private Guid uid;
 
         /// <summary>
+        /// The cfsp value.
+        /// </summary>
+        private string cfsp;
+
+        /// <summary>
         /// The oner value;
         /// </summary>
         private string oner;
@@ -117,6 +122,17 @@ namespace DPXReader.DyKnow
         {
             get { return this.uid; }
             set { this.uid = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the CFSP.
+        /// </summary>
+        /// <value>The CFSP value.</value>
+        [XmlAttribute("CFSP")]
+        public string CFSP
+        {
+            get { return this.cfsp; }
+            set { this.cfsp = value; }
         }
 
         /// <summary>
