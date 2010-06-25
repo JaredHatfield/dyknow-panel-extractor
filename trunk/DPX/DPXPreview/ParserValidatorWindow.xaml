@@ -12,7 +12,7 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Background="White" >
             <Button Name="ButtonSelectFiles" Width="150" Height="30" Margin="10"  Click="ButtonSelectFiles_Click">Select Files</Button>
-            <CheckBox Name="CheckBoxAnalysis" Margin="10,30,10,30">Export Analysis</CheckBox>
+            <CheckBox Name="CheckBoxAnalysis" Margin="10,30,10,30" Click="CheckBoxAnalysis_Click">Export Analysis</CheckBox>
         </StackPanel>
         <ScrollViewer>
             <Grid Name="GridResults">

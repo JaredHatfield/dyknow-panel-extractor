@@ -48,6 +48,11 @@ namespace DPXReader.DyKnow
         private Guid uid;
 
         /// <summary>
+        /// The dpi value.
+        /// </summary>
+        private string dpi;
+
+        /// <summary>
         /// The isrem value.
         /// </summary>
         private bool isrem;
@@ -157,6 +162,17 @@ namespace DPXReader.DyKnow
         {
             get { return this.uid; }
             set { this.uid = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the DPI.
+        /// </summary>
+        /// <value>The DPI value.</value>
+        [XmlAttribute("DPI")]
+        public string DPI
+        {
+            get { return this.dpi; }
+            set { this.dpi = value; }
         }
 
         /// <summary>
