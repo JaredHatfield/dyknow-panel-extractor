@@ -1,6 +1,12 @@
 #summary The release notes for DPX
 #labels Featured
 
+== [http://dyknow-panel-extractor.googlecode.com/files/DPX-Tools%200.3.1.0.msi Version 0.3.1.0] ==
+*Released 6/25/2010*
+  * A minor release that fixed a threading issue that crashed the application when the option for writing out the results of the Parser Validator was selected.
+  * Added another known files issue to the list of known problems (missing TXTMODEMODXAML and TXTMODEPARTXAML tags).
+  * Fixed a variety of DPX parser bugs that were identified by analyzing another set of (older) files.
+
 == [http://dyknow-panel-extractor.googlecode.com/files/DPX-Tools%200.3.0.0.msi Version 0.3.0.0] ==
 *Released 6/24/2010*
   * Newly added [DPXGrader DPX Grader] application is able to recognize hand written text located in the corner of a page and convert it to text.  The results can then be saved as a CSV file which includes the participant's username and full name if it was collected in a DyKnow session..
