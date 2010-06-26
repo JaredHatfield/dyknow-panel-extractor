@@ -39,5 +39,14 @@ namespace HandwritingAccuracy
                 return this.target.ToString();
             }
         }
+
+        /// <summary>
+        /// Gets the name of the experiment.
+        /// </summary>
+        /// <value>The name of the experiment.</value>
+        public override string ExperimentName
+        {
+            get { return "Integer"; }
+        }
     }
 }

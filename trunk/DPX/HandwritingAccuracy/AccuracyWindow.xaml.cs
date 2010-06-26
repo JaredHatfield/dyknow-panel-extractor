@@ -132,6 +132,9 @@ namespace HandwritingAccuracy
                 this.TextBoxResults.Text += "Failed\n";
             }
 
+            // Send the results to the databse
+            DatabaseManager.Instance().InsertExperimentRun(this.experimentId, this.currentTestNumber, this.rt);
+
             this.NewTest();
         }
 

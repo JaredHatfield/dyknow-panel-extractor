@@ -40,6 +40,11 @@ namespace HandwritingAccuracy
         private string recognizedText;
 
         /// <summary>
+        /// The alternative recognized text.
+        /// </summary>
+        private AnalysisAlternateCollection alternateText;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="RecognitionTest"/> class.
         /// </summary>
         public RecognitionTest()
@@ -85,10 +90,42 @@ namespace HandwritingAccuracy
         }
 
         /// <summary>
+        /// Gets the serialized ink.
+        /// </summary>
+        /// <value>The serialized ink.</value>
+        public string SerializedInk
+        {
+            get
+            {
+                MemoryStream ms = new MemoryStream();
+                this.strokes.Clone().Save(ms);
+                ms.Seek(0, SeekOrigin.Begin);
+                string encoded = System.Convert.ToBase64String(ms.ToArray());
+                return encoded;
+
+                // And the reverse...
+                /*
+                byte[] decoded = System.Convert.FromBase64String(encoded);
+                MemoryStream d = new MemoryStream(decoded);
+                this.InkCanvasRight.Strokes = new System.Windows.Ink.StrokeCollection(d);
+                 */
+            }
+        }
+
+        /// <summary>
         /// Gets the text for this test.
         /// </summary>
         /// <value>The text for this test.</value>
         public abstract string Text
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Gets the name of the experiment.
+        /// </summary>
+        /// <value>The name of the experiment.</value>
+        public abstract string ExperimentName
         {
             get;
         }
@@ -101,32 +138,53 @@ namespace HandwritingAccuracy
         {
             get
             {
-                if (!this.analyisTestDidRun)
-                {
-                    if (this.strokes.Count > 0)
-                    {
-                        InkAnalyzer theInkAnalyzer = new InkAnalyzer();
-                        theInkAnalyzer.AddStrokes(this.strokes);
-                        AnalysisStatus status = theInkAnalyzer.Analyze();
+                this.RecognizeStuff();
+                return this.recognizedText;
+            }
+        }
 
-                        if (status.Successful)
-                        {
-                            this.recognizedText = theInkAnalyzer.GetRecognizedString();
-                        }
-                        else
-                        {
-                            this.recognizedText = string.Empty;
-                        }
+        /// <summary>
+        /// Gets the alternative text.
+        /// </summary>
+        /// <value>The alternative text.</value>
+        public AnalysisAlternateCollection AlternativeText
+        {
+            get
+            {
+                this.RecognizeStuff();
+                return this.alternateText;
+            }
+        }
+
+        /// <summary>
+        /// Preforms the recognition on the stroke collection if necessary.
+        /// </summary>
+        private void RecognizeStuff()
+        {
+            if (!this.analyisTestDidRun)
+            {
+                if (this.strokes.Count > 0)
+                {
+                    InkAnalyzer theInkAnalyzer = new InkAnalyzer();
+                    theInkAnalyzer.AddStrokes(this.strokes);
+                    AnalysisStatus status = theInkAnalyzer.Analyze();
+
+                    if (status.Successful)
+                    {
+                        this.recognizedText = theInkAnalyzer.GetRecognizedString();
+                        this.alternateText = theInkAnalyzer.GetAlternates();
                     }
                     else
                     {
                         this.recognizedText = string.Empty;
                     }
-
-                    this.analyisTestDidRun = true;
+                }
+                else
+                {
+                    this.recognizedText = string.Empty;
                 }
 
-                return this.recognizedText;
+                this.analyisTestDidRun = true;
             }
         }
 
