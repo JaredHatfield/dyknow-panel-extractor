@@ -115,27 +115,30 @@ namespace HandwritingAccuracy
             Debug.WriteLine("Inserted Run with PID = " + value);
 
             // Insert all of the alternative recogniations
-            for (int i = 0; i < rt.AlternativeText.Count; i++)
+            if (rt.AlternativeText != null)
             {
-                OdbcCommand comm = new OdbcCommand("INSERT INTO `alternative` (`run`, `confidence`, `recognized`, `match`) VALUES (?, ?,?, ?)", this.connection);
-                OdbcParameter rnum = new OdbcParameter("run", value);
-                comm.Parameters.Add(rnum);
-                OdbcParameter conf = new OdbcParameter("confidence", rt.AlternativeText[i].InkRecognitionConfidence);
-                comm.Parameters.Add(conf);
-                OdbcParameter altrec = new OdbcParameter("recognized", rt.AlternativeText[i].RecognizedString);
-                comm.Parameters.Add(altrec);
-                if (rt.AlternativeText[i].RecognizedString.Equals(rt.Text))
+                for (int i = 0; i < rt.AlternativeText.Count; i++)
                 {
-                    OdbcParameter rmat = new OdbcParameter("match", "1");
-                    comm.Parameters.Add(rmat);
-                }
-                else
-                {
-                    OdbcParameter rmat = new OdbcParameter("match", "0");
-                    comm.Parameters.Add(rmat);
-                }
+                    OdbcCommand comm = new OdbcCommand("INSERT INTO `alternative` (`run`, `confidence`, `recognized`, `match`) VALUES (?, ?,?, ?)", this.connection);
+                    OdbcParameter rnum = new OdbcParameter("run", value);
+                    comm.Parameters.Add(rnum);
+                    OdbcParameter conf = new OdbcParameter("confidence", rt.AlternativeText[i].InkRecognitionConfidence);
+                    comm.Parameters.Add(conf);
+                    OdbcParameter altrec = new OdbcParameter("recognized", rt.AlternativeText[i].RecognizedString);
+                    comm.Parameters.Add(altrec);
+                    if (rt.AlternativeText[i].RecognizedString.Equals(rt.Text))
+                    {
+                        OdbcParameter rmat = new OdbcParameter("match", "1");
+                        comm.Parameters.Add(rmat);
+                    }
+                    else
+                    {
+                        OdbcParameter rmat = new OdbcParameter("match", "0");
+                        comm.Parameters.Add(rmat);
+                    }
 
-                int n2 = comm.ExecuteNonQuery();
+                    int n2 = comm.ExecuteNonQuery();
+                }
             }
         }
 

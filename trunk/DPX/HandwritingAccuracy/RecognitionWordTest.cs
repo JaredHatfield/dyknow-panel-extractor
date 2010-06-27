@@ -22,6 +22,15 @@ namespace HandwritingAccuracy
         /// <summary>
         /// Initializes a new instance of the <see cref="RecognitionWordTest"/> class.
         /// </summary>
+        public RecognitionWordTest()
+            : base()
+        {
+            this.target = "test";
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RecognitionWordTest"/> class.
+        /// </summary>
         /// <param name="word">The word to recognize.</param>
         public RecognitionWordTest(string word)
             : base()
