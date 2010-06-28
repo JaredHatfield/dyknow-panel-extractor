@@ -31,6 +31,11 @@ namespace DPXReader.DyKnow
         private Guid uid;
 
         /// <summary>
+        /// The bkgr value.
+        /// </summary>
+        private string bkgr;
+
+        /// <summary>
         /// The cfsp value.
         /// </summary>
         private string cfsp;
@@ -122,6 +127,17 @@ namespace DPXReader.DyKnow
         {
             get { return this.uid; }
             set { this.uid = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the BKGR.
+        /// </summary>
+        /// <value>The BKGR value.</value>
+        [XmlAttribute("BKGR")]
+        public string BKGR
+        {
+            get { return this.bkgr; }
+            set { this.bkgr = value; }
         }
 
         /// <summary>
@@ -282,6 +298,8 @@ namespace DPXReader.DyKnow
         [XmlArrayItem("LINK", typeof(Link), IsNullable = true)]
         [XmlArrayItem("EPOLL", typeof(Epoll), IsNullable = true)]
         [XmlArrayItem("ABOX", typeof(Abox), IsNullable = true)]
+        [XmlArrayItem("TBLE", typeof(Tble), IsNullable = true)]
+        [XmlArrayItem("PGNAV", typeof(Pgnav), IsNullable = true)]
         public ArrayList OLST
         {
             get { return this.olst; }

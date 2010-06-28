@@ -72,8 +72,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DyKnow\Abox.cs" />
+    <Compile Include="DyKnow\Capimg.cs" />
     <Compile Include="DyKnow\Message.cs" />
     <Compile Include="DyKnow\Nlst.cs" />
+    <Compile Include="DyKnow\Pgnav.cs" />
+    <Compile Include="DyKnow\Tble.cs" />
     <Compile Include="DyKnow\Ulst.cs" />
     <Compile Include="LegacyReader\DyKnowImage.cs" />
     <Compile Include="LegacyReader\DyKnowPage.cs" />

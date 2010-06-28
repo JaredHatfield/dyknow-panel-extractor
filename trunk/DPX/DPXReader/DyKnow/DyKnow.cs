@@ -24,6 +24,11 @@ namespace DPXReader.DyKnow
     public class DyKnow
     {
         /// <summary>
+        /// The aid value.
+        /// </summary>
+        private string aid;
+
+        /// <summary>
         /// The vrsn value.
         /// </summary>
         private string vrsn;
@@ -55,6 +60,17 @@ namespace DPXReader.DyKnow
         {
             this.data = new ArrayList();
             this.chats = new ArrayList();
+        }
+
+        /// <summary>
+        /// Gets or sets the AID.
+        /// </summary>
+        /// <value>The AID value.</value>
+        [XmlAttribute("AID")]
+        public string AID
+        {
+            get { return this.aid; }
+            set { this.aid = value; }
         }
 
         /// <summary>

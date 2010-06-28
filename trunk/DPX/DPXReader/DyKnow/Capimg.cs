@@ -1,4 +1,4 @@
-﻿// <copyright file="Pen.cs" company="University of Louisville Speed School of Engineering">
+﻿// <copyright file="Capimg.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
 // <summary>The representation of a pen stroke.</summary>
@@ -14,13 +14,17 @@ namespace DPXReader.DyKnow
     /// <summary>
     /// The representation of a pen stroke.
     /// </summary>
-    [XmlRoot("PEN")]
-    public class Pen
+    public class Capimg
     {
         /// <summary>
         /// The ut value.
         /// </summary>
         private int ut;
+
+        /// <summary>
+        /// The sp value.
+        /// </summary>
+        private string sp;
 
         /// <summary>
         /// The pw value.
@@ -38,47 +42,25 @@ namespace DPXReader.DyKnow
         private Guid uid;
 
         /// <summary>
-        /// The ati value.
+        /// The id value.
         /// </summary>
-        private string ati;
+        private Guid id;
 
         /// <summary>
-        /// The dpi value.
+        /// The wid value.
         /// </summary>
-        private string dpi;
+        private int wid;
 
         /// <summary>
-        /// The ispri value.
+        /// The hei value.
         /// </summary>
-        private string ispri;
+        private int hei;
 
         /// <summary>
-        /// The data value.
+        /// Initializes a new instance of the <see cref="Capimg"/> class.
         /// </summary>
-        private string data;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Pen"/> class.
-        /// </summary>
-        public Pen()
+        public Capimg()
         {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Pen"/> class.
-        /// </summary>
-        /// <param name="ut">The ut value.</param>
-        /// <param name="pw">The pw value.</param>
-        /// <param name="ph">The ph value.</param>
-        /// <param name="uid">The uid value.</param>
-        /// <param name="data">The data value.</param>
-        public Pen(int ut, int pw, int ph, Guid uid, string data)
-        {
-            this.ut = ut;
-            this.pw = pw;
-            this.ph = ph;
-            this.uid = uid;
-            this.data = data;
         }
 
         /// <summary>
@@ -90,6 +72,17 @@ namespace DPXReader.DyKnow
         {
             get { return this.ut; }
             set { this.ut = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the SP.
+        /// </summary>
+        /// <value>The SP value.</value>
+        [XmlAttribute("SP")]
+        public string SP
+        {
+            get { return this.sp; }
+            set { this.sp = value; }
         }
 
         /// <summary>
@@ -126,47 +119,36 @@ namespace DPXReader.DyKnow
         }
 
         /// <summary>
-        /// Gets or sets the ATI.
+        /// Gets or sets the ID.
         /// </summary>
-        /// <value>The ATI value.</value>
-        [XmlAttribute("ATI")]
-        public string ATI
+        /// <value>The ID value.</value>
+        [XmlAttribute("ID")]
+        public Guid ID
         {
-            get { return this.ati; }
-            set { this.ati = value; }
+            get { return this.id; }
+            set { this.id = value; }
         }
 
         /// <summary>
-        /// Gets or sets the DPI.
+        /// Gets or sets the WID.
         /// </summary>
-        /// <value>The DPI value.</value>
-        [XmlAttribute("DPI")]
-        public string DPI
+        /// <value>The WID value.</value>
+        [XmlAttribute("WID")]
+        public int WID
         {
-            get { return this.dpi; }
-            set { this.dpi = value; }
+            get { return this.wid; }
+            set { this.wid = value; }
         }
 
         /// <summary>
-        /// Gets or sets the ISPRI.
+        /// Gets or sets the HEI.
         /// </summary>
-        /// <value>The ISPRI.</value>
-        [XmlAttribute("ISPRI")]
-        public string ISPRI
+        /// <value>The HEI value.</value>
+        [XmlAttribute("HEI")]
+        public int HEI
         {
-            get { return this.ispri; }
-            set { this.ispri = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the DATA.
-        /// </summary>
-        /// <value>The DATA value.</value>
-        [XmlAttribute("DATA")]
-        public string DATA
-        {
-            get { return this.data; }
-            set { this.data = value; }
+            get { return this.hei; }
+            set { this.hei = value; }
         }
     }
 }

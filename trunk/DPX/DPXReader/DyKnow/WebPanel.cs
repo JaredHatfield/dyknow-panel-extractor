@@ -35,7 +35,7 @@ namespace DPXReader.DyKnow
         /// <summary>
         /// The uid value.
         /// </summary>
-        private Guid uid;
+        private string uid;
 
         /// <summary>
         /// The pos value.
@@ -53,31 +53,15 @@ namespace DPXReader.DyKnow
         private string url;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WebPanel"/> class.
+        /// The capimg value.
         /// </summary>
-        public WebPanel()
-        {
-        }
+        private Capimg capimg;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WebPanel"/> class.
         /// </summary>
-        /// <param name="ut">The ut value.</param>
-        /// <param name="pw">The pw value.</param>
-        /// <param name="ph">The ph value.</param>
-        /// <param name="uid">The uid value.</param>
-        /// <param name="pos">The pos value.</param>
-        /// <param name="cap">if set to <c>true</c> [cap].</param>
-        /// <param name="url">The URL value.</param>
-        public WebPanel(int ut, int pw, int ph, Guid uid, int pos, bool cap, string url)
+        public WebPanel()
         {
-            this.ut = ut;
-            this.pw = pw;
-            this.ph = ph;
-            this.uid = uid;
-            this.pos = pos;
-            this.cap = cap;
-            this.url = url;
         }
 
         /// <summary>
@@ -118,7 +102,7 @@ namespace DPXReader.DyKnow
         /// </summary>
         /// <value>The UID value.</value>
         [XmlAttribute("UID")]
-        public Guid UID
+        public string UID
         {
             get { return this.uid; }
             set { this.uid = value; }
@@ -155,6 +139,17 @@ namespace DPXReader.DyKnow
         {
             get { return this.url; }
             set { this.url = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the CAPIMG.
+        /// </summary>
+        /// <value>The CAPIMG value.</value>
+        [XmlElement("CAPIMG")]
+        public Capimg CAPIMG
+        {
+            get { return this.capimg; }
+            set { this.capimg = value; }
         }
     }
 }

@@ -185,6 +185,60 @@ namespace UnitTests
         }
 
         /// <summary>
+        /// Test the serialization and deserialization of a DyKnow file that contains an arrow shape.
+        /// </summary>
+        [TestMethod()]
+        public void SerializationTestShapesArrow()
+        {
+            this.PerformSerializationTest("TestShapesArrow", "Shape Arrow");
+        }
+
+        /// <summary>
+        /// Test the serialization and deserialization of a DyKnow file that contains a circle.
+        /// </summary>
+        [TestMethod()]
+        public void SerializationTestShapesCircle()
+        {
+            this.PerformSerializationTest("TestShapesCircle", "Shape Circle");
+        }
+
+        /// <summary>
+        /// Test the serialization and deserialization of a DyKnow file that contains a line.
+        /// </summary>
+        [TestMethod()]
+        public void SerializationTestShapesLine()
+        {
+            this.PerformSerializationTest("TestShapesLine", "Shape Line");
+        }
+
+        /// <summary>
+        /// Test the serialization and deserialization of a DyKnow file that contains a rectangle.
+        /// </summary>
+        [TestMethod()]
+        public void SerializationTestShapesRectangle()
+        {
+            this.PerformSerializationTest("TestShapesRectangle", "Shape Rectangle");
+        }
+
+        /// <summary>
+        /// Test the serialization and deserialization of a DyKnow file that contains a straight line.
+        /// </summary>
+        [TestMethod()]
+        public void SerializationTestShapesStraightLine()
+        {
+            this.PerformSerializationTest("TestShapesStraightLine", "Shape Straight Line");
+        }
+
+        /// <summary>
+        /// Test the serialization and deserialization of a DyKnow file that contains a table.
+        /// </summary>
+        [TestMethod()]
+        public void SerializationTestShapesTable()
+        {
+            this.PerformSerializationTest("TestShapesTable", "Shape Table");
+        }
+
+        /// <summary>
         /// Performs the serialization test.
         /// </summary>
         /// <param name="file">The file to process.</param>

@@ -28,6 +28,11 @@ namespace DPXReader.DyKnow
         private Guid? uid;
 
         /// <summary>
+        /// The ati value.
+        /// </summary>
+        private string ati;
+
+        /// <summary>
         /// The ig value.
         /// </summary>
         private bool ig;
@@ -92,6 +97,17 @@ namespace DPXReader.DyKnow
             {
                 this.uid = new Guid(value);
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the ATI.
+        /// </summary>
+        /// <value>The ATI value.</value>
+        [XmlAttribute("ATI")]
+        public string ATI
+        {
+            get { return this.ati; }
+            set { this.ati = value; }
         }
 
         /// <summary>

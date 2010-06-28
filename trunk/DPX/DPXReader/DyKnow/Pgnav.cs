@@ -1,7 +1,7 @@
-﻿// <copyright file="Pen.cs" company="University of Louisville Speed School of Engineering">
+﻿// <copyright file="Pgnav.cs" company="University of Louisville Speed School of Engineering">
 // GNU General Public License v3
 // </copyright>
-// <summary>The representation of a pen stroke.</summary>
+// <summary>The representation of a pgnav.</summary>
 namespace DPXReader.DyKnow
 {
     using System;
@@ -12,10 +12,9 @@ namespace DPXReader.DyKnow
     using System.Xml.Serialization;
 
     /// <summary>
-    /// The representation of a pen stroke.
+    /// The representation of a pgnav.
     /// </summary>
-    [XmlRoot("PEN")]
-    public class Pen
+    public class Pgnav
     {
         /// <summary>
         /// The ut value.
@@ -43,42 +42,20 @@ namespace DPXReader.DyKnow
         private string ati;
 
         /// <summary>
-        /// The dpi value.
+        /// The pgguid.
         /// </summary>
-        private string dpi;
+        private Guid pgguid;
 
         /// <summary>
-        /// The ispri value.
+        /// The type value.
         /// </summary>
-        private string ispri;
+        private int type;
 
         /// <summary>
-        /// The data value.
+        /// Initializes a new instance of the <see cref="Pgnav"/> class.
         /// </summary>
-        private string data;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Pen"/> class.
-        /// </summary>
-        public Pen()
+        public Pgnav()
         {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Pen"/> class.
-        /// </summary>
-        /// <param name="ut">The ut value.</param>
-        /// <param name="pw">The pw value.</param>
-        /// <param name="ph">The ph value.</param>
-        /// <param name="uid">The uid value.</param>
-        /// <param name="data">The data value.</param>
-        public Pen(int ut, int pw, int ph, Guid uid, string data)
-        {
-            this.ut = ut;
-            this.pw = pw;
-            this.ph = ph;
-            this.uid = uid;
-            this.data = data;
         }
 
         /// <summary>
@@ -137,36 +114,25 @@ namespace DPXReader.DyKnow
         }
 
         /// <summary>
-        /// Gets or sets the DPI.
+        /// Gets or sets the PGGUID.
         /// </summary>
-        /// <value>The DPI value.</value>
-        [XmlAttribute("DPI")]
-        public string DPI
+        /// <value>The PGGUID value.</value>
+        [XmlElement("PGGUID")]
+        public Guid PGGUID
         {
-            get { return this.dpi; }
-            set { this.dpi = value; }
+            get { return this.pgguid; }
+            set { this.pgguid = value; }
         }
 
         /// <summary>
-        /// Gets or sets the ISPRI.
+        /// Gets or sets the TYPE.
         /// </summary>
-        /// <value>The ISPRI.</value>
-        [XmlAttribute("ISPRI")]
-        public string ISPRI
+        /// <value>The TYPE value.</value>
+        [XmlElement("TYPE")]
+        public int TYPE
         {
-            get { return this.ispri; }
-            set { this.ispri = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the DATA.
-        /// </summary>
-        /// <value>The DATA value.</value>
-        [XmlAttribute("DATA")]
-        public string DATA
-        {
-            get { return this.data; }
-            set { this.data = value; }
+            get { return this.type; }
+            set { this.type = value; }
         }
     }
 }
