@@ -50,7 +50,9 @@ namespace HandwritingAccuracy
         public RecognitionTest()
         {
             this.strokes = new StrokeCollection();
-            this.strokes.StrokesChanged += new StrokeCollectionChangedEventHandler(this.StrokeCollectionChanged);
+
+            // This seems to be breaking the writing...
+            // this.strokes.StrokesChanged += new StrokeCollectionChangedEventHandler(this.StrokeCollectionChanged);
             this.analyisTestDidRun = false;
         }
 
