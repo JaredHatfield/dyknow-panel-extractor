@@ -38,6 +38,11 @@ namespace DPXReader.DyKnow
         private string rid;
 
         /// <summary>
+        /// The qte value.
+        /// </summary>
+        private string qte;
+
+        /// <summary>
         /// The scd value.
         /// </summary>
         private string scd;
@@ -111,6 +116,17 @@ namespace DPXReader.DyKnow
         {
             get { return this.rid; }
             set { this.rid = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the QTE.
+        /// </summary>
+        /// <value>The QTE value.</value>
+        [XmlAttribute("QTE")]
+        public string QTE
+        {
+            get { return this.qte; }
+            set { this.qte = value; }
         }
 
         /// <summary>

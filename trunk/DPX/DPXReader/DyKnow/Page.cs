@@ -31,6 +31,11 @@ namespace DPXReader.DyKnow
         private Guid uid;
 
         /// <summary>
+        /// The cfsm value.
+        /// </summary>
+        private string cfsm;
+
+        /// <summary>
         /// The bkgr value.
         /// </summary>
         private string bkgr;
@@ -127,6 +132,17 @@ namespace DPXReader.DyKnow
         {
             get { return this.uid; }
             set { this.uid = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the CFSM.
+        /// </summary>
+        /// <value>The CFSM value.</value>
+        [XmlAttribute("CFSM")]
+        public string CFSM
+        {
+            get { return this.cfsm; }
+            set { this.cfsm = value; }
         }
 
         /// <summary>
