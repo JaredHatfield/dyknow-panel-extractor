@@ -50,6 +50,7 @@ namespace HandwritingAccuracy
             HandwritingAccuracy.Properties.Settings.Default.DBPass = this.TextBoxPassword.Text;
             HandwritingAccuracy.Properties.Settings.Default.DBPort = this.TextBoxPortNumber.Text;
             HandwritingAccuracy.Properties.Settings.Default.DBUid = this.TextBoxUserName.Text;
+            HandwritingAccuracy.Properties.Settings.Default.Save();
 
             // Close this window
             this.Close();
