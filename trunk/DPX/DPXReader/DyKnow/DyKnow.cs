@@ -14,6 +14,7 @@ namespace DPXReader.DyKnow
     using System.Windows.Ink;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
+    using System.Windows.Shapes;
     using System.Xml;
     using System.Xml.Serialization;
 
@@ -245,6 +246,22 @@ namespace DPXReader.DyKnow
                 // Set the position on the canvas
                 InkCanvas.SetLeft(im, left);
                 InkCanvas.SetTop(im, top);
+            }
+
+            // Add all of the answer boxes
+            ArrayList aboxes = dp.AnswerBoxes;
+            for (int i = 0; i < aboxes.Count; i++)
+            {
+                Abox abox = aboxes[i] as Abox;
+                Rectangle r = new Rectangle();
+                r.Fill = Brushes.LightGray;
+                double left = abox.ActualLeftPosition(inky.Width);
+                double top = abox.ActualTopPosition(inky.Height);
+                r.Width = abox.ActualWidth(inky.Width);
+                r.Height = abox.ActualHeight(inky.Height);
+                InkCanvas.SetLeft(r, left);
+                InkCanvas.SetTop(r, top);
+                inky.Children.Add(r);
             }
 
             // Get that Panel's pen strokes

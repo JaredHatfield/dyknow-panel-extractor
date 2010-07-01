@@ -402,6 +402,28 @@ namespace DPXReader.DyKnow
         }
 
         /// <summary>
+        /// Gets the answer boxes.
+        /// </summary>
+        /// <value>The answer boxes.</value>
+        [XmlIgnore]
+        internal ArrayList AnswerBoxes
+        {
+            get
+            {
+                ArrayList arr = new ArrayList();
+                for (int i = 0; i < this.olst.Count; i++)
+                {
+                    if (this.olst[i].GetType().Equals(typeof(Abox)))
+                    {
+                        arr.Add(this.olst[i]);
+                    }
+                }
+
+                return arr;
+            }
+        }
+
+        /// <summary>
         /// Determines whether the specified object is deleted.
         /// </summary>
         /// <param name="id">The object identifier.</param>
