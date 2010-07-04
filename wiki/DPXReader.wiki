@@ -13,7 +13,6 @@ The current applications that use this library are DPXGrader and DPXPreview.  Th
 
 === Known Panel Rendering Problems ==
   * Elements that are not shown
-    * Answer Box
     * Polls
     * Web pages
     * Page text
