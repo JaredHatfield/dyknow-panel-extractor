@@ -1,6 +1,11 @@
 #summary The release notes for DPX
 #labels Featured
 
+== [http://dyknow-panel-extractor.googlecode.com/files/DPX-Tools%200.3.2.0.msi Version 0.3.2.0] ==
+*Released 7/4/2010*
+  * More improvements to the DPXReader library that corrected problems with reading several types of files.  These corrections were made by using the Parser Validator and analyzing files.
+  * ABOX (answer boxes) are now rendered on the panel as grey rectangles.
+
 == [http://dyknow-panel-extractor.googlecode.com/files/DPX-Tools%200.3.1.0.msi Version 0.3.1.0] ==
 *Released 6/25/2010*
   * A minor release that fixed a threading issue that crashed the application when the option for writing out the results of the Parser Validator was selected.
