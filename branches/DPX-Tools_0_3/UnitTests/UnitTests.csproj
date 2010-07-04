@@ -79,6 +79,12 @@
     <None Include="DyKnowFiles\TestRetrievedPanels.dyz" />
     <None Include="DyKnowFiles\TestScaleInking.dyz" />
     <None Include="DyKnowFiles\TestSessionChat.dyz" />
+    <None Include="DyKnowFiles\TestShapesArrow.dyz" />
+    <None Include="DyKnowFiles\TestShapesCircle.dyz" />
+    <None Include="DyKnowFiles\TestShapesLine.dyz" />
+    <None Include="DyKnowFiles\TestShapesRectangle.dyz" />
+    <None Include="DyKnowFiles\TestShapesStraightLine.dyz" />
+    <None Include="DyKnowFiles\TestShapesTable.dyz" />
     <None Include="DyKnowFiles\TestSimpleImage.dyz" />
     <None Include="DyKnowFiles\TestSimpleInking.dyz" />
     <None Include="DyKnowFiles\TestSimplePoll.dyz" />

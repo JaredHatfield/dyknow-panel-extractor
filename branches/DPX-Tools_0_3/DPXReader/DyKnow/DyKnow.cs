@@ -14,6 +14,7 @@ namespace DPXReader.DyKnow
     using System.Windows.Ink;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
+    using System.Windows.Shapes;
     using System.Xml;
     using System.Xml.Serialization;
 
@@ -23,6 +24,11 @@ namespace DPXReader.DyKnow
     [XmlRoot("DYKNOW_NB50")]
     public class DyKnow
     {
+        /// <summary>
+        /// The aid value.
+        /// </summary>
+        private string aid;
+
         /// <summary>
         /// The vrsn value.
         /// </summary>
@@ -55,6 +61,17 @@ namespace DPXReader.DyKnow
         {
             this.data = new ArrayList();
             this.chats = new ArrayList();
+        }
+
+        /// <summary>
+        /// Gets or sets the AID.
+        /// </summary>
+        /// <value>The AID value.</value>
+        [XmlAttribute("AID")]
+        public string AID
+        {
+            get { return this.aid; }
+            set { this.aid = value; }
         }
 
         /// <summary>
@@ -229,6 +246,22 @@ namespace DPXReader.DyKnow
                 // Set the position on the canvas
                 InkCanvas.SetLeft(im, left);
                 InkCanvas.SetTop(im, top);
+            }
+
+            // Add all of the answer boxes
+            ArrayList aboxes = dp.AnswerBoxes;
+            for (int i = 0; i < aboxes.Count; i++)
+            {
+                Abox abox = aboxes[i] as Abox;
+                Rectangle r = new Rectangle();
+                r.Fill = Brushes.LightGray;
+                double left = abox.ActualLeftPosition(inky.Width);
+                double top = abox.ActualTopPosition(inky.Height);
+                r.Width = abox.ActualWidth(inky.Width);
+                r.Height = abox.ActualHeight(inky.Height);
+                InkCanvas.SetLeft(r, left);
+                InkCanvas.SetTop(r, top);
+                inky.Children.Add(r);
             }
 
             // Get that Panel's pen strokes

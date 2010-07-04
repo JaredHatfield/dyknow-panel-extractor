@@ -151,5 +151,111 @@ namespace DPXReader.DyKnow
             get { return this.uid; }
             set { this.uid = value; }
         }
+
+        /// <summary>
+        /// Gets the left position for the box.
+        /// </summary>
+        /// <value>The left position.</value>
+        [XmlIgnore]
+        private double CustomPositionLeft
+        {
+            get
+            {
+                int start = 0;
+                int end = this.sp.IndexOf(':');
+                string val = this.sp.Substring(start, end);
+                double num = int.Parse(val);
+                return num;
+            }
+        }
+
+        /// <summary>
+        /// Gets the top position for the box.
+        /// </summary>
+        /// <value>The top position.</value>
+        [XmlIgnore]
+        private double CustomPositionTop
+        {
+            get
+            {
+                int start = this.sp.IndexOf(':') + 1;
+                string val = this.sp.Substring(start);
+                double num = int.Parse(val);
+                return num;
+            }
+        }
+
+        /// <summary>
+        /// Gets the left position for the box.
+        /// </summary>
+        /// <value>The left position.</value>
+        [XmlIgnore]
+        private double CustomWidth
+        {
+            get
+            {
+                int start = 0;
+                int end = this.ep.IndexOf(':');
+                string val = this.ep.Substring(start, end);
+                double num = int.Parse(val);
+                return num;
+            }
+        }
+
+        /// <summary>
+        /// Gets the top position for the box.
+        /// </summary>
+        /// <value>The top position.</value>
+        [XmlIgnore]
+        private double CustomHeight
+        {
+            get
+            {
+                int start = this.ep.IndexOf(':') + 1;
+                string val = this.ep.Substring(start);
+                double num = int.Parse(val);
+                return num;
+            }
+        }
+
+        /// <summary>
+        /// Actuals the top position.
+        /// </summary>
+        /// <param name="height">The height.</param>
+        /// <returns>The adjusted distance from the top.</returns>
+        internal double ActualTopPosition(double height)
+        {
+            return this.CustomPositionTop * height / (double)this.PH;
+        }
+
+        /// <summary>
+        /// Actuals the left position.
+        /// </summary>
+        /// <param name="width">The width.</param>
+        /// <returns>The adjusted distance from the left.</returns>
+        internal double ActualLeftPosition(double width)
+        {
+            return this.CustomPositionLeft * width / (double)this.PW;
+        }
+
+        /// <summary>
+        /// Actuals the height.
+        /// </summary>
+        /// <param name="height">The height.</param>
+        /// <returns>The adjusted width of the box.</returns>
+        internal double ActualHeight(double height)
+        {
+            return (this.CustomHeight * height / (double)this.PH) - this.ActualTopPosition(height);
+        }
+
+        /// <summary>
+        /// Actuals the width.
+        /// </summary>
+        /// <param name="width">The width.</param>
+        /// <returns>The adjusted height of the box.</returns>
+        internal double ActualWidth(double width)
+        {
+            return (this.CustomWidth * width / (double)this.PW) - this.ActualLeftPosition(width);
+        }
     }
 }

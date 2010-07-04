@@ -27,11 +27,16 @@ namespace HandwritingAccuracy
         /// The total number of tests.
         /// </summary>
         private const int TotalTests = 60;
-            
+
         /// <summary>
-        /// The list of tests that have been run.
+        /// A random number generator.
         /// </summary>
-        private Collection<RecognitionTest> tests = new Collection<RecognitionTest>();
+        private Random r = new Random();
+
+        /// <summary>
+        /// The number of test that have been completed.
+        /// </summary>
+        private int[] counts;
 
         /// <summary>
         /// The current test.
@@ -65,6 +70,7 @@ namespace HandwritingAccuracy
         /// <param name="tablet">The tablet.</param>
         public AccuracyWindow(Participant participant, TabletPC tablet)
         {
+            this.counts = new int[3];
             this.participant = participant;
             this.tablet = tablet;
             this.currentTestNumber = 0;
@@ -82,6 +88,7 @@ namespace HandwritingAccuracy
             this.Inky.IsEnabled = false;
             this.ButtonClear.IsEnabled = false;
             this.ButtonConfirm.IsEnabled = false;
+            this.ProgressBar.Maximum = AccuracyWindow.TotalTests;
         }
 
         /// <summary>
@@ -89,9 +96,41 @@ namespace HandwritingAccuracy
         /// </summary>
         private void NewTest()
         {
-            this.rt = new RecognitionDoubleTest();
-            this.tests.Add(this.rt);
-            this.LoadTest(this.rt);
+            if (this.currentTestNumber < TotalTests)
+            {
+                this.ProgressBar.Value = ++this.currentTestNumber;
+
+                while (true)
+                {
+                    int test = this.r.Next(0, 3);
+                    if (this.counts[test] < AccuracyWindow.TotalTests / 3.0)
+                    {
+                        this.counts[test]++;
+                        if (test == 0)
+                        {
+                            this.rt = new RecognitionDoubleTest();
+                        }
+                        else if (test == 1)
+                        {
+                            this.rt = new RecognitionIntegerTest();
+                        }
+                        else if (test == 2)
+                        {
+                            this.rt = new RecognitionWordTest();
+                        }
+
+                        break;
+                    }
+                }
+
+                this.LoadTest(this.rt);
+            }
+            else
+            {
+                this.LabelPrompt.Content = string.Empty;
+                this.ButtonClear.IsEnabled = false;
+                this.ButtonConfirm.IsEnabled = false;
+            }
         }
 
         /// <summary>
@@ -121,7 +160,6 @@ namespace HandwritingAccuracy
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ButtonConfirm_Click(object sender, RoutedEventArgs e)
         {
-            this.ProgressBar.Value = ++this.currentTestNumber;
             this.TextBoxResults.Text += this.rt.Text + "\t" + this.rt.RecognizedText + "\t";
             if (this.rt.Passed)
             {
@@ -131,6 +169,9 @@ namespace HandwritingAccuracy
             {
                 this.TextBoxResults.Text += "Failed\n";
             }
+
+            // Send the results to the databse
+            DatabaseManager.Instance().InsertExperimentRun(this.experimentId, this.currentTestNumber, this.rt);
 
             this.NewTest();
         }

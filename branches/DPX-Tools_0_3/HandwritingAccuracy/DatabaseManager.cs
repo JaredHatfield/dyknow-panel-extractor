@@ -73,6 +73,76 @@ namespace HandwritingAccuracy
         }
 
         /// <summary>
+        /// Inserts the experiment run.
+        /// </summary>
+        /// <param name="experiment">The experiment number.</param>
+        /// <param name="number">The run number.</param>
+        /// <param name="rt">The recognition test.</param>
+        internal void InsertExperimentRun(int experiment, int number, RecognitionTest rt)
+        {
+            // Insert the "run" into the database
+            this.Connect();
+            OdbcCommand command = new OdbcCommand("INSERT INTO `run` (`experiment`, `number`, `type`, `value`, `recognized`, `content`, `match`, `time`) VALUES (?, ?, ?, ?, ?, ?, ?, NOW());", this.connection);
+            OdbcParameter exp = new OdbcParameter("experiment", experiment);
+            command.Parameters.Add(exp);
+            OdbcParameter num = new OdbcParameter("number", number);
+            command.Parameters.Add(num);
+            OdbcParameter typ = new OdbcParameter("type", rt.ExperimentName);
+            command.Parameters.Add(typ);
+            OdbcParameter val = new OdbcParameter("value", rt.Text);
+            command.Parameters.Add(val);
+            OdbcParameter rec = new OdbcParameter("recognized", rt.RecognizedText);
+            command.Parameters.Add(rec);
+            OdbcParameter con = new OdbcParameter("content", rt.SerializedInk);
+            command.Parameters.Add(con);
+            if (rt.Passed)
+            {
+                OdbcParameter mat = new OdbcParameter("match", "1");
+                command.Parameters.Add(mat);
+            }
+            else
+            {
+                OdbcParameter mat = new OdbcParameter("match", "0");
+                command.Parameters.Add(mat);
+            }
+
+            int n = command.ExecuteNonQuery();
+
+            // Get the id of the inserted "run"
+            OdbcCommand command2 = new OdbcCommand("SELECT LAST_INSERT_ID()", this.connection);
+            object result = command2.ExecuteScalar();
+            int value = Int32.Parse(result.ToString());
+            Debug.WriteLine("Inserted Run with PID = " + value);
+
+            // Insert all of the alternative recogniations
+            if (rt.AlternativeText != null)
+            {
+                for (int i = 0; i < rt.AlternativeText.Count; i++)
+                {
+                    OdbcCommand comm = new OdbcCommand("INSERT INTO `alternative` (`run`, `confidence`, `recognized`, `match`) VALUES (?, ?,?, ?)", this.connection);
+                    OdbcParameter rnum = new OdbcParameter("run", value);
+                    comm.Parameters.Add(rnum);
+                    OdbcParameter conf = new OdbcParameter("confidence", rt.AlternativeText[i].InkRecognitionConfidence);
+                    comm.Parameters.Add(conf);
+                    OdbcParameter altrec = new OdbcParameter("recognized", rt.AlternativeText[i].RecognizedString);
+                    comm.Parameters.Add(altrec);
+                    if (rt.AlternativeText[i].RecognizedString.Equals(rt.Text))
+                    {
+                        OdbcParameter rmat = new OdbcParameter("match", "1");
+                        comm.Parameters.Add(rmat);
+                    }
+                    else
+                    {
+                        OdbcParameter rmat = new OdbcParameter("match", "0");
+                        comm.Parameters.Add(rmat);
+                    }
+
+                    int n2 = comm.ExecuteNonQuery();
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets the participant.
         /// </summary>
         /// <param name="firstname">The firstname.</param>

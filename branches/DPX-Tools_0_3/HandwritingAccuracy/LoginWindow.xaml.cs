@@ -49,7 +49,7 @@ namespace HandwritingAccuracy
             else
             {
                 Participant p = DatabaseManager.Instance().GetParticipant(this.TextBoxFirstName.Text, this.TextBoxLastName.Text);
-                
+
                 if (p == null)
                 {
                     MessageBox.Show("User not found!");
