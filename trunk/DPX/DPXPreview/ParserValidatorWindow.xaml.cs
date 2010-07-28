@@ -30,11 +30,6 @@ namespace DPXPreview
     public partial class ParserValidatorWindow : Window
     {
         /// <summary>
-        /// The random number generator.
-        /// </summary>
-        private Random r = new Random();
-
-        /// <summary>
         /// The collection of KnownMistakes that will not produce a failure of the serialization algorithm.
         /// </summary>
         private List<KnownMistake> knownMistakes;
@@ -175,7 +170,7 @@ namespace DPXPreview
                     lock (this.workerQueue)
                     {
                         this.workerQueue.Enqueue(f);
-                        Monitor.Pulse(this.workerQueue);
+                        Monitor.PulseAll(this.workerQueue);
                     }
                 }
             }
@@ -203,15 +198,15 @@ namespace DPXPreview
                     {
                         f = this.workerQueue.Dequeue();
                     }
+                    else
+                    {
+                        Monitor.Wait(this.workerQueue);
+                    }
                 }
 
                 if (f != null)
                 {
                     this.PerformSerializationTest(f);
-                }
-                else
-                {
-                    Thread.Sleep(this.r.Next(1000, 5000));
                 }
             }
         }
