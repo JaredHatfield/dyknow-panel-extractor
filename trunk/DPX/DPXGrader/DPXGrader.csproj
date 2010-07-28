@@ -89,6 +89,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnalyzerQueueItem.cs" />
     <Compile Include="PanelProcessorWindow.xaml.cs">
       <DependentUpon>PanelProcessorWindow.xaml</DependentUpon>
     </Compile>

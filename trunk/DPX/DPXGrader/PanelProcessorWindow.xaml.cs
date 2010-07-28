@@ -5,6 +5,7 @@
 namespace DPXGrader
 {
     using System;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Diagnostics;
     using System.IO;
@@ -53,7 +54,7 @@ namespace DPXGrader
         /// Used to remove the border when a new object is selected.
         /// </summary>
         private Border selectedThumbnail;
-        
+
         /// <summary>
         /// The panel number that is selected.
         /// </summary>
@@ -65,11 +66,38 @@ namespace DPXGrader
         private string fileName;
 
         /// <summary>
+        /// The list of threads.
+        /// </summary>
+        private List<Thread> workers;
+
+        /// <summary>
+        /// The queue of work that needs to be performed.
+        /// </summary>
+        private Queue<AnalyzerQueueItem> workerQueue;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PanelProcessorWindow"/> class.
         /// </summary>
         public PanelProcessorWindow()
         {
             InitializeComponent();
+
+            // Create the worker queue
+            this.workerQueue = new Queue<AnalyzerQueueItem>();
+
+            // Start all of the worker threads
+            this.workers = new List<Thread>();
+            Debug.WriteLine("Starting " + Environment.ProcessorCount + " threads for processing.");
+            for (int i = 0; i < Environment.ProcessorCount; i++)
+            {
+                Thread t = new Thread(new ThreadStart(this.Worker));
+                t.Name = "Queue Worker " + i;
+                t.SetApartmentState(ApartmentState.STA);
+                t.Start();
+                this.workers.Add(t);
+            }
+
+            // Set up everything else
             this.boxSize = 50;
             this.boxLocation = BoxLocation.TopLeft;
             this.selectedThumbnail = new Border();
@@ -77,6 +105,9 @@ namespace DPXGrader
             this.results = new Collection<string[]>();
             this.DisableStepTwo();
             this.DisableStepThree();
+
+            // Subscribe the shutdown method.
+            Dispatcher.ShutdownStarted += this.DispatcherShutdownStarted;
         }
 
         /// <summary>
@@ -137,6 +168,46 @@ namespace DPXGrader
             /// Location represented by the bottom right corner.
             /// </summary>
             BottomRight
+        }
+
+        /// <summary>
+        /// Handles the ShutdownStarted event of the Dispatcher control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void DispatcherShutdownStarted(object sender, EventArgs e)
+        {
+            for (int i = 0; i < this.workers.Count; i++)
+            {
+                this.workers[i].Abort();
+            }
+        }
+
+        /// <summary>
+        /// The worker thread.
+        /// </summary>
+        private void Worker()
+        {
+            while (true)
+            {
+                AnalyzerQueueItem queueItem = null;
+                lock (this.workerQueue)
+                {
+                    if (this.workerQueue.Count > 0)
+                    {
+                        queueItem = this.workerQueue.Dequeue();
+                    }
+                    else
+                    {
+                        Monitor.Wait(this.workerQueue);
+                    }
+                }
+
+                if (queueItem != null)
+                {
+                    this.PerformPanelAnalysis(queueItem);
+                }
+            }
         }
 
         /// <summary>
@@ -259,7 +330,7 @@ namespace DPXGrader
             string file = this.fileName;
             Dispatcher.Invoke(new UpdateProgressBarDelegate(this.UpdateOpenProgressBar), DispatcherPriority.Normal, 0, 1);
             Dispatcher.Invoke(new UpdateProgressBarDelegate(this.UpdateProcessProgressBar), DispatcherPriority.Input, 0, 1);
-            
+
             // Reset the GUI
             Dispatcher.Invoke(new NoArgsDelegate(this.ClearInterface), DispatcherPriority.Normal);
             this.selectedPanelId = -1;
@@ -291,7 +362,7 @@ namespace DPXGrader
         }
 
         // Methods that are dispatched to update the GUI
-        
+
         /// <summary>
         /// Clears the interface.
         /// </summary>
@@ -513,55 +584,124 @@ namespace DPXGrader
             int goal = this.dyknow.DATA.Count;
             Dispatcher.Invoke(new UpdateProgressBarDelegate(this.UpdateProcessProgressBar), DispatcherPriority.Input, 0, goal);
 
+            // Add everything to the queue to be processed
             for (int i = 0; i < this.dyknow.DATA.Count; i++)
             {
-                DPXReader.DyKnow.Page page = this.dyknow.DATA[i] as DPXReader.DyKnow.Page;
-                InkCanvas ink = new InkCanvas();
-                ink.Width = 400;
-                ink.Height = 300;
-                this.dyknow.Render(ink, i);
-                ink.Strokes.Clip(this.GetRectangleArea());
-                string val = string.Empty;
-                double valDigit = 0;
-                if (ink.Strokes.Count > 0)
+                AnalyzerQueueItem aqi = new AnalyzerQueueItem(i, goal);
+                lock (this.workerQueue)
                 {
-                    InkAnalyzer theInkAnalyzer = new InkAnalyzer();
-                    theInkAnalyzer.AddStrokes(ink.Strokes);
-                    AnalysisStatus status = theInkAnalyzer.Analyze();
+                    this.workerQueue.Enqueue(aqi);
+                }
+            }
 
-                    if (status.Successful)
+            // Wake up the workers so we can get some stuff done!
+            lock (this.workerQueue)
+            {
+                Monitor.PulseAll(this.workerQueue);
+            }
+
+            // Wait until the results queue has been completely filled
+            while (true)
+            {
+                lock (this.results)
+                {
+                    if (this.results.Count == goal)
                     {
-                        val = theInkAnalyzer.GetRecognizedString();
-                        try
+                        break;
+                    }
+                    else
+                    {
+                        // We won't check again until the results set changes
+                        Monitor.Wait(this.results);
+                    }
+                }
+            }
+
+            // Sort the reqults queue (not efficient, but it should already be nearly sorted)
+            lock (this.results)
+            {
+                for (int pass = 1; pass < this.results.Count; pass++)
+                {
+                    for (int i = 0; i < this.results.Count - 1; i++)
+                    {
+                        if (Int32.Parse(this.results[i][0]) > Int32.Parse(this.results[i + 1][0]))
                         {
-                            valDigit = double.Parse(val);
-                        }
-                        catch
-                        {
+                            string[] tmp = this.results[i];
+                            this.results[i] = this.results[i + 1];
+                            this.results[i + 1] = tmp;
                         }
                     }
                 }
-                
-                // Add the new record to the results table 
-                Dispatcher.Invoke(new AddRowToResultsDelegate(this.AddRowToResults), DispatcherPriority.Input, i, page.ONERN, page.ONER, val, valDigit);
-
-                // Add the values to the results collection
-                string[] record = new string[5];
-                record[0] = (i + 1).ToString();
-                record[1] = page.ONERN;
-                record[2] = page.ONER;
-                record[3] = val;
-                record[4] = string.Empty + valDigit;
-                this.results.Add(record);
-
-                // Update the progress bar
-                Dispatcher.Invoke(new UpdateProgressBarDelegate(this.UpdateProcessProgressBar), DispatcherPriority.Input, i, goal);
             }
 
+            // Update the GUI to indicate that the file processing had concluded
             Dispatcher.BeginInvoke(new NoArgsDelegate(this.EnableBoxControls), DispatcherPriority.Input);
             Dispatcher.BeginInvoke(new NoArgsDelegate(this.ReEnableProcess), DispatcherPriority.Input);
             Dispatcher.BeginInvoke(new NoArgsDelegate(this.EnableStepThree), DispatcherPriority.Input);
             Dispatcher.BeginInvoke(new UpdateProgressBarDelegate(this.UpdateProcessProgressBar), DispatcherPriority.Input, goal, goal);
+        }
+
+        /// <summary>
+        /// Performs the panel analysis in one of the worker threads.
+        /// </summary>
+        /// <param name="queueItem">The queue item.</param>
+        private void PerformPanelAnalysis(AnalyzerQueueItem queueItem)
+        {
+            InkCanvas ink = new InkCanvas();
+            ink.Width = 400;
+            ink.Height = 300;
+            DPXReader.DyKnow.Page page;
+
+            lock (this.dyknow)
+            {
+                page = this.dyknow.DATA[queueItem.Num] as DPXReader.DyKnow.Page;
+                this.dyknow.Render(ink, queueItem.Num);
+            }
+
+            ink.Strokes.Clip(this.GetRectangleArea());
+            string val = string.Empty;
+            double valDigit = 0;
+            if (ink.Strokes.Count > 0)
+            {
+                InkAnalyzer theInkAnalyzer = new InkAnalyzer();
+                theInkAnalyzer.AddStrokes(ink.Strokes);
+                AnalysisStatus status = theInkAnalyzer.Analyze();
+
+                if (status.Successful)
+                {
+                    val = theInkAnalyzer.GetRecognizedString();
+                    try
+                    {
+                        valDigit = double.Parse(val);
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+
+            // Add the new record to the results table 
+            Dispatcher.Invoke(new AddRowToResultsDelegate(this.AddRowToResults), DispatcherPriority.Input, queueItem.Num, page.ONERN, page.ONER, val, valDigit);
+
+            // Add the values to the results collection
+            string[] record = new string[5];
+            record[0] = (queueItem.Num + 1).ToString();
+            record[1] = page.ONERN;
+            record[2] = page.ONER;
+            record[3] = val;
+            record[4] = string.Empty + valDigit;
+            int progressNumber = 0;
+            lock (this.results)
+            {
+                this.results.Add(record);
+                progressNumber = this.results.Count;
+
+                // Notify the parent thread that something was added to the results
+                Monitor.Pulse(this.results);
+            }
+
+            // Update the progress bar
+            Dispatcher.Invoke(new UpdateProgressBarDelegate(this.UpdateProcessProgressBar), DispatcherPriority.Input, progressNumber, queueItem.Goal);
         }
 
         // Methods that are tied directly to the GUI
@@ -670,6 +810,7 @@ namespace DPXGrader
             this.ButtonPreview.IsEnabled = false;
             this.ButtonProcess.IsEnabled = false;
 
+            // Start processing all of the DyKnow files
             Thread t = new Thread(new ThreadStart(this.ProcessStep));
             t.Name = "ProcessThread";
             t.SetApartmentState(ApartmentState.STA);
@@ -693,19 +834,25 @@ namespace DPXGrader
                     // Save the CSV file
                     string file = saveFileDialog.FileName;
                     StreamWriter sr = new StreamWriter(file);
+
                     for (int i = 0; i < this.results.Count; i++)
                     {
-                        string[] val = this.results[i];
+                        string[] val;
+                        lock (this.results)
+                        {
+                            val = this.results[i];
+                        }
+
                         for (int j = 0; j < val.Length; j++)
                         {
                             // Remove any line breaks that may be part of the elements and replace them with spaces
-                            if (val[j].Contains(Environment.NewLine))
+                            if (val[j] != null && val[j].Contains(Environment.NewLine))
                             {
                                 val[j] = val[j].Replace(Environment.NewLine, " ");
                             }
 
                             // Any of the strings that contain a comma need to be surrounded with double quotes
-                            if (val[j].Contains(','))
+                            if (val[j] != null && val[j].Contains(','))
                             {
                                 // TODO: What if there are double quotes contained within the string, these should be escaped.
                                 val[j] = "\"" + val[j] + "\"";
@@ -723,9 +870,10 @@ namespace DPXGrader
                     MessageBox.Show("Error: The file could not be saved.");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 MessageBox.Show("The file was not saved successfully.");
+                Debug.WriteLine("File was not saved: " + ex.Message);
             }
         }
     }
