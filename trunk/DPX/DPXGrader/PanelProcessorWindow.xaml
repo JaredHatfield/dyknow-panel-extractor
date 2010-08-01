@@ -3,10 +3,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="DPX Grader" 
     Height="685" Width="790" 
-    ResizeMode="NoResize"
+    MinHeight="685" MinWidth="790"
+    MaxWidth="790"
+    ResizeMode="CanResizeWithGrip"
     Icon="Icon.ico">
-    <StackPanel Background="#DDDDDD">
-        <StackPanel.Resources>
+    <DockPanel Background="#DDDDDD">
+        <DockPanel.Resources>
             <Style TargetType="Label" x:Key="StepLabel">
                 <Setter Property="HorizontalAlignment" Value="Center"/>
                 <Setter Property="FontSize" Value="25"/>
@@ -37,11 +39,11 @@
             <Style TargetType="RadioButton">
                 <Setter Property="Foreground" Value="DarkBlue"/>
             </Style>
-        </StackPanel.Resources>
-
-        <Border BorderBrush="DarkBlue" BorderThickness="0,0,0,2">
-            <StackPanel Orientation="Horizontal">
-                <StackPanel Width="150" Background="LightSteelBlue">
+        </DockPanel.Resources>
+        <!-- Step 1 -->
+        <Border BorderBrush="DarkBlue" BorderThickness="0,0,0,2" DockPanel.Dock="Top">
+            <DockPanel>
+                <StackPanel Width="150" Background="LightSteelBlue" DockPanel.Dock="Left">
                     <Label Style="{StaticResource StepLabel}">Step 1</Label>
                     <Label Style="{StaticResource DescriptionLabel}">Select File</Label>
                     <Button Name="ButtonOpen" Width="100" Click="ButtonOpen_Click">Open</Button>
@@ -65,12 +67,12 @@
                         </StackPanel>
                     </ScrollViewer>
                 </StackPanel>
-            </StackPanel>
+            </DockPanel>
         </Border>
-
-        <Border BorderBrush="DarkBlue" BorderThickness="0,0,0,2" >
-            <StackPanel Orientation="Horizontal">
-                <StackPanel Width="150" Background="LightSteelBlue">
+        <!-- Step 2 -->
+        <Border BorderBrush="DarkBlue" BorderThickness="0,0,0,2" DockPanel.Dock="Top">
+            <DockPanel>
+                <StackPanel Width="150" Background="LightSteelBlue" DockPanel.Dock="Left">
                     <Label Style="{StaticResource StepLabel}">Step 2</Label>
                     <Label Style="{StaticResource DescriptionLabel}">Choose Region</Label>
                     <Button Name="ButtonProcess" Width="100" Click="ButtonProcess_Click">Process</Button>
@@ -104,29 +106,28 @@
                         <TextBox Name="TextBoxPreviewOutput" MaxLines="3" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
                     </StackPanel>
                 </StackPanel>
-            </StackPanel>
+            </DockPanel>
         </Border>
-
+        <!-- Step 3 -->
         <Border>
-            <StackPanel Orientation="Horizontal" Height="150">
-                <StackPanel Width="150" Height="Auto" Background="LightSteelBlue">
+            <DockPanel>
+                <StackPanel Width="150" Height="Auto" Background="LightSteelBlue" DockPanel.Dock="Left">
                     <Label Style="{StaticResource StepLabel}">Step 3</Label>
                     <Label Style="{StaticResource DescriptionLabel}">Get Results</Label>
                     <Button Name="ButtonSave" Click="ButtonSave_Click">Save</Button>
                 </StackPanel>
-                    <ScrollViewer Width="600" Height="100" Margin="10" Background="White" VerticalAlignment="Top">
-                        <Grid Name="GridResults" Width="Auto" Height="Auto">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition MaxWidth="50" />
-                                <ColumnDefinition Width="145" />
-                                <ColumnDefinition Width="145" />
-                                <ColumnDefinition Width="115" />
-                                <ColumnDefinition Width="115" />
-                            </Grid.ColumnDefinitions>
-                        </Grid>
-                    </ScrollViewer>
-            </StackPanel>
+                <ScrollViewer Width="600" Margin="10" Background="White">
+                    <Grid Name="GridResults" Width="Auto" Height="Auto">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MaxWidth="50" />
+                            <ColumnDefinition Width="145" />
+                            <ColumnDefinition Width="145" />
+                            <ColumnDefinition Width="115" />
+                            <ColumnDefinition Width="115" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ScrollViewer>
+            </DockPanel>
         </Border>
-        
-    </StackPanel>
+    </DockPanel>
 </Window>
