@@ -89,7 +89,7 @@ namespace DPXGrader
             this.workers = new List<Thread>();
             Debug.WriteLine("Starting " + Environment.ProcessorCount + " threads for processing.");
             for (int i = 0; i < Environment.ProcessorCount; i++)
-            {
+                {
                 Thread t = new Thread(new ThreadStart(this.Worker));
                 t.Name = "Queue Worker " + i;
                 t.SetApartmentState(ApartmentState.STA);
@@ -665,9 +665,36 @@ namespace DPXGrader
             {
                 InkAnalyzer theInkAnalyzer = new InkAnalyzer();
                 theInkAnalyzer.AddStrokes(ink.Strokes);
-                AnalysisStatus status = theInkAnalyzer.Analyze();
+                AnalysisStatus status = null;
 
-                if (status.Successful)
+                // It is possible for this to fail. :(
+                // We want to make multiple attempts to perform the analysis if necessary.
+                int attemptCount = 4;
+                while (attemptCount > 0)
+                {
+                    try
+                    {
+                        // Attempt the handwriting analysis
+                        status = theInkAnalyzer.Analyze();
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine("The analysis failed! " + e.Message);
+
+                        // If we failed for some reason, lets take a short break
+                        Thread.Sleep(100);
+                    }
+
+                    // It worked so we do not need to make any more attempts
+                    if (status != null)
+                    {
+                        break;
+                    }
+
+                    attemptCount--;
+                }
+
+                if (status != null && status.Successful)
                 {
                     val = theInkAnalyzer.GetRecognizedString();
                     try
