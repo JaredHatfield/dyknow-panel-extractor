@@ -1,4 +1,4 @@
-#summary The application used for grading student work.
+#summary The application used for processing instructor grades on panels
 
 http://lh6.ggpht.com/_l4Rv5VGKzLQ/TCPFDJMqbcI/AAAAAAAAAcQ/jM2uXobwwPQ/s400/DPXGrader.png
 
