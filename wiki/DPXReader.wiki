@@ -13,10 +13,10 @@ The current applications that use this library are DPXGrader and DPXPreview.  Th
 
 === Known Panel Rendering Problems ==
   * Elements that are not shown
-    * Polls
+    * Polls (See issue 13)
     * Web pages
-    * Page text
-    * Text boxes
-  * Resized or moved ink does not render the transformation properly
+    * Page text (See issue 14)
+    * Text boxes (See issue 15)
+  * Resized or moved ink does not render the transformation properly (See issue 12)
 
 DyKnow's ability to store the history of modifications to a file prevents the contents of the InkCanvas from being modified.
