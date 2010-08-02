@@ -1,8 +1,98 @@
 ﻿<Window x:Class="DPXAnswers.AnswerWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Answers" Height="300" Width="300">
-    <Grid>
-        
-    </Grid>
+    Title="DPX Answers"
+    Height="650" Width="800"
+    ResizeMode="CanMinimize"
+    Icon="Icon.ico">
+    <DockPanel Background="LightGray">
+        <DockPanel.Resources>
+            <Style TargetType="Label" x:Key="StepLabel">
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="25"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Foreground" Value="DarkBlue"/>
+            </Style>
+            <Style TargetType="Label" x:Key="DescriptionLabel">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="Foreground" Value="DarkBlue"/>
+            </Style>
+            <Style TargetType="Label" x:Key="InformationLabel">
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Foreground" Value="DarkBlue"/>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="Background" Value="LightSteelBlue"/>
+                <Setter Property="Foreground" Value="DarkBlue"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="Margin" Value="10"/>
+            </Style>
+            <Style TargetType="Separator">
+                <Setter Property="Background" Value="DarkBlue"/>
+            </Style>
+            <Style TargetType="RadioButton">
+                <Setter Property="Foreground" Value="DarkBlue"/>
+            </Style>
+        </DockPanel.Resources>
+        <!-- File -->
+        <Border BorderBrush="DarkBlue" BorderThickness="0,0,1,0" Width="200" DockPanel.Dock="Left">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top" Background="LightSteelBlue" Height="100">
+                    <Label Style="{StaticResource StepLabel}">File</Label>
+                    <Button Name="ButtonOpen" Width="80" HorizontalAlignment="Center" Click="ButtonOpen_Click">Open</Button>
+                </StackPanel>
+                <ScrollViewer 
+                        Margin="10"
+                        HorizontalScrollBarVisibility="Hidden"
+                        VerticalScrollBarVisibility="Visible"
+                        Background="White">
+                    <StackPanel 
+                            Name="PanelScrollView"
+                            Width="160"
+                            Orientation="Vertical"
+                            ScrollViewer.HorizontalScrollBarVisibility="Visible">
+                    </StackPanel>
+                </ScrollViewer>
+            </DockPanel>
+        </Border>
+        <!-- Grade -->
+        <Border BorderBrush="DarkBlue" BorderThickness="1,0,1,0" Width="430" DockPanel.Dock="Left">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top" Background="LightSteelBlue" Height="100">
+                    <Label Style="{StaticResource StepLabel}">Grade</Label>
+                    <ProgressBar Name="ProgressBarProcessFile" Height="20" Margin="50,10,50,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Border Margin="10,10,10,0" Width="404" BorderBrush="DarkBlue" BorderThickness="2">
+                        <InkCanvas Name="Inky" Width="400" Height="300" IsEnabled="False" />
+                    </Border>
+                    <DockPanel>
+                        <TextBox Name="TextBoxStudentName"  Width="150" IsReadOnly="True" DockPanel.Dock="Left" />
+                        <TextBox Name="TextBoxUserName" Width="150" IsReadOnly="True" DockPanel.Dock="Right" />
+                        <Separator />
+                    </DockPanel>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+        <!-- Answer -->
+        <Border BorderBrush="DarkBlue" BorderThickness="1,0,0,0">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top" Background="LightSteelBlue" Height="100">
+                    <Label Style="{StaticResource StepLabel}">Answer</Label>
+                    <Button Name="ButtonSave" Width="80" HorizontalAlignment="Center" Click="ButtonSave_Click">Save</Button>
+                </StackPanel>
+                <ScrollViewer Margin="10" Background="White">
+                    <Grid Name="GridResults" Width="Auto" Height="Auto">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ScrollViewer>
+            </DockPanel>
+        </Border>
+    </DockPanel>
 </Window>

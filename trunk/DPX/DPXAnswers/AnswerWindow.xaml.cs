@@ -30,5 +30,25 @@ namespace DPXAnswers
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// Handles the Click event of the ButtonOpen control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void ButtonOpen_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: Implement me!
+        }
+
+        /// <summary>
+        /// Handles the Click event of the ButtonSave control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void ButtonSave_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: Implement me!
+        }
     }
 }
