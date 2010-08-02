@@ -5,6 +5,7 @@
     * [DPXDatabase DPX Database]
     * [DPXReader DPX Reader]
   * Applications
+    * [DPXAnswers DPX Answers]
     * [DPXGrader DPX Grader]
     * [DPXManager DPX Manager]
     * [DPXPreview DPX Preview]
