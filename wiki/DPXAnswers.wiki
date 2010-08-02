@@ -1,0 +1,5 @@
+#summary The application used for processing student answers on panels
+
+= Introduction =
+
+This application provides a semi-automated way to process student responses and grade panels for accuracy.  This specific application is currently under development.
