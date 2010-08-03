@@ -5,52 +5,131 @@
 namespace DPXGrader
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using System.Diagnostics;
     using System.Text;
+    using System.Threading;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Ink;
+    using System.Windows.Threading;
+    using DPXCommon;
+    using DPXReader.DyKnow;
 
     /// <summary>
     /// A queue item that needs to be processed.
     /// </summary>
-    internal class AnalyzerQueueItem
+    internal class AnalyzerQueueItem : QueueItem
     {
+        /// <summary>
+        /// The window element that will be manipulated by this item.
+        /// </summary>
+        private PanelProcessorWindow window;
+
         /// <summary>
         /// The number of the panel to process.
         /// </summary>
         private int num;
 
         /// <summary>
-        /// The total number of panels.
-        /// </summary>
-        private int goal;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="AnalyzerQueueItem"/> class.
         /// </summary>
+        /// <param name="window">The window.</param>
         /// <param name="num">The number.</param>
-        /// <param name="goal">The goal number.</param>
-        public AnalyzerQueueItem(int num, int goal)
+        public AnalyzerQueueItem(PanelProcessorWindow window, int num)
         {
+            this.window = window;
             this.num = num;
-            this.goal = goal;
         }
 
         /// <summary>
-        /// Gets the number.
+        /// Executes the action required by this item.
         /// </summary>
-        /// <value>The number.</value>
-        public int Num
+        public override void Run()
         {
-            get { return this.num; }
-        }
+            InkCanvas ink = new InkCanvas();
+            ink.Width = 400;
+            ink.Height = 300;
+            DPXReader.DyKnow.Page page;
+            int goal = 0;
 
-        /// <summary>
-        /// Gets the goal number.
-        /// </summary>
-        /// <value>The goal number.</value>
-        public int Goal
-        {
-            get { return this.goal; }
+            lock (this.window.DyKnow)
+            {
+                page = this.window.DyKnow.DATA[this.num] as DPXReader.DyKnow.Page;
+                this.window.DyKnow.Render(ink, this.num);
+                goal = this.window.DyKnow.DATA.Count;
+            }
+
+            ink.Strokes.Clip(this.window.GetRectangleArea());
+            string val = string.Empty;
+            double valDigit = 0;
+            if (ink.Strokes.Count > 0)
+            {
+                InkAnalyzer theInkAnalyzer = new InkAnalyzer();
+                theInkAnalyzer.AddStrokes(ink.Strokes);
+                AnalysisStatus status = null;
+
+                // It is possible for this to fail. :(
+                // We want to make multiple attempts to perform the analysis if necessary.
+                int attemptCount = 4;
+                while (attemptCount > 0)
+                {
+                    try
+                    {
+                        // Attempt the handwriting analysis
+                        status = theInkAnalyzer.Analyze();
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine("The analysis failed! " + e.Message);
+
+                        // If we failed for some reason, lets take a short break
+                        Thread.Sleep(100);
+                    }
+
+                    // It worked so we do not need to make any more attempts
+                    if (status != null)
+                    {
+                        break;
+                    }
+
+                    attemptCount--;
+                }
+
+                if (status != null && status.Successful)
+                {
+                    val = theInkAnalyzer.GetRecognizedString();
+                    try
+                    {
+                        valDigit = double.Parse(val);
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+
+            // Add the new record to the results table
+            this.window.Dispatcher.Invoke(new PanelProcessorWindow.AddRowToResultsDelegate(this.window.AddRowToResults), DispatcherPriority.Input, this.num, page.ONERN, page.ONER, val, valDigit);
+
+            // Add the values to the results collection
+            string[] record = new string[5];
+            record[0] = (this.num + 1).ToString();
+            record[1] = page.ONERN;
+            record[2] = page.ONER;
+            record[3] = val;
+            record[4] = string.Empty + valDigit;
+            int progressNumber = 0;
+            lock (this.window.Results)
+            {
+                this.window.Results.Add(record);
+                progressNumber = this.window.Results.Count;
+
+                // Notify the parent thread that something was added to the results
+                Monitor.Pulse(this.window.Results);
+            }
+
+            // Update the progress bar
+            this.window.Dispatcher.Invoke(new PanelProcessorWindow.UpdateProgressBarDelegate(this.window.UpdateProcessProgressBar), DispatcherPriority.Input, progressNumber, goal);
         }
     }
 }

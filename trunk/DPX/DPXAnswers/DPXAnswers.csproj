@@ -68,6 +68,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnswerManager.cs" />
+    <Compile Include="AnswerProcessQueueItem.cs" />
+    <Compile Include="ImageProcessQueueItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -93,6 +96,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DPXCommon\DPXCommon.csproj">
+      <Project>{B3EA1278-7F1D-4ED1-850B-B68DC59C0EA2}</Project>
+      <Name>DPXCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DPXReader\DPXReader.csproj">
+      <Project>{C05354D4-086C-4DF8-BC63-F42CD0F7A036}</Project>
+      <Name>DPXReader</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
