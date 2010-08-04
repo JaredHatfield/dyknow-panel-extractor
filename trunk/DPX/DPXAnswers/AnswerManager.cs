@@ -43,6 +43,11 @@ namespace DPXAnswers
         private DyKnow dyknow;
 
         /// <summary>
+        /// The collection of answers.
+        /// </summary>
+        private Dictionary<int, PanelAnswer> answers;
+
+        /// <summary>
         /// The list of threads.
         /// </summary>
         private List<Thread> workers;
@@ -57,6 +62,9 @@ namespace DPXAnswers
         /// </summary>
         private AnswerManager()
         {
+            // Create the list fo answers
+            this.answers = new Dictionary<int, PanelAnswer>();
+
             // Create the worker queue
             this.workerQueue = new Queue<QueueItem>();
 
@@ -122,6 +130,7 @@ namespace DPXAnswers
         internal DyKnow OpenFile(string name)
         {
             this.filename = name;
+            this.answers.Clear();
             this.dyknow = DyKnow.DeserializeFromFile(this.filename);
             return this.dyknow;
         }
@@ -147,6 +156,29 @@ namespace DPXAnswers
                 {
                     this.answerWindow.TextBoxUserName.Text = oner;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Processes the panel answer boxes.
+        /// </summary>
+        /// <param name="n">The panel number.</param>
+        internal void ProcessPanelAnswers(int n)
+        {
+            // Create the answer
+            PanelAnswer pa = new PanelAnswer();
+            this.answers.Add(n, pa);
+
+            // Create the new task
+            AnswerProcessQueueItem apqi = new AnswerProcessQueueItem(this.dyknow, n, pa);
+
+            // Add the item to the queue
+            lock (this.workerQueue)
+            {
+                this.workerQueue.Enqueue(apqi);
+
+                // Notify a thread that work is available
+                Monitor.Pulse(this.workerQueue);
             }
         }
 

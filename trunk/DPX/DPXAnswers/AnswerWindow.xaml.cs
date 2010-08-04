@@ -116,11 +116,15 @@ namespace DPXAnswers
                 this.selectedPanelId = 0;
             }
 
-            // Render and add all of the thumbnails
+            // Loop through all of the panels
             for (int i = 0; i < dyknow.DATA.Count; i++)
             {
+                // Generate and display the thumbnail
                 ImageProcessQueueItem tqi = new ImageProcessQueueItem(this, dyknow, i);
                 Dispatcher.BeginInvoke(new NoArgsDelegate(tqi.Run), DispatcherPriority.Background);
+
+                // Process the panels answer boxes
+                this.answerManager.ProcessPanelAnswers(i);
             }
 
             Dispatcher.BeginInvoke(new NoArgsDelegate(this.ReEnableOpen), DispatcherPriority.ContextIdle);
