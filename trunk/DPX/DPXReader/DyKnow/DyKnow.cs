@@ -305,6 +305,28 @@ namespace DPXReader.DyKnow
         }
 
         /// <summary>
+        /// Gets the thumbnail for the specified page.
+        /// </summary>
+        /// <param name="page">The page to render.</param>
+        /// <param name="width">The width of the original InkCanvas.</param>
+        /// <param name="height">The height of the original InkCanvas.</param>
+        /// <param name="factor">The factor to reduce the image by.</param>
+        /// <returns>The rendered thumbnail as an image.</returns>
+        public Image GetThumbnail(int page, double width, double height, double factor)
+        {
+            InkCanvas ink = new InkCanvas();
+            ink.Width = width;
+            ink.Height = height;
+            this.Render(ink, page);
+            RenderTargetBitmap rtb = new RenderTargetBitmap(Convert.ToInt32(ink.Width), Convert.ToInt32(ink.Height), 96d, 96d, PixelFormats.Default);
+            rtb.Render(ink);
+            TransformedBitmap tb = new TransformedBitmap(rtb, new ScaleTransform(factor, factor));
+            Image myImage = new Image();
+            myImage.Source = tb;
+            return myImage;
+        }
+
+        /// <summary>
         /// Gets the image data.
         /// </summary>
         /// <param name="id">The image identifier.</param>

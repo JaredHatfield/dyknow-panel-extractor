@@ -55,19 +55,11 @@ namespace DPXAnswers
         /// </summary>
         public override void Run()
         {
-            InkCanvas ink = new InkCanvas();
-            ink.Width = this.window.Inky.ActualWidth;
-            ink.Height = this.window.Inky.ActualHeight;
-            lock (this.dyknow)
-            {
-                this.dyknow.Render(ink, this.index);
-            }
-
-            RenderTargetBitmap rtb = new RenderTargetBitmap(Convert.ToInt32(ink.Width), Convert.ToInt32(ink.Height), 96d, 96d, PixelFormats.Default);
-            rtb.Render(ink);
-            TransformedBitmap tb = new TransformedBitmap(rtb, new ScaleTransform(.4, .4));
-            Image myImage = new Image();
-            myImage.Source = tb;
+            Image myImage = this.dyknow.GetThumbnail(
+                this.index, 
+                this.window.Inky.ActualWidth, 
+                this.window.Inky.ActualHeight, 
+                0.4);
             Border b = new Border();
             b.Child = myImage;
 
