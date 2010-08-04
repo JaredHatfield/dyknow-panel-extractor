@@ -66,7 +66,7 @@ namespace DPXGrader
             if (this.num == 0)
             {
                 b.BorderBrush = Brushes.Gold;
-                this.window.SelectedThumbnail = b;
+                this.window.SelectedPanelId = this.num;
             }
             else
             {

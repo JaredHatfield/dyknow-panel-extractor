@@ -51,12 +51,6 @@ namespace DPXGrader
         private BoxLocation boxLocation;
 
         /// <summary>
-        /// The selected thumnail object.
-        /// Used to remove the border when a new object is selected.
-        /// </summary>
-        private Border selectedThumbnail;
-
-        /// <summary>
         /// The panel number that is selected.
         /// </summary>
         private int selectedPanelId;
@@ -101,7 +95,6 @@ namespace DPXGrader
             // Set up everything else
             this.boxSize = 50;
             this.boxLocation = BoxLocation.TopLeft;
-            this.selectedThumbnail = new Border();
             this.selectedPanelId = -1;
             this.results = new Collection<string[]>();
             this.DisableStepTwo();
@@ -190,13 +183,13 @@ namespace DPXGrader
         }
 
         /// <summary>
-        /// Gets or sets the selected thumbnail.
+        /// Gets or sets the selected panel id.
         /// </summary>
-        /// <value>The selected thumbnail.</value>
-        internal Border SelectedThumbnail
+        /// <value>The selected panel id.</value>
+        internal int SelectedPanelId
         {
-            get { return this.selectedThumbnail; }
-            set { this.selectedThumbnail = value; }
+            get { return this.selectedPanelId; }
+            set { this.selectedPanelId = value; }
         }
 
         /// <summary>
@@ -303,9 +296,10 @@ namespace DPXGrader
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         internal void PanelSelected(object sender, EventArgs e)
         {
-            this.selectedThumbnail.BorderBrush = Brushes.Black;
+            (this.PanelScrollView.Children[this.selectedPanelId] as Border).BorderBrush = Brushes.Black;
             Border b = sender as Border;
-            this.selectedThumbnail = b;
+            int panelIndex = (int)b.Tag;
+            this.selectedPanelId = panelIndex;
             b.BorderBrush = Brushes.Gold;
             this.DisplayPanel((int)b.Tag);
         }
