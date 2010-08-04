@@ -18,6 +18,8 @@ namespace DPXAnswers
     using System.Windows.Media.Imaging;
     using System.Windows.Navigation;
     using System.Windows.Shapes;
+    using System.Windows.Threading;
+    using DPXReader.DyKnow;
 
     /// <summary>
     /// Interaction logic for AnswerWindow.xaml
@@ -30,11 +32,23 @@ namespace DPXAnswers
         private AnswerManager answerManager;
 
         /// <summary>
+        /// The name of the file that is being opened.
+        /// </summary>
+        private string filename;
+
+        /// <summary>
+        /// The panel number that is selected.
+        /// </summary>
+        private int selectedPanelId;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AnswerWindow"/> class.
         /// </summary>
         public AnswerWindow()
         {
             InitializeComponent();
+            this.filename = null;
+            this.selectedPanelId = -1;
 
             // Set up the AnswerManager.
             this.answerManager = AnswerManager.Instance();
@@ -45,10 +59,99 @@ namespace DPXAnswers
         }
 
         /// <summary>
+        /// The delegate for displaying a panel.
+        /// </summary>
+        /// <param name="index">The index of the panel to display.</param>
+        public delegate void DisplayPanelDelegate(int index);
+
+        /// <summary>
+        /// The delegate for call with no arguments.
+        /// </summary>
+        private delegate void NoArgsDelegate();
+
+        /// <summary>
+        /// Gets or sets the selected panel id.
+        /// </summary>
+        /// <value>The selected panel id.</value>
+        internal int SelectedPanelId
+        {
+            get { return this.selectedPanelId; }
+            set { this.selectedPanelId = value; }
+        }
+
+        /// <summary>
+        /// Event that is fired when a panel in the scroll view is selected.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        internal void PanelSelected(object sender, EventArgs e)
+        {
+            (this.PanelScrollView.Children[this.selectedPanelId] as Border).BorderBrush = Brushes.Black;
+            Border b = sender as Border;
+            int panelIndex = (int)b.Tag;
+            this.selectedPanelId = panelIndex;
+            b.BorderBrush = Brushes.Gold;
+            Dispatcher.BeginInvoke(new DisplayPanelDelegate(this.answerManager.DisplayPanel), DispatcherPriority.Input, panelIndex);
+        }
+
+        /// <summary>
+        /// Loads the DyKnow file.
+        /// </summary>
+        private void LoadDyKnowFile()
+        {
+            string file = this.filename;
+
+            // Reset the GUI
+            Dispatcher.Invoke(new NoArgsDelegate(this.ClearInterface), DispatcherPriority.Normal);
+            this.selectedPanelId = -1;
+
+            // Read in the file
+            DyKnow dyknow = this.answerManager.OpenFile(file);
+            int goal = dyknow.DATA.Count + 1;
+
+            // Display the first panel
+            if (dyknow.DATA.Count > 0)
+            {
+                Dispatcher.Invoke(new DisplayPanelDelegate(this.answerManager.DisplayPanel), DispatcherPriority.Input, 0);
+                this.selectedPanelId = 0;
+            }
+
+            // Render and add all of the thumbnails
+            for (int i = 0; i < dyknow.DATA.Count; i++)
+            {
+                ImageProcessQueueItem tqi = new ImageProcessQueueItem(this, dyknow, i);
+                Dispatcher.BeginInvoke(new NoArgsDelegate(tqi.Run), DispatcherPriority.Background);
+            }
+
+            Dispatcher.BeginInvoke(new NoArgsDelegate(this.ReEnableOpen), DispatcherPriority.ContextIdle);
+        }
+
+        /// <summary>
         /// Does the nothing.
         /// </summary>
         private void DoNothing()
         {
+        }
+
+        /// <summary>
+        /// Clears the interface.
+        /// </summary>
+        private void ClearInterface()
+        {
+            this.GridResults.Children.Clear();
+            this.Inky.Children.Clear();
+            this.Inky.Strokes.Clear();
+            this.PanelScrollView.Children.Clear();
+            this.TextBoxStudentName.Text = string.Empty;
+            this.TextBoxUserName.Text = string.Empty;
+        }
+
+        /// <summary>
+        /// Re-Enable the open button.
+        /// </summary>
+        private void ReEnableOpen()
+        {
+            this.ButtonOpen.IsEnabled = true;
         }
 
         /// <summary>
@@ -66,8 +169,8 @@ namespace DPXAnswers
                 this.ButtonOpen.IsEnabled = false;
 
                 // Open the DyKnow file
-                this.answerManager.SetFilename(openFileDialog.FileName);
-                Thread t = new Thread(new ThreadStart(this.DoNothing));
+                this.filename = openFileDialog.FileName;
+                Thread t = new Thread(new ThreadStart(this.LoadDyKnowFile));
                 t.Name = "OpenFileThread";
                 t.SetApartmentState(ApartmentState.STA);
                 t.Start();

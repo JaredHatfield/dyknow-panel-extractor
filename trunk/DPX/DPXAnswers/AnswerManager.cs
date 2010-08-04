@@ -115,12 +115,39 @@ namespace DPXAnswers
         }
 
         /// <summary>
-        /// Sets the filename.
+        /// Opens the specified DyKnow file.
         /// </summary>
-        /// <param name="filename">The filename.</param>
-        internal void SetFilename(string filename)
+        /// <param name="name">The file name.</param>
+        /// <returns>The opened DyKnow file.</returns>
+        internal DyKnow OpenFile(string name)
         {
-            this.filename = filename;
+            this.filename = name;
+            this.dyknow = DyKnow.DeserializeFromFile(this.filename);
+            return this.dyknow;
+        }
+
+        /// <summary>
+        /// Displays a panel.
+        /// </summary>
+        /// <param name="n">The panel to display.</param>
+        internal void DisplayPanel(int n)
+        {
+            if (this.dyknow != null && n >= 0 && n < this.dyknow.DATA.Count)
+            {
+                this.answerWindow.SelectedPanelId = n;
+                this.dyknow.Render(this.answerWindow.Inky, n);
+                string oner = (this.dyknow.DATA[n] as DPXReader.DyKnow.Page).ONER;
+                string onern = (this.dyknow.DATA[n] as DPXReader.DyKnow.Page).ONERN;
+                if (oner != null)
+                {
+                    this.answerWindow.TextBoxStudentName.Text = onern;
+                }
+
+                if (onern != null)
+                {
+                    this.answerWindow.TextBoxUserName.Text = oner;
+                }
+            }
         }
 
         /// <summary>
