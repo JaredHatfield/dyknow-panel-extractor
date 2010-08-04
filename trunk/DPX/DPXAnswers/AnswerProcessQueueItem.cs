@@ -114,6 +114,12 @@ namespace DPXAnswers
                     }
                 }
             }
+            
+            // Mark the answer as complete
+            lock (this.answer)
+            {
+                this.answer.FlagProcesed();
+            }
         }
     }
 }

@@ -112,6 +112,7 @@ namespace DPXAnswers
             // Display the first panel
             if (dyknow.DATA.Count > 0)
             {
+                this.answerManager.ProcessPanelAnswers(0);
                 Dispatcher.Invoke(new DisplayPanelDelegate(this.answerManager.DisplayPanel), DispatcherPriority.Input, 0);
                 this.selectedPanelId = 0;
             }
@@ -119,12 +120,15 @@ namespace DPXAnswers
             // Loop through all of the panels
             for (int i = 0; i < dyknow.DATA.Count; i++)
             {
+                // Process the panels answer boxes
+                if (i > 0)
+                {
+                    this.answerManager.ProcessPanelAnswers(i);
+                }
+
                 // Generate and display the thumbnail
                 ImageProcessQueueItem tqi = new ImageProcessQueueItem(this, dyknow, i);
                 Dispatcher.BeginInvoke(new NoArgsDelegate(tqi.Run), DispatcherPriority.Background);
-
-                // Process the panels answer boxes
-                this.answerManager.ProcessPanelAnswers(i);
             }
 
             Dispatcher.BeginInvoke(new NoArgsDelegate(this.ReEnableOpen), DispatcherPriority.ContextIdle);
@@ -142,6 +146,7 @@ namespace DPXAnswers
         /// </summary>
         private void ClearInterface()
         {
+            this.GridRecognizedAnswers.Children.Clear();
             this.GridResults.Children.Clear();
             this.Inky.Children.Clear();
             this.Inky.Strokes.Clear();

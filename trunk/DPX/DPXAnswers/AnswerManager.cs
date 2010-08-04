@@ -87,6 +87,12 @@ namespace DPXAnswers
         private delegate void NoArgsDelegate();
 
         /// <summary>
+        /// The delegate for display recognized answer.
+        /// </summary>
+        /// <param name="panel">The panel answer.</param>
+        private delegate void DisplayRecognizedAnswerDelegate(PanelAnswer panel);
+
+        /// <summary>
         /// Returns the singleton instance.
         /// </summary>
         /// <returns>An instance of AnswerManager.</returns>
@@ -130,7 +136,11 @@ namespace DPXAnswers
         internal DyKnow OpenFile(string name)
         {
             this.filename = name;
-            this.answers.Clear();
+            lock (this.answers)
+            {
+                this.answers.Clear();
+            }
+
             this.dyknow = DyKnow.DeserializeFromFile(this.filename);
             return this.dyknow;
         }
@@ -156,6 +166,64 @@ namespace DPXAnswers
                 {
                     this.answerWindow.TextBoxUserName.Text = oner;
                 }
+
+                // Display the panel answers
+                PanelAnswer pa = null;
+                lock (this.answers)
+                {
+                    pa = this.RetreivePanelAnswer(n);
+                }
+
+                if (pa != null)
+                {
+                    this.DisplayRecognizedAnswer(pa);
+                    if (!pa.IsProcessed)
+                    {
+                        pa.DidProcess += new PanelAnswer.PanelProcessedDelegate(this.DisplayRecognizedAnswerDispatch);
+                    }
+                }
+                else
+                {
+                    // Subscribe the event to update the gui when processing is complete
+                    Debug.WriteLine("Panel Answer is null: " + n);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Displays the recognized answer dispatch.
+        /// </summary>
+        internal void DisplayRecognizedAnswerDispatch()
+        {
+            int id = this.answerWindow.SelectedPanelId;
+            PanelAnswer pa = this.RetreivePanelAnswer(id);
+            pa.DidProcess -= new PanelAnswer.PanelProcessedDelegate(this.DisplayRecognizedAnswerDispatch);
+            this.answerWindow.Dispatcher.BeginInvoke(new DisplayRecognizedAnswerDelegate(this.DisplayRecognizedAnswer), pa);
+        }
+
+        /// <summary>
+        /// Displays the recognized answers.
+        /// </summary>
+        /// <param name="panel">The panel answer.</param>
+        internal void DisplayRecognizedAnswer(PanelAnswer panel)
+        {
+            // Display the answer information to the user
+            Grid g = this.answerWindow.GridRecognizedAnswers;
+            g.Children.Clear();
+            for (int i = 0; i < panel.Keys.Count; i++)
+            {
+                RowDefinition rd = new RowDefinition();
+                rd.Height = GridLength.Auto;
+                g.RowDefinitions.Add(rd);
+
+                // Add the panel number
+                Label num = new Label();
+                num.Content = panel.GetRecognizedString(panel.Keys[i]);
+                num.BorderBrush = Brushes.DarkGray;
+                num.BorderThickness = new Thickness(1);
+                Grid.SetRow(num, i);
+                Grid.SetColumn(num, 0);
+                g.Children.Add(num);
             }
         }
 
@@ -167,7 +235,10 @@ namespace DPXAnswers
         {
             // Create the answer
             PanelAnswer pa = new PanelAnswer();
-            this.answers.Add(n, pa);
+            lock (this.answers)
+            {
+                this.answers.Add(n, pa);
+            }
 
             // Create the new task
             AnswerProcessQueueItem apqi = new AnswerProcessQueueItem(this.dyknow, n, pa);
@@ -180,6 +251,24 @@ namespace DPXAnswers
                 // Notify a thread that work is available
                 Monitor.Pulse(this.workerQueue);
             }
+        }
+
+        /// <summary>
+        /// Retreives the panel answer.
+        /// </summary>
+        /// <param name="n">The panel number.</param>
+        /// <returns>The PanelAnswer if it has been processed; otherwise null.</returns>
+        internal PanelAnswer RetreivePanelAnswer(int n)
+        {
+            lock (this.answers)
+            {
+                if (this.answers.ContainsKey(n))
+                {
+                    return this.answers[n];
+                }
+            }
+
+            return null;
         }
 
         /// <summary>

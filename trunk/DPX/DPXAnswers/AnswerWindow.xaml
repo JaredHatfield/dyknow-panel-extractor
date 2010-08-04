@@ -66,16 +66,23 @@
                     <Label Style="{StaticResource StepLabel}">Grade</Label>
                     <ProgressBar Name="ProgressBarProcessFile" Height="20" Margin="50,10,50,0"/>
                 </StackPanel>
-                <StackPanel Orientation="Vertical">
-                    <Border Margin="10,10,10,0" Width="404" BorderBrush="DarkBlue" BorderThickness="2">
+                <DockPanel>
+                    <Border Margin="10,10,10,0" Width="404" BorderBrush="DarkBlue" BorderThickness="2" DockPanel.Dock="Top">
                         <InkCanvas Name="Inky" Width="400" Height="300" IsEnabled="False" />
                     </Border>
-                    <DockPanel>
+                    <DockPanel DockPanel.Dock="Top">
                         <TextBox Name="TextBoxStudentName"  Width="150" IsReadOnly="True" DockPanel.Dock="Left" />
                         <TextBox Name="TextBoxUserName" Width="150" IsReadOnly="True" DockPanel.Dock="Right" />
                         <Separator />
                     </DockPanel>
-                </StackPanel>
+                    <ScrollViewer Margin="10" Background="White">
+                        <Grid Name="GridRecognizedAnswers" Width="Auto" Height="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </ScrollViewer>
+                </DockPanel>
             </DockPanel>
         </Border>
         <!-- Answer -->
