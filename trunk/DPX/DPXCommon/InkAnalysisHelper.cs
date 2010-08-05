@@ -1,4 +1,7 @@
-﻿
+﻿// <copyright file="InkAnalysisHelper.cs" company="University of Louisville Speed School of Engineering">
+// GNU General Public License v3
+// </copyright>
+// <summary>The InkAnalysisHelper for performing handwriting recognition.</summary>
 namespace DPXCommon
 {
     using System;
@@ -10,7 +13,7 @@ namespace DPXCommon
     using System.Windows.Ink;
 
     /// <summary>
-    /// 
+    /// The InkAnalysisHelper for performing handwriting recognition.
     /// </summary>
     public class InkAnalysisHelper
     {
@@ -19,7 +22,7 @@ namespace DPXCommon
         /// </summary>
         /// <param name="strokes">The strokes.</param>
         /// <param name="attemptCount">The attempt count.</param>
-        /// <returns></returns>
+        /// <returns>The InkAnalyzer that has already run.</returns>
         public static InkAnalyzer Analyze(StrokeCollection strokes, int attemptCount)
         {
             InkAnalyzer theInkAnalyzer = new InkAnalyzer();

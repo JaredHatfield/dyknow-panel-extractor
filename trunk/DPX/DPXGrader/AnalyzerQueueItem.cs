@@ -80,7 +80,6 @@ namespace DPXGrader
                 catch
                 {
                 }
-
             }
 
             // Add the new record to the results table
