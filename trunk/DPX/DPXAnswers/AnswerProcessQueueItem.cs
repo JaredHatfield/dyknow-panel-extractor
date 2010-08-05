@@ -87,30 +87,21 @@ namespace DPXAnswers
 
                 if (strokes.Count > 0)
                 {
-                    InkAnalyzer theInkAnalyzer = new InkAnalyzer();
-                    theInkAnalyzer.AddStrokes(strokes);
-                    AnalysisStatus status = null;
-
                     try
                     {
-                        // Attempt the handwriting analysis
-                        status = theInkAnalyzer.Analyze();
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.WriteLine("The analysis failed! " + e.Message);
-                    }
+                        InkAnalyzer theInkAnalyzer = InkAnalysisHelper.Analyze(strokes, 4);
 
-                    if (status != null && status.Successful)
-                    {
                         // Add the result to the answer
                         lock (this.answer)
                         {
                             this.answer.AddResult(
-                                bounds, 
-                                theInkAnalyzer.GetRecognizedString(), 
+                                bounds,
+                                theInkAnalyzer.GetRecognizedString(),
                                 theInkAnalyzer.GetAlternates());
                         }
+                    }
+                    catch
+                    {
                     }
                 }
             }

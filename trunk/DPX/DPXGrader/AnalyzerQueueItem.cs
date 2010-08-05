@@ -64,39 +64,10 @@ namespace DPXGrader
             double valDigit = 0;
             if (ink.Strokes.Count > 0)
             {
-                InkAnalyzer theInkAnalyzer = new InkAnalyzer();
-                theInkAnalyzer.AddStrokes(ink.Strokes);
-                AnalysisStatus status = null;
-
-                // It is possible for this to fail. :(
-                // We want to make multiple attempts to perform the analysis if necessary.
-                int attemptCount = 4;
-                while (attemptCount > 0)
+                // Perform the handwriting recognition
+                try
                 {
-                    try
-                    {
-                        // Attempt the handwriting analysis
-                        status = theInkAnalyzer.Analyze();
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.WriteLine("The analysis failed! " + e.Message);
-
-                        // If we failed for some reason, lets take a short break
-                        Thread.Sleep(100);
-                    }
-
-                    // It worked so we do not need to make any more attempts
-                    if (status != null)
-                    {
-                        break;
-                    }
-
-                    attemptCount--;
-                }
-
-                if (status != null && status.Successful)
-                {
+                    InkAnalyzer theInkAnalyzer = InkAnalysisHelper.Analyze(ink.Strokes, 4);
                     val = theInkAnalyzer.GetRecognizedString();
                     try
                     {
@@ -106,6 +77,10 @@ namespace DPXGrader
                     {
                     }
                 }
+                catch
+                {
+                }
+
             }
 
             // Add the new record to the results table

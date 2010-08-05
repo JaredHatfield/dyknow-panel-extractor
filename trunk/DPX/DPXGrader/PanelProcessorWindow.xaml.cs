@@ -703,15 +703,12 @@ namespace DPXGrader
             strokes.Clip(this.GetRectangleArea());
             if (strokes.Count > 0)
             {
-                InkAnalyzer theInkAnalyzer = new InkAnalyzer();
-                theInkAnalyzer.AddStrokes(strokes);
-                AnalysisStatus status = theInkAnalyzer.Analyze();
-
-                if (status.Successful)
+                try
                 {
+                    InkAnalyzer theInkAnalyzer = InkAnalysisHelper.Analyze(strokes, 1);
                     this.TextBoxPreviewOutput.Text = theInkAnalyzer.GetRecognizedString();
                 }
-                else
+                catch
                 {
                     this.TextBoxPreviewOutput.Text = string.Empty;
                 }
