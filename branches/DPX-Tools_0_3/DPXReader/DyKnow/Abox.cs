@@ -8,6 +8,7 @@ namespace DPXReader.DyKnow
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Windows;
     using System.Xml;
     using System.Xml.Serialization;
 
@@ -216,6 +217,21 @@ namespace DPXReader.DyKnow
                 double num = int.Parse(val);
                 return num;
             }
+        }
+
+        /// <summary>
+        /// Gets the rectangle that represents the answer box.
+        /// </summary>
+        /// <param name="height">The canvas height.</param>
+        /// <param name="width">The canvas width.</param>
+        /// <returns>The bounding rectangle.</returns>
+        public Rect GetRect(double height, double width)
+        {
+            return new Rect(
+                this.ActualLeftPosition(width),
+                this.ActualTopPosition(height),
+                this.ActualWidth(width),
+                this.ActualHeight(height));
         }
 
         /// <summary>

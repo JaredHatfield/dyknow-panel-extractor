@@ -216,6 +216,7 @@ namespace HandwritingAccuracy
             connectionString += "UID=" + HandwritingAccuracy.Properties.Settings.Default.DBUid + ";";
             connectionString += "PASSWORD=" + HandwritingAccuracy.Properties.Settings.Default.DBPass + ";";
             connectionString += "OPTION=" + HandwritingAccuracy.Properties.Settings.Default.DBOptions + ";";
+            Debug.WriteLine(connectionString);
             return connectionString;
         }
     }

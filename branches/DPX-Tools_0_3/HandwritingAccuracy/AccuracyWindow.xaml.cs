@@ -160,16 +160,6 @@ namespace HandwritingAccuracy
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ButtonConfirm_Click(object sender, RoutedEventArgs e)
         {
-            this.TextBoxResults.Text += this.rt.Text + "\t" + this.rt.RecognizedText + "\t";
-            if (this.rt.Passed)
-            {
-                this.TextBoxResults.Text += "Passed\n";
-            }
-            else
-            {
-                this.TextBoxResults.Text += "Failed\n";
-            }
-
             // Send the results to the databse
             DatabaseManager.Instance().InsertExperimentRun(this.experimentId, this.currentTestNumber, this.rt);
 
