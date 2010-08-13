@@ -77,6 +77,22 @@ namespace DPXAnswers
         }
 
         /// <summary>
+        /// Transforms the specified rectangle.
+        /// </summary>
+        /// <param name="rect">The rectangle to transform.</param>
+        /// <param name="width">The target width.</param>
+        /// <param name="height">The target height.</param>
+        /// <returns>The transformed rectangle.</returns>
+        internal static Rect Transform(Rect rect, double width, double height)
+        {
+            double x = width / (double)AnswerProcessQueueItem.DefaultWidth;
+            double y = height / (double)AnswerProcessQueueItem.DefaultHeight;
+            Rect r = new Rect(rect.Location, rect.Size);
+            r.Scale(x, y);
+            return r;
+        }
+
+        /// <summary>
         /// Adds the result.
         /// </summary>
         /// <param name="rect">The bounding rectangle.</param>

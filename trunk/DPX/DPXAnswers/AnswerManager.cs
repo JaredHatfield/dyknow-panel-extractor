@@ -221,6 +221,9 @@ namespace DPXAnswers
                 num.Content = panel.GetRecognizedString(panel.Keys[i]);
                 num.BorderBrush = Brushes.DarkGray;
                 num.BorderThickness = new Thickness(1);
+                num.Tag = panel.Keys[i];
+                num.MouseEnter += new System.Windows.Input.MouseEventHandler(this.answerWindow.AnswerMouseEnter);
+                num.MouseLeave += new System.Windows.Input.MouseEventHandler(this.answerWindow.AnswerMouseLeave);
                 Grid.SetRow(num, i);
                 Grid.SetColumn(num, 0);
                 g.Children.Add(num);

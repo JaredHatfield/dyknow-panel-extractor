@@ -68,7 +68,10 @@
                 </StackPanel>
                 <DockPanel>
                     <Border Margin="10,10,10,0" Width="404" BorderBrush="DarkBlue" BorderThickness="2" DockPanel.Dock="Top">
-                        <InkCanvas Name="Inky" Width="400" Height="300" IsEnabled="False" />
+                        <Canvas Name="CanvasForInking" Width="400" Height="300">
+                            <InkCanvas Name="Inky" Width="400" Height="300" IsEnabled="False" />
+                            <Rectangle Name="Boxy" Fill="Yellow" Opacity=".3" />
+                        </Canvas>
                     </Border>
                     <DockPanel DockPanel.Dock="Top">
                         <TextBox Name="TextBoxStudentName"  Width="150" IsReadOnly="True" DockPanel.Dock="Left" />

@@ -22,6 +22,16 @@ namespace DPXAnswers
     internal class AnswerProcessQueueItem : QueueItem
     {
         /// <summary>
+        /// The width of the canvas used for recognition.
+        /// </summary>
+        public const int DefaultWidth = 1024;
+
+        /// <summary>
+        /// The height of the canvas used for recognition.
+        /// </summary>
+        public const int DefaultHeight = 768;
+
+        /// <summary>
         /// The DyKnow file to render.
         /// </summary>
         private DyKnow dyknow;
@@ -56,8 +66,8 @@ namespace DPXAnswers
         {
             // Render the ink canvas
             InkCanvas ink = new InkCanvas();
-            ink.Width = 1024;
-            ink.Height = 768;
+            ink.Width = AnswerProcessQueueItem.DefaultWidth;
+            ink.Height = AnswerProcessQueueItem.DefaultHeight;
             DPXReader.DyKnow.Page page;
             int goal = 0;
             lock (this.dyknow)

@@ -95,6 +95,35 @@ namespace DPXAnswers
         }
 
         /// <summary>
+        /// Handles the mouse over for an answer box rectangle.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseEventArgs" /> instance containing the event data.</param>
+        internal void AnswerMouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Label l = (Label)sender;
+            l.Background = Brushes.LightYellow;
+            Rect rect = PanelAnswer.Transform((Rect)l.Tag, Inky.Width, Inky.Height);
+            this.Boxy.Height = rect.Height;
+            this.Boxy.Width = rect.Width;
+            Canvas.SetTop(this.Boxy, rect.Top);
+            Canvas.SetLeft(this.Boxy, rect.Left);
+        }
+
+        /// <summary>
+        /// Handles the mouse leave for an answer box rectangle.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseEventArgs"/> instance containing the event data.</param>
+        internal void AnswerMouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Label l = (Label)sender;
+            l.Background = Brushes.White;
+            this.Boxy.Height = 0;
+            this.Boxy.Width = 0;
+        }
+
+        /// <summary>
         /// Loads the DyKnow file.
         /// </summary>
         private void LoadDyKnowFile()
