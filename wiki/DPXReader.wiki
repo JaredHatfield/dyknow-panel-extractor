@@ -19,4 +19,8 @@ The current applications that use this library are DPXGrader and DPXPreview.  Th
     * Text boxes (See issue 15)
   * Resized or moved ink does not render the transformation properly (See issue 12)
 
+=== Workaround for issue 12 ===
+The solution to properly rendering resized or moved elements on the DyKnow panel is to remove the panel history using DyKnow before opening the file using DPX.
+
+== Important Notes ==
 DyKnow's ability to store the history of modifications to a file prevents the contents of the InkCanvas from being modified.
