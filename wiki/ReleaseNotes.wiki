@@ -1,9 +1,15 @@
 #summary The release notes for DPX
 #labels Featured
 
+== [http://dyknow-panel-extractor.googlecode.com/files/DPX-Tools%200.3.3.0.msi Version 0.3.3.0] ==
+*Released 8/13/2010*
+  * [DPXGrader DPX Grader] processes panels using multi-threaded workers to speed up the process.  A worker is created for each CPU core so computers with multiple cores will process files faster.
+  * This release is compiled for x86 compatibility.  Some of the previous releases may not have been compiled using these setting.
+  * Some minor tweaks to the [DPXReader DPX Reader] library.
+
 == [http://dyknow-panel-extractor.googlecode.com/files/DPX-Tools%200.3.2.0.msi Version 0.3.2.0] ==
 *Released 7/4/2010*
-  * More improvements to the DPXReader library that corrected problems with reading several types of files.  These corrections were made by using the Parser Validator and analyzing files.
+  * More improvements to the [DPXReader DPX Reader] library that corrected problems with reading several types of files.  These corrections were made by using the Parser Validator and analyzing files.
   * ABOX (answer boxes) are now rendered on the panel as grey rectangles.
 
 == [http://dyknow-panel-extractor.googlecode.com/files/DPX-Tools%200.3.1.0.msi Version 0.3.1.0] ==
@@ -28,4 +34,4 @@
 == [http://dyknow-panel-extractor.googlecode.com/files/DPX-Tools%200.1.0.0.msi Version 0.1.0.0] ==
 *Released 4/28/2010*
 
-  * This first release of DPX includes three software tools: DPX Manager, DPX Preview, and DPX Sorter.  DPX Manager is the main software tool capable of importing DyKnow panels into a database and generating reports based off of the dates that each panel was submitted.  This first release is still considered a beta quality product.
+  * This first release of DPX includes three software tools: [DPXManager DPX Manager], [DPXPreview DPX Preview], and [DPXSorter DPX Sorter].  [DPXManager DPX Manager] is the main software tool capable of importing DyKnow panels into a database and generating reports based off of the dates that each panel was submitted.  This first release is still considered a beta quality product.
