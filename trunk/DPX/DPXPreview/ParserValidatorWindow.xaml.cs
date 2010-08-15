@@ -60,11 +60,25 @@ namespace DPXPreview
         private object writeResultsLock;
 
         /// <summary>
+        /// A counter that indicate that the application is currently processing items.
+        /// </summary>
+        private int processing;
+
+        /// <summary>
+        /// The locak that is used when accessing the processing count.
+        /// </summary>
+        private object processingLock;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ParserValidatorWindow"/> class.
         /// </summary>
         public ParserValidatorWindow()
         {
             InitializeComponent();
+
+            // Set the processing count to zero
+            this.processing = 0;
+            this.processingLock = new object();
 
             // Set the write flag
             this.writeResultsFlag = false;
@@ -134,8 +148,14 @@ namespace DPXPreview
             if (openFileDialog.ShowDialog() == true)
             {
                 string[] files = openFileDialog.FileNames;
+
+                // Disable the Clear Results button
+                if (files.Length > 0)
+                {
+                    this.ButtonClearResults.IsEnabled = false;
+                }
                 
-                // TODO: Add all of the files to the GUI and add them to the worker queue
+                // Add all of the files to the GUI and add them to the worker queue
                 for (int i = 0; i < files.Length; i++)
                 {
                     // Add the row definition
@@ -165,6 +185,12 @@ namespace DPXPreview
                     // Increment the row
                     this.currentRow++;
 
+                    // Increment the process counter
+                    lock (this.processingLock)
+                    {
+                        this.processing++;
+                    }
+
                     // Create the progress
                     FileProcessRow f = new FileProcessRow(Dispatcher, files[i], progress);
                     lock (this.workerQueue)
@@ -182,6 +208,14 @@ namespace DPXPreview
         private void EnableButtons()
         {
             this.ButtonSelectFiles.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// Enables the clear results button through a dispatched call.
+        /// </summary>
+        private void EnableClearResultsButton()
+        {
+            this.ButtonClearResults.IsEnabled = true;
         }
 
         /// <summary>
@@ -207,6 +241,16 @@ namespace DPXPreview
                 if (f != null)
                 {
                     this.PerformSerializationTest(f);
+
+                    // If the processing is finished enable the clear button
+                    lock (this.processingLock)
+                    {
+                        this.processing--;
+                        if (this.processing == 0)
+                        {
+                            Dispatcher.Invoke(new NoArgsDelegate(this.EnableClearResultsButton));
+                        }
+                    }
                 }
             }
         }
@@ -384,6 +428,18 @@ namespace DPXPreview
                     this.writeResultsFlag = false;
                 }
             }
+        }
+
+        /// <summary>
+        /// Handles the Click event of the ButtonClearResults control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void ButtonClearResults_Click(object sender, RoutedEventArgs e)
+        {
+            this.GridResults.Children.Clear();
+            this.ButtonClearResults.IsEnabled = false;
+            this.currentRow = 0;
         }
     }
 }

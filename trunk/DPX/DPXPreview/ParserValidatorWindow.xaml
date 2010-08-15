@@ -10,10 +10,12 @@
             <Label Margin="10,0,10,0">The results will be display in the right column: Passed / Known Errors / Failed</Label>
             <Label Margin="10,0,10,10">Files that have failed are not properly understood and the DPX parser may result in data loss.</Label>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Background="White" >
-            <Button Name="ButtonSelectFiles" Width="150" Height="30" Margin="10"  Click="ButtonSelectFiles_Click">Select Files</Button>
-            <CheckBox Name="CheckBoxAnalysis" Margin="10,30,10,30" Click="CheckBoxAnalysis_Click">Export Analysis</CheckBox>
-        </StackPanel>
+        <DockPanel DockPanel.Dock="Bottom" Background="White" >
+            <Button Name="ButtonSelectFiles" Width="150" Height="30" Margin="10" DockPanel.Dock="Left" Click="ButtonSelectFiles_Click">Select Files</Button>
+            <CheckBox Name="CheckBoxAnalysis" Margin="10,30,10,30" DockPanel.Dock="Left" Click="CheckBoxAnalysis_Click">Export Analysis</CheckBox>
+            <Button Name="ButtonClearResults" Width="150" Height="30" Margin="10" DockPanel.Dock="Right" IsEnabled="False" Click="ButtonClearResults_Click">Clear Results</Button>
+            <Separator />
+        </DockPanel>
         <ScrollViewer>
             <Grid Name="GridResults">
                 <Grid.ColumnDefinitions>
