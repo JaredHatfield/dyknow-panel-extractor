@@ -45,8 +45,6 @@ namespace DPXPreview
         {
             InitializeComponent();
             this.currentPanelNumber = 0;
-            menuUserInformation.IsEnabled = false;
-            menuStatistics.IsEnabled = false;
         }
 
         /// <summary>
@@ -67,8 +65,6 @@ namespace DPXPreview
                 Inky.Strokes.Clear();
                 this.DisplayPanel(this.currentPanelNumber);
                 this.UpdatePageNumber();
-                menuUserInformation.IsEnabled = true;
-                menuStatistics.IsEnabled = true;
             }
         }
 
@@ -159,48 +155,6 @@ namespace DPXPreview
             AboutDPX popupWindow = new AboutDPX();
             popupWindow.Owner = this;
             popupWindow.ShowDialog();
-        }
-
-        /// <summary>
-        /// Display the UserInformation window.
-        /// </summary>
-        /// <param name="sender">The object that raised the event.</param>
-        /// <param name="e">Event arguments.</param>
-        private void DisplayUserInformationWindow(object sender, RoutedEventArgs e)
-        {
-            /*
-            FlowDocument fd = new FlowDocument();
-            fd.Blocks.Add(new Paragraph(new Run("Students")));
-            if (fd != null)
-            {
-                for (int i = 0; i < this.dr.NumOfPages(); i++)
-                {
-                    DyKnowPage d = this.dr.GetDyKnowPage(i);
-                    string s = (i + 1).ToString() + ") " + d.FullName;
-                    Paragraph p = new Paragraph(new Run(s));
-                    p.LineHeight = 5.0;
-                    fd.Blocks.Add(p);
-                }
-            }
-
-            UserInformation popupWindow = new UserInformation(fd);
-            popupWindow.Owner = this;
-            popupWindow.ShowDialog();
-             */
-        }
-
-        /// <summary>
-        /// Display the Statistics window.
-        /// </summary>
-        /// <param name="sender">The object that raised the event.</param>
-        /// <param name="e">Event arguments.</param>
-        private void DisplayStatisticsWindow(object sender, RoutedEventArgs e)
-        {
-            /*
-            Statistics popupWindow = new Statistics(this.dr);
-            popupWindow.Owner = this;
-            popupWindow.ShowDialog();
-             */
         }
 
         /// <summary>

@@ -168,6 +168,7 @@ namespace DPXPreview
                     num.Content = files[i];
                     num.BorderBrush = Brushes.DarkGray;
                     num.BorderThickness = new Thickness(1);
+                    num.Background = Brushes.White;
                     Grid.SetRow(num, this.currentRow);
                     Grid.SetColumn(num, 0);
                     this.GridResults.Children.Add(num);

@@ -160,7 +160,7 @@ namespace DPXPreview
             else if (result.Equals(ParserTestResult.WARNING))
             {
                 this.progress.Content = "Known Errors";
-                this.progress.Background = Brushes.LightYellow;
+                this.progress.Background = Brushes.Yellow;
             }
             else if (result.Equals(ParserTestResult.FAILED))
             {
