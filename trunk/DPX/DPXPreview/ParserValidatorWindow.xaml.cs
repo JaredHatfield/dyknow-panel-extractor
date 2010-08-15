@@ -98,7 +98,7 @@ namespace DPXPreview
 
             // Start all of the worker threads
             this.threadList = new List<Thread>();
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < Environment.ProcessorCount; i++)
             {
                 Thread t = new Thread(new ThreadStart(this.Worker));
                 t.Name = "Queue Worker " + i;
