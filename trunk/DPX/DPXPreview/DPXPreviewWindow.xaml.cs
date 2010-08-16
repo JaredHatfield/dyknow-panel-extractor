@@ -19,6 +19,7 @@ namespace DPXPreview
     using System.Windows.Media.Imaging;
     using System.Windows.Navigation;
     using System.Windows.Shapes;
+    using System.Windows.Threading;
     using DPXCommon;
     using DPXReader;
     using DPXReader.DyKnow;
@@ -48,6 +49,18 @@ namespace DPXPreview
         }
 
         /// <summary>
+        /// The delegate used for opening a file.
+        /// </summary>
+        /// <param name="filename">The name of the file to open.</param>
+        private delegate void OpenDyKnowFileDelegate(string filename);
+
+        /// <summary>
+        /// The delegate used for displaying a panel.
+        /// </summary>
+        /// <param name="id">The panel number.</param>
+        private delegate void DisplayPanelDelegate(int id);
+
+        /// <summary>
         /// Load a new DyKnow file.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
@@ -59,13 +72,22 @@ namespace DPXPreview
             openFileDialog1.Filter = "DyKnow files (*.dyz)|*.dyz";
             if (openFileDialog1.ShowDialog() == true)
             {
-                // Open the DyKnow file
-                this.dyknow = DyKnow.DeserializeFromFile(openFileDialog1.FileName);
-                this.currentPanelNumber = 0;
-                Inky.Strokes.Clear();
-                this.DisplayPanel(this.currentPanelNumber);
-                this.UpdatePageNumber();
+                string filename = openFileDialog1.FileName;
+                Dispatcher.BeginInvoke(new OpenDyKnowFileDelegate(this.OpenDyKnowFile), DispatcherPriority.Input, filename);
             }
+        }
+
+        /// <summary>
+        /// Opens the dy know file.
+        /// </summary>
+        /// <param name="filename">The filename.</param>
+        private void OpenDyKnowFile(string filename)
+        {
+            // Open the DyKnow file
+            this.dyknow = DyKnow.DeserializeFromFile(filename);
+            this.currentPanelNumber = 0;
+            Inky.Strokes.Clear();
+            Dispatcher.BeginInvoke(new DisplayPanelDelegate(this.DisplayPanel), DispatcherPriority.Input, this.currentPanelNumber);
         }
 
         /// <summary>
@@ -79,8 +101,7 @@ namespace DPXPreview
             {
                 if ((this.currentPanelNumber + 1) < this.dyknow.DATA.Count)
                 {
-                    this.DisplayPanel(++this.currentPanelNumber);
-                    this.UpdatePageNumber();
+                    Dispatcher.BeginInvoke(new DisplayPanelDelegate(this.DisplayPanel), DispatcherPriority.Input, (this.currentPanelNumber + 1));
                 }
             }
         }
@@ -96,18 +117,9 @@ namespace DPXPreview
             {
                 if (this.currentPanelNumber > 0)
                 {
-                    this.DisplayPanel(--this.currentPanelNumber);
-                    this.UpdatePageNumber();
+                    Dispatcher.BeginInvoke(new DisplayPanelDelegate(this.DisplayPanel), DispatcherPriority.Input, (this.currentPanelNumber - 1));
                 }
             }
-        }
-
-        /// <summary>
-        /// Update the page number.
-        /// </summary>
-        private void UpdatePageNumber()
-        {
-            labelPageNumber.Content = (this.currentPanelNumber + 1).ToString() + " of " + this.dyknow.DATA.Count;
         }
 
         /// <summary>
@@ -142,6 +154,27 @@ namespace DPXPreview
             {
                 this.currentPanelNumber = n;
                 this.dyknow.Render(Inky, n);
+                labelPageNumber.Content = (n + 1).ToString() + " of " + this.dyknow.DATA.Count;
+
+                // Enable or disable the previous button as necessary
+                if (n == 0)
+                {
+                    this.buttonPrevious.IsEnabled = false;
+                }
+                else if (!this.buttonPrevious.IsEnabled)
+                {
+                    this.buttonPrevious.IsEnabled = true;
+                }
+
+                // Enable or disable the next button as necessary
+                if (n + 1 == this.dyknow.DATA.Count)
+                {
+                    this.buttonNext.IsEnabled = false;
+                }
+                else if (!this.buttonNext.IsEnabled)
+                {
+                    this.buttonNext.IsEnabled = true;
+                }
             }
         }
 

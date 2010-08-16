@@ -33,8 +33,8 @@
         <Border BorderBrush="DarkBlue" BorderThickness="0,2,0,0" DockPanel.Dock="Bottom">
             <DockPanel Width="Auto" MaxWidth="500" Margin="0,20,0,0">
                 <Slider Name="sliderPanelSize" Margin="10" MaxWidth="300" Minimum=".25" Maximum="1" Value=".5" ValueChanged="SliderPanelSize_ValueChanged" DockPanel.Dock="Bottom"/>
-                <Button Name="buttonPrevious" Click="ButtonPreviousClick" Margin="20,0,0,0" Width="100" DockPanel.Dock="Left">Previous</Button>
-                <Button Name="buttonNext" Click="ButtonNextClick" Margin="0,0,20,0" HorizontalAlignment="Right" Width="100" DockPanel.Dock="Right">Next</Button>
+                <Button Name="buttonPrevious" Click="ButtonPreviousClick" Margin="20,0,0,0" Width="100" IsEnabled="False" DockPanel.Dock="Left">Previous</Button>
+                <Button Name="buttonNext" Click="ButtonNextClick" Margin="0,0,20,0" HorizontalAlignment="Right" Width="100" IsEnabled="False" DockPanel.Dock="Right">Next</Button>
                 <Label Name="labelPageNumber" HorizontalAlignment="Center" DockPanel.Dock="Bottom">0 of 0</Label>
             </DockPanel>
         </Border>
