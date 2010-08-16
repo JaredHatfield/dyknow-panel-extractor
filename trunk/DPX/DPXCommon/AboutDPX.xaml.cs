@@ -32,8 +32,8 @@ namespace DPXCommon
             InitializeComponent();
             buttonOk.Focus();
             this.AddHandler(Hyperlink.RequestNavigateEvent, new RequestNavigateEventHandler(this.HyperlinkNavigate));
-            this.VersionNumber.Text = "Version " + System.Reflection.Assembly.GetCallingAssembly().GetName().Version.ToString();
-            this.ApplicationName.Text = System.Reflection.Assembly.GetCallingAssembly().GetName().Name;
+            this.VersionNumber.Content = "Version " + System.Reflection.Assembly.GetCallingAssembly().GetName().Version.ToString();
+            this.ApplicationName.Content = System.Reflection.Assembly.GetCallingAssembly().GetName().Name;
         }
 
         /// <summary>
