@@ -3,22 +3,38 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="DPX Sorter" Height="310" Width="650" ResizeMode="NoResize"
     Icon="Icon.ico">
-    <StackPanel>
-        <Menu Height="22.22" Name="menu1" Width="Auto">
+    <DockPanel Background="LightSteelBlue">
+        <DockPanel.Resources>
+            <Style TargetType="Label">
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Foreground" Value="DarkBlue"/>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="Background" Value="LightSteelBlue"/>
+                <Setter Property="Foreground" Value="DarkBlue"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+        </DockPanel.Resources>
+        <Menu DockPanel.Dock="Top">
             <MenuItem Header="_Help">
                 <MenuItem Header="_About" Click="DisplayAboutWindow"/>
             </MenuItem>
         </Menu>
-        <Grid Height="Auto" Margin="0,0,0,0">
-            <Button Height="23" HorizontalAlignment="Right" Margin="0,27.48,30,0" Name="opendialog" VerticalAlignment="Top" Width="75" Click="OpenDialog_Box">Open</Button>
-            <Button HorizontalAlignment="Right" Margin="0,70,30,0" Name="savedialog" Width="75" Click="SaveDialog_Box" Height="23" VerticalAlignment="Top">Save</Button>
-            <Button Margin="200,200,0,0" Name="processsort" Width="300" Height="23" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ProcessSort_Click">Process</Button>
-            <TextBox Height="23" Margin="180,26,120,0" Name="inputfilename" VerticalAlignment="Top" />
-            <TextBox Margin="180,70,120,0" Name="outputfilename" Height="23" VerticalAlignment="Top" />
-            <Label Height="28" HorizontalAlignment="Left" Margin="8,26,0,0" Name="label1" VerticalAlignment="Top" Width="155">Source DyKnow File</Label>
-            <Label HorizontalAlignment="Left" Margin="8,69,0,0" Name="label2" Width="155" Height="28" VerticalAlignment="Top">Destination DyKnow File</Label>
-            <RadioButton Margin="180,160,0,0" GroupName="sortsetting" Name="radioButtonSN" IsChecked="True" Height="16" VerticalAlignment="Top">Sort by Student Name</RadioButton>
-            <RadioButton Height="16" Margin="180,130,0,0" GroupName="sortsetting" Name="radioButtonUN" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" >Sort by Username</RadioButton>
-        </Grid>
-    </StackPanel>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="20">
+                <Label VerticalAlignment="Top" Width="155">Source DyKnow File</Label>
+                <TextBox Name="inputfilename" Width="300" />
+                <Button Name="opendialog" VerticalAlignment="Top" Width="75" Margin="20,0,0,0" Click="OpenDialog_Box">Open</Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="20">
+                <Label Width="155" VerticalAlignment="Top">Destination DyKnow File</Label>
+                <TextBox Name="outputfilename" Width="300" />
+                <Button Name="savedialog" Width="75" Margin="20,0,0,0" Click="SaveDialog_Box">Save</Button>
+            </StackPanel>
+            <RadioButton Name="radioButtonUN" GroupName="sortsetting" Margin="150,5,150,5">Sort by Username</RadioButton>
+            <RadioButton Name="radioButtonSN" GroupName="sortsetting" Margin="150,5,150,5" IsChecked="True">Sort by Student Name</RadioButton>
+            <Button Name="processsort" Width="200" Margin="20" Click="ProcessSort_Click">Process</Button>
+        </StackPanel>
+    </DockPanel>
 </Window>
