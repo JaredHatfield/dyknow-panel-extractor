@@ -103,7 +103,8 @@ namespace DPXAnswers
         {
             Label l = (Label)sender;
             l.Background = Brushes.LightYellow;
-            Rect rect = PanelAnswer.Transform((Rect)l.Tag, Inky.Width, Inky.Height);
+            AnswerRect ar = (AnswerRect)l.Tag;
+            Rect rect = PanelAnswer.Transform(ar.Area, Inky.Width, Inky.Height);
             this.Boxy.Height = rect.Height;
             this.Boxy.Width = rect.Width;
             Canvas.SetTop(this.Boxy, rect.Top);

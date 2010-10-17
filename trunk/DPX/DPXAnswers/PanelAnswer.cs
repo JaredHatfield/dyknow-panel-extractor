@@ -18,9 +18,14 @@ namespace DPXAnswers
     internal class PanelAnswer
     {
         /// <summary>
+        /// The AnswerRectFactory.
+        /// </summary>
+        private AnswerRectFactory answerRectFactory;
+
+        /// <summary>
         /// The list of keys.
         /// </summary>
-        private List<Rect> keys;
+        private List<AnswerRect> keys;
 
         /// <summary>
         /// The list of answers for the given answer boxes.
@@ -40,9 +45,11 @@ namespace DPXAnswers
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelAnswer"/> class.
         /// </summary>
-        internal PanelAnswer()
+        /// <param name="answerRectFactory">The AnswerRectFactory.</param>
+        internal PanelAnswer(AnswerRectFactory answerRectFactory)
         {
-            this.keys = new List<Rect>();
+            this.answerRectFactory = answerRectFactory;
+            this.keys = new List<AnswerRect>();
             this.answers = new Dictionary<Rect, string>();
             this.alternates = new Dictionary<Rect, Collection<string>>();
             this.processed = false;
@@ -71,9 +78,9 @@ namespace DPXAnswers
         /// Gets the list of keys.
         /// </summary>
         /// <value>The list of keys.</value>
-        public ReadOnlyCollection<Rect> Keys
+        public ReadOnlyCollection<AnswerRect> Keys
         {
-            get { return new ReadOnlyCollection<Rect>(this.keys); }
+            get { return new ReadOnlyCollection<AnswerRect>(this.keys); }
         }
 
         /// <summary>
@@ -100,7 +107,8 @@ namespace DPXAnswers
         /// <param name="aac">The Analysis Alternate Collection.</param>
         internal void AddResult(Rect rect, string recognized, AnalysisAlternateCollection aac)
         {
-            this.keys.Add(rect);
+            AnswerRect ar = this.answerRectFactory.GetAnswerRect(rect);
+            this.keys.Add(ar);
             this.answers.Add(rect, recognized);
             Collection<string> alt = new Collection<string>();
             for (int i = 0; i < aac.Count; i++)
@@ -116,9 +124,9 @@ namespace DPXAnswers
         /// </summary>
         /// <param name="rect">The key to lookup.</param>
         /// <returns>The recognized string.</returns>
-        internal string GetRecognizedString(Rect rect)
+        internal string GetRecognizedString(AnswerRect rect)
         {
-            return this.answers[rect];
+            return this.answers[rect.Area];
         }
 
         /// <summary>
@@ -126,9 +134,9 @@ namespace DPXAnswers
         /// </summary>
         /// <param name="rect">The key to lookup.</param>
         /// <returns>The collection of alternative strings.</returns>
-        internal Collection<string> GetAlternateString(Rect rect)
+        internal Collection<string> GetAlternateString(AnswerRect rect)
         {
-            return this.alternates[rect];
+            return this.alternates[rect.Area];
         }
 
         /// <summary>

@@ -82,6 +82,7 @@
                         <Grid Name="GridRecognizedAnswers" Width="Auto" Height="Auto">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
+                                <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                         </Grid>
                     </ScrollViewer>
