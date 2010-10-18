@@ -40,7 +40,7 @@ namespace DPXAnswers
         /// <value>The answer rectangle.</value>
         public ReadOnlyCollection<AnswerRect> AnswerRect
         {
-            get { return new ReadOnlyCollection<AnswerRect>(this.AnswerRect); }
+            get { return new ReadOnlyCollection<AnswerRect>(this.rectangles); }
         }
 
         /// <summary>

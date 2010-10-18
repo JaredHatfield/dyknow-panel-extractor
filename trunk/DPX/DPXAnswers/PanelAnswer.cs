@@ -126,7 +126,14 @@ namespace DPXAnswers
         /// <returns>The recognized string.</returns>
         internal string GetRecognizedString(AnswerRect rect)
         {
-            return this.answers[rect.Area];
+            try
+            {
+                return this.answers[rect.Area];
+            }
+            catch (KeyNotFoundException)
+            {
+                return string.Empty;
+            }
         }
 
         /// <summary>
@@ -136,7 +143,14 @@ namespace DPXAnswers
         /// <returns>The collection of alternative strings.</returns>
         internal Collection<string> GetAlternateString(AnswerRect rect)
         {
-            return this.alternates[rect.Area];
+            try
+            {
+                return this.alternates[rect.Area];
+            }
+            catch (KeyNotFoundException)
+            {
+                return new Collection<string>();
+            }
         }
 
         /// <summary>

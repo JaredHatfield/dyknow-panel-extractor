@@ -6,6 +6,8 @@ namespace DPXAnswers
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading;
@@ -191,6 +193,7 @@ namespace DPXAnswers
         private void ReEnableOpen()
         {
             this.ButtonOpen.IsEnabled = true;
+            this.ButtonSave.IsEnabled = true;
         }
 
         /// <summary>
@@ -206,6 +209,7 @@ namespace DPXAnswers
             if (openFileDialog.ShowDialog() == true)
             {
                 this.ButtonOpen.IsEnabled = false;
+                this.ButtonSave.IsEnabled = false;
 
                 // Open the DyKnow file
                 this.filename = openFileDialog.FileName;
@@ -223,7 +227,29 @@ namespace DPXAnswers
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Implement me!
+            try
+            {
+                // Let the user choose which file to open
+                Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
+                saveFileDialog.Filter = "CSV (*.csv)|*.csv";
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    // Save the CSV file
+                    string file = saveFileDialog.FileName;
+                    StreamWriter sr = new StreamWriter(file);
+                    sr.Write(this.answerManager.CreateOutputReport());
+                    sr.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Error: The file could not be saved.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("The file was not saved successfully.");
+                Debug.WriteLine("File was not saved: " + ex.Message);
+            }
         }
     }
 }

@@ -94,7 +94,7 @@
             <DockPanel>
                 <StackPanel DockPanel.Dock="Top" Background="LightSteelBlue" Height="100">
                     <Label Style="{StaticResource StepLabel}">Answer</Label>
-                    <Button Name="ButtonSave" Width="80" HorizontalAlignment="Center" Click="ButtonSave_Click">Save</Button>
+                    <Button Name="ButtonSave" IsEnabled="False"  Width="80" HorizontalAlignment="Center" Click="ButtonSave_Click">Save</Button>
                 </StackPanel>
                 <ScrollViewer Margin="10" Background="White">
                     <Grid Name="GridResults" Width="Auto" Height="Auto">

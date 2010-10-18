@@ -6,6 +6,7 @@ namespace DPXAnswers
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Diagnostics;
     using System.Linq;
     using System.Text;
@@ -298,6 +299,33 @@ namespace DPXAnswers
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Creates the output report for a CSV file.
+        /// </summary>
+        /// <returns>The string that contains the contents of the CSV file.</returns>
+        internal string CreateOutputReport()
+        {
+            StringBuilder sb = new StringBuilder();
+            ReadOnlyCollection<AnswerRect> boxes = this.answerRectFactory.AnswerRect;
+            sb.Append("Panel,");
+            foreach (AnswerRect r in boxes)
+            {
+                sb.Append("Box " + r.Index + ",");
+            }
+
+            foreach (KeyValuePair<int, PanelAnswer> pa in this.answers)
+            {
+                sb.Append("\n" + (pa.Key + 1) + ",");
+                foreach (AnswerRect r in boxes)
+                {
+                    string ans = pa.Value.GetRecognizedString(r);
+                    sb.Append(ans + ",");
+                }
+            }
+
+            return sb.ToString();
         }
 
         /// <summary>
