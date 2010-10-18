@@ -309,7 +309,7 @@ namespace DPXAnswers
         {
             StringBuilder sb = new StringBuilder();
             ReadOnlyCollection<AnswerRect> boxes = this.answerRectFactory.AnswerRect;
-            sb.Append("Panel,");
+            sb.Append("Panel,User,Name");
             foreach (AnswerRect r in boxes)
             {
                 sb.Append("Box " + r.Index + ",");
@@ -317,11 +317,12 @@ namespace DPXAnswers
 
             foreach (KeyValuePair<int, PanelAnswer> pa in this.answers)
             {
-                sb.Append("\n" + (pa.Key + 1) + ",");
+                DPXReader.DyKnow.Page p = this.dyknow.DATA[pa.Key] as DPXReader.DyKnow.Page;
+                sb.Append("\n" + (pa.Key + 1) + ",\"" + p.ONER + "\",\"" + p.ONERN + "\",");
                 foreach (AnswerRect r in boxes)
                 {
                     string ans = pa.Value.GetRecognizedString(r);
-                    sb.Append(ans + ",");
+                    sb.Append("\"" + ans + "\",");
                 }
             }
 
