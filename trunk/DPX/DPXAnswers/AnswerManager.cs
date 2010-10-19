@@ -230,42 +230,7 @@ namespace DPXAnswers
                 RowDefinition rd = new RowDefinition();
                 rd.Height = GridLength.Auto;
                 g.RowDefinitions.Add(rd);
-
-                // Add the panel index
-                Label index = new Label();
-                index.Content = "Box " + panel.Keys[i].Index;
-                index.BorderBrush = Brushes.DarkGray;
-                index.BorderThickness = new Thickness(1);
-                index.Tag = panel.Keys[i];
-                index.MouseEnter += new System.Windows.Input.MouseEventHandler(this.answerWindow.AnswerMouseEnter);
-                index.MouseLeave += new System.Windows.Input.MouseEventHandler(this.answerWindow.AnswerMouseLeave);
-                Grid.SetRow(index, i);
-                Grid.SetColumn(index, 0);
-                g.Children.Add(index);
-
-                // Add the panel number
-                Label num = new Label();
-                num.Content = panel.GetRecognizedString(panel.Keys[i]);
-                num.BorderBrush = Brushes.DarkGray;
-                num.BorderThickness = new Thickness(1);
-                num.Tag = panel.Keys[i];
-                num.MouseEnter += new System.Windows.Input.MouseEventHandler(this.answerWindow.AnswerMouseEnter);
-                num.MouseLeave += new System.Windows.Input.MouseEventHandler(this.answerWindow.AnswerMouseLeave);
-                Grid.SetRow(num, i);
-                Grid.SetColumn(num, 1);
-                g.Children.Add(num);
-
-                // Add the answer
-                Label ans = new Label();
-                ans.Content = panel.GetAnswer(panel.Keys[i]);
-                ans.BorderBrush = Brushes.DarkGray;
-                ans.BorderThickness = new Thickness(1);
-                ans.Tag = panel.Keys[i];
-                ans.MouseEnter += new System.Windows.Input.MouseEventHandler(this.answerWindow.AnswerMouseEnter);
-                ans.MouseLeave += new System.Windows.Input.MouseEventHandler(this.answerWindow.AnswerMouseLeave);
-                Grid.SetRow(ans, i);
-                Grid.SetColumn(ans, 2);
-                g.Children.Add(ans);
+                GradeRow gr = new GradeRow(g, this.answerWindow, panel, i);
             }
         }
 

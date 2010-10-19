@@ -105,6 +105,7 @@
     <Compile Include="AnswerRect.cs" />
     <Compile Include="AnswerRectFactory.cs" />
     <Compile Include="BoxAnalysis.cs" />
+    <Compile Include="GradeRow.cs" />
     <Compile Include="ImageProcessQueueItem.cs" />
     <Compile Include="PanelAnswer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

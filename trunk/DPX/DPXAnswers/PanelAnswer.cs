@@ -7,6 +7,7 @@ namespace DPXAnswers
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
     using System.Windows;
@@ -102,17 +103,21 @@ namespace DPXAnswers
         /// <param name="aac">The Analysis Alternate Collection.</param>
         internal void AddResult(int index, Rect rect, string recognized, AnalysisAlternateCollection aac)
         {
-            AnswerRect ar = this.answerRectFactory.GetAnswerRect(rect);
-            this.keys.Add(ar);
-            Collection<string> alt = new Collection<string>();
-            for (int i = 0; i < aac.Count; i++)
+            // We need to lock on the factory because this action needs to be atomic
+            lock (this.answerRectFactory)
             {
-                alt.Add(aac[i].RecognizedString);
-            }
+                AnswerRect ar = this.answerRectFactory.GetAnswerRect(rect);
+                Collection<string> alt = new Collection<string>();
+                for (int i = 0; i < aac.Count; i++)
+                {
+                    alt.Add(aac[i].RecognizedString);
+                }
 
-            BoxAnalysis ba = new BoxAnalysis(recognized, alt);
-            ar.Panels.Add(index, ba);
-            this.answers.Add(rect, ba);
+                BoxAnalysis ba = new BoxAnalysis(recognized, alt);
+                ar.Panels.Add(index, ba);
+                this.answers.Add(rect, ba);
+                this.keys.Add(ar);
+            }
         }
 
         /// <summary>
@@ -163,6 +168,23 @@ namespace DPXAnswers
             catch (KeyNotFoundException)
             {
                 return BoxAnalysis.Grade.INVALID;
+            }
+        }
+
+        /// <summary>
+        /// Gets the box analysis.
+        /// </summary>
+        /// <param name="rect">The rect to locate.</param>
+        /// <returns>The BoxAnalysis for the given region.</returns>
+        internal BoxAnalysis GetBoxAnalysis(AnswerRect rect)
+        {
+            try
+            {
+                return this.answers[rect.Area];
+            }
+            catch (KeyNotFoundException)
+            {
+                return null;
             }
         }
 

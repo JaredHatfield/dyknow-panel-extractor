@@ -110,9 +110,20 @@ namespace DPXAnswers
         internal void AnswerMouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             Label l = (Label)sender;
-            l.Background = Brushes.LightYellow;
-            AnswerRect ar = (AnswerRect)l.Tag;
-            Rect rect = PanelAnswer.Transform(ar.Area, Inky.Width, Inky.Height);
+            Rect rect = new Rect();
+            if (l.Tag.GetType().Equals(typeof(GradeRow)))
+            {
+                GradeRow gr = (GradeRow)l.Tag;
+                gr.MouseIn();
+                rect = PanelAnswer.Transform(gr.Rect, Inky.Width, Inky.Height);
+            }
+            else
+            {
+                l.Background = Brushes.LightYellow;
+                AnswerRect ar = (AnswerRect)l.Tag;
+                rect = PanelAnswer.Transform(ar.Area, Inky.Width, Inky.Height);
+            }
+
             this.Boxy.Height = rect.Height;
             this.Boxy.Width = rect.Width;
             Canvas.SetTop(this.Boxy, rect.Top);
@@ -127,7 +138,16 @@ namespace DPXAnswers
         internal void AnswerMouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             Label l = (Label)sender;
-            l.Background = Brushes.White;
+            if (l.Tag.GetType().Equals(typeof(GradeRow)))
+            {
+                GradeRow gr = (GradeRow)l.Tag;
+                gr.MouseOut();
+            }
+            else
+            {
+                l.Background = Brushes.White;
+            }
+
             this.Boxy.Height = 0;
             this.Boxy.Width = 0;
         }
