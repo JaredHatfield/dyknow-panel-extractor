@@ -67,6 +67,12 @@ namespace DPXAnswers
         public delegate void DisplayPanelDelegate(int index);
 
         /// <summary>
+        /// The delegate for updating the progress bar.
+        /// </summary>
+        /// <param name="index">The index to set for the progress bar.</param>
+        public delegate void ProgressBarDelegate(int index);
+
+        /// <summary>
         /// The delegate for call with no arguments.
         /// </summary>
         private delegate void NoArgsDelegate();
@@ -127,6 +133,22 @@ namespace DPXAnswers
         }
 
         /// <summary>
+        /// Increments the progress bar using the dispatcher.
+        /// </summary>
+        internal void IncrementProgressBar()
+        {
+            Dispatcher.Invoke(new NoArgsDelegate(this.IncrementProgressBarDispatched), DispatcherPriority.Normal);
+        }
+
+        /// <summary>
+        /// Increments the progress bar.
+        /// </summary>
+        internal void IncrementProgressBarDispatched()
+        {
+            this.ProgressBarProcessFile.Value++;
+        }
+
+        /// <summary>
         /// Loads the DyKnow file.
         /// </summary>
         private void LoadDyKnowFile()
@@ -139,7 +161,13 @@ namespace DPXAnswers
 
             // Read in the file
             DyKnow dyknow = this.answerManager.OpenFile(file);
-            int goal = dyknow.DATA.Count + 1;
+            int goal = dyknow.DATA.Count * 2;
+
+            // Set the progress bar to zero
+            Dispatcher.Invoke(
+                new ProgressBarDelegate(this.ZeroProgressBar), 
+                DispatcherPriority.Normal,
+                goal);
 
             // Display the first panel
             if (dyknow.DATA.Count > 0)
@@ -198,6 +226,16 @@ namespace DPXAnswers
             this.PanelScrollView.Children.Clear();
             this.TextBoxStudentName.Text = string.Empty;
             this.TextBoxUserName.Text = string.Empty;
+        }
+
+        /// <summary>
+        /// Zeroes the progress bar.
+        /// </summary>
+        /// <param name="goal">The goal for the progress bar.</param>
+        private void ZeroProgressBar(int goal)
+        {
+            this.ProgressBarProcessFile.Maximum = goal;
+            this.ProgressBarProcessFile.Value = 0;
         }
 
         /// <summary>

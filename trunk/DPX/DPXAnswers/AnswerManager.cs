@@ -413,6 +413,7 @@ namespace DPXAnswers
                 if (queueItem != null)
                 {
                     queueItem.Run();
+                    this.answerWindow.IncrementProgressBar();
                 }
             }
         }
