@@ -105,6 +105,7 @@ namespace DPXAnswers
                         lock (this.answer)
                         {
                             this.answer.AddResult(
+                                this.index,
                                 bounds,
                                 theInkAnalyzer.GetRecognizedString(),
                                 theInkAnalyzer.GetAlternates());

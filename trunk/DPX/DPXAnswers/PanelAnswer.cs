@@ -28,14 +28,9 @@ namespace DPXAnswers
         private List<AnswerRect> keys;
 
         /// <summary>
-        /// The list of answers for the given answer boxes.
+        /// The list of analyzed answer boxes.
         /// </summary>
-        private Dictionary<Rect, string> answers;
-
-        /// <summary>
-        /// The list of alternates for the given answer boxes.
-        /// </summary>
-        private Dictionary<Rect, Collection<string>> alternates;
+        private Dictionary<Rect, BoxAnalysis> answers;
 
         /// <summary>
         /// A flag that indicates that this panel has been fully processed.
@@ -50,8 +45,7 @@ namespace DPXAnswers
         {
             this.answerRectFactory = answerRectFactory;
             this.keys = new List<AnswerRect>();
-            this.answers = new Dictionary<Rect, string>();
-            this.alternates = new Dictionary<Rect, Collection<string>>();
+            this.answers = new Dictionary<Rect, BoxAnalysis>();
             this.processed = false;
         }
 
@@ -102,21 +96,23 @@ namespace DPXAnswers
         /// <summary>
         /// Adds the result.
         /// </summary>
+        /// <param name="index">The index of the panel.</param>
         /// <param name="rect">The bounding rectangle.</param>
         /// <param name="recognized">The recognized string.</param>
         /// <param name="aac">The Analysis Alternate Collection.</param>
-        internal void AddResult(Rect rect, string recognized, AnalysisAlternateCollection aac)
+        internal void AddResult(int index, Rect rect, string recognized, AnalysisAlternateCollection aac)
         {
             AnswerRect ar = this.answerRectFactory.GetAnswerRect(rect);
             this.keys.Add(ar);
-            this.answers.Add(rect, recognized);
             Collection<string> alt = new Collection<string>();
             for (int i = 0; i < aac.Count; i++)
             {
                 alt.Add(aac[i].RecognizedString);
             }
 
-            this.alternates.Add(rect, alt);
+            BoxAnalysis ba = new BoxAnalysis(recognized, alt);
+            ar.Panels.Add(index, ba);
+            this.answers.Add(rect, ba);
         }
 
         /// <summary>
@@ -128,7 +124,7 @@ namespace DPXAnswers
         {
             try
             {
-                return this.answers[rect.Area];
+                return this.answers[rect.Area].Answer;
             }
             catch (KeyNotFoundException)
             {
@@ -141,15 +137,32 @@ namespace DPXAnswers
         /// </summary>
         /// <param name="rect">The key to lookup.</param>
         /// <returns>The collection of alternative strings.</returns>
-        internal Collection<string> GetAlternateString(AnswerRect rect)
+        internal ReadOnlyCollection<string> GetAlternateString(AnswerRect rect)
         {
             try
             {
-                return this.alternates[rect.Area];
+                return this.answers[rect.Area].Alternates;
             }
             catch (KeyNotFoundException)
             {
-                return new Collection<string>();
+                return new ReadOnlyCollection<string>(new Collection<string>());
+            }
+        }
+
+        /// <summary>
+        /// Gets the answer.
+        /// </summary>
+        /// <param name="rect">The key to lookup.</param>
+        /// <returns>The answer to the panel.</returns>
+        internal BoxAnalysis.Grade GetAnswer(AnswerRect rect)
+        {
+            try
+            {
+                return this.answers[rect.Area].BoxGrade;
+            }
+            catch (KeyNotFoundException)
+            {
+                return BoxAnalysis.Grade.INVALID;
             }
         }
 

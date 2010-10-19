@@ -254,6 +254,18 @@ namespace DPXAnswers
                 Grid.SetRow(num, i);
                 Grid.SetColumn(num, 1);
                 g.Children.Add(num);
+
+                // Add the answer
+                Label ans = new Label();
+                ans.Content = panel.GetAnswer(panel.Keys[i]);
+                ans.BorderBrush = Brushes.DarkGray;
+                ans.BorderThickness = new Thickness(1);
+                ans.Tag = panel.Keys[i];
+                ans.MouseEnter += new System.Windows.Input.MouseEventHandler(this.answerWindow.AnswerMouseEnter);
+                ans.MouseLeave += new System.Windows.Input.MouseEventHandler(this.answerWindow.AnswerMouseLeave);
+                Grid.SetRow(ans, i);
+                Grid.SetColumn(ans, 2);
+                g.Children.Add(ans);
             }
         }
 

@@ -26,6 +26,11 @@ namespace DPXAnswers
         private int index;
 
         /// <summary>
+        /// The list of BoxAnalysis objects for each panel.
+        /// </summary>
+        private Dictionary<int, BoxAnalysis> panels;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AnswerRect"/> class.
         /// </summary>
         /// <param name="rect">The rectangle.</param>
@@ -34,6 +39,7 @@ namespace DPXAnswers
         {
             this.rect = rect;
             this.index = index;
+            this.panels = new Dictionary<int, BoxAnalysis>();
         }
 
         /// <summary>
@@ -52,6 +58,15 @@ namespace DPXAnswers
         public int Index
         {
             get { return this.index; }
+        }
+
+        /// <summary>
+        /// Gets the panels.
+        /// </summary>
+        /// <value>The panels.</value>
+        public Dictionary<int, BoxAnalysis> Panels
+        {
+            get { return this.panels; }
         }
     }
 }
