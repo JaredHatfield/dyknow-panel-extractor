@@ -258,6 +258,36 @@ namespace DPXAnswers
         }
 
         /// <summary>
+        /// Displays the answers.
+        /// </summary>
+        internal void DisplayAnswers()
+        {
+            // Display the answer information to the user
+            Grid g = this.answerWindow.GridResults;
+            g.Children.Clear();
+            ReadOnlyCollection<AnswerRect> rects = this.answerRectFactory.AnswerRect;
+            for (int i = 0; i < rects.Count; i++)
+            {
+                AnswerRect ar = rects[i];
+                RowDefinition rd = new RowDefinition();
+                rd.Height = GridLength.Auto;
+                g.RowDefinitions.Add(rd);
+
+                // Add the panel index
+                Label index = new Label();
+                index.Content = "Box " + ar.Index;
+                index.BorderBrush = Brushes.DarkGray;
+                index.BorderThickness = new Thickness(1);
+                index.Tag = ar;
+                index.MouseEnter += new System.Windows.Input.MouseEventHandler(this.answerWindow.AnswerMouseEnter);
+                index.MouseLeave += new System.Windows.Input.MouseEventHandler(this.answerWindow.AnswerMouseLeave);
+                Grid.SetRow(index, i);
+                Grid.SetColumn(index, 0);
+                g.Children.Add(index);
+            }
+        }
+
+        /// <summary>
         /// Processes the panel answer boxes.
         /// </summary>
         /// <param name="n">The panel number.</param>
@@ -309,7 +339,7 @@ namespace DPXAnswers
         {
             StringBuilder sb = new StringBuilder();
             ReadOnlyCollection<AnswerRect> boxes = this.answerRectFactory.AnswerRect;
-            sb.Append("Panel,User,Name");
+            sb.Append("Panel,User,Name,");
             foreach (AnswerRect r in boxes)
             {
                 sb.Append("Box " + r.Index + ",");
@@ -327,6 +357,37 @@ namespace DPXAnswers
             }
 
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// Determines whether the queue is empty.
+        /// </summary>
+        /// <returns><c>true</c> if [is queue empty]; otherwise, <c>false</c>.
+        /// </returns>
+        internal bool IsQueueEmpty()
+        {
+            // If there are things left in the queue, the queue is not empty
+            lock (this.workerQueue)
+            {
+                if (this.workerQueue.Count != 0)
+                {
+                    return false;
+                }
+            }
+
+            // If one of the workers is busy, the queue is not empty.
+            lock (this.workers)
+            {
+                foreach (Thread t in this.workers)
+                {
+                    if (t.ThreadState == System.Threading.ThreadState.Running)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
 
         /// <summary>

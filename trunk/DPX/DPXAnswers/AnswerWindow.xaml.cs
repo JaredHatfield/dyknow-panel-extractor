@@ -163,7 +163,20 @@ namespace DPXAnswers
                 Dispatcher.BeginInvoke(new NoArgsDelegate(tqi.Run), DispatcherPriority.Background);
             }
 
-            Dispatcher.BeginInvoke(new NoArgsDelegate(this.ReEnableOpen), DispatcherPriority.ContextIdle);
+            // Wait for the queue to empty and everything to process
+            while (!this.answerManager.IsQueueEmpty())
+            {
+                Thread.Sleep(500);
+            }
+
+            // Wait until the dispatcher has flushed its queue which is filled with thumbnail render requests
+            Dispatcher.Invoke(new NoArgsDelegate(this.DoNothing), DispatcherPriority.ContextIdle);
+
+            // Display the AnswerBox results in the answer column
+            Dispatcher.Invoke(new NoArgsDelegate(this.answerManager.DisplayAnswers), DispatcherPriority.Background);
+
+            // Update the interface to indicate that the processing has finished
+            Dispatcher.Invoke(new NoArgsDelegate(this.ReEnableOpen), DispatcherPriority.ContextIdle);
         }
 
         /// <summary>

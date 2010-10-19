@@ -31,7 +31,7 @@ namespace DPXAnswers
         public AnswerRectFactory()
         {
             this.rectangles = new Collection<AnswerRect>();
-            this.index = 0;
+            this.index = 1;
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace DPXAnswers
         public void Reset()
         {
             this.rectangles.Clear();
-            this.index = 0;
+            this.index = 1;
         }
 
         /// <summary>
