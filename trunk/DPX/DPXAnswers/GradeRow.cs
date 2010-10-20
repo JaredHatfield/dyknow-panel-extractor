@@ -161,6 +161,21 @@ namespace DPXAnswers
         {
             this.boxAnalysis.BoxGrade = BoxAnalysis.Grade.SETCORRECT;
             this.ans.Content = this.boxAnalysis.BoxGrade;
+
+            // Go through and change any other answers that may be correct
+            Dictionary<int, BoxAnalysis> other = this.rect.Panels;
+            foreach (KeyValuePair<int, BoxAnalysis> ba in other)
+            {
+                // Make comparisions for all of the other not set panels
+                // We only change panels that were not set that exactly match the incorrect answer
+                if (!ba.Value.Equals(this.boxAnalysis) &&
+                    (ba.Value.BoxGrade == BoxAnalysis.Grade.NOTSET ||
+                    ba.Value.BoxGrade != BoxAnalysis.Grade.AUTOINCORRECT) &&
+                    ba.Value.Answer.Equals(this.boxAnalysis.Answer))
+                {
+                    ba.Value.BoxGrade = BoxAnalysis.Grade.AUTOCORRECT;
+                }
+            }
         }
 
         /// <summary>
@@ -172,6 +187,21 @@ namespace DPXAnswers
         {
             this.boxAnalysis.BoxGrade = BoxAnalysis.Grade.SETINCORRECT;
             this.ans.Content = this.boxAnalysis.BoxGrade;
+
+            // Go through and change any other answers that may be incorrect
+            Dictionary<int, BoxAnalysis> other = this.rect.Panels;
+            foreach (KeyValuePair<int, BoxAnalysis> ba in other)
+            {
+                // Make comparisions for all of the other not set panels
+                // We only change panels that were not set that exactly match the incorrect answer
+                if (!ba.Value.Equals(this.boxAnalysis) && 
+                    (ba.Value.BoxGrade == BoxAnalysis.Grade.NOTSET ||
+                    ba.Value.BoxGrade == BoxAnalysis.Grade.AUTOCORRECT) &&
+                    ba.Value.Answer.Equals(this.boxAnalysis.Answer))
+                {
+                    ba.Value.BoxGrade = BoxAnalysis.Grade.AUTOINCORRECT;
+                }
+            }
         }
     }
 }
