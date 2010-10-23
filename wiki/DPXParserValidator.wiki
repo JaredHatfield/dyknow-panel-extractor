@@ -1,0 +1,9 @@
+#summary Application for validating the ability to properly read and write DyKnow files.
+
+http://lh4.ggpht.com/_l4Rv5VGKzLQ/TML1ExyqzmI/AAAAAAAAAd4/AVhgkcIScag/s400/DPXParserValidator.png
+
+= Introduction =
+
+This application is capable of testing the ability of [DPXReader DPX Reader] to properly read and write a DyKnow file successfully.  The purpose of this application is to assist in the development of [DPXReader DPX Reader] as the DyKnow file format changes over time and flaws are found in the existing code base.  An analyzed file can either pass, have known errors, or fail.  Files with known errors have mistakes or flaws that do not influence the ability of the engine to successfully read and write files.  These mistakes are centered around the changes to the DyKnow file format that have resulted from new versions of the file format.  Files that fail have errors that result in the file not being able to load properly or differences in the output that were not expected.  These differences can be printed out if the "Export Analysis" button is checked.
+
+This application is a multi-threaded application and takes advantage of multiple cores to quickly process the list of selected files.
