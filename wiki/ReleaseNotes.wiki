@@ -1,6 +1,15 @@
 #summary The release notes for DPX
 #labels Featured
 
+== [http://dyknow-panel-extractor.googlecode.com/files/DPX-Tools%200.3.4.0.msi Version 0.3.4.0] ==
+*Released 10/23/2010*
+  * The initial release of [DPXAnswers DPX Answers] is able to analyze and grade the contents of AnswerBoxes.  When a file is opened, the contents of answer boxes are automatically anslyzed using handwriting recognition.  The individual answer boxes can then be graded and the results can be saved as a CSV file.
+  * The [DPXGrader DPX Grader] window can now be maximized and some minor improvements were made to the GUI to accomidate this change.  
+  * [DPXParserValidator DPX Parser Validator] was made its own application.  Improvements to this application include using a thread for each CPU core and some other minor changes to the GUI.
+  * [DPXPreview DPX Preview] now matches the formatting and style of other application in the DPX-Tools suite.
+  * [DPXSorter DPX Sorter] uses a custom parser to perform the sorting of panels, and this code was moved out of the DPXReader library and directly into the application.  This application should use the [DPXReader DPX Reader] library to perform the sorting (Issue 18).
+  * The About window for the applications now matches the color scheme of the DPX-Tools suite.
+
 == [http://dyknow-panel-extractor.googlecode.com/files/DPX-Tools%200.3.3.0.msi Version 0.3.3.0] ==
 *Released 8/13/2010*
   * [DPXGrader DPX Grader] processes panels using multi-threaded workers to speed up the process.  A worker is created for each CPU core so computers with multiple cores will process files faster.
