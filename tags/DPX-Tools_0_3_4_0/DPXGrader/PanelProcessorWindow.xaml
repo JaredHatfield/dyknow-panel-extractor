@@ -1,0 +1,129 @@
+﻿<Window x:Class="DPXGrader.PanelProcessorWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="DPX Grader" 
+    Height="685" Width="790" 
+    MinHeight="685" MinWidth="790"
+    Icon="Icon.ico">
+    <DockPanel Background="#DDDDDD">
+        <DockPanel.Resources>
+            <Style TargetType="Label" x:Key="StepLabel">
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="25"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Foreground" Value="DarkBlue"/>
+            </Style>
+            <Style TargetType="Label" x:Key="DescriptionLabel">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="Foreground" Value="DarkBlue"/>
+            </Style>
+            <Style TargetType="Label" x:Key="InformationLabel">
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Foreground" Value="DarkBlue"/>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="Background" Value="LightSteelBlue"/>
+                <Setter Property="Foreground" Value="DarkBlue"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="Margin" Value="10"/>
+            </Style>
+            <Style TargetType="Separator">
+                <Setter Property="Background" Value="DarkBlue"/>
+            </Style>
+            <Style TargetType="RadioButton">
+                <Setter Property="Foreground" Value="DarkBlue"/>
+            </Style>
+        </DockPanel.Resources>
+        <!-- Step 1 -->
+        <Border BorderBrush="DarkBlue" BorderThickness="0,0,0,2" DockPanel.Dock="Top">
+            <DockPanel>
+                <StackPanel Width="150" Background="LightSteelBlue" DockPanel.Dock="Left">
+                    <Label Style="{StaticResource StepLabel}">Step 1</Label>
+                    <Label Style="{StaticResource DescriptionLabel}">Select File</Label>
+                    <Button Name="ButtonOpen" Width="100" Click="ButtonOpen_Click">Open</Button>
+                    <ProgressBar Height="20" Name="ProgressBarOpen" Width="100" />
+                </StackPanel>
+                <DockPanel>
+                    <TextBox Name="TextBoxFileName" IsReadOnly="True" DockPanel.Dock="Top" />
+                    <ScrollViewer 
+                        Margin="10,0,10,10"
+                        HorizontalScrollBarVisibility="Visible"
+                        VerticalScrollBarVisibility="Hidden"
+                        Background="White"
+                        DockPanel.Dock="Top">
+                        <StackPanel 
+                            Name="PanelScrollView"
+                            Height="100"
+                            Orientation="Horizontal"
+                            ScrollViewer.HorizontalScrollBarVisibility="Visible">
+                        </StackPanel>
+                    </ScrollViewer>
+                </DockPanel>
+            </DockPanel>
+        </Border>
+        <!-- Step 2 -->
+        <Border BorderBrush="DarkBlue" BorderThickness="0,0,0,2" DockPanel.Dock="Top">
+            <DockPanel>
+                <StackPanel Width="150" Background="LightSteelBlue" DockPanel.Dock="Left">
+                    <Label Style="{StaticResource StepLabel}">Step 2</Label>
+                    <Label Style="{StaticResource DescriptionLabel}">Choose Region</Label>
+                    <Button Name="ButtonProcess" Width="100" Click="ButtonProcess_Click">Process</Button>
+                    <ProgressBar Height="20" Name="ProgressBarProcess" Width="100" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel>
+                        <Border Margin="10,10,10,0" BorderBrush="DarkBlue" BorderThickness="2">
+                            <Canvas Name="CanvasForInking" Width="400" Height="300">
+                                <InkCanvas Name="Inky" Width="400" Height="300" IsEnabled="False" />
+                                <Rectangle Name="Boxy" Width="50" Height="50" Fill="Green" Opacity=".3" />
+                            </Canvas>
+                        </Border>
+                        <DockPanel>
+                            <TextBox Name="TextBoxStudentName"  Width="150" IsReadOnly="True" DockPanel.Dock="Left" />
+                            <TextBox Name="TextBoxUserName" Width="150" IsReadOnly="True" DockPanel.Dock="Right" />
+                            <Separator />
+                        </DockPanel>
+                    </StackPanel>
+                    <StackPanel Width="200">
+                        <Label Style="{StaticResource InformationLabel}">Size:</Label>
+                        <Slider Name="SliderSize" Margin="10" Minimum="20" Maximum="200" Value="50" ValueChanged="SliderSize_ValueChanged"></Slider>
+                        <Separator Margin="10" />
+                        <Label Style="{StaticResource InformationLabel}">Position:</Label>
+                        <RadioButton Name="RadioButtonTopLeft" Margin="10,2,10,2" GroupName="BoxLocation" Checked="RadioButtonPosition_Checked" IsChecked="True">Top Left</RadioButton>
+                        <RadioButton Name="RadioButtonTopRight" Margin="10,2,10,2" GroupName="BoxLocation" Checked="RadioButtonPosition_Checked">Top Right</RadioButton>
+                        <RadioButton Name="RadioButtonBottomLeft" Margin="10,2,10,2" GroupName="BoxLocation" Checked="RadioButtonPosition_Checked">Bottom Left</RadioButton>
+                        <RadioButton Name="RadioButtonBottomRight" Margin="10,2,10,10" GroupName="BoxLocation" Checked="RadioButtonPosition_Checked">Bottom Right</RadioButton>
+                        <Separator Margin="10"/>
+                        <Button Name="ButtonPreview" Click="ButtonPreview_Click">Preview Recognition</Button>
+                        <TextBox Name="TextBoxPreviewOutput" MaxLines="3" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                    </StackPanel>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+        <!-- Step 3 -->
+        <Border>
+            <DockPanel>
+                <StackPanel Width="150" Height="Auto" Background="LightSteelBlue" DockPanel.Dock="Left">
+                    <Label Style="{StaticResource StepLabel}">Step 3</Label>
+                    <Label Style="{StaticResource DescriptionLabel}">Get Results</Label>
+                    <Button Name="ButtonSave" Click="ButtonSave_Click">Save</Button>
+                </StackPanel>
+                <ScrollViewer Margin="10" Background="White">
+                    <Grid Name="GridResults" Width="Auto" Height="Auto">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MaxWidth="50" />
+                            <ColumnDefinition Width="145" />
+                            <ColumnDefinition Width="145" />
+                            <ColumnDefinition Width="115" />
+                            <ColumnDefinition Width="115" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ScrollViewer>
+            </DockPanel>
+        </Border>
+    </DockPanel>
+</Window>
