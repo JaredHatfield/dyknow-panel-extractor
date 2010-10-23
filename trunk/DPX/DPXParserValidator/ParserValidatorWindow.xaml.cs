@@ -22,6 +22,7 @@ namespace DPXParserValidator
     using System.Windows.Shapes;
     using System.Windows.Threading;
     using DiffMatchPatch;
+    using DPXCommon;
     using DPXReader.DyKnow;
 
     /// <summary>
@@ -441,6 +442,18 @@ namespace DPXParserValidator
             this.GridResults.Children.Clear();
             this.ButtonClearResults.IsEnabled = false;
             this.currentRow = 0;
+        }
+
+        /// <summary>
+        /// Display the AboutDPX window.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">Event arguments.</param>
+        private void DisplayAboutWindow(object sender, RoutedEventArgs e)
+        {
+            AboutDPX popupWindow = new AboutDPX();
+            popupWindow.Owner = this;
+            popupWindow.ShowDialog();
         }
     }
 }

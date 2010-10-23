@@ -21,6 +21,11 @@
                 <Setter Property="FontWeight" Value="Bold"/>
             </Style>
         </DockPanel.Resources>
+        <Menu Height="22.22" Name="menu1" Width="Auto" DockPanel.Dock="Top">
+            <MenuItem Header="_Help">
+                <MenuItem Header="_About" Click="DisplayAboutWindow"/>
+            </MenuItem>
+        </Menu>
         <StackPanel DockPanel.Dock="Top">
             <StackPanel Orientation="Horizontal">
                 <Label Margin="10,10,0,0" FontWeight="Bold">Instructions: </Label>
