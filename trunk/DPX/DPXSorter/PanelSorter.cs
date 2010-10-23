@@ -2,7 +2,7 @@
 // GNU General Public License v3
 // </copyright>
 // <summary>A parser that is able to sort the panels in a DyKnow file and produce a new file.</summary>
-namespace DPXReader
+namespace DPXSorter
 {
     using System;
     using System.Collections.Generic;
