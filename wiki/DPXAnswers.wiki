@@ -1,5 +1,7 @@
 #summary The application used for processing student answers on panels
 
+http://lh3.ggpht.com/_l4Rv5VGKzLQ/TMMCEz7EudI/AAAAAAAAAeE/9SUoeMkiLac/s400/DPXAnswers.png
+
 = Introduction =
 
-This application provides a semi-automated way to process student responses and grade panels for accuracy.  This specific application is currently under development.
+This application provides a semi-automated way to process student responses and grade panels for accuracy.  The DyKnow file is read in and the ink contents of AnswerBoxes are automatically converted to strings using handwriting recognition.  The individual boxes are then marked as correct or incorrect and the results can be saved as a CSV file.
