@@ -9,5 +9,6 @@
     * [DPXGrader DPX Grader]
     * [DPXManager DPX Manager]
     * [DPXPreview DPX Preview]
+    * [DPXParserValidator DPX Parser Validator]
     * [DPXSorter DPX Sorter]
   * [ReleaseNotes Release Notes]
