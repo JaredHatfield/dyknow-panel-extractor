@@ -90,7 +90,7 @@ namespace DPXAnswers
 
             // Add the answer
             this.ans = new Label();
-            this.ans.Content = panel.GetAnswer(panel.Keys[i]);
+            this.SetStatusLabel(this.boxAnalysis.BoxGrade);
             this.ans.BorderBrush = Brushes.DarkGray;
             this.ans.BorderThickness = new Thickness(1);
             this.ans.Tag = this;
@@ -153,6 +153,47 @@ namespace DPXAnswers
         }
 
         /// <summary>
+        /// Sets the status of the answer for the specific answer box..
+        /// </summary>
+        /// <param name="grade">The grade of the panel.</param>
+        private void SetStatusLabel(BoxAnalysis.Grade grade)
+        {
+            switch (grade)
+            {
+                case BoxAnalysis.Grade.NOTSET:
+                    this.ans.Content = BoxAnalysis.BoxGradeString(grade);
+                    this.ans.Foreground = Brushes.Black;
+                    this.ans.FontWeight = FontWeights.Normal;
+                    break;
+                case BoxAnalysis.Grade.AUTOCORRECT:
+                    this.ans.Content = BoxAnalysis.BoxGradeString(grade);
+                    this.ans.Foreground = Brushes.DarkGreen;
+                    this.ans.FontWeight = FontWeights.Normal;
+                    break;
+                case BoxAnalysis.Grade.SETCORRECT:
+                    this.ans.Content = BoxAnalysis.BoxGradeString(grade);
+                    this.ans.Foreground = Brushes.DarkGreen;
+                    this.ans.FontWeight = FontWeights.Bold;
+                    break;
+                case BoxAnalysis.Grade.AUTOINCORRECT:
+                    this.ans.Content = BoxAnalysis.BoxGradeString(grade);
+                    this.ans.Foreground = Brushes.DarkRed;
+                    this.ans.FontWeight = FontWeights.Normal;
+                    break;
+                case BoxAnalysis.Grade.SETINCORRECT:
+                    this.ans.Content = BoxAnalysis.BoxGradeString(grade);
+                    this.ans.Foreground = Brushes.DarkRed;
+                    this.ans.FontWeight = FontWeights.Bold;
+                    break;
+                case BoxAnalysis.Grade.INVALID:
+                    this.ans.Content = BoxAnalysis.BoxGradeString(grade);
+                    this.ans.Foreground = Brushes.Black;
+                    this.ans.FontWeight = FontWeights.Normal;
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Answers the set correct.
         /// </summary>
         /// <param name="sender">The sender.</param>
@@ -160,7 +201,7 @@ namespace DPXAnswers
         private void AnswerSetCorrect(object sender, RoutedEventArgs e)
         {
             this.boxAnalysis.BoxGrade = BoxAnalysis.Grade.SETCORRECT;
-            this.ans.Content = this.boxAnalysis.BoxGrade;
+            this.SetStatusLabel(this.boxAnalysis.BoxGrade);
 
             // Go through and change any other answers that may be correct
             Dictionary<int, BoxAnalysis> other = this.rect.Panels;
@@ -186,7 +227,7 @@ namespace DPXAnswers
         private void AnswerSetIncorrect(object sender, RoutedEventArgs e)
         {
             this.boxAnalysis.BoxGrade = BoxAnalysis.Grade.SETINCORRECT;
-            this.ans.Content = this.boxAnalysis.BoxGrade;
+            this.SetStatusLabel(this.boxAnalysis.BoxGrade);
 
             // Go through and change any other answers that may be incorrect
             Dictionary<int, BoxAnalysis> other = this.rect.Panels;

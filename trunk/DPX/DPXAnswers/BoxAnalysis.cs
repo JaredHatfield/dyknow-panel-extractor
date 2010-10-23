@@ -105,5 +105,31 @@ namespace DPXAnswers
             get { return this.boxGrade; }
             set { this.boxGrade = value; }
         }
+
+        /// <summary>
+        /// Gets the string representation of a BoxGrade.
+        /// </summary>
+        /// <param name="grade">The grade to convert.</param>
+        /// <returns>The string represntation.</returns>
+        public static string BoxGradeString(BoxAnalysis.Grade grade)
+        {
+            switch (grade)
+            {
+                case BoxAnalysis.Grade.NOTSET:
+                    return "?";
+                case BoxAnalysis.Grade.AUTOCORRECT:
+                    return "Correct (Auto)";
+                case BoxAnalysis.Grade.SETCORRECT:
+                    return "Correct";
+                case BoxAnalysis.Grade.AUTOINCORRECT:
+                    return "Incorrect (Auto)";
+                case BoxAnalysis.Grade.SETINCORRECT:
+                    return "Incorrect";
+                case BoxAnalysis.Grade.INVALID:
+                    return "?";
+            }
+
+            return string.Empty;
+        }
     }
 }

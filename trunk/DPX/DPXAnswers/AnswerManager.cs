@@ -319,17 +319,24 @@ namespace DPXAnswers
             sb.Append("Panel,User,Name,");
             foreach (AnswerRect r in boxes)
             {
-                sb.Append("Box " + r.Index + ",");
+                sb.Append("Box " + r.Index + " Answer, Box " + r.Index + " Grade,");
             }
 
             foreach (KeyValuePair<int, PanelAnswer> pa in this.answers)
             {
                 DPXReader.DyKnow.Page p = this.dyknow.DATA[pa.Key] as DPXReader.DyKnow.Page;
-                sb.Append("\n" + (pa.Key + 1) + ",\"" + p.ONER + "\",\"" + p.ONERN + "\",");
+                sb.Append("\n" + (pa.Key + 1) + ",\"" + p.ONER + "\",\"" + p.ONERN + "\"");
                 foreach (AnswerRect r in boxes)
                 {
-                    string ans = pa.Value.GetRecognizedString(r);
-                    sb.Append("\"" + ans + "\",");
+                    BoxAnalysis ba = pa.Value.GetBoxAnalysis(r);
+                    if (ba != null)
+                    {
+                        sb.Append(",\"" + ba.Answer + "\"," + BoxAnalysis.BoxGradeString(ba.BoxGrade));
+                    }
+                    else
+                    {
+                        sb.Append(",,");
+                    }
                 }
             }
 
