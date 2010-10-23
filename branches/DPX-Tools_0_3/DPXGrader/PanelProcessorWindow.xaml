@@ -4,8 +4,6 @@
     Title="DPX Grader" 
     Height="685" Width="790" 
     MinHeight="685" MinWidth="790"
-    MaxWidth="790"
-    ResizeMode="CanResizeWithGrip"
     Icon="Icon.ico">
     <DockPanel Background="#DDDDDD">
         <DockPanel.Resources>
@@ -49,16 +47,14 @@
                     <Button Name="ButtonOpen" Width="100" Click="ButtonOpen_Click">Open</Button>
                     <ProgressBar Height="20" Name="ProgressBarOpen" Width="100" />
                 </StackPanel>
-                <StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBox Name="TextBoxFileName" Width="600" IsReadOnly="True" />
-                    </StackPanel>
+                <DockPanel>
+                    <TextBox Name="TextBoxFileName" IsReadOnly="True" DockPanel.Dock="Top" />
                     <ScrollViewer 
                         Margin="10,0,10,10"
-                        Width="600"
                         HorizontalScrollBarVisibility="Visible"
                         VerticalScrollBarVisibility="Hidden"
-                        Background="White">
+                        Background="White"
+                        DockPanel.Dock="Top">
                         <StackPanel 
                             Name="PanelScrollView"
                             Height="100"
@@ -66,7 +62,7 @@
                             ScrollViewer.HorizontalScrollBarVisibility="Visible">
                         </StackPanel>
                     </ScrollViewer>
-                </StackPanel>
+                </DockPanel>
             </DockPanel>
         </Border>
         <!-- Step 2 -->
@@ -116,7 +112,7 @@
                     <Label Style="{StaticResource DescriptionLabel}">Get Results</Label>
                     <Button Name="ButtonSave" Click="ButtonSave_Click">Save</Button>
                 </StackPanel>
-                <ScrollViewer Width="600" Margin="10" Background="White">
+                <ScrollViewer Margin="10" Background="White">
                     <Grid Name="GridResults" Width="Auto" Height="Auto">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition MaxWidth="50" />

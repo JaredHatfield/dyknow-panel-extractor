@@ -1,34 +1,41 @@
 ﻿<Window x:Class="DPXPreview.DPXPreviewWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="DPX Preview" Height="600" Width="Auto"
+    Title="DPX Preview" 
+    Height="600" Width="Auto"
+    MinHeight="600" MinWidth="600"
     Icon="Icon.ico">
-    <DockPanel Name="myStackPanel" Height="Auto" Width="Auto" Background="LightBlue">
+    <DockPanel Name="myStackPanel" Height="Auto" Width="Auto" Background="LightSteelBlue">
+        <DockPanel.Resources>
+            <Style TargetType="Label">
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Foreground" Value="DarkBlue"/>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="Background" Value="LightSteelBlue"/>
+                <Setter Property="Foreground" Value="DarkBlue"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+        </DockPanel.Resources>
         <Menu Height="22.22" Name="menu1" Width="Auto" DockPanel.Dock="Top">
             <MenuItem Header="_File">
                 <MenuItem Header="_Open" Click="ButtonLoadClick" />
                 <MenuItem Header="_Export Image" Click="ButtonExportImageClick" />
             </MenuItem>
-            <MenuItem Header="_Information">
-                <MenuItem Header="_User Information" Name="menuUserInformation" Click="DisplayUserInformationWindow" />
-                <MenuItem Header="_Statistics" Name="menuStatistics" Click="DisplayStatisticsWindow"/>
-            </MenuItem>
-            <MenuItem Header="_Special">
-                <MenuItem Header="_Parser Validator" Click="ParserValidatorWindow"  />
-            </MenuItem>
             <MenuItem Header="_Help">
                 <MenuItem Header="_About" Click="DisplayAboutWindow"/>
             </MenuItem>
         </Menu>
-        <StackPanel Height="100" DockPanel.Dock="Bottom" MaxWidth="500">
-            <DockPanel Width="Auto" Margin="0,20,0,0">
-                <Button Name="buttonPrevious" Click="ButtonPreviousClick" Margin="20,0,0,0" Width="100" DockPanel.Dock="Left">Previous</Button>
-                <Button Name="buttonNext" Click="ButtonNextClick" Margin="0,0,20,0" HorizontalAlignment="Right" Width="100" DockPanel.Dock="Right">Next</Button>
+        <Border BorderBrush="DarkBlue" BorderThickness="0,2,0,0" DockPanel.Dock="Bottom">
+            <DockPanel Width="Auto" MaxWidth="500" Margin="0,20,0,0">
+                <Slider Name="sliderPanelSize" Margin="10" MaxWidth="300" Minimum=".25" Maximum="1" Value=".5" ValueChanged="SliderPanelSize_ValueChanged" DockPanel.Dock="Bottom"/>
+                <Button Name="buttonPrevious" Click="ButtonPreviousClick" Margin="20,0,0,0" Width="100" IsEnabled="False" DockPanel.Dock="Left">Previous</Button>
+                <Button Name="buttonNext" Click="ButtonNextClick" Margin="0,0,20,0" HorizontalAlignment="Right" Width="100" IsEnabled="False" DockPanel.Dock="Right">Next</Button>
                 <Label Name="labelPageNumber" HorizontalAlignment="Center" DockPanel.Dock="Bottom">0 of 0</Label>
             </DockPanel>
-            <Slider Name="sliderPanelSize" MaxWidth="300" Minimum=".25" Maximum="1" Value=".5" ValueChanged="SliderPanelSize_ValueChanged" ></Slider>
-        </StackPanel>
-        <ScrollViewer Name="scollViewerPanel" Width="Auto" Height="Auto" HorizontalScrollBarVisibility="Visible" Background="LightGray">
+        </Border>
+        <ScrollViewer Name="scollViewerPanel" Width="Auto" Height="Auto" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="LightGray">
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                 <InkCanvas Name="Inky" Width="1024" Height="768" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <InkCanvas.LayoutTransform>

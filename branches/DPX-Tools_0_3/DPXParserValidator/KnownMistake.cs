@@ -2,7 +2,7 @@
 // GNU General Public License v3
 // </copyright>
 // <summary>A structure that represents a known mistake in the serialization difference.</summary>
-namespace DPXPreview
+namespace DPXParserValidator
 {
     using System;
     using System.Collections.Generic;

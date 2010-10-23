@@ -25,14 +25,17 @@ namespace DPXCommon
         /// <returns>The InkAnalyzer that has already run.</returns>
         public static InkAnalyzer Analyze(StrokeCollection strokes, int attemptCount)
         {
-            InkAnalyzer theInkAnalyzer = new InkAnalyzer();
-            theInkAnalyzer.AddStrokes(strokes);
-            AnalysisStatus status = null;
-
             // It is possible for this to fail. :(
             // We want to make multiple attempts to perform the analysis if necessary.
-            while (attemptCount > 0)
+            int counter = 0;
+            while (counter < attemptCount)
             {
+                Debug.WriteLine("InkAnalysisHelper->Analyze Attempt " + (counter + 1));
+                InkAnalyzer theInkAnalyzer = new InkAnalyzer();
+                theInkAnalyzer.AddStrokes(strokes);
+                AnalysisStatus status = null;
+                bool success = true;
+
                 try
                 {
                     // Attempt the handwriting analysis
@@ -41,21 +44,22 @@ namespace DPXCommon
                 catch (Exception e)
                 {
                     Debug.WriteLine("The analysis failed! " + e.Message);
+                    success = false;
 
                     // If we failed for some reason, lets take a short break
                     Thread.Sleep(100);
                 }
 
                 // It worked so we do not need to make any more attempts
-                if (status != null && status.Successful)
+                if (success && status != null && status.Successful)
                 {
                     return theInkAnalyzer;
                 }
 
-                attemptCount--;
+                counter++;
             }
 
-            throw new Exception("The analysis failed!  Giving up.");
+            throw new Exception("The analysis failed!  Giving up.  All hope is lost!");
         }
     }
 }

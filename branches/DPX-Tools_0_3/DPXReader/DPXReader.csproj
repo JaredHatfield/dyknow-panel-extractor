@@ -99,7 +99,6 @@
     <Compile Include="DyKnow\SerializerHelper.cs" />
     <Compile Include="DyKnow\WebPanel.cs" />
     <Compile Include="LegacyReader\ImageData.cs" />
-    <Compile Include="PanelSorter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

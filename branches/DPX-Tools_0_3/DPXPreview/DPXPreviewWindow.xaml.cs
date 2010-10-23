@@ -19,6 +19,7 @@ namespace DPXPreview
     using System.Windows.Media.Imaging;
     using System.Windows.Navigation;
     using System.Windows.Shapes;
+    using System.Windows.Threading;
     using DPXCommon;
     using DPXReader;
     using DPXReader.DyKnow;
@@ -45,9 +46,19 @@ namespace DPXPreview
         {
             InitializeComponent();
             this.currentPanelNumber = 0;
-            menuUserInformation.IsEnabled = false;
-            menuStatistics.IsEnabled = false;
         }
+
+        /// <summary>
+        /// The delegate used for opening a file.
+        /// </summary>
+        /// <param name="filename">The name of the file to open.</param>
+        private delegate void OpenDyKnowFileDelegate(string filename);
+
+        /// <summary>
+        /// The delegate used for displaying a panel.
+        /// </summary>
+        /// <param name="id">The panel number.</param>
+        private delegate void DisplayPanelDelegate(int id);
 
         /// <summary>
         /// Load a new DyKnow file.
@@ -61,15 +72,22 @@ namespace DPXPreview
             openFileDialog1.Filter = "DyKnow files (*.dyz)|*.dyz";
             if (openFileDialog1.ShowDialog() == true)
             {
-                // Open the DyKnow file
-                this.dyknow = DyKnow.DeserializeFromFile(openFileDialog1.FileName);
-                this.currentPanelNumber = 0;
-                Inky.Strokes.Clear();
-                this.DisplayPanel(this.currentPanelNumber);
-                this.UpdatePageNumber();
-                menuUserInformation.IsEnabled = true;
-                menuStatistics.IsEnabled = true;
+                string filename = openFileDialog1.FileName;
+                Dispatcher.BeginInvoke(new OpenDyKnowFileDelegate(this.OpenDyKnowFile), DispatcherPriority.Input, filename);
             }
+        }
+
+        /// <summary>
+        /// Opens the dy know file.
+        /// </summary>
+        /// <param name="filename">The filename.</param>
+        private void OpenDyKnowFile(string filename)
+        {
+            // Open the DyKnow file
+            this.dyknow = DyKnow.DeserializeFromFile(filename);
+            this.currentPanelNumber = 0;
+            Inky.Strokes.Clear();
+            Dispatcher.BeginInvoke(new DisplayPanelDelegate(this.DisplayPanel), DispatcherPriority.Input, this.currentPanelNumber);
         }
 
         /// <summary>
@@ -83,8 +101,7 @@ namespace DPXPreview
             {
                 if ((this.currentPanelNumber + 1) < this.dyknow.DATA.Count)
                 {
-                    this.DisplayPanel(++this.currentPanelNumber);
-                    this.UpdatePageNumber();
+                    Dispatcher.BeginInvoke(new DisplayPanelDelegate(this.DisplayPanel), DispatcherPriority.Input, (this.currentPanelNumber + 1));
                 }
             }
         }
@@ -100,18 +117,9 @@ namespace DPXPreview
             {
                 if (this.currentPanelNumber > 0)
                 {
-                    this.DisplayPanel(--this.currentPanelNumber);
-                    this.UpdatePageNumber();
+                    Dispatcher.BeginInvoke(new DisplayPanelDelegate(this.DisplayPanel), DispatcherPriority.Input, (this.currentPanelNumber - 1));
                 }
             }
-        }
-
-        /// <summary>
-        /// Update the page number.
-        /// </summary>
-        private void UpdatePageNumber()
-        {
-            labelPageNumber.Content = (this.currentPanelNumber + 1).ToString() + " of " + this.dyknow.DATA.Count;
         }
 
         /// <summary>
@@ -146,6 +154,27 @@ namespace DPXPreview
             {
                 this.currentPanelNumber = n;
                 this.dyknow.Render(Inky, n);
+                labelPageNumber.Content = (n + 1).ToString() + " of " + this.dyknow.DATA.Count;
+
+                // Enable or disable the previous button as necessary
+                if (n == 0)
+                {
+                    this.buttonPrevious.IsEnabled = false;
+                }
+                else if (!this.buttonPrevious.IsEnabled)
+                {
+                    this.buttonPrevious.IsEnabled = true;
+                }
+
+                // Enable or disable the next button as necessary
+                if (n + 1 == this.dyknow.DATA.Count)
+                {
+                    this.buttonNext.IsEnabled = false;
+                }
+                else if (!this.buttonNext.IsEnabled)
+                {
+                    this.buttonNext.IsEnabled = true;
+                }
             }
         }
 
@@ -162,48 +191,6 @@ namespace DPXPreview
         }
 
         /// <summary>
-        /// Display the UserInformation window.
-        /// </summary>
-        /// <param name="sender">The object that raised the event.</param>
-        /// <param name="e">Event arguments.</param>
-        private void DisplayUserInformationWindow(object sender, RoutedEventArgs e)
-        {
-            /*
-            FlowDocument fd = new FlowDocument();
-            fd.Blocks.Add(new Paragraph(new Run("Students")));
-            if (fd != null)
-            {
-                for (int i = 0; i < this.dr.NumOfPages(); i++)
-                {
-                    DyKnowPage d = this.dr.GetDyKnowPage(i);
-                    string s = (i + 1).ToString() + ") " + d.FullName;
-                    Paragraph p = new Paragraph(new Run(s));
-                    p.LineHeight = 5.0;
-                    fd.Blocks.Add(p);
-                }
-            }
-
-            UserInformation popupWindow = new UserInformation(fd);
-            popupWindow.Owner = this;
-            popupWindow.ShowDialog();
-             */
-        }
-
-        /// <summary>
-        /// Display the Statistics window.
-        /// </summary>
-        /// <param name="sender">The object that raised the event.</param>
-        /// <param name="e">Event arguments.</param>
-        private void DisplayStatisticsWindow(object sender, RoutedEventArgs e)
-        {
-            /*
-            Statistics popupWindow = new Statistics(this.dr);
-            popupWindow.Owner = this;
-            popupWindow.ShowDialog();
-             */
-        }
-
-        /// <summary>
         /// Change the size of the panel being displayed.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
@@ -211,18 +198,6 @@ namespace DPXPreview
         private void SliderPanelSize_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             // Nothing here yet.
-        }
-
-        /// <summary>
-        /// Parsers the validator window.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
-        private void ParserValidatorWindow(object sender, RoutedEventArgs e)
-        {
-            // Display the window that is able to validate a DyKnow file.
-            ParserValidatorWindow pvw = new ParserValidatorWindow();
-            pvw.ShowDialog();
         }
     }
 }

@@ -6,6 +6,8 @@ namespace DPXAnswers
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading;
@@ -65,6 +67,12 @@ namespace DPXAnswers
         public delegate void DisplayPanelDelegate(int index);
 
         /// <summary>
+        /// The delegate for updating the progress bar.
+        /// </summary>
+        /// <param name="index">The index to set for the progress bar.</param>
+        public delegate void ProgressBarDelegate(int index);
+
+        /// <summary>
         /// The delegate for call with no arguments.
         /// </summary>
         private delegate void NoArgsDelegate();
@@ -102,8 +110,20 @@ namespace DPXAnswers
         internal void AnswerMouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             Label l = (Label)sender;
-            l.Background = Brushes.LightYellow;
-            Rect rect = PanelAnswer.Transform((Rect)l.Tag, Inky.Width, Inky.Height);
+            Rect rect = new Rect();
+            if (l.Tag.GetType().Equals(typeof(GradeRow)))
+            {
+                GradeRow gr = (GradeRow)l.Tag;
+                gr.MouseIn();
+                rect = PanelAnswer.Transform(gr.Rect, Inky.Width, Inky.Height);
+            }
+            else
+            {
+                l.Background = Brushes.LightYellow;
+                AnswerRect ar = (AnswerRect)l.Tag;
+                rect = PanelAnswer.Transform(ar.Area, Inky.Width, Inky.Height);
+            }
+
             this.Boxy.Height = rect.Height;
             this.Boxy.Width = rect.Width;
             Canvas.SetTop(this.Boxy, rect.Top);
@@ -118,9 +138,34 @@ namespace DPXAnswers
         internal void AnswerMouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             Label l = (Label)sender;
-            l.Background = Brushes.White;
+            if (l.Tag.GetType().Equals(typeof(GradeRow)))
+            {
+                GradeRow gr = (GradeRow)l.Tag;
+                gr.MouseOut();
+            }
+            else
+            {
+                l.Background = Brushes.White;
+            }
+
             this.Boxy.Height = 0;
             this.Boxy.Width = 0;
+        }
+
+        /// <summary>
+        /// Increments the progress bar using the dispatcher.
+        /// </summary>
+        internal void IncrementProgressBar()
+        {
+            Dispatcher.Invoke(new NoArgsDelegate(this.IncrementProgressBarDispatched), DispatcherPriority.Normal);
+        }
+
+        /// <summary>
+        /// Increments the progress bar.
+        /// </summary>
+        internal void IncrementProgressBarDispatched()
+        {
+            this.ProgressBarProcessFile.Value++;
         }
 
         /// <summary>
@@ -136,7 +181,13 @@ namespace DPXAnswers
 
             // Read in the file
             DyKnow dyknow = this.answerManager.OpenFile(file);
-            int goal = dyknow.DATA.Count + 1;
+            int goal = dyknow.DATA.Count * 2;
+
+            // Set the progress bar to zero
+            Dispatcher.Invoke(
+                new ProgressBarDelegate(this.ZeroProgressBar), 
+                DispatcherPriority.Normal,
+                goal);
 
             // Display the first panel
             if (dyknow.DATA.Count > 0)
@@ -160,7 +211,20 @@ namespace DPXAnswers
                 Dispatcher.BeginInvoke(new NoArgsDelegate(tqi.Run), DispatcherPriority.Background);
             }
 
-            Dispatcher.BeginInvoke(new NoArgsDelegate(this.ReEnableOpen), DispatcherPriority.ContextIdle);
+            // Wait for the queue to empty and everything to process
+            while (!this.answerManager.IsQueueEmpty())
+            {
+                Thread.Sleep(500);
+            }
+
+            // Wait until the dispatcher has flushed its queue which is filled with thumbnail render requests
+            Dispatcher.Invoke(new NoArgsDelegate(this.DoNothing), DispatcherPriority.ContextIdle);
+
+            // Display the AnswerBox results in the answer column
+            Dispatcher.Invoke(new NoArgsDelegate(this.answerManager.DisplayAnswers), DispatcherPriority.Background);
+
+            // Update the interface to indicate that the processing has finished
+            Dispatcher.Invoke(new NoArgsDelegate(this.ReEnableOpen), DispatcherPriority.ContextIdle);
         }
 
         /// <summary>
@@ -185,11 +249,22 @@ namespace DPXAnswers
         }
 
         /// <summary>
+        /// Zeroes the progress bar.
+        /// </summary>
+        /// <param name="goal">The goal for the progress bar.</param>
+        private void ZeroProgressBar(int goal)
+        {
+            this.ProgressBarProcessFile.Maximum = goal;
+            this.ProgressBarProcessFile.Value = 0;
+        }
+
+        /// <summary>
         /// Re-Enable the open button.
         /// </summary>
         private void ReEnableOpen()
         {
             this.ButtonOpen.IsEnabled = true;
+            this.ButtonSave.IsEnabled = true;
         }
 
         /// <summary>
@@ -205,6 +280,7 @@ namespace DPXAnswers
             if (openFileDialog.ShowDialog() == true)
             {
                 this.ButtonOpen.IsEnabled = false;
+                this.ButtonSave.IsEnabled = false;
 
                 // Open the DyKnow file
                 this.filename = openFileDialog.FileName;
@@ -222,7 +298,29 @@ namespace DPXAnswers
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Implement me!
+            try
+            {
+                // Let the user choose which file to open
+                Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
+                saveFileDialog.Filter = "CSV (*.csv)|*.csv";
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    // Save the CSV file
+                    string file = saveFileDialog.FileName;
+                    StreamWriter sr = new StreamWriter(file);
+                    sr.Write(this.answerManager.CreateOutputReport());
+                    sr.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Error: The file could not be saved.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("The file was not saved successfully.");
+                Debug.WriteLine("File was not saved: " + ex.Message);
+            }
         }
     }
 }

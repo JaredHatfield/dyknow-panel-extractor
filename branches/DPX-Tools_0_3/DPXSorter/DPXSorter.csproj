@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{A282959D-2118-4A11-8A8A-A39939CEFD43}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -119,6 +119,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PanelSorter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -148,10 +149,6 @@
     <ProjectReference Include="..\DPXCommon\DPXCommon.csproj">
       <Project>{B3EA1278-7F1D-4ED1-850B-B68DC59C0EA2}</Project>
       <Name>DPXCommon</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DPXReader\DPXReader.csproj">
-      <Project>{C05354D4-086C-4DF8-BC63-F42CD0F7A036}</Project>
-      <Name>DPXReader</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

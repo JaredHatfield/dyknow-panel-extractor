@@ -7,6 +7,7 @@ namespace DPXAnswers
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
     using System.Windows;
@@ -18,19 +19,19 @@ namespace DPXAnswers
     internal class PanelAnswer
     {
         /// <summary>
+        /// The AnswerRectFactory.
+        /// </summary>
+        private AnswerRectFactory answerRectFactory;
+
+        /// <summary>
         /// The list of keys.
         /// </summary>
-        private List<Rect> keys;
+        private List<AnswerRect> keys;
 
         /// <summary>
-        /// The list of answers for the given answer boxes.
+        /// The list of analyzed answer boxes.
         /// </summary>
-        private Dictionary<Rect, string> answers;
-
-        /// <summary>
-        /// The list of alternates for the given answer boxes.
-        /// </summary>
-        private Dictionary<Rect, Collection<string>> alternates;
+        private Dictionary<Rect, BoxAnalysis> answers;
 
         /// <summary>
         /// A flag that indicates that this panel has been fully processed.
@@ -40,11 +41,12 @@ namespace DPXAnswers
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelAnswer"/> class.
         /// </summary>
-        internal PanelAnswer()
+        /// <param name="answerRectFactory">The AnswerRectFactory.</param>
+        internal PanelAnswer(AnswerRectFactory answerRectFactory)
         {
-            this.keys = new List<Rect>();
-            this.answers = new Dictionary<Rect, string>();
-            this.alternates = new Dictionary<Rect, Collection<string>>();
+            this.answerRectFactory = answerRectFactory;
+            this.keys = new List<AnswerRect>();
+            this.answers = new Dictionary<Rect, BoxAnalysis>();
             this.processed = false;
         }
 
@@ -71,9 +73,9 @@ namespace DPXAnswers
         /// Gets the list of keys.
         /// </summary>
         /// <value>The list of keys.</value>
-        public ReadOnlyCollection<Rect> Keys
+        public ReadOnlyCollection<AnswerRect> Keys
         {
-            get { return new ReadOnlyCollection<Rect>(this.keys); }
+            get { return new ReadOnlyCollection<AnswerRect>(this.keys); }
         }
 
         /// <summary>
@@ -95,20 +97,27 @@ namespace DPXAnswers
         /// <summary>
         /// Adds the result.
         /// </summary>
+        /// <param name="index">The index of the panel.</param>
         /// <param name="rect">The bounding rectangle.</param>
         /// <param name="recognized">The recognized string.</param>
         /// <param name="aac">The Analysis Alternate Collection.</param>
-        internal void AddResult(Rect rect, string recognized, AnalysisAlternateCollection aac)
+        internal void AddResult(int index, Rect rect, string recognized, AnalysisAlternateCollection aac)
         {
-            this.keys.Add(rect);
-            this.answers.Add(rect, recognized);
-            Collection<string> alt = new Collection<string>();
-            for (int i = 0; i < aac.Count; i++)
+            // We need to lock on the factory because this action needs to be atomic
+            lock (this.answerRectFactory)
             {
-                alt.Add(aac[i].RecognizedString);
-            }
+                AnswerRect ar = this.answerRectFactory.GetAnswerRect(rect);
+                Collection<string> alt = new Collection<string>();
+                for (int i = 0; i < aac.Count; i++)
+                {
+                    alt.Add(aac[i].RecognizedString);
+                }
 
-            this.alternates.Add(rect, alt);
+                BoxAnalysis ba = new BoxAnalysis(recognized, alt);
+                ar.Panels.Add(index, ba);
+                this.answers.Add(rect, ba);
+                this.keys.Add(ar);
+            }
         }
 
         /// <summary>
@@ -116,9 +125,16 @@ namespace DPXAnswers
         /// </summary>
         /// <param name="rect">The key to lookup.</param>
         /// <returns>The recognized string.</returns>
-        internal string GetRecognizedString(Rect rect)
+        internal string GetRecognizedString(AnswerRect rect)
         {
-            return this.answers[rect];
+            try
+            {
+                return this.answers[rect.Area].Answer;
+            }
+            catch (KeyNotFoundException)
+            {
+                return string.Empty;
+            }
         }
 
         /// <summary>
@@ -126,9 +142,50 @@ namespace DPXAnswers
         /// </summary>
         /// <param name="rect">The key to lookup.</param>
         /// <returns>The collection of alternative strings.</returns>
-        internal Collection<string> GetAlternateString(Rect rect)
+        internal ReadOnlyCollection<string> GetAlternateString(AnswerRect rect)
         {
-            return this.alternates[rect];
+            try
+            {
+                return this.answers[rect.Area].Alternates;
+            }
+            catch (KeyNotFoundException)
+            {
+                return new ReadOnlyCollection<string>(new Collection<string>());
+            }
+        }
+
+        /// <summary>
+        /// Gets the answer.
+        /// </summary>
+        /// <param name="rect">The key to lookup.</param>
+        /// <returns>The answer to the panel.</returns>
+        internal BoxAnalysis.Grade GetAnswer(AnswerRect rect)
+        {
+            try
+            {
+                return this.answers[rect.Area].BoxGrade;
+            }
+            catch (KeyNotFoundException)
+            {
+                return BoxAnalysis.Grade.INVALID;
+            }
+        }
+
+        /// <summary>
+        /// Gets the box analysis.
+        /// </summary>
+        /// <param name="rect">The rect to locate.</param>
+        /// <returns>The BoxAnalysis for the given region.</returns>
+        internal BoxAnalysis GetBoxAnalysis(AnswerRect rect)
+        {
+            try
+            {
+                return this.answers[rect.Area];
+            }
+            catch (KeyNotFoundException)
+            {
+                return null;
+            }
         }
 
         /// <summary>
