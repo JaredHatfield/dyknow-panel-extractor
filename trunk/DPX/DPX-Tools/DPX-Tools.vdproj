@@ -22,7 +22,7 @@
         "Entry"
         {
         "MsmKey" = "8:_1E8CE9F2D59E442D02652F46D53CEE1E"
-        "OwnerKey" = "8:_76DB4087C29C49839DBD21BFEC6962C9"
+        "OwnerKey" = "8:_292E2BCB770E48DBA40C759DF9DBDD3A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -40,6 +40,12 @@
         "Entry"
         {
         "MsmKey" = "8:_1E8CE9F2D59E442D02652F46D53CEE1E"
+        "OwnerKey" = "8:_76DB4087C29C49839DBD21BFEC6962C9"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1E8CE9F2D59E442D02652F46D53CEE1E"
         "OwnerKey" = "8:_76C13074A8604F928017DC33C41E1254"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -51,6 +57,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_292E2BCB770E48DBA40C759DF9DBDD3A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_49E4176B3CF7078FDBAEA215373E9ABD"
         "OwnerKey" = "8:_8CE490F798785B78EDEA5D22C9B94D93"
         "MsmSig" = "8:_UNDEFINED"
@@ -58,6 +70,12 @@
         "Entry"
         {
         "MsmKey" = "8:_49E4176B3CF7078FDBAEA215373E9ABD"
+        "OwnerKey" = "8:_292E2BCB770E48DBA40C759DF9DBDD3A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_49E4176B3CF7078FDBAEA215373E9ABD"
         "OwnerKey" = "8:_6AA7C890A0284EEF85192070862601DC"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -70,7 +88,7 @@
         "Entry"
         {
         "MsmKey" = "8:_4CDD9E76A83B97FD93B5E71F9E5543D5"
-        "OwnerKey" = "8:_76DB4087C29C49839DBD21BFEC6962C9"
+        "OwnerKey" = "8:_292E2BCB770E48DBA40C759DF9DBDD3A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -89,6 +107,12 @@
         {
         "MsmKey" = "8:_4CDD9E76A83B97FD93B5E71F9E5543D5"
         "OwnerKey" = "8:_BBC89EAB8B264499873F78A943087DEB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4CDD9E76A83B97FD93B5E71F9E5543D5"
+        "OwnerKey" = "8:_76DB4087C29C49839DBD21BFEC6962C9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -129,6 +153,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_8CE490F798785B78EDEA5D22C9B94D93"
+        "OwnerKey" = "8:_292E2BCB770E48DBA40C759DF9DBDD3A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_B0A5CCDBCBE60910541D792F0A19245F"
         "OwnerKey" = "8:_EB10D91D3E1B4A6CA93B70A33E390DAD"
         "MsmSig" = "8:_UNDEFINED"
@@ -154,6 +184,18 @@
         "Entry"
         {
         "MsmKey" = "8:_E32C476D5BCDAA9F87A82811C60BA739"
+        "OwnerKey" = "8:_292E2BCB770E48DBA40C759DF9DBDD3A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E32C476D5BCDAA9F87A82811C60BA739"
+        "OwnerKey" = "8:_F25A7BA7BDFB952D462469B64F42EAD3"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E32C476D5BCDAA9F87A82811C60BA739"
         "OwnerKey" = "8:_76DB4087C29C49839DBD21BFEC6962C9"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -173,12 +215,6 @@
         {
         "MsmKey" = "8:_E32C476D5BCDAA9F87A82811C60BA739"
         "OwnerKey" = "8:_76C13074A8604F928017DC33C41E1254"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E32C476D5BCDAA9F87A82811C60BA739"
-        "OwnerKey" = "8:_F25A7BA7BDFB952D462469B64F42EAD3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -196,7 +232,7 @@
         "Entry"
         {
         "MsmKey" = "8:_EE9D42D8815A7A279930E3D0C97F27CC"
-        "OwnerKey" = "8:_76DB4087C29C49839DBD21BFEC6962C9"
+        "OwnerKey" = "8:_292E2BCB770E48DBA40C759DF9DBDD3A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -209,6 +245,12 @@
         {
         "MsmKey" = "8:_EE9D42D8815A7A279930E3D0C97F27CC"
         "OwnerKey" = "8:_BBC89EAB8B264499873F78A943087DEB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EE9D42D8815A7A279930E3D0C97F27CC"
+        "OwnerKey" = "8:_76DB4087C29C49839DBD21BFEC6962C9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -226,7 +268,7 @@
         "Entry"
         {
         "MsmKey" = "8:_F25A7BA7BDFB952D462469B64F42EAD3"
-        "OwnerKey" = "8:_76DB4087C29C49839DBD21BFEC6962C9"
+        "OwnerKey" = "8:_292E2BCB770E48DBA40C759DF9DBDD3A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -239,6 +281,12 @@
         {
         "MsmKey" = "8:_F25A7BA7BDFB952D462469B64F42EAD3"
         "OwnerKey" = "8:_BBC89EAB8B264499873F78A943087DEB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F25A7BA7BDFB952D462469B64F42EAD3"
+        "OwnerKey" = "8:_76DB4087C29C49839DBD21BFEC6962C9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -268,7 +316,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_76DB4087C29C49839DBD21BFEC6962C9"
+        "OwnerKey" = "8:_292E2BCB770E48DBA40C759DF9DBDD3A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -287,6 +335,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_BBC89EAB8B264499873F78A943087DEB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_76DB4087C29C49839DBD21BFEC6962C9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -798,7 +852,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:DPX-Tools"
         "ProductCode" = "8:{33EEE489-6C70-4207-BC0E-215AF4488DE6}"
-        "PackageCode" = "8:{79AECC43-B595-4451-BE88-9480E6056C78}"
+        "PackageCode" = "8:{A0B99211-6BC2-4F9C-B68C-070AA1F8951A}"
         "UpgradeCode" = "8:{6432F7C3-B290-48F3-B79F-27BE6FBB9C26}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
@@ -917,6 +971,20 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_00681FA9DAC24295B323350FFF6E172F"
+            {
+            "Name" = "8:DPX Answers"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_292E2BCB770E48DBA40C759DF9DBDD3A"
+            "Folder" = "8:_428D29BF83BF41869A17B6E257BFD64F"
+            "WorkingFolder" = "8:_B81E8B20C5C34E0482C4016517F9DF4A"
+            "Icon" = "8:_DA18BC49D49F4F4792B9154C6A6CCC59"
+            "Feature" = "8:"
+            }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_0DBBE900BF86415EBE9EF4202FE8B59C"
             {
             "Name" = "8:DPX Parser Validator"
@@ -928,7 +996,7 @@
             "Target" = "8:_76DB4087C29C49839DBD21BFEC6962C9"
             "Folder" = "8:_428D29BF83BF41869A17B6E257BFD64F"
             "WorkingFolder" = "8:_B81E8B20C5C34E0482C4016517F9DF4A"
-            "Icon" = "8:"
+            "Icon" = "8:_DA18BC49D49F4F4792B9154C6A6CCC59"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_1A203B0613FA41B7A7D6A8339CA19348"
@@ -1386,6 +1454,34 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_292E2BCB770E48DBA40C759DF9DBDD3A"
+            {
+            "SourcePath" = "8:..\\DPXAnswers\\obj\\x86\\Debug\\DPXAnswers.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_B81E8B20C5C34E0482C4016517F9DF4A"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{59602D12-3B1F-499C-87E5-5453ABD9D386}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_6AA7C890A0284EEF85192070862601DC"
             {
             "SourcePath" = "8:..\\DPXGrader\\obj\\x86\\Debug\\DPXGrader.exe"
