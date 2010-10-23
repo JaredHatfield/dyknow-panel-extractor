@@ -1,9 +1,0 @@
-﻿<Window x:Class="HandwritingAccuracy.MainWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Handwriting Accuracy" Height="250" Width="300">
-    <StackPanel>
-        <Button Name="ButtonConnect" Margin="20" Height="60" Click="ButtonConnect_Click">Connect</Button>
-        <Button Name="ButtonSettings" Margin="20" Height="60" Click="ButtonSettings_Click" >Settings</Button>
-    </StackPanel>
-</Window>
