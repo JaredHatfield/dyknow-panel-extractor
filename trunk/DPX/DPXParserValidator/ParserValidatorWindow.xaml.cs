@@ -2,7 +2,7 @@
 // GNU General Public License v3
 // </copyright>
 // <summary>The main window for Parser Validator.</summary>
-namespace DPXPreview
+namespace DPXParserValidator
 {
     using System;
     using System.Collections.Generic;

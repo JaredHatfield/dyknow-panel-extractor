@@ -23,9 +23,6 @@
                 <MenuItem Header="_Open" Click="ButtonLoadClick" />
                 <MenuItem Header="_Export Image" Click="ButtonExportImageClick" />
             </MenuItem>
-            <MenuItem Header="_Special">
-                <MenuItem Header="_Parser Validator" Click="ParserValidatorWindow"  />
-            </MenuItem>
             <MenuItem Header="_Help">
                 <MenuItem Header="_About" Click="DisplayAboutWindow"/>
             </MenuItem>

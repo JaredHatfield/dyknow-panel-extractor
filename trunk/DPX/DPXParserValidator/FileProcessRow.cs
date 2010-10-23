@@ -2,7 +2,7 @@
 // GNU General Public License v3
 // </copyright>
 // <summary>The record for a file that needs to be processed.</summary>
-namespace DPXPreview
+namespace DPXParserValidator
 {
     using System;
     using System.Collections.Generic;
