@@ -84,8 +84,7 @@
                                 <ColumnDefinition Width="75" />
                                 <ColumnDefinition />
                                 <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="40" />
-                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="100" />
                             </Grid.ColumnDefinitions>
                         </Grid>
                     </ScrollViewer>
