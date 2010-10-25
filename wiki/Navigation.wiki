@@ -8,7 +8,7 @@
     * [DPXAnswers DPX Answers]
     * [DPXGrader DPX Grader]
     * [DPXManager DPX Manager]
-    * [DPXPreview DPX Preview]
     * [DPXParserValidator DPX Parser Validator]
+    * [DPXPreview DPX Preview]
     * [DPXSorter DPX Sorter]
   * [ReleaseNotes Release Notes]
