@@ -110,7 +110,7 @@
                 <StackPanel Width="150" Height="Auto" Background="LightSteelBlue" DockPanel.Dock="Left">
                     <Label Style="{StaticResource StepLabel}">Step 3</Label>
                     <Label Style="{StaticResource DescriptionLabel}">Get Results</Label>
-                    <Button Name="ButtonSave" Click="ButtonSave_Click">Save</Button>
+                    <Button Name="ButtonSave" Width="100" Click="ButtonSave_Click">Save</Button>
                 </StackPanel>
                 <ScrollViewer Margin="10" Background="White">
                     <Grid Name="GridResults" Width="Auto" Height="Auto">
