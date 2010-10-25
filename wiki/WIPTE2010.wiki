@@ -1,0 +1,6 @@
+#summary Presentation at WIPTE 2010: A Method For Automating the Analysis of Tablet PC Ink Based Student Work Collected Using Dyknow Vision
+
+*A Method For Automating the Analysis of Tablet PC Ink Based Student Work Collected Using Dyknow Vision*
+
+= Presentation =
+<wiki:gadget url="http://dyknow-panel-extractor.googlecode.com/svn/hatfield_wipte_2010.xml" height="451" width="555" border="1"/>
