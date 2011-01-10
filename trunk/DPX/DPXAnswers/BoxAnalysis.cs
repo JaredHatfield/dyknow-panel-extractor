@@ -26,11 +26,6 @@ namespace DPXAnswers
         private Collection<string> alternates;
 
         /// <summary>
-        /// The flag indicating the answer is correct.
-        /// </summary>
-        private Grade boxGrade;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="BoxAnalysis"/> class.
         /// </summary>
         /// <param name="answer">The answer.</param>
@@ -39,43 +34,6 @@ namespace DPXAnswers
         {
             this.answer = answer;
             this.alternates = alternates;
-            this.boxGrade = Grade.NOTSET;
-        }
-
-        /// <summary>
-        /// The different settings for each grade.
-        /// </summary>
-        public enum Grade
-        {
-            /// <summary>
-            /// The box is not valid.
-            /// </summary>
-            INVALID,
-
-            /// <summary>
-            /// The answer has not been graded.
-            /// </summary>
-            NOTSET,
-
-            /// <summary>
-            /// The user set the answer as correct.
-            /// </summary>
-            SETCORRECT,
-
-            /// <summary>
-            /// The user set the answer as incorrect.
-            /// </summary>
-            SETINCORRECT,
-
-            /// <summary>
-            /// The system set the answer as correct.
-            /// </summary>
-            AUTOCORRECT,
-
-            /// <summary>
-            /// The system set the answer as incorrect.
-            /// </summary>
-            AUTOINCORRECT
         }
 
         /// <summary>
@@ -97,39 +55,63 @@ namespace DPXAnswers
         }
 
         /// <summary>
-        /// Gets or sets the box grade.
-        /// </summary>
-        /// <value>The box grade.</value>
-        public Grade BoxGrade
-        {
-            get { return this.boxGrade; }
-            set { this.boxGrade = value; }
-        }
-
-        /// <summary>
         /// Gets the string representation of a BoxGrade.
         /// </summary>
         /// <param name="grade">The grade to convert.</param>
         /// <returns>The string represntation.</returns>
-        public static string BoxGradeString(BoxAnalysis.Grade grade)
+        public static string BoxGradeString(Grade grade)
         {
             switch (grade)
             {
-                case BoxAnalysis.Grade.NOTSET:
+                case Grade.NOTSET:
                     return "?";
-                case BoxAnalysis.Grade.AUTOCORRECT:
+                case Grade.AUTOCORRECT:
                     return "Correct (Auto)";
-                case BoxAnalysis.Grade.SETCORRECT:
+                case Grade.SETCORRECT:
                     return "Correct";
-                case BoxAnalysis.Grade.AUTOINCORRECT:
+                case Grade.AUTOINCORRECT:
                     return "Incorrect (Auto)";
-                case BoxAnalysis.Grade.SETINCORRECT:
+                case Grade.SETINCORRECT:
                     return "Incorrect";
-                case BoxAnalysis.Grade.INVALID:
+                case Grade.INVALID:
                     return "?";
             }
 
             return string.Empty;
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object"/> is equal to this instance.
+        /// </summary>
+        /// <param name="obj">The <see cref="System.Object"/> to compare with this instance.</param>
+        /// <returns><c>true</c> if the specified <see cref="System.Object"/> is equal to this instance; otherwise, <c>false</c>.</returns>
+        /// <exception cref="T:System.NullReferenceException">
+        /// The <paramref name="obj"/> parameter is null.
+        /// </exception>
+        public override bool Equals(object obj)
+        {
+            try
+            {
+                BoxAnalysis ba = obj as BoxAnalysis;
+
+                // Equivalence is based on the recognized answer
+                return this.answer.Equals(ba.answer);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        /// </returns>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

@@ -114,7 +114,7 @@ namespace DPXAnswers
                 }
 
                 BoxAnalysis ba = new BoxAnalysis(recognized, alt);
-                ar.Panels.Add(index, ba);
+                ar.Panels.AddValueDynamic(ba);
                 this.answers.Add(rect, ba);
                 this.keys.Add(ar);
             }
@@ -159,15 +159,16 @@ namespace DPXAnswers
         /// </summary>
         /// <param name="rect">The key to lookup.</param>
         /// <returns>The answer to the panel.</returns>
-        internal BoxAnalysis.Grade GetAnswer(AnswerRect rect)
+        internal Grade GetAnswer(AnswerRect rect)
         {
             try
             {
-                return this.answers[rect.Area].BoxGrade;
+                BoxAnalysis ba = this.answers[rect.Area];
+                return rect.Panels.GetGroup(ba).Label;
             }
             catch (KeyNotFoundException)
             {
-                return BoxAnalysis.Grade.INVALID;
+                return Grade.INVALID;
             }
         }
 

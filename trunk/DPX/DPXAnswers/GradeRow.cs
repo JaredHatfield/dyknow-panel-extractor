@@ -122,7 +122,7 @@ namespace DPXAnswers
 
             // Add the answer
             this.ans = new Label();
-            this.SetStatusLabel(this.boxAnalysis.BoxGrade);
+            this.SetStatusLabel(this.rect.Panels.GetGroup(this.boxAnalysis).Label);
             this.ans.BorderBrush = Brushes.DarkGray;
             this.ans.BorderThickness = new Thickness(1);
             this.ans.Tag = this;
@@ -168,46 +168,46 @@ namespace DPXAnswers
         /// Sets the status of the answer for the specific answer box..
         /// </summary>
         /// <param name="grade">The grade of the panel.</param>
-        private void SetStatusLabel(BoxAnalysis.Grade grade)
+        private void SetStatusLabel(Grade grade)
         {
             switch (grade)
             {
-                case BoxAnalysis.Grade.NOTSET:
+                case Grade.NOTSET:
                     this.ans.Content = BoxAnalysis.BoxGradeString(grade);
                     this.ans.Foreground = Brushes.Black;
                     this.ans.FontWeight = FontWeights.Normal;
                     this.cor.IsEnabled = true;
                     this.incor.IsEnabled = true;
                     break;
-                case BoxAnalysis.Grade.AUTOCORRECT:
+                case Grade.AUTOCORRECT:
                     this.ans.Content = BoxAnalysis.BoxGradeString(grade);
                     this.ans.Foreground = Brushes.DarkGreen;
                     this.ans.FontWeight = FontWeights.Normal;
                     this.cor.IsEnabled = false;
                     this.incor.IsEnabled = true;
                     break;
-                case BoxAnalysis.Grade.SETCORRECT:
+                case Grade.SETCORRECT:
                     this.ans.Content = BoxAnalysis.BoxGradeString(grade);
                     this.ans.Foreground = Brushes.DarkGreen;
                     this.ans.FontWeight = FontWeights.Bold;
                     this.cor.IsEnabled = false;
                     this.incor.IsEnabled = true;
                     break;
-                case BoxAnalysis.Grade.AUTOINCORRECT:
+                case Grade.AUTOINCORRECT:
                     this.ans.Content = BoxAnalysis.BoxGradeString(grade);
                     this.ans.Foreground = Brushes.DarkRed;
                     this.ans.FontWeight = FontWeights.Normal;
                     this.cor.IsEnabled = true;
                     this.incor.IsEnabled = false;
                     break;
-                case BoxAnalysis.Grade.SETINCORRECT:
+                case Grade.SETINCORRECT:
                     this.ans.Content = BoxAnalysis.BoxGradeString(grade);
                     this.ans.Foreground = Brushes.DarkRed;
                     this.ans.FontWeight = FontWeights.Bold;
                     this.cor.IsEnabled = true;
                     this.incor.IsEnabled = false;
                     break;
-                case BoxAnalysis.Grade.INVALID:
+                case Grade.INVALID:
                     this.ans.Content = BoxAnalysis.BoxGradeString(grade);
                     this.ans.Foreground = Brushes.Black;
                     this.ans.FontWeight = FontWeights.Normal;
@@ -218,55 +218,25 @@ namespace DPXAnswers
         }
 
         /// <summary>
-        /// Answers the set correct.
+        /// Sets the group that contains this box as correct.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void AnswerSetCorrect(object sender, RoutedEventArgs e)
         {
-            this.boxAnalysis.BoxGrade = BoxAnalysis.Grade.SETCORRECT;
-            this.SetStatusLabel(this.boxAnalysis.BoxGrade);
-
-            // Go through and change any other answers that may be correct
-            Dictionary<int, BoxAnalysis> other = this.rect.Panels;
-            foreach (KeyValuePair<int, BoxAnalysis> ba in other)
-            {
-                // Make comparisions for all of the other not set panels
-                // We only change panels that were not set that exactly match the incorrect answer
-                if (!ba.Value.Equals(this.boxAnalysis) &&
-                    (ba.Value.BoxGrade == BoxAnalysis.Grade.NOTSET ||
-                    ba.Value.BoxGrade == BoxAnalysis.Grade.AUTOINCORRECT) &&
-                    ba.Value.Answer.Equals(this.boxAnalysis.Answer))
-                {
-                    ba.Value.BoxGrade = BoxAnalysis.Grade.AUTOCORRECT;
-                }
-            }
+            this.rect.Panels.GetGroup(this.boxAnalysis).Label = Grade.SETCORRECT;
+            this.SetStatusLabel(Grade.SETCORRECT);
         }
 
         /// <summary>
-        /// Answers the set incorrect.
+        /// Sets the group that contains this box as incorrect.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void AnswerSetIncorrect(object sender, RoutedEventArgs e)
         {
-            this.boxAnalysis.BoxGrade = BoxAnalysis.Grade.SETINCORRECT;
-            this.SetStatusLabel(this.boxAnalysis.BoxGrade);
-
-            // Go through and change any other answers that may be incorrect
-            Dictionary<int, BoxAnalysis> other = this.rect.Panels;
-            foreach (KeyValuePair<int, BoxAnalysis> ba in other)
-            {
-                // Make comparisions for all of the other not set panels
-                // We only change panels that were not set that exactly match the incorrect answer
-                if (!ba.Value.Equals(this.boxAnalysis) && 
-                    (ba.Value.BoxGrade == BoxAnalysis.Grade.NOTSET ||
-                    ba.Value.BoxGrade == BoxAnalysis.Grade.AUTOCORRECT) &&
-                    ba.Value.Answer.Equals(this.boxAnalysis.Answer))
-                {
-                    ba.Value.BoxGrade = BoxAnalysis.Grade.AUTOINCORRECT;
-                }
-            }
+            this.rect.Panels.GetGroup(this.boxAnalysis).Label = Grade.SETINCORRECT;
+            this.SetStatusLabel(Grade.SETINCORRECT);
         }
     }
 }

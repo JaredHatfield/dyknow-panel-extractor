@@ -331,7 +331,8 @@ namespace DPXAnswers
                     BoxAnalysis ba = pa.Value.GetBoxAnalysis(r);
                     if (ba != null)
                     {
-                        sb.Append(",\"" + ba.Answer + "\"," + BoxAnalysis.BoxGradeString(ba.BoxGrade));
+                        Grade g = r.Panels.GetGroup(ba).Label;
+                        sb.Append(",\"" + ba.Answer + "\"," + BoxAnalysis.BoxGradeString(g));
                     }
                     else
                     {

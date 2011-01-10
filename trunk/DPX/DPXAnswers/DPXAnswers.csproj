@@ -49,6 +49,10 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClusterLibraryCore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ClusterLibraryCore.dll</HintPath>
+    </Reference>
     <Reference Include="IACore, Version=1.7.6223.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ThirdParty\IACore.dll</HintPath>
@@ -105,6 +109,7 @@
     <Compile Include="AnswerRect.cs" />
     <Compile Include="AnswerRectFactory.cs" />
     <Compile Include="BoxAnalysis.cs" />
+    <Compile Include="Grade.cs" />
     <Compile Include="GradeRow.cs" />
     <Compile Include="ImageProcessQueueItem.cs" />
     <Compile Include="PanelAnswer.cs" />
