@@ -179,28 +179,14 @@ namespace DPXAnswers
                     this.cor.IsEnabled = true;
                     this.incor.IsEnabled = true;
                     break;
-                case Grade.AUTOCORRECT:
-                    this.ans.Content = BoxAnalysis.BoxGradeString(grade);
-                    this.ans.Foreground = Brushes.DarkGreen;
-                    this.ans.FontWeight = FontWeights.Normal;
-                    this.cor.IsEnabled = false;
-                    this.incor.IsEnabled = true;
-                    break;
-                case Grade.SETCORRECT:
+                case Grade.CORRECT:
                     this.ans.Content = BoxAnalysis.BoxGradeString(grade);
                     this.ans.Foreground = Brushes.DarkGreen;
                     this.ans.FontWeight = FontWeights.Bold;
                     this.cor.IsEnabled = false;
                     this.incor.IsEnabled = true;
                     break;
-                case Grade.AUTOINCORRECT:
-                    this.ans.Content = BoxAnalysis.BoxGradeString(grade);
-                    this.ans.Foreground = Brushes.DarkRed;
-                    this.ans.FontWeight = FontWeights.Normal;
-                    this.cor.IsEnabled = true;
-                    this.incor.IsEnabled = false;
-                    break;
-                case Grade.SETINCORRECT:
+                case Grade.INCORRECT:
                     this.ans.Content = BoxAnalysis.BoxGradeString(grade);
                     this.ans.Foreground = Brushes.DarkRed;
                     this.ans.FontWeight = FontWeights.Bold;
@@ -224,8 +210,8 @@ namespace DPXAnswers
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void AnswerSetCorrect(object sender, RoutedEventArgs e)
         {
-            this.rect.Panels.GetGroup(this.boxAnalysis).Label = Grade.SETCORRECT;
-            this.SetStatusLabel(Grade.SETCORRECT);
+            this.rect.Panels.GetGroup(this.boxAnalysis).Label = Grade.CORRECT;
+            this.SetStatusLabel(Grade.CORRECT);
         }
 
         /// <summary>
@@ -235,8 +221,8 @@ namespace DPXAnswers
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void AnswerSetIncorrect(object sender, RoutedEventArgs e)
         {
-            this.rect.Panels.GetGroup(this.boxAnalysis).Label = Grade.SETINCORRECT;
-            this.SetStatusLabel(Grade.SETINCORRECT);
+            this.rect.Panels.GetGroup(this.boxAnalysis).Label = Grade.INCORRECT;
+            this.SetStatusLabel(Grade.INCORRECT);
         }
     }
 }

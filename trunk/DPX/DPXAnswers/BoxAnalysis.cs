@@ -65,13 +65,9 @@ namespace DPXAnswers
             {
                 case Grade.NOTSET:
                     return "?";
-                case Grade.AUTOCORRECT:
-                    return "Correct (Auto)";
-                case Grade.SETCORRECT:
+                case Grade.CORRECT:
                     return "Correct";
-                case Grade.AUTOINCORRECT:
-                    return "Incorrect (Auto)";
-                case Grade.SETINCORRECT:
+                case Grade.INCORRECT:
                     return "Incorrect";
                 case Grade.INVALID:
                     return "?";

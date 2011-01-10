@@ -25,23 +25,13 @@ namespace DPXAnswers
         NOTSET,
 
         /// <summary>
-        /// The user set the answer as correct.
+        /// The answer is correct.
         /// </summary>
-        SETCORRECT,
+        CORRECT,
 
         /// <summary>
-        /// The user set the answer as incorrect.
+        /// The answer is incorrect.
         /// </summary>
-        SETINCORRECT,
-
-        /// <summary>
-        /// The system set the answer as correct.
-        /// </summary>
-        AUTOCORRECT,
-
-        /// <summary>
-        /// The system set the answer as incorrect.
-        /// </summary>
-        AUTOINCORRECT
+        INCORRECT
     }
 }
