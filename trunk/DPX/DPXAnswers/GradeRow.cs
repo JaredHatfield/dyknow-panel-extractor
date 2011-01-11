@@ -11,6 +11,7 @@ namespace DPXAnswers
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
+    using ClusterLibraryCore;
 
     /// <summary>
     /// The row for the grade results.
@@ -28,6 +29,11 @@ namespace DPXAnswers
         private BoxAnalysis boxAnalysis;
 
         /// <summary>
+        /// The group for the GradeRow.
+        /// </summary>
+        private IClusterGroup<BoxAnalysis, Grade> group;
+
+        /// <summary>
         /// The index label.
         /// </summary>
         private Label index;
@@ -43,21 +49,6 @@ namespace DPXAnswers
         private Label ans;
 
         /// <summary>
-        /// The stack panel that contains the buttons.
-        /// </summary>
-        private StackPanel sp;
-
-        /// <summary>
-        /// The Correct answer button.
-        /// </summary>
-        private Button cor;
-
-        /// <summary>
-        /// The incorrect answer button.
-        /// </summary>
-        private Button incor;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="GradeRow"/> class.
         /// </summary>
         /// <param name="g">The grid to add to.</param>
@@ -68,6 +59,8 @@ namespace DPXAnswers
         {
             this.rect = panel.Keys[i];
             this.boxAnalysis = panel.GetBoxAnalysis(panel.Keys[i]);
+            this.group = this.rect.Panels.GetGroup(this.boxAnalysis);
+            this.group.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(this.GradeRowPropertyChanged);
 
             // Add the panel index
             this.index = new Label();
@@ -92,33 +85,6 @@ namespace DPXAnswers
             Grid.SetRow(this.num, i);
             Grid.SetColumn(this.num, 1);
             g.Children.Add(this.num);
-
-            // The stack panel for the buttons
-            Border b = new Border();
-            b.BorderBrush = Brushes.DarkGray;
-            b.BorderThickness = new Thickness(1);
-            Grid.SetRow(b, i);
-            Grid.SetColumn(b, 3);
-            g.Children.Add(b);
-            this.sp = new StackPanel();
-            this.sp.Orientation = Orientation.Vertical;
-            b.Child = this.sp;
-
-            // Button to mark the answer as correct
-            this.cor = new Button();
-            this.cor.Content = "Correct";
-            this.cor.Tag = this;
-            this.cor.Click += new RoutedEventHandler(this.AnswerSetCorrect);
-            this.cor.Margin = new Thickness(5, 5, 5, 0);
-            this.sp.Children.Add(this.cor);
-
-            // Button to mark the answer as incorrect
-            this.incor = new Button();
-            this.incor.Content = "Incorrect";
-            this.incor.Tag = this;
-            this.incor.Click += new RoutedEventHandler(this.AnswerSetIncorrect);
-            this.incor.Margin = new Thickness(5);
-            this.sp.Children.Add(this.incor);
 
             // Add the answer
             this.ans = new Label();
@@ -150,7 +116,6 @@ namespace DPXAnswers
             this.index.Background = Brushes.LightYellow;
             this.num.Background = Brushes.LightYellow;
             this.ans.Background = Brushes.LightYellow;
-            this.sp.Background = Brushes.LightYellow;
         }
 
         /// <summary>
@@ -161,7 +126,6 @@ namespace DPXAnswers
             this.index.Background = Brushes.White;
             this.num.Background = Brushes.White;
             this.ans.Background = Brushes.White;
-            this.sp.Background = Brushes.White;
         }
 
         /// <summary>
@@ -176,29 +140,21 @@ namespace DPXAnswers
                     this.ans.Content = BoxAnalysis.BoxGradeString(grade);
                     this.ans.Foreground = Brushes.Black;
                     this.ans.FontWeight = FontWeights.Normal;
-                    this.cor.IsEnabled = true;
-                    this.incor.IsEnabled = true;
                     break;
                 case Grade.CORRECT:
                     this.ans.Content = BoxAnalysis.BoxGradeString(grade);
                     this.ans.Foreground = Brushes.DarkGreen;
                     this.ans.FontWeight = FontWeights.Bold;
-                    this.cor.IsEnabled = false;
-                    this.incor.IsEnabled = true;
                     break;
                 case Grade.INCORRECT:
                     this.ans.Content = BoxAnalysis.BoxGradeString(grade);
                     this.ans.Foreground = Brushes.DarkRed;
                     this.ans.FontWeight = FontWeights.Bold;
-                    this.cor.IsEnabled = true;
-                    this.incor.IsEnabled = false;
                     break;
                 case Grade.INVALID:
                     this.ans.Content = BoxAnalysis.BoxGradeString(grade);
                     this.ans.Foreground = Brushes.Black;
                     this.ans.FontWeight = FontWeights.Normal;
-                    this.cor.IsEnabled = false;
-                    this.incor.IsEnabled = false;
                     break;
             }
         }
@@ -223,6 +179,19 @@ namespace DPXAnswers
         {
             this.rect.Panels.GetGroup(this.boxAnalysis).Label = Grade.INCORRECT;
             this.SetStatusLabel(Grade.INCORRECT);
+        }
+
+        /// <summary>
+        /// Grades the row property changed.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> instance containing the event data.</param>
+        private void GradeRowPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Equals("Label"))
+            {
+                this.SetStatusLabel(this.group.Label);
+            }
         }
     }
 }

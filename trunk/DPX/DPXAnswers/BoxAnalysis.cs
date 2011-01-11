@@ -13,7 +13,7 @@ namespace DPXAnswers
     /// <summary>
     /// The analysis results of an answer box.
     /// </summary>
-    internal class BoxAnalysis
+    public class BoxAnalysis
     {
         /// <summary>
         /// The recognized string for the answer box.
@@ -30,7 +30,7 @@ namespace DPXAnswers
         /// </summary>
         /// <param name="answer">The answer.</param>
         /// <param name="alternates">The alternates.</param>
-        public BoxAnalysis(string answer, Collection<string> alternates)
+        internal BoxAnalysis(string answer, Collection<string> alternates)
         {
             this.answer = answer;
             this.alternates = alternates;

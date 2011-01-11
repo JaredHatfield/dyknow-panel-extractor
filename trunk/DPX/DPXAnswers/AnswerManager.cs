@@ -240,27 +240,49 @@ namespace DPXAnswers
         internal void DisplayAnswers()
         {
             // Display the answer information to the user
-            Grid g = this.answerWindow.GridResults;
-            g.Children.Clear();
+            this.answerWindow.ComboBoxBoxList.Items.Clear();
             ReadOnlyCollection<AnswerRect> rects = this.answerRectFactory.AnswerRect;
             for (int i = 0; i < rects.Count; i++)
             {
+                // Add the value to the drop down list
                 AnswerRect ar = rects[i];
-                RowDefinition rd = new RowDefinition();
-                rd.Height = GridLength.Auto;
-                g.RowDefinitions.Add(rd);
+                ComboBoxItem cbi = new ComboBoxItem();
+                cbi.Content = ar;
+                this.answerWindow.ComboBoxBoxList.Items.Add(cbi);
 
-                // Add the panel index
-                Label index = new Label();
-                index.Content = "Box " + ar.Index;
-                index.BorderBrush = Brushes.DarkGray;
-                index.BorderThickness = new Thickness(1);
-                index.Tag = ar;
-                index.MouseEnter += new System.Windows.Input.MouseEventHandler(this.answerWindow.AnswerMouseEnter);
-                index.MouseLeave += new System.Windows.Input.MouseEventHandler(this.answerWindow.AnswerMouseLeave);
-                Grid.SetRow(index, i);
-                Grid.SetColumn(index, 0);
-                g.Children.Add(index);
+                // Select the first value
+                if (i == 0)
+                {
+                    // This will trigger an event that will display the contents
+                    this.answerWindow.ComboBoxBoxList.SelectedIndex = 0;
+                }
+            }
+
+            this.answerWindow.ComboBoxBoxList.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// Displays the grade groups.
+        /// </summary>
+        /// <param name="ar">The AnswerRect to be displayed.</param>
+        internal void DisplayGradeGroups(AnswerRect ar)
+        {
+            Grid g = this.answerWindow.GridGroups;
+            g.Children.Clear();
+            g.RowDefinitions.Clear();
+            if (ar != null)
+            {
+                for (int j = 0; j < ar.Panels.Groups.Count; j++)
+                {
+                    RowDefinition rd = new RowDefinition();
+                    rd.Height = GridLength.Auto;
+                    g.RowDefinitions.Add(rd);
+
+                    GradeGroup gg = new GradeGroup(ar.Panels.Groups[j], j);
+                    Grid.SetRow(gg, j);
+                    Grid.SetColumn(gg, 0);
+                    g.Children.Add(gg);
+                }
             }
         }
 

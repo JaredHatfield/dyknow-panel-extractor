@@ -240,7 +240,8 @@ namespace DPXAnswers
         private void ClearInterface()
         {
             this.GridRecognizedAnswers.Children.Clear();
-            this.GridResults.Children.Clear();
+            this.ComboBoxBoxList.IsEnabled = false;
+            this.ComboBoxBoxList.Items.Clear();
             this.Inky.Children.Clear();
             this.Inky.Strokes.Clear();
             this.PanelScrollView.Children.Clear();
@@ -320,6 +321,25 @@ namespace DPXAnswers
             {
                 MessageBox.Show("The file was not saved successfully.");
                 Debug.WriteLine("File was not saved: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Comboes the box box list selection changed.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs"/> instance containing the event data.</param>
+        private void ComboBoxBoxListSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count == 1)
+            {
+                ComboBoxItem cbi = e.AddedItems[0] as ComboBoxItem;
+                AnswerRect ar = cbi.Content as AnswerRect;
+                this.answerManager.DisplayGradeGroups(ar);
+            }
+            else
+            {
+                this.answerManager.DisplayGradeGroups(null);
             }
         }
     }
