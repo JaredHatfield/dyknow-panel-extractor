@@ -113,7 +113,7 @@ namespace DPXAnswers
                     alt.Add(aac[i].RecognizedString);
                 }
 
-                BoxAnalysis ba = new BoxAnalysis(recognized, alt);
+                BoxAnalysis ba = new BoxAnalysis(recognized, alt, index);
                 ar.Panels.AddValueDynamic(ba);
                 this.answers.Add(rect, ba);
                 this.keys.Add(ar);

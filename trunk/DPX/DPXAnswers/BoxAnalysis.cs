@@ -26,14 +26,21 @@ namespace DPXAnswers
         private Collection<string> alternates;
 
         /// <summary>
+        /// The index for the panel.
+        /// </summary>
+        private int panelIndex;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="BoxAnalysis"/> class.
         /// </summary>
         /// <param name="answer">The answer.</param>
         /// <param name="alternates">The alternates.</param>
-        internal BoxAnalysis(string answer, Collection<string> alternates)
+        /// <param name="panelIndex">Index of the panel.</param>
+        internal BoxAnalysis(string answer, Collection<string> alternates, int panelIndex)
         {
             this.answer = answer;
             this.alternates = alternates;
+            this.panelIndex = panelIndex;
         }
 
         /// <summary>
@@ -52,6 +59,15 @@ namespace DPXAnswers
         public ReadOnlyCollection<string> Alternates
         {
             get { return new ReadOnlyCollection<string>(this.alternates); }
+        }
+
+        /// <summary>
+        /// Gets the index of the panel.
+        /// </summary>
+        /// <value>The index of the panel.</value>
+        public int PanelIndex
+        {
+            get { return this.panelIndex; }
         }
 
         /// <summary>

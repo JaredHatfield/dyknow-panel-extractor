@@ -94,11 +94,8 @@ namespace DPXAnswers
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         internal void PanelSelected(object sender, EventArgs e)
         {
-            (this.PanelScrollView.Children[this.selectedPanelId] as Border).BorderBrush = Brushes.Black;
             Border b = sender as Border;
             int panelIndex = (int)b.Tag;
-            this.selectedPanelId = panelIndex;
-            b.BorderBrush = Brushes.Gold;
             Dispatcher.BeginInvoke(new DisplayPanelDelegate(this.answerManager.DisplayPanel), DispatcherPriority.Input, panelIndex);
         }
 

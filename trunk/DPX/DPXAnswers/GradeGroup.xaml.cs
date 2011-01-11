@@ -49,12 +49,37 @@ namespace DPXAnswers
             this.LabelGroupName.Content = "Group " + this.index;
             for (int i = 0; i < group.Nodes.Count; i++)
             {
+                StackPanel sp = new StackPanel();
+                sp.Orientation = Orientation.Horizontal;
+
+                Button b = new Button();
+                b.Content = "Display";
+                b.Tag = group.Nodes[i].Value.PanelIndex + string.Empty;
+                b.Click += new RoutedEventHandler(this.ButtonDisplayPanelClick);
+                b.Width = 50;
+                sp.Children.Add(b);
+
                 Label l = new Label();
                 l.Content = group.Nodes[i].Value.Answer;
                 l.Tag = group.Nodes[i].Value;
-                this.StackPanelGrades.Children.Add(l);
+                l.Margin = new Thickness(5);
+                sp.Children.Add(l);
+
+                this.StackPanelGrades.Children.Add(sp);
             }
         }
+
+        /// <summary>
+        /// The delegate responsible for triggering a request to display a specific panel.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The event arguments.</param>
+        public delegate void PanelDisplayRequestEventHandler(object sender, DisplayPanelEventArgs e);
+
+        /// <summary>
+        /// Occurs when a specific panel is requested to be displayed.
+        /// </summary>
+        public event PanelDisplayRequestEventHandler DisplayPanel;
 
         /// <summary>
         /// Updates the buttons.
@@ -93,6 +118,18 @@ namespace DPXAnswers
             {
                 this.UpdateButtons();
             }
+        }
+
+        /// <summary>
+        /// Buttons the display panel click.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void ButtonDisplayPanelClick(object sender, RoutedEventArgs e)
+        {
+            Button b = sender as Button;
+            int n = int.Parse(b.Tag as string);
+            this.DisplayPanel(this, new DisplayPanelEventArgs(n));
         }
 
         /// <summary>

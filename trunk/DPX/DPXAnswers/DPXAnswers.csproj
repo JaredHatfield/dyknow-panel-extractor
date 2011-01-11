@@ -122,6 +122,7 @@
     <Compile Include="AnswerRect.cs" />
     <Compile Include="AnswerRectFactory.cs" />
     <Compile Include="BoxAnalysis.cs" />
+    <Compile Include="DisplayPanelEventArgs.cs" />
     <Compile Include="Grade.cs" />
     <Compile Include="GradeGroup.xaml.cs">
       <DependentUpon>GradeGroup.xaml</DependentUpon>

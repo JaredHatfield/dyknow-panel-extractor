@@ -102,6 +102,12 @@ namespace DPXAnswers
         private delegate void DisplayRecognizedAnswerDelegate(PanelAnswer panel);
 
         /// <summary>
+        /// The delegate for displaying a panel.
+        /// </summary>
+        /// <param name="index">The index of the panel to display.</param>
+        private delegate void DisplayPanelDelegate(int index);
+
+        /// <summary>
         /// Returns the singleton instance.
         /// </summary>
         /// <returns>An instance of AnswerManager.</returns>
@@ -167,7 +173,19 @@ namespace DPXAnswers
         {
             if (this.dyknow != null && n >= 0 && n < this.dyknow.DATA.Count)
             {
-                this.answerWindow.SelectedPanelId = n;
+                if (this.answerWindow.SelectedPanelId >= 0)
+                {
+                    // Update the panel highlighting and the panel number
+                    (this.answerWindow.PanelScrollView.Children[this.answerWindow.SelectedPanelId] as Border).BorderBrush = Brushes.Black;
+                    this.answerWindow.SelectedPanelId = n;
+                    (this.answerWindow.PanelScrollView.Children[this.answerWindow.SelectedPanelId] as Border).BorderBrush = Brushes.Gold;
+                }
+                else
+                {
+                    // Special case where the panel images haven't finished processing so we can update highlighting
+                    this.answerWindow.SelectedPanelId = n;
+                }
+
                 this.dyknow.Render(this.answerWindow.Inky, n);
                 string oner = (this.dyknow.DATA[n] as DPXReader.DyKnow.Page).ONER;
                 string onern = (this.dyknow.DATA[n] as DPXReader.DyKnow.Page).ONERN;
@@ -202,6 +220,16 @@ namespace DPXAnswers
                     Debug.WriteLine("Panel Answer is null: " + n);
                 }
             }
+        }
+
+        /// <summary>
+        /// Displays the panel request.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="DPXAnswers.DisplayPanelEventArgs"/> instance containing the event data.</param>
+        internal void DisplayPanelRequest(object sender, DisplayPanelEventArgs e)
+        {
+            Dispatcher.CurrentDispatcher.BeginInvoke(new DisplayPanelDelegate(this.DisplayPanel), DispatcherPriority.Input, e.Index);
         }
 
         /// <summary>
@@ -279,6 +307,7 @@ namespace DPXAnswers
                     g.RowDefinitions.Add(rd);
 
                     GradeGroup gg = new GradeGroup(ar.Panels.Groups[j], j);
+                    gg.DisplayPanel += new GradeGroup.PanelDisplayRequestEventHandler(this.DisplayPanelRequest);
                     Grid.SetRow(gg, j);
                     Grid.SetColumn(gg, 0);
                     g.Children.Add(gg);
