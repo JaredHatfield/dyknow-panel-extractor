@@ -17,6 +17,7 @@ namespace DPXAnswers
     using System.Windows.Threading;
     using DPXCommon;
     using DPXReader.DyKnow;
+    using GradeLibrary;
 
     /// <summary>
     /// The manager for processing the file and interpreting the answers.
@@ -382,7 +383,7 @@ namespace DPXAnswers
                     BoxAnalysis ba = pa.Value.GetBoxAnalysis(r);
                     if (ba != null)
                     {
-                        Grade g = r.Panels.GetGroup(ba).Label;
+                        Grade g = r.Panels.GetGroup(ba).Label.Grade;
                         sb.Append(",\"" + ba.Answer + "\"," + BoxAnalysis.BoxGradeString(g));
                     }
                     else

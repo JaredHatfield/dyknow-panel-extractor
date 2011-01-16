@@ -12,6 +12,7 @@ namespace DPXAnswers
     using System.Text;
     using System.Windows;
     using System.Windows.Ink;
+    using GradeLibrary;
 
     /// <summary>
     /// The results from analyzing the answer boxes.
@@ -164,7 +165,7 @@ namespace DPXAnswers
             try
             {
                 BoxAnalysis ba = this.answers[rect.Area];
-                return rect.Panels.GetGroup(ba).Label;
+                return rect.Panels.GetGroup(ba).Label.Grade;
             }
             catch (KeyNotFoundException)
             {

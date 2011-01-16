@@ -18,6 +18,7 @@ namespace DPXAnswers
     using System.Windows.Navigation;
     using System.Windows.Shapes;
     using ClusterLibraryCore;
+    using GradeLibrary;
 
     /// <summary>
     /// Interaction logic for GradeGroup.xaml
@@ -27,7 +28,7 @@ namespace DPXAnswers
         /// <summary>
         /// The group that is being displayed.
         /// </summary>
-        private IClusterGroup<BoxAnalysis, Grade> group;
+        private IClusterGroup<IAnswer, GroupData> group;
 
         /// <summary>
         /// The index of the group.
@@ -39,7 +40,7 @@ namespace DPXAnswers
         /// </summary>
         /// <param name="group">The group.</param>
         /// <param name="index">The index.</param>
-        public GradeGroup(IClusterGroup<BoxAnalysis, Grade> group, int index)
+        public GradeGroup(IClusterGroup<IAnswer, GroupData> group, int index)
         {
             InitializeComponent();
             this.group = group;
@@ -54,7 +55,7 @@ namespace DPXAnswers
 
                 Button b = new Button();
                 b.Content = "Display";
-                b.Tag = group.Nodes[i].Value.PanelIndex + string.Empty;
+                b.Tag = (group.Nodes[i].Value as BoxAnalysis).PanelIndex + string.Empty;
                 b.Click += new RoutedEventHandler(this.ButtonDisplayPanelClick);
                 b.Width = 50;
                 sp.Children.Add(b);
@@ -86,7 +87,7 @@ namespace DPXAnswers
         /// </summary>
         private void UpdateButtons()
         {
-            switch (this.group.Label)
+            switch (this.group.Label.Grade)
             {
                 case Grade.CORRECT:
                     this.ButtonGradeCorrect.IsEnabled = false;
@@ -139,7 +140,8 @@ namespace DPXAnswers
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ButtonGradeCorrectClick(object sender, RoutedEventArgs e)
         {
-            this.group.Label = Grade.CORRECT;
+            this.group.Label.Grade = Grade.CORRECT;
+            this.group.UpdateLabelValue();
         }
 
         /// <summary>
@@ -149,7 +151,8 @@ namespace DPXAnswers
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ButtonGradeIncorrectClick(object sender, RoutedEventArgs e)
         {
-            this.group.Label = Grade.INCORRECT;
+            this.group.Label.Grade = Grade.INCORRECT;
+            this.group.UpdateLabelValue();
         }
     }
 }

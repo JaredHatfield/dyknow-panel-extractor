@@ -10,6 +10,7 @@ namespace DPXAnswers
     using System.Text;
     using System.Windows;
     using ClusterLibraryCore;
+    using GradeLibrary;
 
     /// <summary>
     /// The Answer Rectangle.
@@ -29,7 +30,7 @@ namespace DPXAnswers
         /// <summary>
         /// The clustering algorithm used by the algorithm.
         /// </summary>
-        private ICluster<BoxAnalysis, Grade> panels;
+        private ICluster<IAnswer, GroupData> panels;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AnswerRect"/> class.
@@ -40,7 +41,7 @@ namespace DPXAnswers
         {
             this.rect = rect;
             this.index = index;
-            this.panels = new Cluster<BoxAnalysis, Grade>(Grade.NOTSET);
+            this.panels = new Cluster<IAnswer, GroupData>(new GroupData());
         }
 
         /// <summary>
@@ -65,7 +66,7 @@ namespace DPXAnswers
         /// Gets the panels.
         /// </summary>
         /// <value>The panels.</value>
-        public ICluster<BoxAnalysis, Grade> Panels
+        public ICluster<IAnswer, GroupData> Panels
         {
             get { return this.panels; }
         }

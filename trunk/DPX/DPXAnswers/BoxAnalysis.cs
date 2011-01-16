@@ -9,11 +9,12 @@ namespace DPXAnswers
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Text;
+    using GradeLibrary;
 
     /// <summary>
     /// The analysis results of an answer box.
     /// </summary>
-    public class BoxAnalysis
+    public class BoxAnalysis : IAnswer
     {
         /// <summary>
         /// The recognized string for the answer box.

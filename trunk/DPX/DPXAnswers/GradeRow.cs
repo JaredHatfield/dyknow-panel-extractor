@@ -12,6 +12,7 @@ namespace DPXAnswers
     using System.Windows.Controls;
     using System.Windows.Media;
     using ClusterLibraryCore;
+    using GradeLibrary;
 
     /// <summary>
     /// The row for the grade results.
@@ -31,7 +32,7 @@ namespace DPXAnswers
         /// <summary>
         /// The group for the GradeRow.
         /// </summary>
-        private IClusterGroup<BoxAnalysis, Grade> group;
+        private IClusterGroup<IAnswer, GroupData> group;
 
         /// <summary>
         /// The index label.
@@ -88,7 +89,7 @@ namespace DPXAnswers
 
             // Add the answer
             this.ans = new Label();
-            this.SetStatusLabel(this.rect.Panels.GetGroup(this.boxAnalysis).Label);
+            this.SetStatusLabel(this.rect.Panels.GetGroup(this.boxAnalysis).Label.Grade);
             this.ans.BorderBrush = Brushes.DarkGray;
             this.ans.BorderThickness = new Thickness(1);
             this.ans.Tag = this;
@@ -166,7 +167,7 @@ namespace DPXAnswers
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void AnswerSetCorrect(object sender, RoutedEventArgs e)
         {
-            this.rect.Panels.GetGroup(this.boxAnalysis).Label = Grade.CORRECT;
+            this.rect.Panels.GetGroup(this.boxAnalysis).Label.Grade = Grade.CORRECT;
             this.SetStatusLabel(Grade.CORRECT);
         }
 
@@ -177,7 +178,7 @@ namespace DPXAnswers
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void AnswerSetIncorrect(object sender, RoutedEventArgs e)
         {
-            this.rect.Panels.GetGroup(this.boxAnalysis).Label = Grade.INCORRECT;
+            this.rect.Panels.GetGroup(this.boxAnalysis).Label.Grade = Grade.INCORRECT;
             this.SetStatusLabel(Grade.INCORRECT);
         }
 
@@ -190,7 +191,7 @@ namespace DPXAnswers
         {
             if (e.PropertyName.Equals("Label"))
             {
-                this.SetStatusLabel(this.group.Label);
+                this.SetStatusLabel(this.group.Label.Grade);
             }
         }
     }

@@ -53,6 +53,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ClusterLibraryCore.dll</HintPath>
     </Reference>
+    <Reference Include="GradeLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\GradeLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="IACore, Version=1.7.6223.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ThirdParty\IACore.dll</HintPath>
@@ -123,7 +127,6 @@
     <Compile Include="AnswerRectFactory.cs" />
     <Compile Include="BoxAnalysis.cs" />
     <Compile Include="DisplayPanelEventArgs.cs" />
-    <Compile Include="Grade.cs" />
     <Compile Include="GradeGroup.xaml.cs">
       <DependentUpon>GradeGroup.xaml</DependentUpon>
     </Compile>
