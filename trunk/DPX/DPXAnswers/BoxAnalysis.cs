@@ -45,6 +45,13 @@ namespace DPXAnswers
         }
 
         /// <summary>
+        /// Prevents a default instance of the <see cref="BoxAnalysis"/> class from being created.
+        /// </summary>
+        private BoxAnalysis()
+        {
+        }
+
+        /// <summary>
         /// Gets the answer.
         /// </summary>
         /// <value>The answer.</value>
@@ -91,6 +98,26 @@ namespace DPXAnswers
             }
 
             return string.Empty;
+        }
+
+        /// <summary>
+        /// Creates a new object that is a copy of the current instance.
+        /// </summary>
+        /// <returns>
+        /// A new object that is a copy of this instance.
+        /// </returns>
+        public object Clone()
+        {
+            BoxAnalysis ba = new BoxAnalysis();
+            ba.answer = this.answer.Clone() as string;
+            ba.alternates = new Collection<string>();
+            for (int i = 0; i < this.alternates.Count; i++)
+            {
+                ba.alternates.Add(this.alternates[i].Clone() as string);
+            }
+
+            ba.panelIndex = this.panelIndex;
+            return ba;
         }
 
         /// <summary>
