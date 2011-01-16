@@ -65,6 +65,11 @@ namespace DPXAnswers
         private Queue<QueueItem> workerQueue;
 
         /// <summary>
+        /// The list of grade rows, kept to insure garbage collection.
+        /// </summary>
+        private List<GradeRow> gradeRows;
+
+        /// <summary>
         /// Prevents a default instance of the <see cref="AnswerManager"/> class from being created.
         /// </summary>
         private AnswerManager()
@@ -77,6 +82,9 @@ namespace DPXAnswers
 
             // Create the worker queue
             this.workerQueue = new Queue<QueueItem>();
+
+            // Create the list for traking gradeRows
+            this.gradeRows = new List<GradeRow>();
 
             // Start all of the worker threads
             this.workers = new List<Thread>();
@@ -250,16 +258,25 @@ namespace DPXAnswers
         /// <param name="panel">The panel answer.</param>
         internal void DisplayRecognizedAnswer(PanelAnswer panel)
         {
-            // Display the answer information to the user
             Grid g = this.answerWindow.GridRecognizedAnswers;
             g.Children.Clear();
-            
+
+            // Clean up all of the old grade rows
+            for (int i = 0; i < this.gradeRows.Count; i++)
+            {
+                this.gradeRows[i].Cleanup();
+            }
+
+            this.gradeRows.Clear();
+
+            // Display the answer information to the user
             for (int i = 0; i < panel.Keys.Count; i++)
             {
                 RowDefinition rd = new RowDefinition();
                 rd.Height = GridLength.Auto;
                 g.RowDefinitions.Add(rd);
                 GradeRow gr = new GradeRow(g, this.answerWindow, panel, i);
+                this.gradeRows.Add(gr);
             }
         }
 
@@ -297,8 +314,19 @@ namespace DPXAnswers
         internal void DisplayGradeGroups(AnswerRect ar)
         {
             Grid g = this.answerWindow.GridGroups;
+
+            // Remove all of the old references from the event handlers for garbage collection purposes
+            for (int i = 0; i < g.Children.Count; i++)
+            {
+                GradeGroup gg = g.Children[i] as GradeGroup;
+                gg.DisplayPanel -= this.DisplayPanelRequest;
+                gg.Cleanup();
+            }
+
             g.Children.Clear();
             g.RowDefinitions.Clear();
+
+            // Now display all of the answer groups
             if (ar != null)
             {
                 for (int j = 0; j < ar.Panels.Groups.Count; j++)
@@ -306,9 +334,9 @@ namespace DPXAnswers
                     RowDefinition rd = new RowDefinition();
                     rd.Height = GridLength.Auto;
                     g.RowDefinitions.Add(rd);
-
+                    
                     GradeGroup gg = new GradeGroup(ar.Panels.Groups[j], j);
-                    gg.DisplayPanel += new GradeGroup.PanelDisplayRequestEventHandler(this.DisplayPanelRequest);
+                    gg.DisplayPanel += this.DisplayPanelRequest;
                     Grid.SetRow(gg, j);
                     Grid.SetColumn(gg, 0);
                     g.Children.Add(gg);
@@ -330,7 +358,7 @@ namespace DPXAnswers
             }
 
             // Create the new task
-            AnswerProcessQueueItem apqi = new AnswerProcessQueueItem(this.dyknow, n, pa);
+            AnswerProcessQueueItem apqi = new AnswerProcessQueueItem(this.dyknow, n, pa, this.answerWindow.Dispatcher);
 
             // Add the item to the queue
             lock (this.workerQueue)

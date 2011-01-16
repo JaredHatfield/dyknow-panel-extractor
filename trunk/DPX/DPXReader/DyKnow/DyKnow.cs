@@ -327,6 +327,29 @@ namespace DPXReader.DyKnow
         }
 
         /// <summary>
+        /// Gets the answer box thumbnail.
+        /// </summary>
+        /// <param name="strokes">The strokes.</param>
+        /// <param name="width">The panel width.</param>
+        /// <param name="height">The panel height.</param>
+        /// <param name="rect">The rectangle.</param>
+        /// <returns>The image of the answer box.</returns>
+        public Image GetAnswerBoxThumbnail(StrokeCollection strokes, double width, double height, System.Windows.Rect rect)
+        {
+            InkCanvas ink = new InkCanvas();
+            ink.Width = width;
+            ink.Height = height;
+            ink.Strokes = strokes;
+            RenderTargetBitmap rtb = new RenderTargetBitmap(Convert.ToInt32(ink.Width), Convert.ToInt32(ink.Height), 96d, 96d, PixelFormats.Default);
+            rtb.Render(ink);
+            System.Windows.Int32Rect intrect = new System.Windows.Int32Rect((int)rect.X, (int)rect.Y, (int)rect.Width, (int)rect.Height);
+            CroppedBitmap cb = new CroppedBitmap(rtb, intrect);
+            Image myImage = new Image();
+            myImage.Source = cb;
+            return myImage;
+        }
+
+        /// <summary>
         /// Gets the image data.
         /// </summary>
         /// <param name="id">The image identifier.</param>

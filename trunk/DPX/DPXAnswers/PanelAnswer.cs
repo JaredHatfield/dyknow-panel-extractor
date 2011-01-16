@@ -11,6 +11,7 @@ namespace DPXAnswers
     using System.Linq;
     using System.Text;
     using System.Windows;
+    using System.Windows.Controls;
     using System.Windows.Ink;
     using GradeLibrary;
 
@@ -102,7 +103,8 @@ namespace DPXAnswers
         /// <param name="rect">The bounding rectangle.</param>
         /// <param name="recognized">The recognized string.</param>
         /// <param name="aac">The Analysis Alternate Collection.</param>
-        internal void AddResult(int index, Rect rect, string recognized, AnalysisAlternateCollection aac)
+        /// <param name="img">The image thumbnail.</param>
+        internal void AddResult(int index, Rect rect, string recognized, AnalysisAlternateCollection aac, Image img)
         {
             // We need to lock on the factory because this action needs to be atomic
             lock (this.answerRectFactory)
@@ -114,7 +116,7 @@ namespace DPXAnswers
                     alt.Add(aac[i].RecognizedString);
                 }
 
-                BoxAnalysis ba = new BoxAnalysis(recognized, alt, index);
+                BoxAnalysis ba = new BoxAnalysis(recognized, alt, index, img);
                 ar.Panels.AddValueDynamic(ba);
                 this.answers.Add(rect, ba);
                 this.keys.Add(ar);

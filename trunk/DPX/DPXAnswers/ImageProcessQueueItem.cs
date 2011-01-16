@@ -80,6 +80,7 @@ namespace DPXAnswers
             b.Tag = this.index;
 
             this.window.PanelScrollView.Children.Add(b);
+
             this.window.IncrementProgressBar();
         }
     }

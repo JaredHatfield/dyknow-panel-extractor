@@ -281,6 +281,7 @@ namespace DPXAnswers
                 this.ButtonSave.IsEnabled = false;
 
                 // Open the DyKnow file
+                GC.Collect();
                 this.filename = openFileDialog.FileName;
                 Thread t = new Thread(new ThreadStart(this.LoadDyKnowFile));
                 t.Name = "OpenFileThread";

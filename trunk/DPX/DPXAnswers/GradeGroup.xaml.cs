@@ -6,6 +6,7 @@ namespace DPXAnswers
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
     using System.Windows;
@@ -44,27 +45,29 @@ namespace DPXAnswers
         {
             InitializeComponent();
             this.group = group;
-            group.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(this.GroupPropertyChanged);
+            group.PropertyChanged += this.GroupPropertyChanged;
             this.UpdateButtons();
             this.index = index;
             this.LabelGroupName.Content = "Group " + this.index;
             for (int i = 0; i < group.Nodes.Count; i++)
             {
+                BoxAnalysis ba = group.Nodes[i].Value as BoxAnalysis;
+
                 StackPanel sp = new StackPanel();
                 sp.Orientation = Orientation.Horizontal;
 
                 Button b = new Button();
                 b.Content = "Display";
-                b.Tag = (group.Nodes[i].Value as BoxAnalysis).PanelIndex + string.Empty;
-                b.Click += new RoutedEventHandler(this.ButtonDisplayPanelClick);
+                b.Tag = ba.PanelIndex + string.Empty;
+                b.Click += this.ButtonDisplayPanelClick;
                 b.Width = 50;
                 sp.Children.Add(b);
-
-                Label l = new Label();
-                l.Content = group.Nodes[i].Value.Answer;
-                l.Tag = group.Nodes[i].Value;
-                l.Margin = new Thickness(5);
-                sp.Children.Add(l);
+                
+                Image img = new Image();
+                img.Source = ba.Thumb.Source.Clone();
+                img.ToolTip = ba.Answer;
+                img.Width = 150;
+                sp.Children.Add(img);
 
                 this.StackPanelGrades.Children.Add(sp);
             }
@@ -81,6 +84,19 @@ namespace DPXAnswers
         /// Occurs when a specific panel is requested to be displayed.
         /// </summary>
         public event PanelDisplayRequestEventHandler DisplayPanel;
+
+        /// <summary>
+        /// Cleanups this instance.
+        /// </summary>
+        internal void Cleanup()
+        {
+            this.group.PropertyChanged -= this.GroupPropertyChanged;
+            for (int i = 0; i < this.StackPanelGrades.Children.Count; i++)
+            {
+                StackPanel sp = this.StackPanelGrades.Children[i] as StackPanel;
+                sp.Children.Clear();
+            }
+        }
 
         /// <summary>
         /// Updates the buttons.

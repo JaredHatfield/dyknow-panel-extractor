@@ -6,6 +6,7 @@ namespace DPXAnswers
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
     using System.Windows;
@@ -50,18 +51,24 @@ namespace DPXAnswers
         private Label ans;
 
         /// <summary>
+        /// The answer window.
+        /// </summary>
+        private AnswerWindow answerWindow;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GradeRow"/> class.
         /// </summary>
         /// <param name="g">The grid to add to.</param>
         /// <param name="answerWindow">The answer window.</param>
         /// <param name="panel">The panel.</param>
         /// <param name="i">The panel index.</param>
-        public GradeRow(Grid g, AnswerWindow answerWindow, PanelAnswer panel, int i)
+        internal GradeRow(Grid g, AnswerWindow answerWindow, PanelAnswer panel, int i)
         {
+            this.answerWindow = answerWindow;
             this.rect = panel.Keys[i];
             this.boxAnalysis = panel.GetBoxAnalysis(panel.Keys[i]);
             this.group = this.rect.Panels.GetGroup(this.boxAnalysis);
-            this.group.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(this.GradeRowPropertyChanged);
+            this.group.PropertyChanged += this.GradeRowPropertyChanged;
 
             // Add the panel index
             this.index = new Label();
@@ -69,8 +76,8 @@ namespace DPXAnswers
             this.index.BorderBrush = Brushes.DarkGray;
             this.index.BorderThickness = new Thickness(1);
             this.index.Tag = this;
-            this.index.MouseEnter += new System.Windows.Input.MouseEventHandler(answerWindow.AnswerMouseEnter);
-            this.index.MouseLeave += new System.Windows.Input.MouseEventHandler(answerWindow.AnswerMouseLeave);
+            this.index.MouseEnter += answerWindow.AnswerMouseEnter;
+            this.index.MouseLeave += answerWindow.AnswerMouseLeave;
             Grid.SetRow(this.index, i);
             Grid.SetColumn(this.index, 0);
             g.Children.Add(this.index);
@@ -81,8 +88,8 @@ namespace DPXAnswers
             this.num.BorderBrush = Brushes.DarkGray;
             this.num.BorderThickness = new Thickness(1);
             this.num.Tag = this;
-            this.num.MouseEnter += new System.Windows.Input.MouseEventHandler(answerWindow.AnswerMouseEnter);
-            this.num.MouseLeave += new System.Windows.Input.MouseEventHandler(answerWindow.AnswerMouseLeave);
+            this.num.MouseEnter += answerWindow.AnswerMouseEnter;
+            this.num.MouseLeave += answerWindow.AnswerMouseLeave;
             Grid.SetRow(this.num, i);
             Grid.SetColumn(this.num, 1);
             g.Children.Add(this.num);
@@ -93,8 +100,8 @@ namespace DPXAnswers
             this.ans.BorderBrush = Brushes.DarkGray;
             this.ans.BorderThickness = new Thickness(1);
             this.ans.Tag = this;
-            this.ans.MouseEnter += new System.Windows.Input.MouseEventHandler(answerWindow.AnswerMouseEnter);
-            this.ans.MouseLeave += new System.Windows.Input.MouseEventHandler(answerWindow.AnswerMouseLeave);
+            this.ans.MouseEnter += answerWindow.AnswerMouseEnter;
+            this.ans.MouseLeave += answerWindow.AnswerMouseLeave;
             Grid.SetRow(this.ans, i);
             Grid.SetColumn(this.ans, 2);
             g.Children.Add(this.ans);
@@ -127,6 +134,20 @@ namespace DPXAnswers
             this.index.Background = Brushes.White;
             this.num.Background = Brushes.White;
             this.ans.Background = Brushes.White;
+        }
+
+        /// <summary>
+        /// Cleanups this instance.
+        /// </summary>
+        internal void Cleanup()
+        {
+            this.group.PropertyChanged -= this.GradeRowPropertyChanged;
+            this.index.MouseEnter -= this.answerWindow.AnswerMouseEnter;
+            this.index.MouseLeave -= this.answerWindow.AnswerMouseLeave;
+            this.num.MouseEnter -= this.answerWindow.AnswerMouseEnter;
+            this.num.MouseLeave -= this.answerWindow.AnswerMouseLeave;
+            this.ans.MouseEnter -= this.answerWindow.AnswerMouseEnter;
+            this.ans.MouseLeave -= this.answerWindow.AnswerMouseLeave;
         }
 
         /// <summary>

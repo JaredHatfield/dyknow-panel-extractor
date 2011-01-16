@@ -7,8 +7,10 @@ namespace DPXAnswers
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
+    using System.Windows.Controls;
     using GradeLibrary;
 
     /// <summary>
@@ -32,16 +34,23 @@ namespace DPXAnswers
         private int panelIndex;
 
         /// <summary>
+        /// The thumbnail of the answer box content.
+        /// </summary>
+        private Image thumb;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="BoxAnalysis"/> class.
         /// </summary>
         /// <param name="answer">The answer.</param>
         /// <param name="alternates">The alternates.</param>
         /// <param name="panelIndex">Index of the panel.</param>
-        internal BoxAnalysis(string answer, Collection<string> alternates, int panelIndex)
+        /// <param name="thumb">The thumbnail.</param>
+        internal BoxAnalysis(string answer, Collection<string> alternates, int panelIndex, Image thumb)
         {
             this.answer = answer;
             this.alternates = alternates;
             this.panelIndex = panelIndex;
+            this.thumb = thumb;
         }
 
         /// <summary>
@@ -76,6 +85,15 @@ namespace DPXAnswers
         public int PanelIndex
         {
             get { return this.panelIndex; }
+        }
+
+        /// <summary>
+        /// Gets the thumb.
+        /// </summary>
+        /// <value>The thumb.</value>
+        public Image Thumb
+        {
+            get { return this.thumb; }
         }
 
         /// <summary>
