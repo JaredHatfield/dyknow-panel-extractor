@@ -67,7 +67,7 @@ namespace DPXAnswers
             this.answerWindow = answerWindow;
             this.rect = panel.Keys[i];
             this.boxAnalysis = panel.GetBoxAnalysis(panel.Keys[i]);
-            this.group = this.rect.Panels.GetGroup(this.boxAnalysis);
+            this.group = this.rect.Cluster.GetGroup(this.boxAnalysis);
             this.group.PropertyChanged += this.GradeRowPropertyChanged;
 
             // Add the panel index
@@ -96,7 +96,7 @@ namespace DPXAnswers
 
             // Add the answer
             this.ans = new Label();
-            this.SetStatusLabel(this.rect.Panels.GetGroup(this.boxAnalysis).Label.Grade);
+            this.SetStatusLabel(this.rect.Cluster.GetGroup(this.boxAnalysis).Label.Grade);
             this.ans.BorderBrush = Brushes.DarkGray;
             this.ans.BorderThickness = new Thickness(1);
             this.ans.Tag = this;
@@ -188,7 +188,7 @@ namespace DPXAnswers
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void AnswerSetCorrect(object sender, RoutedEventArgs e)
         {
-            this.rect.Panels.GetGroup(this.boxAnalysis).Label.Grade = Grade.CORRECT;
+            this.rect.Cluster.GetGroup(this.boxAnalysis).Label.Grade = Grade.CORRECT;
             this.SetStatusLabel(Grade.CORRECT);
         }
 
@@ -199,7 +199,7 @@ namespace DPXAnswers
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void AnswerSetIncorrect(object sender, RoutedEventArgs e)
         {
-            this.rect.Panels.GetGroup(this.boxAnalysis).Label.Grade = Grade.INCORRECT;
+            this.rect.Cluster.GetGroup(this.boxAnalysis).Label.Grade = Grade.INCORRECT;
             this.SetStatusLabel(Grade.INCORRECT);
         }
 

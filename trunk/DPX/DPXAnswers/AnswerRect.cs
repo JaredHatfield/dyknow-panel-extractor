@@ -29,9 +29,9 @@ namespace DPXAnswers
         private int index;
 
         /// <summary>
-        /// The clustering algorithm used by the algorithm.
+        /// The cluster of answers.
         /// </summary>
-        private ICluster<IAnswer, GroupData> panels;
+        private ICluster<IAnswer, GroupData> cluster;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AnswerRect"/> class.
@@ -42,7 +42,7 @@ namespace DPXAnswers
         {
             this.rect = rect;
             this.index = index;
-            this.panels = new Cluster<IAnswer, GroupData>(new GroupData());
+            this.cluster = new Cluster<IAnswer, GroupData>(new GroupData());
         }
 
         /// <summary>
@@ -64,12 +64,12 @@ namespace DPXAnswers
         }
 
         /// <summary>
-        /// Gets the panels.
+        /// Gets the cluster.
         /// </summary>
-        /// <value>The panels.</value>
-        public ICluster<IAnswer, GroupData> Panels
+        /// <value>The cluster.</value>
+        public ICluster<IAnswer, GroupData> Cluster
         {
-            get { return this.panels; }
+            get { return this.cluster; }
         }
 
         /// <summary>

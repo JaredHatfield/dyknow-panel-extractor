@@ -236,6 +236,7 @@ namespace DPXAnswers
         /// </summary>
         private void ClearInterface()
         {
+            this.answerManager.Cleanup();
             this.GridRecognizedAnswers.Children.Clear();
             this.ComboBoxBoxList.IsEnabled = false;
             this.ComboBoxBoxList.Items.Clear();

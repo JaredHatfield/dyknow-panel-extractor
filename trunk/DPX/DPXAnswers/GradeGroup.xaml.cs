@@ -5,7 +5,8 @@
 namespace DPXAnswers
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Collections.Specialized;
     using System.Diagnostics;
     using System.Linq;
     using System.Text;
@@ -46,31 +47,11 @@ namespace DPXAnswers
             InitializeComponent();
             this.group = group;
             group.PropertyChanged += this.GroupPropertyChanged;
+            (group.Nodes as INotifyCollectionChanged).CollectionChanged += this.GradeGroupCollectionChanged;
             this.UpdateButtons();
             this.index = index;
             this.LabelGroupName.Content = "Group " + this.index;
-            for (int i = 0; i < group.Nodes.Count; i++)
-            {
-                BoxAnalysis ba = group.Nodes[i].Value as BoxAnalysis;
-
-                StackPanel sp = new StackPanel();
-                sp.Orientation = Orientation.Horizontal;
-
-                Button b = new Button();
-                b.Content = "Display";
-                b.Tag = ba.PanelIndex + string.Empty;
-                b.Click += this.ButtonDisplayPanelClick;
-                b.Width = 50;
-                sp.Children.Add(b);
-                
-                Image img = new Image();
-                img.Source = ba.Thumb.Source.Clone();
-                img.ToolTip = ba.Answer;
-                img.Width = 150;
-                sp.Children.Add(img);
-
-                this.StackPanelGrades.Children.Add(sp);
-            }
+            this.GradeGroupCollectionChanged(this, null);
         }
 
         /// <summary>
@@ -91,10 +72,43 @@ namespace DPXAnswers
         internal void Cleanup()
         {
             this.group.PropertyChanged -= this.GroupPropertyChanged;
+            (this.group.Nodes as INotifyCollectionChanged).CollectionChanged -= this.GradeGroupCollectionChanged;
             for (int i = 0; i < this.StackPanelGrades.Children.Count; i++)
             {
                 StackPanel sp = this.StackPanelGrades.Children[i] as StackPanel;
                 sp.Children.Clear();
+            }
+        }
+
+        /// <summary>
+        /// Grades the group collection changed.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Collections.Specialized.NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
+        private void GradeGroupCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            this.StackPanelGrades.Children.Clear();
+            for (int i = 0; i < this.group.Nodes.Count; i++)
+            {
+                BoxAnalysis ba = this.group.Nodes[i].Value as BoxAnalysis;
+
+                StackPanel sp = new StackPanel();
+                sp.Orientation = Orientation.Horizontal;
+
+                Button b = new Button();
+                b.Content = "Display";
+                b.Tag = ba.PanelIndex + string.Empty;
+                b.Click += this.ButtonDisplayPanelClick;
+                b.Width = 50;
+                sp.Children.Add(b);
+
+                Image img = new Image();
+                img.Source = ba.Thumb.Source.Clone();
+                img.ToolTip = ba.Answer;
+                img.Width = 150;
+                sp.Children.Add(img);
+
+                this.StackPanelGrades.Children.Add(sp);
             }
         }
 

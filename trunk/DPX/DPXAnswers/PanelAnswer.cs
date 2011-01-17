@@ -117,7 +117,7 @@ namespace DPXAnswers
                 }
 
                 BoxAnalysis ba = new BoxAnalysis(recognized, alt, index, img);
-                ar.Panels.AddValueDynamic(ba);
+                ar.Cluster.AddValueDynamic(ba);
                 this.answers.Add(rect, ba);
                 this.keys.Add(ar);
             }
@@ -167,7 +167,7 @@ namespace DPXAnswers
             try
             {
                 BoxAnalysis ba = this.answers[rect.Area];
-                return rect.Panels.GetGroup(ba).Label.Grade;
+                return rect.Cluster.GetGroup(ba).Label.Grade;
             }
             catch (KeyNotFoundException)
             {

@@ -7,6 +7,7 @@ namespace DPXAnswers
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Collections.Specialized;
     using System.Diagnostics;
     using System.Linq;
     using System.Text;
@@ -68,6 +69,11 @@ namespace DPXAnswers
         /// The list of grade rows, kept to insure garbage collection.
         /// </summary>
         private List<GradeRow> gradeRows;
+
+        /// <summary>
+        /// The answerRect that is currently selected.
+        /// </summary>
+        private AnswerRect answerRect;
 
         /// <summary>
         /// Prevents a default instance of the <see cref="AnswerManager"/> class from being created.
@@ -141,6 +147,19 @@ namespace DPXAnswers
             {
                 this.workers[i].Abort();
             }
+        }
+
+        /// <summary>
+        /// Cleanups this instance.
+        /// </summary>
+        internal void Cleanup()
+        {
+            if (this.answerRect != null)
+            {
+                (this.answerRect.Cluster.Groups as INotifyCollectionChanged).CollectionChanged -= this.AnswerManagerCollectionChanged;
+            }
+
+            this.answerRect = null;
         }
 
         /// <summary>
@@ -313,6 +332,26 @@ namespace DPXAnswers
         /// <param name="ar">The AnswerRect to be displayed.</param>
         internal void DisplayGradeGroups(AnswerRect ar)
         {
+            if (this.answerRect != null)
+            {
+                (this.answerRect.Cluster.Groups as INotifyCollectionChanged).CollectionChanged -= this.AnswerManagerCollectionChanged;
+            }
+
+            this.answerRect = ar;
+            if (ar != null)
+            {
+                (this.answerRect.Cluster.Groups as INotifyCollectionChanged).CollectionChanged += this.AnswerManagerCollectionChanged;
+            }
+
+            this.RefreshGradeGroups(ar);
+        }
+
+        /// <summary>
+        /// Refreshes the grade groups.
+        /// </summary>
+        /// <param name="ar">The AnswerRect.</param>
+        internal void RefreshGradeGroups(AnswerRect ar)
+        {
             Grid g = this.answerWindow.GridGroups;
 
             // Remove all of the old references from the event handlers for garbage collection purposes
@@ -329,17 +368,47 @@ namespace DPXAnswers
             // Now display all of the answer groups
             if (ar != null)
             {
-                for (int j = 0; j < ar.Panels.Groups.Count; j++)
+                for (int j = 0; j < ar.Cluster.Groups.Count; j++)
                 {
                     RowDefinition rd = new RowDefinition();
                     rd.Height = GridLength.Auto;
                     g.RowDefinitions.Add(rd);
-                    
-                    GradeGroup gg = new GradeGroup(ar.Panels.Groups[j], j);
+
+                    GradeGroup gg = new GradeGroup(ar.Cluster.Groups[j], j);
                     gg.DisplayPanel += this.DisplayPanelRequest;
                     Grid.SetRow(gg, j);
                     Grid.SetColumn(gg, 0);
                     g.Children.Add(gg);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles the CollectionChanged event of the AnswerManager control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Collections.Specialized.NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
+        internal void AnswerManagerCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (this.answerRect != null)
+            {
+                // Refresh all of the groups since we changed one of them
+                this.RefreshGradeGroups(this.answerRect);
+
+                // The panel answers should also be refreshed to insure proper event bindings
+                PanelAnswer pa = null;
+                lock (this.answers)
+                {
+                    pa = this.RetreivePanelAnswer(this.answerWindow.SelectedPanelId);
+                }
+
+                if (pa != null)
+                {
+                    this.DisplayRecognizedAnswer(pa);
+                    if (!pa.IsProcessed)
+                    {
+                        pa.DidProcess += new PanelAnswer.PanelProcessedDelegate(this.DisplayRecognizedAnswerDispatch);
+                    }
                 }
             }
         }
@@ -411,7 +480,7 @@ namespace DPXAnswers
                     BoxAnalysis ba = pa.Value.GetBoxAnalysis(r);
                     if (ba != null)
                     {
-                        Grade g = r.Panels.GetGroup(ba).Label.Grade;
+                        Grade g = r.Cluster.GetGroup(ba).Label.Grade;
                         sb.Append(",\"" + ba.Answer + "\"," + BoxAnalysis.BoxGradeString(g));
                     }
                     else
