@@ -182,28 +182,6 @@ namespace DPXAnswers
         }
 
         /// <summary>
-        /// Sets the group that contains this box as correct.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
-        private void AnswerSetCorrect(object sender, RoutedEventArgs e)
-        {
-            this.rect.Cluster.GetGroup(this.boxAnalysis).Label.Grade = Grade.CORRECT;
-            this.SetStatusLabel(Grade.CORRECT);
-        }
-
-        /// <summary>
-        /// Sets the group that contains this box as incorrect.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
-        private void AnswerSetIncorrect(object sender, RoutedEventArgs e)
-        {
-            this.rect.Cluster.GetGroup(this.boxAnalysis).Label.Grade = Grade.INCORRECT;
-            this.SetStatusLabel(Grade.INCORRECT);
-        }
-
-        /// <summary>
         /// Grades the row property changed.
         /// </summary>
         /// <param name="sender">The sender.</param>
