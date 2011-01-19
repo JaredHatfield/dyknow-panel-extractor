@@ -9,7 +9,9 @@ namespace DPXAnswers
     using System.Collections.ObjectModel;
     using System.Collections.Specialized;
     using System.Diagnostics;
+    using System.IO;
     using System.Linq;
+    using System.Reflection;
     using System.Text;
     using System.Threading;
     using System.Windows;
@@ -34,6 +36,11 @@ namespace DPXAnswers
         /// The answer window.
         /// </summary>
         private AnswerWindow answerWindow;
+
+        /// <summary>
+        /// The clustering algorithms that are available to the application.
+        /// </summary>
+        private List<IClusterAlgorithm> clusterAlgorithms;
 
         /// <summary>
         /// The file name that will be opened.
@@ -91,6 +98,11 @@ namespace DPXAnswers
 
             // Create the list for traking gradeRows
             this.gradeRows = new List<GradeRow>();
+
+            // Load the external DLL files that include the clustering algorithms
+            string exeName = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string folder = Path.GetDirectoryName(exeName);
+            this.clusterAlgorithms = GetPlugins<IClusterAlgorithm>(folder);
 
             // Start all of the worker threads
             this.workers = new List<Thread>();
@@ -458,6 +470,26 @@ namespace DPXAnswers
         }
 
         /// <summary>
+        /// Run the first clustering algorithm on all of the clusters.
+        /// </summary>
+        internal void ClusterEverything()
+        {
+            if (this.clusterAlgorithms.Count > 0)
+            {
+                for (int i = 0; i < this.answerRectFactory.AnswerRect.Count; i++)
+                {
+                    AnswerRect ar = this.answerRectFactory.AnswerRect[i];
+                    this.clusterAlgorithms[0].Cluster = ar.Cluster;
+                    this.clusterAlgorithms[0].Process();
+                }
+            }
+            else
+            {
+                Debug.WriteLine("No Clustering Algorithm Available!");
+            }
+        }
+
+        /// <summary>
         /// Creates the output report for a CSV file.
         /// </summary>
         /// <returns>The string that contains the contents of the CSV file.</returns>
@@ -522,6 +554,46 @@ namespace DPXAnswers
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Gets the plugins.
+        /// </summary>
+        /// <typeparam name="T">The interface type to initialize.</typeparam>
+        /// <param name="folder">The folder.</param>
+        /// <returns>The list of plugin objects.</returns>
+        private List<T> GetPlugins<T>(string folder)
+        {
+            string[] files = Directory.GetFiles(folder, "*.dll");
+            List<T> tlist = new List<T>();
+            Debug.Assert(typeof(T).IsInterface, "The must be an interface");
+            foreach (string file in files)
+            {
+                try
+                {
+                    Assembly assembly = Assembly.LoadFile(file);
+                    foreach (Type type in assembly.GetTypes())
+                    {
+                        if (!type.IsClass || type.IsNotPublic)
+                        {
+                            continue;
+                        }
+
+                        Type[] interfaces = type.GetInterfaces();
+                        if (((System.Collections.IList)interfaces).Contains(typeof(T)))
+                        {
+                            object obj = Activator.CreateInstance(type);
+                            T t = (T)obj;
+                            tlist.Add(t);
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            return tlist;
         }
 
         /// <summary>

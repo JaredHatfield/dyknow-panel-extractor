@@ -217,6 +217,9 @@ namespace DPXAnswers
             // Wait until the dispatcher has flushed its queue which is filled with thumbnail render requests
             Dispatcher.Invoke(new NoArgsDelegate(this.DoNothing), DispatcherPriority.ContextIdle);
 
+            // Perform all of the clustering
+            this.answerManager.ClusterEverything();
+
             // Display the AnswerBox results in the answer column
             Dispatcher.Invoke(new NoArgsDelegate(this.answerManager.DisplayAnswers), DispatcherPriority.Background);
 
