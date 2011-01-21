@@ -99,9 +99,9 @@
                         <Grid Name="GridRecognizedAnswers" Width="Auto" Height="Auto">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="75" />
+                                <ColumnDefinition Width="175" />
                                 <ColumnDefinition />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="80" />
                             </Grid.ColumnDefinitions>
                         </Grid>
                     </ScrollViewer>

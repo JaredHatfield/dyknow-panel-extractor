@@ -106,19 +106,13 @@ namespace DPXAnswers
         /// <param name="e">The <see cref="System.Windows.Input.MouseEventArgs" /> instance containing the event data.</param>
         internal void AnswerMouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            Label l = (Label)sender;
+            FrameworkElement fe = sender as FrameworkElement;
             Rect rect = new Rect();
-            if (l.Tag.GetType().Equals(typeof(GradeRow)))
+            if (fe.Tag.GetType().Equals(typeof(GradeRow)))
             {
-                GradeRow gr = (GradeRow)l.Tag;
+                GradeRow gr = fe.Tag as GradeRow;
                 gr.MouseIn();
                 rect = PanelAnswer.Transform(gr.Rect, Inky.Width, Inky.Height);
-            }
-            else
-            {
-                l.Background = Brushes.LightYellow;
-                AnswerRect ar = (AnswerRect)l.Tag;
-                rect = PanelAnswer.Transform(ar.Area, Inky.Width, Inky.Height);
             }
 
             this.Boxy.Height = rect.Height;
@@ -134,15 +128,11 @@ namespace DPXAnswers
         /// <param name="e">The <see cref="System.Windows.Input.MouseEventArgs"/> instance containing the event data.</param>
         internal void AnswerMouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            Label l = (Label)sender;
-            if (l.Tag.GetType().Equals(typeof(GradeRow)))
+            FrameworkElement fe = sender as FrameworkElement;
+            if (fe.Tag.GetType().Equals(typeof(GradeRow)))
             {
-                GradeRow gr = (GradeRow)l.Tag;
+                GradeRow gr = fe.Tag as GradeRow;
                 gr.MouseOut();
-            }
-            else
-            {
-                l.Background = Brushes.White;
             }
 
             this.Boxy.Height = 0;

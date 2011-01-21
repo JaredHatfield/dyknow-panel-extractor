@@ -385,9 +385,10 @@ namespace DPXAnswers
                     RowDefinition rd = new RowDefinition();
                     rd.Height = GridLength.Auto;
                     g.RowDefinitions.Add(rd);
-
-                    GradeGroup gg = new GradeGroup(ar.Cluster.Groups[j], j);
+                    
+                    GradeGroup gg = new GradeGroup(ar.Cluster, j);
                     gg.DisplayPanel += this.DisplayPanelRequest;
+                    gg.Margin = new Thickness(0, 0, 0, 10);
                     Grid.SetRow(gg, j);
                     Grid.SetColumn(gg, 0);
                     g.Children.Add(gg);

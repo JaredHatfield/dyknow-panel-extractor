@@ -41,6 +41,11 @@ namespace DPXAnswers
         private Label index;
 
         /// <summary>
+        /// The thumbnail.
+        /// </summary>
+        private Border thumb;
+
+        /// <summary>
         /// The number label.
         /// </summary>
         private Label num;
@@ -73,14 +78,30 @@ namespace DPXAnswers
             // Add the panel index
             this.index = new Label();
             this.index.Content = "Box " + panel.Keys[i].Index;
+            this.index.FontWeight = FontWeights.Bold;
             this.index.BorderBrush = Brushes.DarkGray;
             this.index.BorderThickness = new Thickness(1);
             this.index.Tag = this;
-            this.index.MouseEnter += answerWindow.AnswerMouseEnter;
-            this.index.MouseLeave += answerWindow.AnswerMouseLeave;
+            this.index.MouseEnter += this.answerWindow.AnswerMouseEnter;
+            this.index.MouseLeave += this.answerWindow.AnswerMouseLeave;
             Grid.SetRow(this.index, i);
             Grid.SetColumn(this.index, 0);
             g.Children.Add(this.index);
+
+            // The image
+            this.thumb = new Border();
+            this.thumb.BorderBrush = Brushes.DarkGray;
+            this.thumb.BorderThickness = new Thickness(1);
+            this.thumb.MouseEnter += this.answerWindow.AnswerMouseEnter;
+            this.thumb.MouseLeave += this.answerWindow.AnswerMouseLeave;
+            this.thumb.Tag = this;
+            Image img = new Image();
+            img.Source = this.boxAnalysis.Thumb.Source.Clone();
+            img.Width = 175;
+            this.thumb.Child = img;
+            Grid.SetRow(this.thumb, i);
+            Grid.SetColumn(this.thumb, 1);
+            g.Children.Add(this.thumb);
 
             // Add the panel number
             this.num = new Label();
@@ -88,10 +109,10 @@ namespace DPXAnswers
             this.num.BorderBrush = Brushes.DarkGray;
             this.num.BorderThickness = new Thickness(1);
             this.num.Tag = this;
-            this.num.MouseEnter += answerWindow.AnswerMouseEnter;
-            this.num.MouseLeave += answerWindow.AnswerMouseLeave;
+            this.num.MouseEnter += this.answerWindow.AnswerMouseEnter;
+            this.num.MouseLeave += this.answerWindow.AnswerMouseLeave;
             Grid.SetRow(this.num, i);
-            Grid.SetColumn(this.num, 1);
+            Grid.SetColumn(this.num, 2);
             g.Children.Add(this.num);
 
             // Add the answer
@@ -100,10 +121,10 @@ namespace DPXAnswers
             this.ans.BorderBrush = Brushes.DarkGray;
             this.ans.BorderThickness = new Thickness(1);
             this.ans.Tag = this;
-            this.ans.MouseEnter += answerWindow.AnswerMouseEnter;
-            this.ans.MouseLeave += answerWindow.AnswerMouseLeave;
+            this.ans.MouseEnter += this.answerWindow.AnswerMouseEnter;
+            this.ans.MouseLeave += this.answerWindow.AnswerMouseLeave;
             Grid.SetRow(this.ans, i);
-            Grid.SetColumn(this.ans, 2);
+            Grid.SetColumn(this.ans, 3);
             g.Children.Add(this.ans);
         }
 
@@ -122,6 +143,7 @@ namespace DPXAnswers
         public void MouseIn()
         {
             this.index.Background = Brushes.LightYellow;
+            this.thumb.Background = Brushes.LightYellow;
             this.num.Background = Brushes.LightYellow;
             this.ans.Background = Brushes.LightYellow;
         }
@@ -132,6 +154,7 @@ namespace DPXAnswers
         public void MouseOut()
         {
             this.index.Background = Brushes.White;
+            this.thumb.Background = Brushes.White;
             this.num.Background = Brushes.White;
             this.ans.Background = Brushes.White;
         }
@@ -144,6 +167,8 @@ namespace DPXAnswers
             this.group.PropertyChanged -= this.GradeRowPropertyChanged;
             this.index.MouseEnter -= this.answerWindow.AnswerMouseEnter;
             this.index.MouseLeave -= this.answerWindow.AnswerMouseLeave;
+            this.thumb.MouseEnter -= this.answerWindow.AnswerMouseEnter;
+            this.thumb.MouseLeave -= this.answerWindow.AnswerMouseLeave;
             this.num.MouseEnter -= this.answerWindow.AnswerMouseEnter;
             this.num.MouseLeave -= this.answerWindow.AnswerMouseLeave;
             this.ans.MouseEnter -= this.answerWindow.AnswerMouseEnter;

@@ -28,6 +28,11 @@ namespace DPXAnswers
     public partial class GradeGroup : UserControl
     {
         /// <summary>
+        /// The cluster that this belongs to.
+        /// </summary>
+        private ICluster<IAnswer, GroupData> cluster;
+
+        /// <summary>
         /// The group that is being displayed.
         /// </summary>
         private IClusterGroup<IAnswer, GroupData> group;
@@ -40,14 +45,15 @@ namespace DPXAnswers
         /// <summary>
         /// Initializes a new instance of the <see cref="GradeGroup"/> class.
         /// </summary>
-        /// <param name="group">The group.</param>
+        /// <param name="cluster">The cluster.</param>
         /// <param name="index">The index.</param>
-        public GradeGroup(IClusterGroup<IAnswer, GroupData> group, int index)
+        public GradeGroup(ICluster<IAnswer, GroupData> cluster, int index)
         {
             InitializeComponent();
-            this.group = group;
-            group.PropertyChanged += this.GroupPropertyChanged;
-            (group.Nodes as INotifyCollectionChanged).CollectionChanged += this.GradeGroupCollectionChanged;
+            this.cluster = cluster;
+            this.group = cluster.Groups[index];
+            this.group.PropertyChanged += this.GroupPropertyChanged;
+            (this.group.Nodes as INotifyCollectionChanged).CollectionChanged += this.GradeGroupCollectionChanged;
             this.UpdateButtons();
             this.index = index;
             this.LabelGroupName.Content = "Group " + this.index;
@@ -92,23 +98,64 @@ namespace DPXAnswers
             {
                 BoxAnalysis ba = this.group.Nodes[i].Value as BoxAnalysis;
 
-                StackPanel sp = new StackPanel();
-                sp.Orientation = Orientation.Horizontal;
+                StackPanel stackHorizontal = new StackPanel();
+                stackHorizontal.Orientation = Orientation.Horizontal;
+                if (i + 1 == this.group.Nodes.Count)
+                {
+                    // Add a margin to only the last element
+                    stackHorizontal.Margin = new Thickness(0, 0, 0, 10);
+                }
 
+                StackPanel stackVertical = new StackPanel();
+                stackVertical.Orientation = Orientation.Vertical;
+                stackVertical.Margin = new Thickness(0);
+                stackHorizontal.Children.Add(stackVertical);
+
+                // The button for displaying the panel
                 Button b = new Button();
                 b.Content = "Display";
                 b.Tag = ba.PanelIndex + string.Empty;
                 b.Click += this.ButtonDisplayPanelClick;
-                b.Width = 50;
-                sp.Children.Add(b);
+                b.Width = 80;
+                stackVertical.Children.Add(b);
 
+                // The combo box for moving an answer between groups
+                ComboBox box = new ComboBox();
+                box.Width = 80;
+                box.Tag = this.group.Nodes[i];
+                for (int j = 0; j < this.cluster.Groups.Count; j++)
+                {
+                    ComboBoxItem cbi = new ComboBoxItem();
+                    cbi.Content = "Group " + j;
+                    cbi.Tag = j + string.Empty;
+                    if (j == this.index)
+                    {
+                        cbi.IsSelected = true;
+                    }
+
+                    box.Items.Add(cbi);
+                }
+
+                // The combo box that lets answers to be moved between groups
+                ComboBoxItem cbinew = new ComboBoxItem();
+                cbinew.Content = "New Group";
+                cbinew.Tag = -1 + string.Empty;
+                box.Items.Add(cbinew);
+                box.SelectionChanged += this.BoxSelectionChanged;
+                stackVertical.Children.Add(box);
+
+                // The thumbnail of the answer
+                Border imgBorder = new Border();
+                imgBorder.Background = Brushes.LightGray;
+                imgBorder.Margin = new Thickness(0, 10, 0, 0);
                 Image img = new Image();
                 img.Source = ba.Thumb.Source.Clone();
                 img.ToolTip = ba.Answer;
                 img.Width = 150;
-                sp.Children.Add(img);
+                imgBorder.Child = img;
+                stackHorizontal.Children.Add(imgBorder);
 
-                this.StackPanelGrades.Children.Add(sp);
+                this.StackPanelGrades.Children.Add(stackHorizontal);
             }
         }
 
@@ -161,6 +208,35 @@ namespace DPXAnswers
             Button b = sender as Button;
             int n = int.Parse(b.Tag as string);
             this.DisplayPanel(this, new DisplayPanelEventArgs(n));
+        }
+
+        /// <summary>
+        /// Boxes the selection changed.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs"/> instance containing the event data.</param>
+        private void BoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox combo = sender as ComboBox;
+            IClusterNode<IAnswer> node = combo.Tag as IClusterNode<IAnswer>;
+            ComboBoxItem cbi = e.AddedItems[0] as ComboBoxItem;
+            int n = int.Parse(cbi.Tag as string);
+            if (n >= 0)
+            {
+                this.cluster.Move(node, this.cluster.Groups[n]);
+            }
+            else
+            {
+                IClusterGroup<IAnswer, GroupData> newGroup = this.cluster.AddGroup();
+                this.cluster.Move(node, newGroup);
+            }
+
+            ComboBoxItem cbiold = e.RemovedItems[0] as ComboBoxItem;
+            int r = int.Parse(cbiold.Tag as string);
+            if (this.cluster.Groups[r].Nodes.Count == 0 && this.cluster.Groups[r].IsDeletable)
+            {
+                this.cluster.RemoveGroup(this.cluster.Groups[r]);
+            }
         }
 
         /// <summary>
