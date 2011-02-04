@@ -1,6 +1,16 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7519B096-4281-40FE-B16B-0DF465EDA14B}"
+	ProjectSection(SolutionItems) = preProject
+		DPX.vsmdi = DPX.vsmdi
+		DPX1.vsmdi = DPX1.vsmdi
+		DPX2.vsmdi = DPX2.vsmdi
+		DPX3.vsmdi = DPX3.vsmdi
+		DPX4.vsmdi = DPX4.vsmdi
+		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPXManager", "DPXManager\DPXManager.csproj", "{62771B0D-F779-413E-B344-CF4E2038E3EF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPXPreview", "DPXPreview\DPXPreview.csproj", "{107A5897-5275-476B-81D7-C0A01EF976B7}"
@@ -18,16 +28,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPXReader", "DPXReader\DPXReader.csproj", "{C05354D4-086C-4DF8-BC63-F42CD0F7A036}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{B2681BCC-B211-4594-918A-B069FD3FAB3D}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7519B096-4281-40FE-B16B-0DF465EDA14B}"
-	ProjectSection(SolutionItems) = preProject
-		DPX.vsmdi = DPX.vsmdi
-		DPX1.vsmdi = DPX1.vsmdi
-		DPX2.vsmdi = DPX2.vsmdi
-		DPX3.vsmdi = DPX3.vsmdi
-		DPX4.vsmdi = DPX4.vsmdi
-		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPXAnswers", "DPXAnswers\DPXAnswers.csproj", "{59602D12-3B1F-499C-87E5-5453ABD9D386}"
 EndProject
