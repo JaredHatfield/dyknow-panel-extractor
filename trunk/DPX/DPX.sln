@@ -131,7 +131,8 @@ Global
 		{A15FA194-4AB1-4878-A438-6FBC3790418D}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{A15FA194-4AB1-4878-A438-6FBC3790418D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A15FA194-4AB1-4878-A438-6FBC3790418D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A15FA194-4AB1-4878-A438-6FBC3790418D}.Release|x86.ActiveCfg = Release|Any CPU
+		{A15FA194-4AB1-4878-A438-6FBC3790418D}.Release|x86.ActiveCfg = Release|x86
+		{A15FA194-4AB1-4878-A438-6FBC3790418D}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
