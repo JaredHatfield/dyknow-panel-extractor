@@ -1,8 +1,6 @@
-#summary Presentation at WIPTE 2009: Collecting and Processing DyKnow Panels in
-Large Classes
+#summary Presentation at WIPTE 2009: Collecting and Processing DyKnow Panels in Large Classes
 
-*Collecting and Processing DyKnow Panels in 
-Large Classes*
+*Collecting and Processing DyKnow Panels in Large Classes*
 
 = Presentation =
 <wiki:gadget url="http://dyknow-panel-extractor.googlecode.com/svn/hieb_hatfield_lewis_wipte_2009.xml" height="451" width="555" border="1"/>
