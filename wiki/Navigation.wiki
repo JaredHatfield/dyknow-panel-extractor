@@ -11,4 +11,7 @@
     * [DPXParserValidator DPX Parser Validator]
     * [DPXPreview DPX Preview]
     * [DPXSorter DPX Sorter]
+  * Presentations
+    * [WIPTE2010 WIPTE 2010]
+    * [WIPTE2009 WIPTE 2009]
   * [ReleaseNotes Release Notes]
