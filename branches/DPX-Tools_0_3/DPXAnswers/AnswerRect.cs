@@ -6,9 +6,12 @@ namespace DPXAnswers
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
     using System.Windows;
+    using ClusterLibraryCore;
+    using GradeLibrary;
 
     /// <summary>
     /// The Answer Rectangle.
@@ -26,9 +29,9 @@ namespace DPXAnswers
         private int index;
 
         /// <summary>
-        /// The list of BoxAnalysis objects for each panel.
+        /// The cluster of answers.
         /// </summary>
-        private Dictionary<int, BoxAnalysis> panels;
+        private ICluster<IAnswer, GroupData> cluster;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AnswerRect"/> class.
@@ -39,7 +42,7 @@ namespace DPXAnswers
         {
             this.rect = rect;
             this.index = index;
-            this.panels = new Dictionary<int, BoxAnalysis>();
+            this.cluster = new Cluster<IAnswer, GroupData>(new GroupData());
         }
 
         /// <summary>
@@ -61,12 +64,21 @@ namespace DPXAnswers
         }
 
         /// <summary>
-        /// Gets the panels.
+        /// Gets the cluster.
         /// </summary>
-        /// <value>The panels.</value>
-        public Dictionary<int, BoxAnalysis> Panels
+        /// <value>The cluster.</value>
+        public ICluster<IAnswer, GroupData> Cluster
         {
-            get { return this.panels; }
+            get { return this.cluster; }
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <returns>A <see cref="System.String"/> that represents this instance.</returns>
+        public override string ToString()
+        {
+            return "Box " + this.index;
         }
     }
 }

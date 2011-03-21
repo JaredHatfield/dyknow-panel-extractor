@@ -94,11 +94,8 @@ namespace DPXAnswers
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         internal void PanelSelected(object sender, EventArgs e)
         {
-            (this.PanelScrollView.Children[this.selectedPanelId] as Border).BorderBrush = Brushes.Black;
             Border b = sender as Border;
             int panelIndex = (int)b.Tag;
-            this.selectedPanelId = panelIndex;
-            b.BorderBrush = Brushes.Gold;
             Dispatcher.BeginInvoke(new DisplayPanelDelegate(this.answerManager.DisplayPanel), DispatcherPriority.Input, panelIndex);
         }
 
@@ -109,19 +106,13 @@ namespace DPXAnswers
         /// <param name="e">The <see cref="System.Windows.Input.MouseEventArgs" /> instance containing the event data.</param>
         internal void AnswerMouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            Label l = (Label)sender;
+            FrameworkElement fe = sender as FrameworkElement;
             Rect rect = new Rect();
-            if (l.Tag.GetType().Equals(typeof(GradeRow)))
+            if (fe.Tag.GetType().Equals(typeof(GradeRow)))
             {
-                GradeRow gr = (GradeRow)l.Tag;
+                GradeRow gr = fe.Tag as GradeRow;
                 gr.MouseIn();
                 rect = PanelAnswer.Transform(gr.Rect, Inky.Width, Inky.Height);
-            }
-            else
-            {
-                l.Background = Brushes.LightYellow;
-                AnswerRect ar = (AnswerRect)l.Tag;
-                rect = PanelAnswer.Transform(ar.Area, Inky.Width, Inky.Height);
             }
 
             this.Boxy.Height = rect.Height;
@@ -137,15 +128,11 @@ namespace DPXAnswers
         /// <param name="e">The <see cref="System.Windows.Input.MouseEventArgs"/> instance containing the event data.</param>
         internal void AnswerMouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            Label l = (Label)sender;
-            if (l.Tag.GetType().Equals(typeof(GradeRow)))
+            FrameworkElement fe = sender as FrameworkElement;
+            if (fe.Tag.GetType().Equals(typeof(GradeRow)))
             {
-                GradeRow gr = (GradeRow)l.Tag;
+                GradeRow gr = fe.Tag as GradeRow;
                 gr.MouseOut();
-            }
-            else
-            {
-                l.Background = Brushes.White;
             }
 
             this.Boxy.Height = 0;
@@ -220,6 +207,9 @@ namespace DPXAnswers
             // Wait until the dispatcher has flushed its queue which is filled with thumbnail render requests
             Dispatcher.Invoke(new NoArgsDelegate(this.DoNothing), DispatcherPriority.ContextIdle);
 
+            // Perform all of the clustering
+            this.answerManager.ClusterEverything();
+
             // Display the AnswerBox results in the answer column
             Dispatcher.Invoke(new NoArgsDelegate(this.answerManager.DisplayAnswers), DispatcherPriority.Background);
 
@@ -239,8 +229,10 @@ namespace DPXAnswers
         /// </summary>
         private void ClearInterface()
         {
+            this.answerManager.Cleanup();
             this.GridRecognizedAnswers.Children.Clear();
-            this.GridResults.Children.Clear();
+            this.ComboBoxBoxList.IsEnabled = false;
+            this.ComboBoxBoxList.Items.Clear();
             this.Inky.Children.Clear();
             this.Inky.Strokes.Clear();
             this.PanelScrollView.Children.Clear();
@@ -283,6 +275,7 @@ namespace DPXAnswers
                 this.ButtonSave.IsEnabled = false;
 
                 // Open the DyKnow file
+                GC.Collect();
                 this.filename = openFileDialog.FileName;
                 Thread t = new Thread(new ThreadStart(this.LoadDyKnowFile));
                 t.Name = "OpenFileThread";
@@ -320,6 +313,25 @@ namespace DPXAnswers
             {
                 MessageBox.Show("The file was not saved successfully.");
                 Debug.WriteLine("File was not saved: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Comboes the box box list selection changed.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs"/> instance containing the event data.</param>
+        private void ComboBoxBoxListSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count == 1)
+            {
+                ComboBoxItem cbi = e.AddedItems[0] as ComboBoxItem;
+                AnswerRect ar = cbi.Content as AnswerRect;
+                this.answerManager.DisplayGradeGroups(ar);
+            }
+            else
+            {
+                this.answerManager.DisplayGradeGroups(null);
             }
         }
     }

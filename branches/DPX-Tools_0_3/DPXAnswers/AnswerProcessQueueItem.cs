@@ -47,17 +47,34 @@ namespace DPXAnswers
         private PanelAnswer answer;
 
         /// <summary>
+        /// The dispatcher for the main window.
+        /// </summary>
+        private Dispatcher dispatcher;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AnswerProcessQueueItem"/> class.
         /// </summary>
         /// <param name="dyknow">The dyknow file.</param>
         /// <param name="index">The panel index.</param>
         /// <param name="answer">The answer.</param>
-        internal AnswerProcessQueueItem(DyKnow dyknow, int index, PanelAnswer answer)
+        /// <param name="dispatcher">The dispatcher.</param>
+        internal AnswerProcessQueueItem(DyKnow dyknow, int index, PanelAnswer answer, Dispatcher dispatcher)
         {
             this.dyknow = dyknow;
             this.index = index;
             this.answer = answer;
+            this.dispatcher = dispatcher;
         }
+
+        /// <summary>
+        /// The delegate used to generate the answer box thumbnail.
+        /// </summary>
+        /// <param name="strokes">The strokes.</param>
+        /// <param name="width">The panel width.</param>
+        /// <param name="height">The panel height.</param>
+        /// <param name="rect">The rectangle.</param>
+        /// <returns>The image of the answer box.</returns>
+        private delegate Image GenerateImageDelegate(StrokeCollection strokes, double width, double height, System.Windows.Rect rect);
 
         /// <summary>
         /// Executes the action required by this item.
@@ -99,8 +116,12 @@ namespace DPXAnswers
                 {
                     try
                     {
+                        // Perform handwriting recognition
                         InkAnalyzer theInkAnalyzer = InkAnalysisHelper.Analyze(strokes, 4);
 
+                        // Generate the answer box thumbnail
+                        Image img = (Image)this.dispatcher.Invoke(new GenerateImageDelegate(this.dyknow.GetAnswerBoxThumbnail), strokes, ink.Width, ink.Height, bounds);
+                        
                         // Add the result to the answer
                         lock (this.answer)
                         {
@@ -108,7 +129,8 @@ namespace DPXAnswers
                                 this.index,
                                 bounds,
                                 theInkAnalyzer.GetRecognizedString(),
-                                theInkAnalyzer.GetAlternates());
+                                theInkAnalyzer.GetAlternates(),
+                                img);
                         }
                     }
                     catch

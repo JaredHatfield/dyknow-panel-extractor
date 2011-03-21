@@ -6,11 +6,14 @@ namespace DPXAnswers
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
+    using ClusterLibraryCore;
+    using GradeLibrary;
 
     /// <summary>
     /// The row for the grade results.
@@ -28,9 +31,19 @@ namespace DPXAnswers
         private BoxAnalysis boxAnalysis;
 
         /// <summary>
+        /// The group for the GradeRow.
+        /// </summary>
+        private IClusterGroup<IAnswer, GroupData> group;
+
+        /// <summary>
         /// The index label.
         /// </summary>
         private Label index;
+
+        /// <summary>
+        /// The thumbnail.
+        /// </summary>
+        private Border thumb;
 
         /// <summary>
         /// The number label.
@@ -43,19 +56,9 @@ namespace DPXAnswers
         private Label ans;
 
         /// <summary>
-        /// The stack panel that contains the buttons.
+        /// The answer window.
         /// </summary>
-        private StackPanel sp;
-
-        /// <summary>
-        /// The Correct answer button.
-        /// </summary>
-        private Button cor;
-
-        /// <summary>
-        /// The incorrect answer button.
-        /// </summary>
-        private Button incor;
+        private AnswerWindow answerWindow;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GradeRow"/> class.
@@ -64,22 +67,41 @@ namespace DPXAnswers
         /// <param name="answerWindow">The answer window.</param>
         /// <param name="panel">The panel.</param>
         /// <param name="i">The panel index.</param>
-        public GradeRow(Grid g, AnswerWindow answerWindow, PanelAnswer panel, int i)
+        internal GradeRow(Grid g, AnswerWindow answerWindow, PanelAnswer panel, int i)
         {
+            this.answerWindow = answerWindow;
             this.rect = panel.Keys[i];
             this.boxAnalysis = panel.GetBoxAnalysis(panel.Keys[i]);
+            this.group = this.rect.Cluster.GetGroup(this.boxAnalysis);
+            this.group.PropertyChanged += this.GradeRowPropertyChanged;
 
             // Add the panel index
             this.index = new Label();
             this.index.Content = "Box " + panel.Keys[i].Index;
+            this.index.FontWeight = FontWeights.Bold;
             this.index.BorderBrush = Brushes.DarkGray;
             this.index.BorderThickness = new Thickness(1);
             this.index.Tag = this;
-            this.index.MouseEnter += new System.Windows.Input.MouseEventHandler(answerWindow.AnswerMouseEnter);
-            this.index.MouseLeave += new System.Windows.Input.MouseEventHandler(answerWindow.AnswerMouseLeave);
+            this.index.MouseEnter += this.answerWindow.AnswerMouseEnter;
+            this.index.MouseLeave += this.answerWindow.AnswerMouseLeave;
             Grid.SetRow(this.index, i);
             Grid.SetColumn(this.index, 0);
             g.Children.Add(this.index);
+
+            // The image
+            this.thumb = new Border();
+            this.thumb.BorderBrush = Brushes.DarkGray;
+            this.thumb.BorderThickness = new Thickness(1);
+            this.thumb.MouseEnter += this.answerWindow.AnswerMouseEnter;
+            this.thumb.MouseLeave += this.answerWindow.AnswerMouseLeave;
+            this.thumb.Tag = this;
+            Image img = new Image();
+            img.Source = this.boxAnalysis.Thumb.Source.Clone();
+            img.Width = 175;
+            this.thumb.Child = img;
+            Grid.SetRow(this.thumb, i);
+            Grid.SetColumn(this.thumb, 1);
+            g.Children.Add(this.thumb);
 
             // Add the panel number
             this.num = new Label();
@@ -87,49 +109,22 @@ namespace DPXAnswers
             this.num.BorderBrush = Brushes.DarkGray;
             this.num.BorderThickness = new Thickness(1);
             this.num.Tag = this;
-            this.num.MouseEnter += new System.Windows.Input.MouseEventHandler(answerWindow.AnswerMouseEnter);
-            this.num.MouseLeave += new System.Windows.Input.MouseEventHandler(answerWindow.AnswerMouseLeave);
+            this.num.MouseEnter += this.answerWindow.AnswerMouseEnter;
+            this.num.MouseLeave += this.answerWindow.AnswerMouseLeave;
             Grid.SetRow(this.num, i);
-            Grid.SetColumn(this.num, 1);
+            Grid.SetColumn(this.num, 2);
             g.Children.Add(this.num);
-
-            // The stack panel for the buttons
-            Border b = new Border();
-            b.BorderBrush = Brushes.DarkGray;
-            b.BorderThickness = new Thickness(1);
-            Grid.SetRow(b, i);
-            Grid.SetColumn(b, 3);
-            g.Children.Add(b);
-            this.sp = new StackPanel();
-            this.sp.Orientation = Orientation.Vertical;
-            b.Child = this.sp;
-
-            // Button to mark the answer as correct
-            this.cor = new Button();
-            this.cor.Content = "Correct";
-            this.cor.Tag = this;
-            this.cor.Click += new RoutedEventHandler(this.AnswerSetCorrect);
-            this.cor.Margin = new Thickness(5, 5, 5, 0);
-            this.sp.Children.Add(this.cor);
-
-            // Button to mark the answer as incorrect
-            this.incor = new Button();
-            this.incor.Content = "Incorrect";
-            this.incor.Tag = this;
-            this.incor.Click += new RoutedEventHandler(this.AnswerSetIncorrect);
-            this.incor.Margin = new Thickness(5);
-            this.sp.Children.Add(this.incor);
 
             // Add the answer
             this.ans = new Label();
-            this.SetStatusLabel(this.boxAnalysis.BoxGrade);
+            this.SetStatusLabel(this.rect.Cluster.GetGroup(this.boxAnalysis).Label.Grade);
             this.ans.BorderBrush = Brushes.DarkGray;
             this.ans.BorderThickness = new Thickness(1);
             this.ans.Tag = this;
-            this.ans.MouseEnter += new System.Windows.Input.MouseEventHandler(answerWindow.AnswerMouseEnter);
-            this.ans.MouseLeave += new System.Windows.Input.MouseEventHandler(answerWindow.AnswerMouseLeave);
+            this.ans.MouseEnter += this.answerWindow.AnswerMouseEnter;
+            this.ans.MouseLeave += this.answerWindow.AnswerMouseLeave;
             Grid.SetRow(this.ans, i);
-            Grid.SetColumn(this.ans, 2);
+            Grid.SetColumn(this.ans, 3);
             g.Children.Add(this.ans);
         }
 
@@ -148,9 +143,9 @@ namespace DPXAnswers
         public void MouseIn()
         {
             this.index.Background = Brushes.LightYellow;
+            this.thumb.Background = Brushes.LightYellow;
             this.num.Background = Brushes.LightYellow;
             this.ans.Background = Brushes.LightYellow;
-            this.sp.Background = Brushes.LightYellow;
         }
 
         /// <summary>
@@ -159,113 +154,68 @@ namespace DPXAnswers
         public void MouseOut()
         {
             this.index.Background = Brushes.White;
+            this.thumb.Background = Brushes.White;
             this.num.Background = Brushes.White;
             this.ans.Background = Brushes.White;
-            this.sp.Background = Brushes.White;
+        }
+
+        /// <summary>
+        /// Cleanups this instance.
+        /// </summary>
+        internal void Cleanup()
+        {
+            this.group.PropertyChanged -= this.GradeRowPropertyChanged;
+            this.index.MouseEnter -= this.answerWindow.AnswerMouseEnter;
+            this.index.MouseLeave -= this.answerWindow.AnswerMouseLeave;
+            this.thumb.MouseEnter -= this.answerWindow.AnswerMouseEnter;
+            this.thumb.MouseLeave -= this.answerWindow.AnswerMouseLeave;
+            this.num.MouseEnter -= this.answerWindow.AnswerMouseEnter;
+            this.num.MouseLeave -= this.answerWindow.AnswerMouseLeave;
+            this.ans.MouseEnter -= this.answerWindow.AnswerMouseEnter;
+            this.ans.MouseLeave -= this.answerWindow.AnswerMouseLeave;
         }
 
         /// <summary>
         /// Sets the status of the answer for the specific answer box..
         /// </summary>
         /// <param name="grade">The grade of the panel.</param>
-        private void SetStatusLabel(BoxAnalysis.Grade grade)
+        private void SetStatusLabel(Grade grade)
         {
             switch (grade)
             {
-                case BoxAnalysis.Grade.NOTSET:
+                case Grade.NOTSET:
                     this.ans.Content = BoxAnalysis.BoxGradeString(grade);
                     this.ans.Foreground = Brushes.Black;
                     this.ans.FontWeight = FontWeights.Normal;
-                    this.cor.IsEnabled = true;
-                    this.incor.IsEnabled = true;
                     break;
-                case BoxAnalysis.Grade.AUTOCORRECT:
-                    this.ans.Content = BoxAnalysis.BoxGradeString(grade);
-                    this.ans.Foreground = Brushes.DarkGreen;
-                    this.ans.FontWeight = FontWeights.Normal;
-                    this.cor.IsEnabled = false;
-                    this.incor.IsEnabled = true;
-                    break;
-                case BoxAnalysis.Grade.SETCORRECT:
+                case Grade.CORRECT:
                     this.ans.Content = BoxAnalysis.BoxGradeString(grade);
                     this.ans.Foreground = Brushes.DarkGreen;
                     this.ans.FontWeight = FontWeights.Bold;
-                    this.cor.IsEnabled = false;
-                    this.incor.IsEnabled = true;
                     break;
-                case BoxAnalysis.Grade.AUTOINCORRECT:
-                    this.ans.Content = BoxAnalysis.BoxGradeString(grade);
-                    this.ans.Foreground = Brushes.DarkRed;
-                    this.ans.FontWeight = FontWeights.Normal;
-                    this.cor.IsEnabled = true;
-                    this.incor.IsEnabled = false;
-                    break;
-                case BoxAnalysis.Grade.SETINCORRECT:
+                case Grade.INCORRECT:
                     this.ans.Content = BoxAnalysis.BoxGradeString(grade);
                     this.ans.Foreground = Brushes.DarkRed;
                     this.ans.FontWeight = FontWeights.Bold;
-                    this.cor.IsEnabled = true;
-                    this.incor.IsEnabled = false;
                     break;
-                case BoxAnalysis.Grade.INVALID:
+                case Grade.INVALID:
                     this.ans.Content = BoxAnalysis.BoxGradeString(grade);
                     this.ans.Foreground = Brushes.Black;
                     this.ans.FontWeight = FontWeights.Normal;
-                    this.cor.IsEnabled = false;
-                    this.incor.IsEnabled = false;
                     break;
             }
         }
 
         /// <summary>
-        /// Answers the set correct.
+        /// Grades the row property changed.
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
-        private void AnswerSetCorrect(object sender, RoutedEventArgs e)
+        /// <param name="e">The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> instance containing the event data.</param>
+        private void GradeRowPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            this.boxAnalysis.BoxGrade = BoxAnalysis.Grade.SETCORRECT;
-            this.SetStatusLabel(this.boxAnalysis.BoxGrade);
-
-            // Go through and change any other answers that may be correct
-            Dictionary<int, BoxAnalysis> other = this.rect.Panels;
-            foreach (KeyValuePair<int, BoxAnalysis> ba in other)
+            if (e.PropertyName.Equals("Label"))
             {
-                // Make comparisions for all of the other not set panels
-                // We only change panels that were not set that exactly match the incorrect answer
-                if (!ba.Value.Equals(this.boxAnalysis) &&
-                    (ba.Value.BoxGrade == BoxAnalysis.Grade.NOTSET ||
-                    ba.Value.BoxGrade == BoxAnalysis.Grade.AUTOINCORRECT) &&
-                    ba.Value.Answer.Equals(this.boxAnalysis.Answer))
-                {
-                    ba.Value.BoxGrade = BoxAnalysis.Grade.AUTOCORRECT;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Answers the set incorrect.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
-        private void AnswerSetIncorrect(object sender, RoutedEventArgs e)
-        {
-            this.boxAnalysis.BoxGrade = BoxAnalysis.Grade.SETINCORRECT;
-            this.SetStatusLabel(this.boxAnalysis.BoxGrade);
-
-            // Go through and change any other answers that may be incorrect
-            Dictionary<int, BoxAnalysis> other = this.rect.Panels;
-            foreach (KeyValuePair<int, BoxAnalysis> ba in other)
-            {
-                // Make comparisions for all of the other not set panels
-                // We only change panels that were not set that exactly match the incorrect answer
-                if (!ba.Value.Equals(this.boxAnalysis) && 
-                    (ba.Value.BoxGrade == BoxAnalysis.Grade.NOTSET ||
-                    ba.Value.BoxGrade == BoxAnalysis.Grade.AUTOCORRECT) &&
-                    ba.Value.Answer.Equals(this.boxAnalysis.Answer))
-                {
-                    ba.Value.BoxGrade = BoxAnalysis.Grade.AUTOINCORRECT;
-                }
+                this.SetStatusLabel(this.group.Label.Grade);
             }
         }
     }

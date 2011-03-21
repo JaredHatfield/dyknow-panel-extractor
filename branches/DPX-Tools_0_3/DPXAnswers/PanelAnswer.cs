@@ -11,7 +11,9 @@ namespace DPXAnswers
     using System.Linq;
     using System.Text;
     using System.Windows;
+    using System.Windows.Controls;
     using System.Windows.Ink;
+    using GradeLibrary;
 
     /// <summary>
     /// The results from analyzing the answer boxes.
@@ -101,7 +103,8 @@ namespace DPXAnswers
         /// <param name="rect">The bounding rectangle.</param>
         /// <param name="recognized">The recognized string.</param>
         /// <param name="aac">The Analysis Alternate Collection.</param>
-        internal void AddResult(int index, Rect rect, string recognized, AnalysisAlternateCollection aac)
+        /// <param name="img">The image thumbnail.</param>
+        internal void AddResult(int index, Rect rect, string recognized, AnalysisAlternateCollection aac, Image img)
         {
             // We need to lock on the factory because this action needs to be atomic
             lock (this.answerRectFactory)
@@ -113,8 +116,8 @@ namespace DPXAnswers
                     alt.Add(aac[i].RecognizedString);
                 }
 
-                BoxAnalysis ba = new BoxAnalysis(recognized, alt);
-                ar.Panels.Add(index, ba);
+                BoxAnalysis ba = new BoxAnalysis(recognized, alt, index, img);
+                ar.Cluster.AddValueDynamic(ba);
                 this.answers.Add(rect, ba);
                 this.keys.Add(ar);
             }
@@ -159,15 +162,16 @@ namespace DPXAnswers
         /// </summary>
         /// <param name="rect">The key to lookup.</param>
         /// <returns>The answer to the panel.</returns>
-        internal BoxAnalysis.Grade GetAnswer(AnswerRect rect)
+        internal Grade GetAnswer(AnswerRect rect)
         {
             try
             {
-                return this.answers[rect.Area].BoxGrade;
+                BoxAnalysis ba = this.answers[rect.Area];
+                return rect.Cluster.GetGroup(ba).Label.Grade;
             }
             catch (KeyNotFoundException)
             {
-                return BoxAnalysis.Grade.INVALID;
+                return Grade.INVALID;
             }
         }
 

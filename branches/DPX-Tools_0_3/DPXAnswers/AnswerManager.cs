@@ -7,8 +7,11 @@ namespace DPXAnswers
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Collections.Specialized;
     using System.Diagnostics;
+    using System.IO;
     using System.Linq;
+    using System.Reflection;
     using System.Text;
     using System.Threading;
     using System.Windows;
@@ -17,6 +20,7 @@ namespace DPXAnswers
     using System.Windows.Threading;
     using DPXCommon;
     using DPXReader.DyKnow;
+    using GradeLibrary;
 
     /// <summary>
     /// The manager for processing the file and interpreting the answers.
@@ -32,6 +36,11 @@ namespace DPXAnswers
         /// The answer window.
         /// </summary>
         private AnswerWindow answerWindow;
+
+        /// <summary>
+        /// The clustering algorithms that are available to the application.
+        /// </summary>
+        private List<IClusterAlgorithm> clusterAlgorithms;
 
         /// <summary>
         /// The file name that will be opened.
@@ -64,6 +73,16 @@ namespace DPXAnswers
         private Queue<QueueItem> workerQueue;
 
         /// <summary>
+        /// The list of grade rows, kept to insure garbage collection.
+        /// </summary>
+        private List<GradeRow> gradeRows;
+
+        /// <summary>
+        /// The answerRect that is currently selected.
+        /// </summary>
+        private AnswerRect answerRect;
+
+        /// <summary>
         /// Prevents a default instance of the <see cref="AnswerManager"/> class from being created.
         /// </summary>
         private AnswerManager()
@@ -76,6 +95,14 @@ namespace DPXAnswers
 
             // Create the worker queue
             this.workerQueue = new Queue<QueueItem>();
+
+            // Create the list for traking gradeRows
+            this.gradeRows = new List<GradeRow>();
+
+            // Load the external DLL files that include the clustering algorithms
+            string exeName = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string folder = Path.GetDirectoryName(exeName);
+            this.clusterAlgorithms = GetPlugins<IClusterAlgorithm>(folder);
 
             // Start all of the worker threads
             this.workers = new List<Thread>();
@@ -102,6 +129,12 @@ namespace DPXAnswers
         private delegate void DisplayRecognizedAnswerDelegate(PanelAnswer panel);
 
         /// <summary>
+        /// The delegate for displaying a panel.
+        /// </summary>
+        /// <param name="index">The index of the panel to display.</param>
+        private delegate void DisplayPanelDelegate(int index);
+
+        /// <summary>
         /// Returns the singleton instance.
         /// </summary>
         /// <returns>An instance of AnswerManager.</returns>
@@ -126,6 +159,19 @@ namespace DPXAnswers
             {
                 this.workers[i].Abort();
             }
+        }
+
+        /// <summary>
+        /// Cleanups this instance.
+        /// </summary>
+        internal void Cleanup()
+        {
+            if (this.answerRect != null)
+            {
+                (this.answerRect.Cluster.Groups as INotifyCollectionChanged).CollectionChanged -= this.AnswerManagerCollectionChanged;
+            }
+
+            this.answerRect = null;
         }
 
         /// <summary>
@@ -167,7 +213,19 @@ namespace DPXAnswers
         {
             if (this.dyknow != null && n >= 0 && n < this.dyknow.DATA.Count)
             {
-                this.answerWindow.SelectedPanelId = n;
+                if (this.answerWindow.SelectedPanelId >= 0)
+                {
+                    // Update the panel highlighting and the panel number
+                    (this.answerWindow.PanelScrollView.Children[this.answerWindow.SelectedPanelId] as Border).BorderBrush = Brushes.Black;
+                    this.answerWindow.SelectedPanelId = n;
+                    (this.answerWindow.PanelScrollView.Children[this.answerWindow.SelectedPanelId] as Border).BorderBrush = Brushes.Gold;
+                }
+                else
+                {
+                    // Special case where the panel images haven't finished processing so we can update highlighting
+                    this.answerWindow.SelectedPanelId = n;
+                }
+
                 this.dyknow.Render(this.answerWindow.Inky, n);
                 string oner = (this.dyknow.DATA[n] as DPXReader.DyKnow.Page).ONER;
                 string onern = (this.dyknow.DATA[n] as DPXReader.DyKnow.Page).ONERN;
@@ -205,6 +263,16 @@ namespace DPXAnswers
         }
 
         /// <summary>
+        /// Displays the panel request.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="DPXAnswers.DisplayPanelEventArgs"/> instance containing the event data.</param>
+        internal void DisplayPanelRequest(object sender, DisplayPanelEventArgs e)
+        {
+            Dispatcher.CurrentDispatcher.BeginInvoke(new DisplayPanelDelegate(this.DisplayPanel), DispatcherPriority.Input, e.Index);
+        }
+
+        /// <summary>
         /// Displays the recognized answer dispatch.
         /// </summary>
         internal void DisplayRecognizedAnswerDispatch()
@@ -221,16 +289,25 @@ namespace DPXAnswers
         /// <param name="panel">The panel answer.</param>
         internal void DisplayRecognizedAnswer(PanelAnswer panel)
         {
-            // Display the answer information to the user
             Grid g = this.answerWindow.GridRecognizedAnswers;
             g.Children.Clear();
-            
+
+            // Clean up all of the old grade rows
+            for (int i = 0; i < this.gradeRows.Count; i++)
+            {
+                this.gradeRows[i].Cleanup();
+            }
+
+            this.gradeRows.Clear();
+
+            // Display the answer information to the user
             for (int i = 0; i < panel.Keys.Count; i++)
             {
                 RowDefinition rd = new RowDefinition();
                 rd.Height = GridLength.Auto;
                 g.RowDefinitions.Add(rd);
                 GradeRow gr = new GradeRow(g, this.answerWindow, panel, i);
+                this.gradeRows.Add(gr);
             }
         }
 
@@ -240,27 +317,112 @@ namespace DPXAnswers
         internal void DisplayAnswers()
         {
             // Display the answer information to the user
-            Grid g = this.answerWindow.GridResults;
-            g.Children.Clear();
+            this.answerWindow.ComboBoxBoxList.Items.Clear();
             ReadOnlyCollection<AnswerRect> rects = this.answerRectFactory.AnswerRect;
             for (int i = 0; i < rects.Count; i++)
             {
+                // Add the value to the drop down list
                 AnswerRect ar = rects[i];
-                RowDefinition rd = new RowDefinition();
-                rd.Height = GridLength.Auto;
-                g.RowDefinitions.Add(rd);
+                ComboBoxItem cbi = new ComboBoxItem();
+                cbi.Content = ar;
+                this.answerWindow.ComboBoxBoxList.Items.Add(cbi);
 
-                // Add the panel index
-                Label index = new Label();
-                index.Content = "Box " + ar.Index;
-                index.BorderBrush = Brushes.DarkGray;
-                index.BorderThickness = new Thickness(1);
-                index.Tag = ar;
-                index.MouseEnter += new System.Windows.Input.MouseEventHandler(this.answerWindow.AnswerMouseEnter);
-                index.MouseLeave += new System.Windows.Input.MouseEventHandler(this.answerWindow.AnswerMouseLeave);
-                Grid.SetRow(index, i);
-                Grid.SetColumn(index, 0);
-                g.Children.Add(index);
+                // Select the first value
+                if (i == 0)
+                {
+                    // This will trigger an event that will display the contents
+                    this.answerWindow.ComboBoxBoxList.SelectedIndex = 0;
+                }
+            }
+
+            this.answerWindow.ComboBoxBoxList.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// Displays the grade groups.
+        /// </summary>
+        /// <param name="ar">The AnswerRect to be displayed.</param>
+        internal void DisplayGradeGroups(AnswerRect ar)
+        {
+            if (this.answerRect != null)
+            {
+                (this.answerRect.Cluster.Groups as INotifyCollectionChanged).CollectionChanged -= this.AnswerManagerCollectionChanged;
+            }
+
+            this.answerRect = ar;
+            if (ar != null)
+            {
+                (this.answerRect.Cluster.Groups as INotifyCollectionChanged).CollectionChanged += this.AnswerManagerCollectionChanged;
+            }
+
+            this.RefreshGradeGroups(ar);
+        }
+
+        /// <summary>
+        /// Refreshes the grade groups.
+        /// </summary>
+        /// <param name="ar">The AnswerRect.</param>
+        internal void RefreshGradeGroups(AnswerRect ar)
+        {
+            Grid g = this.answerWindow.GridGroups;
+
+            // Remove all of the old references from the event handlers for garbage collection purposes
+            for (int i = 0; i < g.Children.Count; i++)
+            {
+                GradeGroup gg = g.Children[i] as GradeGroup;
+                gg.DisplayPanel -= this.DisplayPanelRequest;
+                gg.Cleanup();
+            }
+
+            g.Children.Clear();
+            g.RowDefinitions.Clear();
+
+            // Now display all of the answer groups
+            if (ar != null)
+            {
+                for (int j = 0; j < ar.Cluster.Groups.Count; j++)
+                {
+                    RowDefinition rd = new RowDefinition();
+                    rd.Height = GridLength.Auto;
+                    g.RowDefinitions.Add(rd);
+                    
+                    GradeGroup gg = new GradeGroup(ar.Cluster, j);
+                    gg.DisplayPanel += this.DisplayPanelRequest;
+                    gg.Margin = new Thickness(0, 0, 0, 10);
+                    Grid.SetRow(gg, j);
+                    Grid.SetColumn(gg, 0);
+                    g.Children.Add(gg);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles the CollectionChanged event of the AnswerManager control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Collections.Specialized.NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
+        internal void AnswerManagerCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (this.answerRect != null)
+            {
+                // Refresh all of the groups since we changed one of them
+                this.RefreshGradeGroups(this.answerRect);
+
+                // The panel answers should also be refreshed to insure proper event bindings
+                PanelAnswer pa = null;
+                lock (this.answers)
+                {
+                    pa = this.RetreivePanelAnswer(this.answerWindow.SelectedPanelId);
+                }
+
+                if (pa != null)
+                {
+                    this.DisplayRecognizedAnswer(pa);
+                    if (!pa.IsProcessed)
+                    {
+                        pa.DidProcess += new PanelAnswer.PanelProcessedDelegate(this.DisplayRecognizedAnswerDispatch);
+                    }
+                }
             }
         }
 
@@ -278,7 +440,7 @@ namespace DPXAnswers
             }
 
             // Create the new task
-            AnswerProcessQueueItem apqi = new AnswerProcessQueueItem(this.dyknow, n, pa);
+            AnswerProcessQueueItem apqi = new AnswerProcessQueueItem(this.dyknow, n, pa, this.answerWindow.Dispatcher);
 
             // Add the item to the queue
             lock (this.workerQueue)
@@ -309,6 +471,26 @@ namespace DPXAnswers
         }
 
         /// <summary>
+        /// Run the first clustering algorithm on all of the clusters.
+        /// </summary>
+        internal void ClusterEverything()
+        {
+            if (this.clusterAlgorithms.Count > 0)
+            {
+                for (int i = 0; i < this.answerRectFactory.AnswerRect.Count; i++)
+                {
+                    AnswerRect ar = this.answerRectFactory.AnswerRect[i];
+                    this.clusterAlgorithms[0].Cluster = ar.Cluster;
+                    this.clusterAlgorithms[0].Process();
+                }
+            }
+            else
+            {
+                Debug.WriteLine("No Clustering Algorithm Available!");
+            }
+        }
+
+        /// <summary>
         /// Creates the output report for a CSV file.
         /// </summary>
         /// <returns>The string that contains the contents of the CSV file.</returns>
@@ -331,7 +513,8 @@ namespace DPXAnswers
                     BoxAnalysis ba = pa.Value.GetBoxAnalysis(r);
                     if (ba != null)
                     {
-                        sb.Append(",\"" + ba.Answer + "\"," + BoxAnalysis.BoxGradeString(ba.BoxGrade));
+                        Grade g = r.Cluster.GetGroup(ba).Label.Grade;
+                        sb.Append(",\"" + ba.Answer + "\"," + BoxAnalysis.BoxGradeString(g));
                     }
                     else
                     {
@@ -372,6 +555,46 @@ namespace DPXAnswers
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Gets the plugins.
+        /// </summary>
+        /// <typeparam name="T">The interface type to initialize.</typeparam>
+        /// <param name="folder">The folder.</param>
+        /// <returns>The list of plugin objects.</returns>
+        private List<T> GetPlugins<T>(string folder)
+        {
+            string[] files = Directory.GetFiles(folder, "*.dll");
+            List<T> tlist = new List<T>();
+            Debug.Assert(typeof(T).IsInterface, "The must be an interface");
+            foreach (string file in files)
+            {
+                try
+                {
+                    Assembly assembly = Assembly.LoadFile(file);
+                    foreach (Type type in assembly.GetTypes())
+                    {
+                        if (!type.IsClass || type.IsNotPublic)
+                        {
+                            continue;
+                        }
+
+                        Type[] interfaces = type.GetInterfaces();
+                        if (((System.Collections.IList)interfaces).Contains(typeof(T)))
+                        {
+                            object obj = Activator.CreateInstance(type);
+                            T t = (T)obj;
+                            tlist.Add(t);
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            return tlist;
         }
 
         /// <summary>
