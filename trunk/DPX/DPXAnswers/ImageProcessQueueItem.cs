@@ -76,7 +76,7 @@ namespace DPXAnswers
             b.BorderThickness = new Thickness(1);
             b.Margin = new Thickness(5);
             
-            b.MouseDown += new MouseButtonEventHandler(this.window.PanelSelected);
+            b.MouseDown += this.window.PanelSelected;
             b.Tag = this.index;
 
             this.window.PanelScrollView.Children.Add(b);

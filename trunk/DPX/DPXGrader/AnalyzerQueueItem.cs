@@ -69,6 +69,7 @@ namespace DPXGrader
                 {
                     InkAnalyzer theInkAnalyzer = InkAnalysisHelper.Analyze(ink.Strokes, 4);
                     val = theInkAnalyzer.GetRecognizedString();
+                    theInkAnalyzer.Dispose();
                     try
                     {
                         valDigit = double.Parse(val);

@@ -84,6 +84,9 @@ namespace DPXAnswers
                 StackPanel sp = this.StackPanelGrades.Children[i] as StackPanel;
                 sp.Children.Clear();
             }
+
+            this.cluster = null;
+            this.group = null;
         }
 
         /// <summary>
@@ -149,7 +152,7 @@ namespace DPXAnswers
                 imgBorder.Background = Brushes.LightGray;
                 imgBorder.Margin = new Thickness(0, 10, 0, 0);
                 Image img = new Image();
-                img.Source = ba.Thumb.Source.Clone();
+                img.Source = ba.Thumb.Source;
                 img.ToolTip = ba.Answer;
                 img.Width = 150;
                 imgBorder.Child = img;

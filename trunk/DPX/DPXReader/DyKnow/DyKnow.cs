@@ -289,6 +289,7 @@ namespace DPXReader.DyKnow
 
                     // Convert the stream into an ink stroke
                     StrokeCollection sc = new StrokeCollection(s);
+                    s.Close();
 
                     // Resize the panel if it is not the default resolution
                     if (p.PH != inky.Height || p.PW != inky.Width)

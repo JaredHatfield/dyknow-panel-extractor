@@ -77,6 +77,11 @@ namespace DPXAnswers
         private delegate Image GenerateImageDelegate(StrokeCollection strokes, double width, double height, System.Windows.Rect rect);
 
         /// <summary>
+        /// The delegate for call with no arguments.
+        /// </summary>
+        private delegate void NoArgsDelegate();
+
+        /// <summary>
         /// Executes the action required by this item.
         /// </summary>
         public override void Run()
@@ -114,14 +119,15 @@ namespace DPXAnswers
 
                 if (strokes.Count > 0)
                 {
+                    InkAnalyzer theInkAnalyzer = null;
                     try
                     {
                         // Perform handwriting recognition
-                        InkAnalyzer theInkAnalyzer = InkAnalysisHelper.Analyze(strokes, 4);
-
+                        theInkAnalyzer = InkAnalysisHelper.Analyze(strokes, 4);
+                        
                         // Generate the answer box thumbnail
                         Image img = (Image)this.dispatcher.Invoke(new GenerateImageDelegate(this.dyknow.GetAnswerBoxThumbnail), strokes, ink.Width, ink.Height, bounds);
-                        
+
                         // Add the result to the answer
                         lock (this.answer)
                         {
@@ -135,6 +141,16 @@ namespace DPXAnswers
                     }
                     catch
                     {
+                    }
+                    finally
+                    {
+                        this.dispatcher.Invoke(new NoArgsDelegate(strokes.Clear));
+                        strokes = null;
+                        if (theInkAnalyzer != null)
+                        {
+                            theInkAnalyzer.Dispose();
+                            theInkAnalyzer = null;
+                        }
                     }
                 }
             }

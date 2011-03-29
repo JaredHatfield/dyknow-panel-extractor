@@ -46,6 +46,9 @@ namespace DPXCommon
                     Debug.WriteLine("The analysis failed! " + e.Message);
                     success = false;
 
+                    // Clean up our mess
+                    theInkAnalyzer.Dispose();
+
                     // If we failed for some reason, lets take a short break
                     Thread.Sleep(100);
                 }

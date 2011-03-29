@@ -468,6 +468,11 @@ namespace DPXGrader
             this.GridResults.Children.Clear();
             this.Inky.Children.Clear();
             this.Inky.Strokes.Clear();
+            for (int i = 0; i < this.PanelScrollView.Children.Count; i++)
+            {
+                this.PanelScrollView.Children[i].MouseDown -= this.PanelSelected;
+            }
+
             this.PanelScrollView.Children.Clear();
             this.TextBoxPreviewOutput.Text = string.Empty;
             this.TextBoxStudentName.Text = string.Empty;
@@ -707,6 +712,7 @@ namespace DPXGrader
                 {
                     InkAnalyzer theInkAnalyzer = InkAnalysisHelper.Analyze(strokes, 1);
                     this.TextBoxPreviewOutput.Text = theInkAnalyzer.GetRecognizedString();
+                    theInkAnalyzer.Dispose();
                 }
                 catch
                 {
