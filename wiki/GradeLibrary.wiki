@@ -1,0 +1,4 @@
+#summary External library used by DPXAnswers for clustering answer boxes
+
+= Introduction =
+This dll library is used by DPXAnswers and uses the ClusterLibraryCore to provide the necessary objects that are used by an implementation of a clustering algorithm.  The interfaces provided in this library allow DPXAnswers to be extended with new clustering algorithms that are loaded at run time.  This design is intended to buffer the GPL open source code of DPXAnswers from the code that is used to implement the clustering algorithm.
