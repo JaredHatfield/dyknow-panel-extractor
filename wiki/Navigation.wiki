@@ -4,6 +4,8 @@
     * [DPXCommon DPX Common]
     * [DPXDatabase DPX Database]
     * [DPXReader DPX Reader]
+    * [ClusterLibraryCore Cluster Library Core]
+    * [GradeLibrary Grade Library]
   * Applications
     * [DPXAnswers DPX Answers]
     * [DPXGrader DPX Grader]
